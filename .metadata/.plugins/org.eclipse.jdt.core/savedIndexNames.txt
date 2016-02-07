@@ -1,0 +1,5 @@
+INDEX VERSION 1.127+/home/bartosz/Documents/CS308/Gizmoball/.metadata/.plugins/org.eclipse.jdt.core
+2083875616.index
+207593391.index
+2453342732.index
+3845929626.index
