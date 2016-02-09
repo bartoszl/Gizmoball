@@ -11,9 +11,8 @@ public class Reader {
 
     private BufferedReader reader;
     private String line = "";
-    private String regex = "[\\s \\t]";
+    private String regex = "[\\s\\t]";
     private List<String[]> data;
-
 
     public Reader () {
         data = new ArrayList<String[]>();
