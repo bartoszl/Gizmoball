@@ -40,8 +40,56 @@ public class Validator {
                     return true;
                 }
             }
+
+            if(command[0].matches("Move")) {
+                return validateMove(command);
+            }
+
+            if(command[0].matches("Connect")) {
+                return validateConnect(command);
+            }
+
+            if(command[0].matches("KeyConnect")) {
+                return validateKeyConnect(command);
+            }
+
+            if(command[0].matches("Gravity")) {
+                return validateGravity(command);
+            }
+
+            if(command[0].matches("Friction")) {
+                return validateFriction(command);
+            }
         }
         return false;
+    }
+
+    public boolean validateFriction(String[] command) {
+        return command.length == 3 && validateFloatPair(command[1], command[2]);
+    }
+
+    public boolean validateGravity(String[] command) {
+        return command.length == 2 && validateFloat(command[1]);
+    }
+
+    public boolean validateKeyConnect(String[] command) {
+        return command.length == 5 && command[1].matches("key")
+                && command[2].matches("\\d+") && command[3].matches("down|up")
+                && validateExistingIdentifier(command[4]);
+    }
+
+    public boolean validateConnect(String[] command) {
+        return command.length == 3 && validateExistingIdentifier(command[1])
+                && validateExistingIdentifier(command[2]);
+    }
+
+    public boolean validateMove(String[] command) {
+        return command.length == 4 && validateExistingIdentifier(command[1])
+                && validateNumberPair(command[2], command[3]);
+    }
+
+    public boolean validateNumberPair(String x, String y) {
+        return validateIntPair(x, y) || validateFloatPair(x, y);
     }
 
     public void addIdentifier(String identifier) {
@@ -83,10 +131,6 @@ public class Validator {
         return command[0].matches("Square|Circle|Triangle|RightFlipper|LeftFlipper")
                 && command.length == 4 && validateIdentifier(command[1])
                 && validateIntPair(command[2], command[3]);
-    }
-
-    public boolean validateInt(String possibleInt) {
-        return possibleInt.matches("\\d+");
     }
 
     public boolean validateExistingIdentifier(String existingIdentifier) {

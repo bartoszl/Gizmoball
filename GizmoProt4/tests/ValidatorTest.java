@@ -16,26 +16,26 @@ public class ValidatorTest {
 
     @Test
     public void testValidateExistingIdentifier_Expected_True () {
-        Validator localReader = new Validator();
-        localReader.addIdentifier("T1");
-        boolean actual = localReader.validateExistingIdentifier("T1");
+        Validator localValidator = new Validator();
+        localValidator.addIdentifier("T1");
+        boolean actual = localValidator.validateExistingIdentifier("T1");
         assertThat(actual, is(equalTo(true)));
     }
     @Test
     public void testValidateRotateAndDelete_Correct_Semantics_Expected_True() {
-        Validator localReader = new Validator();
-        localReader.addIdentifier("T1");
+        Validator localValidator = new Validator();
+        localValidator.addIdentifier("T1");
         String[] test = new String[] {"Rotate", "T1"};
-        boolean actual = localReader.validateRotateAndDelete(test);
+        boolean actual = localValidator.validateRotateAndDelete(test);
         assertThat(actual, is(equalTo(true)));
     }
 
     @Test
     public void testValidateRotateAndDelete_Incorrect_Semantics_No_Indentifier_Expected_True() {
-        Validator localReader = new Validator();
-        localReader.addIdentifier("T1");
+        Validator localValidator = new Validator();
+        localValidator.addIdentifier("T1");
         String[] test = new String[] {"Rotate"};
-        boolean actual = localReader.validateRotateAndDelete(test);
+        boolean actual = localValidator.validateRotateAndDelete(test);
         assertThat(actual, is(equalTo(false)));
     }
 
@@ -83,41 +83,17 @@ public class ValidatorTest {
 
     @Test
     public void testValidateGizmoOp_Triangle_Expected_True () {
-        Validator localReader = new Validator();
+        Validator localValidator = new Validator();
         String[] test = new String[] {"Triangle", "T1", "1", "2"};
-        boolean actual = localReader.validateGizmoOp(test);
+        boolean actual = localValidator.validateGizmoOp(test);
         assertThat(actual, is(equalTo(true)));
     }
 
     @Test
     public void testValidateGizmoOp_Blob_Expected_False () {
-        Validator localReader = new Validator();
-        String[] test = new String[] {"Blob", "Blob1", "1", "2"};
-        boolean actual = localReader.validateGizmoOp(test);
-        assertThat(actual, is(equalTo(false)));
-    }
-
-    @Test
-    public void testValidateInt_5_Expected_True () {
-        boolean actual = reader.validateInt("5");
-        assertThat(actual, is(equalTo(true)));
-    }
-
-    @Test
-    public void testValidateInt_5_Point_5_Expected_False () {
-        boolean actual = reader.validateInt("5.5");
-        assertThat(actual, is(equalTo(false)));
-    }
-
-    @Test
-    public void testValidateInt_Non_Numeric_Expected_False () {
-        boolean actual = reader.validateInt("NonNumeric");
-        assertThat(actual, is(equalTo(false)));
-    }
-
-    @Test
-    public void testValidateInt_Empty_String_Expected_False () {
-        boolean actual = reader.validateInt("");
+        Validator localValidator = new Validator();
+        String[] test = new String[]{"Blob", "Blob1", "1", "2"};
+        boolean actual = localValidator.validateGizmoOp(test);
         assertThat(actual, is(equalTo(false)));
     }
 
@@ -144,80 +120,187 @@ public class ValidatorTest {
 
     @Test
     public void testValidateAbsorber_Correct_Values_Expected_True () {
-        Validator localReader = new Validator();
+        Validator localValidator = new Validator();
         String[] testAbsorber = new String[] {"Absorber", "Absorber1", "1", "2", "1", "10"};
-        boolean actual = localReader.validateAbsorber(testAbsorber);
+        boolean actual = localValidator.validateAbsorber(testAbsorber);
         assertThat(actual, is(equalTo(true)));
     }
 
     @Test
     public void testValidateCommand_Valid_Rotate_Expected_True () {
-        Validator localReader = new Validator();
-        localReader.addIdentifier("T1");
+        Validator localValidator = new Validator();
+        localValidator.addIdentifier("T1");
         String[] testRotate = new String[] {"Rotate", "T1"};
-        boolean actual = localReader.validateCommand(testRotate);
+        boolean actual = localValidator.validateCommand(testRotate);
         assertThat(actual, is(equalTo(true)));
     }
 
     @Test
     public void testValidateCommand_Invalid_Rotate_Expected_False () {
-        Validator localReader = new Validator();
-        localReader.addIdentifier("T2");
+        Validator localValidator = new Validator();
+        localValidator.addIdentifier("T2");
         String[] testRotate = new String[] {"Rotate", "T1"};
-        boolean actual = localReader.validateCommand(testRotate);
+        boolean actual = localValidator.validateCommand(testRotate);
         assertThat(actual, is(equalTo(false)));
     }
 
     @Test
     public void testValidateCommand_Valid_Delete_Expected_True () {
-        Validator localReader = new Validator();
-        localReader.addIdentifier("T1");
+        Validator localValidator = new Validator();
+        localValidator.addIdentifier("T1");
         String[] testRotate = new String[] {"Delete", "T1"};
-        boolean actual = localReader.validateCommand(testRotate);
+        boolean actual = localValidator.validateCommand(testRotate);
         assertThat(actual, is(equalTo(true)));
     }
 
     @Test
     public void testValidateCommand_Invalid_Delete_Expected_False () {
-        Validator localReader = new Validator();
-        localReader.addIdentifier("T2");
+        Validator localValidator = new Validator();
+        localValidator.addIdentifier("T2");
         String[] testRotate = new String[] {"Delete", "T1"};
-        boolean actual = localReader.validateCommand(testRotate);
+        boolean actual = localValidator.validateCommand(testRotate);
         assertThat(actual, is(equalTo(false)));
     }
     @Test
     public void testValidateCommand_Valid_Ball_Expected_True () {
-        Validator localReader = new Validator();
+        Validator localValidator = new Validator();
         String[] testBall = new String[] {"Ball", "B", "1.0", "11.0", "0.0", "0.0"};
-        boolean actual = localReader.validateCommand(testBall);
+        boolean actual = localValidator.validateCommand(testBall);
         assertThat(actual, is(equalTo(true)));
     }
 
     @Test
     public void testValidateCommand_Invalid_Ball_Expected_False () {
-        Validator localReader = new Validator();
+        Validator localValidator = new Validator();
         String[] testBall = new String[] {"Ball", "OuterWalls", "1.0", "11.0", "0.0", "0.0"};
-        boolean actual = localReader.validateCommand(testBall);
+        boolean actual = localValidator.validateCommand(testBall);
         assertThat(actual, is(equalTo(false)));
     }
 
     @Test
     public void testValidateCommand_Valid_Absorber_Expected_True () {
-        Validator localReader = new Validator();
+        Validator localValidator = new Validator();
         String[] testAbsorber = new String[] {"Absorber", "Absorber1", "1", "1", "5", "5"};
-        boolean actual = localReader.validateCommand(testAbsorber);
+        boolean actual = localValidator.validateCommand(testAbsorber);
         assertThat(actual, is(equalTo(true)));
     }
 
     @Test
     public void testValidateCommand_Invalid_Absorber_Expected_False () {
-        Validator localReader = new Validator();
+        Validator localValidator = new Validator();
         String[] testAbsorber = new String[] {"Absorber", "OuterWalls", "1.0", "11.0", "0.0", "0.0"};
-        boolean actual = localReader.validateCommand(testAbsorber);
+        boolean actual = localValidator.validateCommand(testAbsorber);
         assertThat(actual, is(equalTo(false)));
     }
 
+    @Test
+    public void testValidateCommand_Valid_Triangle_Expected_True () {
+        Validator localValidaotr = new Validator();
+        String[] testTriangle = new String[] {"Triangle", "T1", "5", "5"};
+        boolean actual = localValidaotr.validateCommand(testTriangle);
+        assertThat(actual, is(equalTo(true)));
+    }
 
+    @Test
+    public void testValidateCommand_Invalid_Square_Expected_True () {
+        Validator localValidator = new Validator();
+        String[] testSquare = new String[] {"Square", "S1", "5.6", "5"};
+        boolean actual = localValidator.validateCommand(testSquare);
+        assertThat(actual, is(equalTo(false)));
+    }
+
+    @Test
+    public void testValidateCommand_Valid_Move_Int_Pair_Expected_True () {
+        Validator localValidator = new Validator();
+        localValidator.addIdentifier("T1");
+        String[] testMove = new String[] {"Move", "T1", "5", "6"};
+        boolean actual = localValidator.validateCommand(testMove);
+        assertThat(actual, is(equalTo(true)));
+    }
+
+    @Test
+    public void testValidateCommand_Valid_Move_Float_Pair_Expected_True () {
+        Validator localValidator = new Validator();
+        localValidator.addIdentifier("T1");
+        String[] testMove = new String[] {"Move" ,"T1", "5.0", "6.5"};
+        boolean actual = localValidator.validateCommand(testMove);
+        assertThat(actual, is(equalTo(true)));
+    }
+
+    @Test
+    public void testValidateCommand_Invalid_Move_Expected_False () {
+        Validator localValidator = new Validator();
+        String[] testMove = new String[] {"Move", "T1", "5", "5"};
+        boolean actual = localValidator.validateCommand(testMove);
+        assertThat(actual, is(equalTo(false)));
+    }
+
+    @Test
+    public void testValidateCommand_Valid_Connect_Expected_True () {
+        Validator localValidator = new Validator();
+        localValidator.addIdentifier("T1");
+        localValidator.addIdentifier("T2");
+        String[] testConnect = new String[] {"Connect", "T1", "T2"};
+        boolean actual = localValidator.validateCommand(testConnect);
+        assertThat(actual, is(equalTo(true)));
+    }
+
+    @Test
+    public void testValidateCommand_Invalid_Connect_No_Existing_Identifier_Expected_False () {
+        Validator localValidator = new Validator();
+        String[] testConnect = new String[] {"Connect", "T1", "T2"};
+        boolean actual = localValidator.validateCommand(testConnect);
+        assertThat(actual, is(equalTo(false)));
+    }
+
+    @Test
+    public void testValidateCommand_Valid_KeyConnect_Expected_True () {
+        Validator localValidator = new Validator();
+        String[] testKeyConnect = new String[] {"KeyConnect", "key", "100", "down", "T1"};
+        localValidator.addIdentifier("T1");
+        boolean actual = localValidator.validateCommand(testKeyConnect);
+        assertThat(actual, is(equalTo(true)));
+    }
+
+    @Test
+    public void testValidateCommand_Invalid_KeyConnect_Invalid_Name_Expected_False () {
+        Validator localValidator = new Validator();
+        String[] testKeyConnect = new String[] {"KeyConnect", "key", "100", "down", "T1"};
+        boolean actual = localValidator.validateCommand(testKeyConnect);
+        assertThat(actual, is(equalTo(false)));
+    }
+
+    @Test
+    public void testValidateCommand_Valid_Gravity_Expected_True () {
+        Validator localValidator = new Validator();
+        String[] testGravity = new String[] {"Gravity", "5.6"};
+        boolean actual = localValidator.validateCommand(testGravity);
+        assertThat(actual, is(equalTo(true)));
+    }
+
+    @Test
+    public void testValidateCommand_Invalid_Gravity_Non_Float_Expected_False () {
+        Validator localValidator = new Validator();
+        String[] testGravity = new String[] {"Gravity", "5"};
+        boolean actual = localValidator.validateCommand(testGravity);
+        assertThat(actual, is(equalTo(false)));
+    }
+
+    @Test
+    public void testValidateCommand_Valid_Friction_Expected_True () {
+        Validator localValidator = new Validator();
+        String[] testFriction = new String[] {"Friction", "6.0", "4.0"};
+        boolean actual = localValidator.validateCommand(testFriction);
+        assertThat(actual, is(equalTo(true)));
+    }
+
+    @Test
+    public void testValidateCommand_Invalid_Friction_Non_Float_Expected_True() {
+        Validator localValidator = new Validator();
+        String[] testFriction = new String[] {"Friction", "4", "6"};
+        boolean actual = localValidator.validateCommand(testFriction);
+        assertThat(actual, is(equalTo(false)));
+    }
     @org.junit.After
     public void tearDown() throws Exception {
         reader = null;
