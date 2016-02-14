@@ -1,6 +1,7 @@
 package model;
 
-import java.util.Vector;
+import java.awt.List;
+import java.util.ArrayList;
 
 import physics.Circle;
 import physics.LineSegment;
@@ -28,6 +29,24 @@ public class Absorber implements IAbsorber {
 		topRight = new Circle(xBottomRight, yTopLeft, 0);
 		bottomLeft = new Circle(xTopLeft, yBottomRight, 0);
 		bottomRight = new Circle(xBottomRight, yBottomRight, 0);
+	}
+	
+	public ArrayList<LineSegment> getLines(){
+		ArrayList<LineSegment> lineList = new ArrayList<LineSegment>();
+		lineList.add(top);
+		lineList.add(bottom);
+		lineList.add(left);
+		lineList.add(right);
+		return lineList;
+	}
+	
+	public ArrayList<Circle> getCircles(){
+		ArrayList<Circle> circleList = new ArrayList<Circle>();
+		circleList.add(topLeft);
+		circleList.add(topRight);
+		circleList.add(bottomLeft);
+		circleList.add(bottomRight);
+		return circleList;
 	}
 	
 }
