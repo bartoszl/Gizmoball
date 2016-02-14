@@ -8,31 +8,21 @@ import physics.LineSegment;
 import physics.Vect;
 
 public class Absorber implements IAbsorber {
-	private LineSegment top;
-	private LineSegment bottom;
-	private LineSegment left;
-	private LineSegment right;
-	private Circle topLeft;
-	private Circle topRight;
-	private Circle bottomLeft;
-	private Circle bottomRight;
+	double xTopLeft,yTopLeft, xBottomRight, yBottomRight;
 	
 	public Absorber(double xTopLeft, double yTopLeft, double xBottomRight, double yBottomRight){
-		/* LINES */
-		top = new LineSegment(xTopLeft, yTopLeft,xBottomRight, yTopLeft);
-		bottom = new LineSegment(xTopLeft, yBottomRight,xBottomRight, yBottomRight);
-		left = new LineSegment(xTopLeft, yTopLeft, xTopLeft, yBottomRight);
-		right = new LineSegment(xBottomRight, yTopLeft,xBottomRight, yBottomRight);
-		
-		/* Circles */
-		topLeft = new Circle(xTopLeft, yTopLeft, 0);
-		topRight = new Circle(xBottomRight, yTopLeft, 0);
-		bottomLeft = new Circle(xTopLeft, yBottomRight, 0);
-		bottomRight = new Circle(xBottomRight, yBottomRight, 0);
+		this.xTopLeft = xTopLeft;
+		this.yTopLeft = yTopLeft;
+		this.xBottomRight = xBottomRight;
+		this.yBottomRight = yBottomRight;
 	}
 	
 	public ArrayList<LineSegment> getLines(){
 		ArrayList<LineSegment> lineList = new ArrayList<LineSegment>();
+		LineSegment top = new LineSegment(xTopLeft, yTopLeft,xBottomRight, yTopLeft);
+		LineSegment bottom = new LineSegment(xTopLeft, yBottomRight,xBottomRight, yBottomRight);
+		LineSegment left = new LineSegment(xTopLeft, yTopLeft, xTopLeft, yBottomRight);
+		LineSegment right = new LineSegment(xBottomRight, yTopLeft,xBottomRight, yBottomRight);
 		lineList.add(top);
 		lineList.add(bottom);
 		lineList.add(left);
@@ -42,6 +32,10 @@ public class Absorber implements IAbsorber {
 	
 	public ArrayList<Circle> getCircles(){
 		ArrayList<Circle> circleList = new ArrayList<Circle>();
+		Circle topLeft = new Circle(xTopLeft, yTopLeft, 0);
+		Circle topRight = new Circle(xBottomRight, yTopLeft, 0);
+		Circle bottomLeft = new Circle(xTopLeft, yBottomRight, 0);
+		Circle bottomRight = new Circle(xBottomRight, yBottomRight, 0);
 		circleList.add(topLeft);
 		circleList.add(topRight);
 		circleList.add(bottomLeft);
