@@ -10,11 +10,14 @@ public class TriangularBumper implements iGizmo {
     private LineSegment hypotenuse;
     private Color color;
     private String gizmoName;
+    private double cx, cy;
 
     private int scale;
 
 
     public TriangularBumper(double cx, double cy, String gizmoName) {
+        this.cx = cx;
+        this.cy = cy;
         scale = 20;
         sideOne = new LineSegment(cx, cy, cx + (1* scale), cy);
         sideTwo = new LineSegment(cx, cy, cx, cy - (1 * scale));
@@ -56,6 +59,23 @@ public class TriangularBumper implements iGizmo {
 
     public String getName() {
         return gizmoName;
+    }
+
+    @Override
+    public double getLeftLimit() {
+        return cx - (1 * scale);
+    }
+
+    public double getRightLimit() {
+        return cx + (1 * scale);
+    }
+
+    public double getUpperLimit() {
+        return cy - (1 * scale);
+    }
+
+    public double getLowerLimit() {
+        return cy + (1 * scale);
     }
 
     public String getGizmoName() {

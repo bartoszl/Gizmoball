@@ -101,9 +101,8 @@ public class GBallModel extends Observable implements iGBallModel {
             return false;
         }
         for(iGizmo g : gizmos) {
-            if (gizmo.getLeftLimit() == g.getLeftLimit() && gizmo.getRightLimit() == g.getRightLimit()) {
-                return false;
-            } else if (gizmo.getUpperLimit() == g.getUpperLimit() && gizmo.getLowerLimit() == gizmo.getLowerLimit()) {
+            if (gizmo.getLeftLimit() == g.getLeftLimit() && gizmo.getRightLimit() == g.getRightLimit() &&
+                    gizmo.getUpperLimit() == g.getUpperLimit() && gizmo.getLowerLimit() == gizmo.getLowerLimit()) {
                 return false;
             }
         }

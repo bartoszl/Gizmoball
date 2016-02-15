@@ -27,38 +27,47 @@ public class Flipper implements iGizmo {
         scale = 20;
         this.orientation = orientation;
         this.pivotPoint = new Vect(cx, cy);
-        leftSide = new LineSegment(cx, cy, cx, cy - (1.75 * scale));
-        rightSide = new LineSegment(cx + (0.5 * scale), cy, cx + (0.5 * scale), cy - (1.75 * scale));
-        c1 = new CircularBumper(cx + (0.25 * scale), cy - (0.25 * scale), (0.25 * 20), "N/A");
-        c2 = new CircularBumper(cx + (0.25 * scale), cy - (1.75 * scale), (0.25 * 20), "N/A");
+        if(orientation == FlipperOrientation.LEFT) {
+            leftSide = new LineSegment(cx, cy, cx, cy + (1.75 * scale));
+            rightSide = new LineSegment(cx + (0.5 * scale), cy, cx + (0.5 * scale), cy + (1.75 * scale));
+            c1 = new CircularBumper(cx + (0.25 * scale), cy + (0.25 * scale), (0.25 * 20), "N/A");
+            c2 = new CircularBumper(cx + (0.25 * scale), cy + (1.75 * scale), (0.25 * 20), "N/A");
+        } else {
+            c1 = new CircularBumper(cx - (0.25 * scale), cy + (0.25 * scale), (0.25 * 20), "N/A");
+            c2 = new CircularBumper(cx - (0.25 * scale), cy  +(1.75 * scale), (0.25 * 20), "N/A");
+        }
+
     }
 
     public void rotate() {
-
     }
 
     public String getName() {
         return gizmoName;
     }
 
-    @Override
     public double getLeftLimit() {
-        return 0;
+        if(orientation == FlipperOrientation.LEFT) {
+            return cx;
+        } else {
+            return cx - (2 * scale);
+        }
     }
 
-    @Override
     public double getRightLimit() {
-        return 0;
+        if(orientation == FlipperOrientation.LEFT) {
+            return cx + (2 * scale);
+        } else {
+            return cx;
+        }
     }
 
-    @Override
     public double getUpperLimit() {
-        return 0;
+        return cy;
     }
 
-    @Override
     public double getLowerLimit() {
-        return 0;
+        return cy + (2 * scale);
     }
 
     public void trigger() {}
