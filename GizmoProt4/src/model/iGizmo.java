@@ -20,4 +20,12 @@ public interface iGizmo {
     public void rotate();
 
     public String getName();
+
+    public double getLeftLimit();
+
+    public double getRightLimit();
+
+    public double getUpperLimit();
+
+    public double getLowerLimit();
 }

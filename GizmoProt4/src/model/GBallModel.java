@@ -1,7 +1,5 @@
 package model;
 
-import physics.Vect;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -24,13 +22,39 @@ public class GBallModel extends Observable implements iGBallModel {
     }
 
     public boolean addGizmo(iGizmo gizmo) {
+        if(safeToAddGizmo(gizmo)) {
+            gizmos.add(gizmo);
+            return true;
+        }
         return false;
     }
 
-    public boolean addAbsorber(iAbsorber absorber) { return false;}
+    public boolean addAbsorber(iAbsorber absorber) {
+        for(iAbsorber abs : absorbers) {
+            if(abs.getLeftXCoordinate() == absorber.getLeftXCoordinate()) {
+                return false;
+            } else if(abs.getRightXCoordinate() == absorber.getRightXCoordinate()) {
+                return false;
+            } else if(abs.getTopYCoordinate() == absorber.getTopYCoordinate()) {
+                return false;
+            } else if(abs.getBottomYCoordinate() == absorber.getBottomYCoordinate()) {
+                return false;
+            }
+        }
+        absorbers.add(absorber);
+        return true;
+    }
 
     public boolean addBall(iBall ball) {
-        return false;
+        for(iBall b : balls) {
+            if(b.getLeftLimit() == ball.getLeftLimit() && b.getRightLimit() == ball.getRightLimit()) {
+                return false;
+            } else if(b.getUpperLimit() == ball.getUpperLimit() && b.getLowerLimit() == ball.getLowerLimit()) {
+                return false;
+            }
+        }
+        balls.add(ball);
+        return true;
     }
 
     public void setGravity(double gravity) {
@@ -77,14 +101,10 @@ public class GBallModel extends Observable implements iGBallModel {
             return false;
         }
         for(iGizmo g : gizmos) {
-            if(g instanceof CircularBumper) {
-                double centreX = ((CircularBumper) g).getCentreX();
-                double centreY = ((CircularBumper) g).getCentreY();
-                double radius = ((CircularBumper) g).getRadius();
-                double leftLimit = centreX - radius;
-                double rightLimit = centreX + radius;
-                double upperLimit = centreY - radius;
-                double lowerLimit = centreY + radius;
+            if (gizmo.getLeftLimit() == g.getLeftLimit() && gizmo.getRightLimit() == g.getRightLimit()) {
+                return false;
+            } else if (gizmo.getUpperLimit() == g.getUpperLimit() && gizmo.getLowerLimit() == gizmo.getLowerLimit()) {
+                return false;
             }
         }
         return true;

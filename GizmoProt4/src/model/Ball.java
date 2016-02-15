@@ -29,4 +29,20 @@ public class Ball implements iBall{
     public String getName() {
         return name;
     }
+
+    public double getLeftLimit() {
+        return xCoordinate - radius;
+    }
+
+    public double getRightLimit() {
+        return xCoordinate + radius;
+    }
+
+    public double getUpperLimit() {
+        return yCoordinate - radius;
+    }
+
+    public double getLowerLimit() {
+        return yCoordinate + radius;
+    }
 }

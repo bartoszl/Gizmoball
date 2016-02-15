@@ -20,4 +20,12 @@ public interface iGBallModel {
     public boolean addConnection(Connection connection);
 
     public boolean addKeyConnection(KeyConnection keyConnection);
+
+    public double getGravity();
+
+    public List<iAbsorber> getAbsorbers();
+
+    public List<iBall> getBalls();
+
+
 }

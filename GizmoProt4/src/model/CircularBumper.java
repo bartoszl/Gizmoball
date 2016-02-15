@@ -45,6 +45,22 @@ public class CircularBumper extends Observable implements iGizmo {
         return gizmoName;
     }
 
+    public double getLeftLimit() {
+        return cx - radius;
+    }
+
+    public double getRightLimit() {
+        return cx + radius;
+    }
+
+    public double getUpperLimit() {
+        return cy - radius;
+    }
+
+    public double getLowerLimit() {
+        return cy + radius;
+    }
+
     public int reservedArea() {
         return 1;
     }
