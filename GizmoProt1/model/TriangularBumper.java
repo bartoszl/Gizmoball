@@ -14,7 +14,7 @@ public class TriangularBumper implements iGizmo {
 	private Vect center;
 	
 	public TriangularBumper(
-			int cx, int cy, 
+			double cx, double cy,
 			boolean right, boolean down, Color color
 			) {
 		int off1 = down ? 1 : 0;
@@ -23,19 +23,16 @@ public class TriangularBumper implements iGizmo {
 		sideTwo = new LineSegment(cx+off2, cy+off2, cx+off2, cy+1+off2);
 		hypotenuse = new LineSegment(cx+1+off1, cy+off1, cx+off2, cy+1+off2);
 		this.color = color;
-		this.right = right;
-		this.down = down;
-		this.center = new Vect(cx+0.5, cy+0.5);
 	}
 	
 	public Color getColor() {
 		return color;
 	}
-	
+
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+
 	public LineSegment getHypotenuse() {
 		return hypotenuse;
 	}
@@ -47,6 +44,7 @@ public class TriangularBumper implements iGizmo {
 	public LineSegment getSideTwo() {
 		return sideTwo;
 	}
+<<<<<<< HEAD
 
 	public void move(int cx, int cy) {
 		int off1 = down ? 1 : 0;
@@ -61,7 +59,6 @@ public class TriangularBumper implements iGizmo {
 		Geometry.rotateAround(sideOne, center, a);
 		Geometry.rotateAround(sideTwo, center, a);
 		Geometry.rotateAround(hypotenuse, center, a);
-	}
 	
 	public int reservedArea() {
 		return 1;

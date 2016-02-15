@@ -30,15 +30,24 @@ public class Flipper implements iGizmo {
 		bottomSide = new LineSegment(cx+off, cy+2, cx+off+0.5, cy+2);
 		this.color = color;
 	}
-	
+
 	public void rotate() {
-		
+		Angle a = Angle.DEG_90;
+		Geometry.rotateAround(topSide, center, a);
+		Geometry.rotateAround(leftSide, center, a);
+		Geometry.rotateAround(bottomSide, center, a);
+		Geometry.rotateAround(rightSide, center, a);
 	}
 	
 	public void trigger() {
 		while(leftSide.angle().compareTo(Angle.DEG_90) < 0) {
 			/*Move at angular velocity of 1080 degrees per second*/
 		}
+		Angle a = Angle.DEG_90;
+		Geometry.rotateAround(topSide, center, a);
+		Geometry.rotateAround(leftSide, center, a);
+		Geometry.rotateAround(bottomSide, center, a);
+		Geometry.rotateAround(rightSide, center, a);
 	}
 	
 	public int reservedArea() {
