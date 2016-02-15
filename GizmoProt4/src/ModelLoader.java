@@ -51,6 +51,22 @@ public class ModelLoader {
                 case "Ball" :
                     model.addBall(createBall(command));
                     break;
+
+                case "Gravity" :
+                    model.setGravity(getGravityValue(command));
+                    break;
+
+                case "Friction" :
+                    model.setFriction(getHorizontalFriction(command), getVerticalFriction(command));
+                    break;
+
+                case "Connect" :
+                    model.addConnection(createConnection(command));
+                    break;
+
+                case "KeyConnect" :
+                    model.addKeyConnection(createKeyConnection(command));
+                    break;
             }
         }
     }
@@ -102,5 +118,29 @@ public class ModelLoader {
         double yVelo = Double.parseDouble(command[5]);
         String name = command[1];
         return new Ball(xCoord, yCoord, xVelo, yVelo, name);
+    }
+
+    private double getGravityValue(String[] command) {
+        return Double.parseDouble(command[1]);
+    }
+
+    private double getHorizontalFriction(String[] command) {
+        return Double.parseDouble(command[1]);
+    }
+
+    private double getVerticalFriction(String[] command) {
+        return Double.parseDouble(command[2]);
+    }
+
+    private Connection createConnection(String[] command) {
+        String connectingFrom = command[1];
+        String connectingTo = command[2];
+        return new Connection(connectingFrom, connectingTo);
+    }
+
+    private KeyConnection createKeyConnection(String[] command) {
+        int keyID = Integer.parseInt(command[1]);
+        String connectingTo = command[2];
+        return new KeyConnection(keyID, connectingTo);
     }
 }

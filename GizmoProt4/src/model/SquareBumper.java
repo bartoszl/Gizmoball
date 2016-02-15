@@ -41,6 +41,10 @@ public class SquareBumper implements iGizmo {
 
     }
 
+    public String getName() {
+        return gizmoName;
+    }
+
     public int reservedArea() {
         return 1;
     }

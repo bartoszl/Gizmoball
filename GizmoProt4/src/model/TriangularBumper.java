@@ -54,6 +54,10 @@ public class TriangularBumper implements iGizmo {
 
     }
 
+    public String getName() {
+        return gizmoName;
+    }
+
     public String getGizmoName() {
         return gizmoName;
     }

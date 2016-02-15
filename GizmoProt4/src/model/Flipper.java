@@ -37,6 +37,10 @@ public class Flipper implements iGizmo {
 
     }
 
+    public String getName() {
+        return gizmoName;
+    }
+
     public void trigger() {}
 
     public int reservedArea() {

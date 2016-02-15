@@ -10,8 +10,11 @@ public class CircularBumper extends Observable implements iGizmo {
     private Color color;
     private double radius;
     private String gizmoName;
+    private double cx, cy;
 
     public CircularBumper(double cx, double cy, double r, String gizmoName) {
+        this.cx = cx;
+        this.cy = cy;
         this.radius = r;
         this.gizmoName = gizmoName;
         circle = new Circle(cx, cy, this.radius);
@@ -38,6 +41,10 @@ public class CircularBumper extends Observable implements iGizmo {
 
     }
 
+    public String getName() {
+        return gizmoName;
+    }
+
     public int reservedArea() {
         return 1;
     }
@@ -48,5 +55,17 @@ public class CircularBumper extends Observable implements iGizmo {
 
     public Vect getCentre() {
         return circle.getCenter();
+    }
+
+    public double getCentreX() {
+        return cx;
+    }
+
+    public double getCentreY() {
+        return cy;
+    }
+
+    public double getRadius() {
+        return radius;
     }
 }

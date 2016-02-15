@@ -18,4 +18,6 @@ public interface iGizmo {
     public void move(int cx, int cy);
 
     public void rotate();
+
+    public String getName();
 }
