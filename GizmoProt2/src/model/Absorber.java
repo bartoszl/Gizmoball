@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.awt.List;
 import java.util.ArrayList;
 
@@ -8,13 +9,15 @@ import physics.LineSegment;
 import physics.Vect;
 
 public class Absorber implements IAbsorber {
-	double xTopLeft,yTopLeft, xBottomRight, yBottomRight;
+	private double xTopLeft,yTopLeft, xBottomRight, yBottomRight;
+	private Color color;
 	
 	public Absorber(double xTopLeft, double yTopLeft, double xBottomRight, double yBottomRight){
 		this.xTopLeft = xTopLeft;
 		this.yTopLeft = yTopLeft;
 		this.xBottomRight = xBottomRight;
 		this.yBottomRight = yBottomRight;
+		color = Color.PINK;
 	}
 	
 	public ArrayList<LineSegment> getLines(){
@@ -48,6 +51,10 @@ public class Absorber implements IAbsorber {
 		ball.setXY(xBottomRight, yBottomRight);
 		Vect v = new Vect(400,0);
 		ball.setVelocity(v);
+	}
+	
+	public Color getColor(){
+		return color;
 	}
 	
 }
