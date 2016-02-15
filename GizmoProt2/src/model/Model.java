@@ -11,19 +11,31 @@ public class Model {
 	//private Walls gws;
 	
 	public Model(){
-		ball = new Ball(25,25,100,100);
+		ball = new Ball(200,200,100,0);
 		//walls = new Walls(0,0,500,500);
-		abs = new Absorber(0,400, 450,450);
+		abs = new Absorber(0,380, 400,400);
 	}
 	
 	public void moveBall(){
+		double moveTime = 0.05;
 		if(ball!=null && ball.isMoving()){
-			
-		}
+			double collisionTime = timeUntilCollision();
+			if(collisionTime>moveTime){
+				ball = moveBallForTime(ball, moveTime);
+			} else {
+				ball = moveBallForTime(ball, collisionTime);
+				abs.absorb(ball);
+			}
+		} 
 	}
 	
 	public Ball moveBallForTime(Ball ball, double time){
-		return null;
+		double xVelocity = ball.getVelocity().x();
+		double yVelocity = ball.getVelocity().y();
+		double newX = ball.getX() + (xVelocity*time);
+		double newY = ball.getY() + (yVelocity*time);
+		ball.setXY(newX, newY);
+		return ball;
 	}
 	
 	private double timeUntilCollision(){
@@ -40,8 +52,14 @@ public class Model {
 		
 		for(Circle circ: abs.getCircles()){
 			time = Geometry.timeUntilCircleCollision(circ, ballCircle, ballVelocity);
+			if(time<shortestTime)
+				shortestTime=time;
 		}
 		return time;
+	}
+	
+	public Ball getBall(){
+		return ball;
 	}
 
 }

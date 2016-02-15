@@ -8,15 +8,15 @@ import physics.Vect;
 public class Ball implements IBall {
 	private Vect velocity;
 	private double radius;
-	private double xpos;
-	private double ypos;
+	private double x;
+	private double y;
 	private Color color;
 	
 	private boolean moving;
 	
 	public Ball(double xpos, double ypos, double xv, double yv){
-		this.xpos =xpos;
-		this.ypos =ypos;
+		x =xpos;
+		y =ypos;
 		velocity = new Vect(xv, yv);
 		color = Color.YELLOW;
 		radius = 10;
@@ -36,7 +36,7 @@ public class Ball implements IBall {
 	}
 	
 	public Circle getCircle(){
-		return new Circle(xpos, ypos, radius);
+		return new Circle(x, y, radius);
 	}
 	
 	public boolean isMoving(){
@@ -53,5 +53,18 @@ public class Ball implements IBall {
 	
 	public void setColor(Color c){
 		color = c;
+	}
+	
+	public double getX(){
+		return x;
+	}
+	
+	public double getY(){
+		return y;
+	}
+	
+	public void setXY(double x, double y){
+		this.y = y;
+		this.x = x;
 	}
 }

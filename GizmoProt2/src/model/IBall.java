@@ -22,4 +22,10 @@ public interface IBall {
 	public Color getColor();
 	
 	public void setColor(Color c);
+	
+	public double getX();
+	
+	public double getY();
+	
+	public void setXY(double x, double y);
 }

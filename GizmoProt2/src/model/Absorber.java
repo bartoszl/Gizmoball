@@ -43,4 +43,11 @@ public class Absorber implements IAbsorber {
 		return circleList;
 	}
 	
+	public void absorb(Ball ball){
+		ball.setMoving(false);
+		ball.setXY(xBottomRight, yBottomRight);
+		Vect v = new Vect(400,0);
+		ball.setVelocity(v);
+	}
+	
 }
