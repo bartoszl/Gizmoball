@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by John Watt on 08/02/2016.
- */
 public class Validator {
 
     private List<String> identifiers;
