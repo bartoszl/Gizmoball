@@ -86,8 +86,8 @@ public class RunGUI {
 		gridView.addCircularBumper(5*20,3*20,new Color(0,255,0));
 
 		//add triangle
-		gridView.addTriangularBumper(6*20,3*20,new Color(0,0,255),0);
-		gridView.addTriangularBumper(7*20,3*20,new Color(0,0,255),1);
+		gridView.addTriangularBumper(9*20,2*20,new Color(0,0,255),0);
+		gridView.addTriangularBumper(8*20,2*20,new Color(0,0,255),1);
 		gridView.addTriangularBumper(8*20,3*20,new Color(0,0,255),2);
 		gridView.addTriangularBumper(9*20,3*20,new Color(0,0,255),3);
 		frame.getContentPane().add(gridView);
@@ -103,6 +103,9 @@ public class RunGUI {
 		gridView.addRightFlipper(2*20,7*20,new Color(235,197,93),1);
 		gridView.addRightFlipper(4*20,7*20,new Color(235,197,93),2);
 		gridView.addRightFlipper(6*20,7*20,new Color(235,197,93),3);
+		
+		//add absorber
+		gridView.addAbsorber(1*20,12*20,11*20,18*20,new Color(235,93,154));
 	}
 	
 	private class GridView extends JPanel{
@@ -111,6 +114,7 @@ public class RunGUI {
 		List<Triangle> triangularBumpers = new ArrayList<Triangle>();
 		List<Attributes> leftFlippers = new ArrayList<Attributes>();
 		List<Attributes> rightFlippers = new ArrayList<Attributes>();
+		List<Absorber> absorbers = new ArrayList<Absorber>();
 		
 		public void paintComponent(Graphics g){
 			drawGrid(g);
@@ -119,6 +123,7 @@ public class RunGUI {
 			drawTriangularBumpers(g);
 			drawLeftFlippers(g);
 			drawRightFlippers(g);
+			drawAbsorber(g);
 		}
 
 		private void drawGrid(Graphics g){
@@ -210,12 +215,23 @@ public class RunGUI {
 						g.fillRect(rFlip.getXcoordinate()+5, rFlip.getYcoordinate()+30, 30, 10);
 						g.fillOval(rFlip.getXcoordinate()+30, rFlip.getYcoordinate()+30, 10, 10);
 						break;
-			}
+				}
 			}	
 		}
 		
 		public boolean addRightFlipper(int x, int y, Color color, int rotation){
 			return rightFlippers.add(new Attributes(x, y, color, rotation));
+		}
+		
+		private void drawAbsorber(Graphics g) {
+			for(Absorber absorb: absorbers){
+				g.setColor(absorb.getColor());
+				g.fillRect(absorb.getX1coordinate(), absorb.getY1coordinate(), absorb.getWidth(), absorb.getHeight());
+			}	
+		}
+		
+		public boolean addAbsorber(int x1, int y1, int x2, int y2, Color color){
+			return absorbers.add(new Absorber(x1, y1, x2, y2, color));
 		}
 	}
 	
@@ -246,6 +262,10 @@ public class RunGUI {
 		public int getRotation(){
 			return rotation;
 		}
+		
+		public void rotate(){
+			rotation=(rotation+1)%4;
+		}
 	}
 	
 	private class Triangle{
@@ -275,40 +295,74 @@ public class RunGUI {
 		}
 		
 		private void calculate(){
-			if(rotate==0){
-				this.x[0]=xCoordinate;
-				this.y[0]=yCoordinate;
-				this.x[1]=xCoordinate+20;
-				this.y[1]=yCoordinate;
-				this.x[2]=xCoordinate+20;
-				this.y[2]=yCoordinate+20;
-			}else if(rotate==1){
-				this.x[0]=xCoordinate;
-				this.y[0]=yCoordinate;
-				this.x[1]=xCoordinate+20;
-				this.y[1]=yCoordinate;
-				this.x[2]=xCoordinate;
-				this.y[2]=yCoordinate+20;
-			}else if(rotate==2){
-				this.x[0]=xCoordinate;
-				this.y[0]=yCoordinate;
-				this.x[1]=xCoordinate+20;
-				this.y[1]=yCoordinate+20;
-				this.x[2]=xCoordinate;
-				this.y[2]=yCoordinate+20;
-			}else if(rotate==3){
-				this.x[0]=xCoordinate+20;
-				this.y[0]=yCoordinate;
-				this.x[1]=xCoordinate+20;
-				this.y[1]=yCoordinate+20;
-				this.x[2]=xCoordinate;
-				this.y[2]=yCoordinate+20;
+			switch(rotate){
+				case 0:	this.x[0]=xCoordinate;
+						this.y[0]=yCoordinate;
+						this.x[1]=xCoordinate+20;
+						this.y[1]=yCoordinate;
+						this.x[2]=xCoordinate+20;
+						this.y[2]=yCoordinate+20;
+						break;	
+				case 1:	this.x[0]=xCoordinate;
+						this.y[0]=yCoordinate;
+						this.x[1]=xCoordinate+20;
+						this.y[1]=yCoordinate;
+						this.x[2]=xCoordinate;
+						this.y[2]=yCoordinate+20;
+						break;
+				case 2:	this.x[0]=xCoordinate;
+						this.y[0]=yCoordinate;
+						this.x[1]=xCoordinate+20;
+						this.y[1]=yCoordinate+20;
+						this.x[2]=xCoordinate;
+						this.y[2]=yCoordinate+20;
+						break;
+				case 3:	this.x[0]=xCoordinate+20;
+						this.y[0]=yCoordinate;
+						this.x[1]=xCoordinate+20;
+						this.y[1]=yCoordinate+20;
+						this.x[2]=xCoordinate;
+						this.y[2]=yCoordinate+20;
+						break;
 			}
 		}
 		
 		public void rotate(){
 			rotate=(rotate+1)%4;
 			calculate();
+		}
+	}
+	
+	private class Absorber{
+		int x1, x2, y1, y2;
+		Color color;
+		
+		public Absorber(int x1, int y1, int x2, int y2, Color color){
+			this.x1=x1;
+			this.y1=y1;
+			this.x2=x2;
+			this.y2=y2;
+			this.color=color;
+		}
+		
+		public int getX1coordinate(){
+			return x1;
+		}
+		
+		public int getY1coordinate(){
+			return y1;
+		}
+		
+		public int getWidth(){
+			return x2-x1;
+		}
+		
+		public int getHeight(){
+			return y2-y1;
+		}
+		
+		public Color getColor(){
+			return color;
 		}
 	}
 }
