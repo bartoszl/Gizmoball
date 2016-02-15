@@ -1,3 +1,5 @@
+package View;
+
 import java.awt.EventQueue;
 import java.awt.Graphics;
 
@@ -7,16 +9,15 @@ import javax.swing.JButton;
 
 /**
  * @author Stephen Dundas
- *
- * Demonstrate a working absorber, ball motion, gravity, 
- * and friction. In running mode, with no bumpers or 
- * flippers on the screen and the ball sitting still in 
- * the absorber, you should be able to press a key, observe 
- * the ball shoot up out of the absorber, slow down as it 
- * rises, fall back to the absorber, and return to its 
- * original position. Also demonstrate that you can shoot 
- * it out a second time. (Note that you do not yet need to 
- * support configurable gravity or friction constants.)
+ * 
+ * Demonstrate key-press triggering of a flipper on the 
+ * screen. When a key is pressed, the flipper should rotate 
+ * 90 degrees; after the key is released, the flipper should 
+ * rotate back to its original position. You should be able 
+ * to trigger it a second or third time by pressing the key 
+ * again after it has returned to the original position. (You 
+ * need not demonstrate connecting the key to the flipper in 
+ * build mode.)
  */
 
 public class RunGUI {
@@ -50,34 +51,34 @@ public class RunGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Gizmo Proto 2");
-		frame.setBounds(100, 100, 564, 440);
+		frame = new JFrame("Gizmo Proto 1");
+		frame.setBounds(100, 100, 264, 140);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 147, 441);
+		panel.setBounds(0, 0, 147, 261);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JButton btnRun = new JButton("Fire Ball");
-		btnRun.setBounds(10, 10, 127, 58);
+		JButton btnRun = new JButton("Flip");
+		btnRun.setBounds(10, 10, 127, 36);
 		panel.add(btnRun);
 		
 		JButton btnQuit = new JButton("Quit");
-		btnQuit.setBounds(10, 79, 127, 58);
+		btnQuit.setBounds(10, 57, 127, 36);
 		panel.add(btnQuit);
 		
-		JPanel gridView = new GridView();
-		gridView.setBounds(147, 0, 405, 405);
-		frame.getContentPane().add(gridView);
+		JPanel panel_1 = new GridView();
+		panel_1.setBounds(147, 0, 225, 225);
+		frame.getContentPane().add(panel_1);
 	}
 	
 	private class GridView extends JPanel{
 		public void paintComponent(Graphics g){
-			for(int i = 0; i <= 20; i++){
-				g.drawLine(0, i*20, 400, i*20);
-				g.drawLine(i*20, 0, i*20, 400);
+			for(int i = 0; i <= 5; i++){
+				g.drawLine(0, i*20, 100, i*20);
+				g.drawLine(i*20, 0, i*20, 100);
 			}
 		}	
 	}
