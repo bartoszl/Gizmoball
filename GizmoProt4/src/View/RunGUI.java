@@ -78,34 +78,59 @@ public class RunGUI {
 		//drawing
 		gridView = new GridView();
 		gridView.setBounds(0, 0, 405, 405);
+		frame.getContentPane().add(gridView);
 
 		//square bumper
-		gridView.addSquareBumper(4*20,3*20,new Color(255,0,0));
+		addSquareBumperToGrid(4*20,3*20,new Color(255,0,0));
 
 		//add circle
-		gridView.addCircularBumper(5*20,3*20,new Color(0,255,0));
+		addCircularBumperToGrid(5*20,3*20,new Color(0,255,0));
 
 		//add triangle
-		gridView.addTriangularBumper(9*20,2*20,new Color(0,0,255),0);
-		gridView.addTriangularBumper(8*20,2*20,new Color(0,0,255),1);
-		gridView.addTriangularBumper(8*20,3*20,new Color(0,0,255),2);
-		gridView.addTriangularBumper(9*20,3*20,new Color(0,0,255),3);
-		frame.getContentPane().add(gridView);
+		addTriangleBumperToGrid(9*20,2*20,new Color(0,0,255),0);
+		addTriangleBumperToGrid(8*20,2*20,new Color(0,0,255),1);
+		addTriangleBumperToGrid(8*20,3*20,new Color(0,0,255),2);
+		addTriangleBumperToGrid(9*20,3*20,new Color(0,0,255),3);
 		
 		//add left flipper
-		gridView.addLeftFlipper(0*20,4*20,new Color(200,100,100),0);
-		gridView.addLeftFlipper(2*20,4*20,new Color(200,100,100),1);
-		gridView.addLeftFlipper(4*20,4*20,new Color(200,100,100),2);
-		gridView.addLeftFlipper(6*20,4*20,new Color(200,100,100),3);
+		addLeftFlipperToGrid(0*20,4*20,new Color(200,100,100),0);
+		addLeftFlipperToGrid(2*20,4*20,new Color(200,100,100),1);
+		addLeftFlipperToGrid(4*20,4*20,new Color(200,100,100),2);
+		addLeftFlipperToGrid(6*20,4*20,new Color(200,100,100),3);
 		
 		//add right flipper
-		gridView.addRightFlipper(0*20,7*20,new Color(235,197,93),0);
-		gridView.addRightFlipper(2*20,7*20,new Color(235,197,93),1);
-		gridView.addRightFlipper(4*20,7*20,new Color(235,197,93),2);
-		gridView.addRightFlipper(6*20,7*20,new Color(235,197,93),3);
+		addRightFlipperToGrid(0*20,7*20,new Color(235,197,93),0);
+		addRightFlipperToGrid(2*20,7*20,new Color(235,197,93),1);
+		addRightFlipperToGrid(4*20,7*20,new Color(235,197,93),2);
+		addRightFlipperToGrid(6*20,7*20,new Color(235,197,93),3);
 		
 		//add absorber
-		gridView.addAbsorber(1*20,12*20,11*20,18*20,new Color(235,93,154));
+		addAbsorberToGrid(1*20,12*20,11*20,18*20,new Color(235,93,154));
+	}
+	
+	public void addSquareBumperToGrid(int x, int y, Color color){
+		gridView.addSquareBumper(x, y, color);
+	}
+	
+	public void addCircularBumperToGrid(int x, int y, Color color){
+		gridView.addCircularBumper(x, y, color);
+	}
+	
+	public void addTriangleBumperToGrid(int x, int y, Color color, int rotation){
+		gridView.addTriangularBumper(x,y,color,rotation);
+		
+	}
+	
+	public void addLeftFlipperToGrid(int x, int y, Color color, int rotation){
+		gridView.addLeftFlipper(x, y, color, rotation);
+	}
+	
+	public void addRightFlipperToGrid(int x, int y, Color color, int rotation){
+		gridView.addRightFlipper(x, y, color, rotation);
+	}
+	
+	public void addAbsorberToGrid(int x1, int y1, int x2, int y2, Color color){
+		gridView.addAbsorber(x1, y1, x2, y2, color);
 	}
 	
 	private class GridView extends JPanel{
