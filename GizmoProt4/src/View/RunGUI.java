@@ -49,9 +49,6 @@ public class RunGUI {
 	 */
 	public RunGUI() {
 		initialize();
-		addSquares();
-		addCircles();
-		addTriangles();
 	}
 
 	/**
@@ -81,19 +78,13 @@ public class RunGUI {
 		//drawing
 		gridView = new GridView();
 		gridView.setBounds(0, 0, 405, 405);
-		frame.getContentPane().add(gridView);
-	}
-	private void addSquares(){
-		//add square
+
+		//square bumper
 		gridView.addSquareBumper(4*20,3*20,new Color(255,0,0));
-		frame.getContentPane().add(gridView);
-	}
-	private void addCircles(){
+
 		//add circle
 		gridView.addCircularBumper(5*20,3*20,new Color(0,255,0));
-		frame.getContentPane().add(gridView);
-	}
-	private void addTriangles(){
+
 		//add triangle
 		gridView.addTriangularBumper(6*20,3*20,new Color(0,0,255),0);
 		gridView.addTriangularBumper(7*20,3*20,new Color(0,0,255),1);
@@ -101,18 +92,33 @@ public class RunGUI {
 		gridView.addTriangularBumper(9*20,3*20,new Color(0,0,255),3);
 		frame.getContentPane().add(gridView);
 		
+		//add left flipper
+		gridView.addLeftFlipper(0*20,4*20,new Color(200,100,100),0);
+		gridView.addLeftFlipper(2*20,4*20,new Color(200,100,100),1);
+		gridView.addLeftFlipper(4*20,4*20,new Color(200,100,100),2);
+		gridView.addLeftFlipper(6*20,4*20,new Color(200,100,100),3);
+		
+		//add right flipper
+		gridView.addRightFlipper(0*20,7*20,new Color(235,197,93),0);
+		gridView.addRightFlipper(2*20,7*20,new Color(235,197,93),1);
+		gridView.addRightFlipper(4*20,7*20,new Color(235,197,93),2);
+		gridView.addRightFlipper(6*20,7*20,new Color(235,197,93),3);
 	}
 	
 	private class GridView extends JPanel{
 		List<Attributes> squareBumpers = new ArrayList<Attributes>();
 		List<Attributes> circularBumpers = new ArrayList<Attributes>();
 		List<Triangle> triangularBumpers = new ArrayList<Triangle>();
+		List<Attributes> leftFlippers = new ArrayList<Attributes>();
+		List<Attributes> rightFlippers = new ArrayList<Attributes>();
 		
 		public void paintComponent(Graphics g){
 			drawGrid(g);
 			drawSquareBumpers(g);
 			drawCircularBumpers(g);
 			drawTriangularBumpers(g);
+			drawLeftFlippers(g);
+			drawRightFlippers(g);
 		}
 
 		private void drawGrid(Graphics g){
@@ -130,7 +136,7 @@ public class RunGUI {
 		}
 		
 		public boolean addSquareBumper(int x, int y, Color color){
-			return squareBumpers.add(new Attributes(x, y, color));
+			return squareBumpers.add(new Attributes(x, y, color, 0));
 		}
 		
 		private void drawCircularBumpers(Graphics g) {
@@ -140,8 +146,8 @@ public class RunGUI {
 			}	
 		}
 		
-		public boolean addTriangularBumper(int x, int y, Color color, int rotation){
-			return triangularBumpers.add(new Triangle(x, y, color, rotation));
+		public boolean addCircularBumper(int x, int y, Color color){
+			return circularBumpers.add(new Attributes(x, y, color, 0));
 		}
 		
 		private void drawTriangularBumpers(Graphics g) {
@@ -151,19 +157,78 @@ public class RunGUI {
 			}	
 		}
 		
-		public boolean addCircularBumper(int x, int y, Color color){
-			return circularBumpers.add(new Attributes(x, y, color));
+		public boolean addTriangularBumper(int x, int y, Color color, int rotation){
+			return triangularBumpers.add(new Triangle(x, y, color, rotation));
+		}
+		
+		private void drawLeftFlippers(Graphics g) {
+			for(Attributes lFlip: leftFlippers){
+				g.setColor(lFlip.getColor());
+				switch(lFlip.getRotation()){
+					case 0: g.fillOval(lFlip.getXcoordinate(), lFlip.getYcoordinate(), 10, 10);
+							g.fillRect(lFlip.getXcoordinate(), lFlip.getYcoordinate()+5, 10, 30);
+							g.fillOval(lFlip.getXcoordinate(), lFlip.getYcoordinate()+30, 10, 10);
+							break;
+					case 1:	g.fillOval(lFlip.getXcoordinate(), lFlip.getYcoordinate()+30, 10, 10);
+							g.fillRect(lFlip.getXcoordinate()+5, lFlip.getYcoordinate()+30, 30, 10);
+							g.fillOval(lFlip.getXcoordinate()+30, lFlip.getYcoordinate()+30, 10, 10);
+							break;
+					case 2: g.fillOval(lFlip.getXcoordinate()+30, lFlip.getYcoordinate(), 10, 10);
+							g.fillRect(lFlip.getXcoordinate()+30, lFlip.getYcoordinate()+5, 10, 30);
+							g.fillOval(lFlip.getXcoordinate()+30, lFlip.getYcoordinate()+30, 10, 10);
+							break;
+					case 3:	g.fillOval(lFlip.getXcoordinate(), lFlip.getYcoordinate(), 10, 10);
+							g.fillRect(lFlip.getXcoordinate()+5, lFlip.getYcoordinate(), 30, 10);
+							g.fillOval(lFlip.getXcoordinate()+30, lFlip.getYcoordinate(), 10, 10);
+							break;
+				}
+				
+			}	
+		}
+		
+		public boolean addLeftFlipper(int x, int y, Color color, int rotation){
+			return leftFlippers.add(new Attributes(x, y, color, rotation));
+		}
+		
+		private void drawRightFlippers(Graphics g) {
+			for(Attributes rFlip: rightFlippers){
+				g.setColor(rFlip.getColor());
+				switch(rFlip.getRotation()){
+				case 0: g.fillOval(rFlip.getXcoordinate()+30, rFlip.getYcoordinate(), 10, 10);
+						g.fillRect(rFlip.getXcoordinate()+30, rFlip.getYcoordinate()+5, 10, 30);
+						g.fillOval(rFlip.getXcoordinate()+30, rFlip.getYcoordinate()+30, 10, 10);
+						break;
+				case 1:	g.fillOval(rFlip.getXcoordinate(), rFlip.getYcoordinate(), 10, 10);
+						g.fillRect(rFlip.getXcoordinate()+5, rFlip.getYcoordinate(), 30, 10);
+						g.fillOval(rFlip.getXcoordinate()+30, rFlip.getYcoordinate(), 10, 10);
+						break;
+				case 2: g.fillOval(rFlip.getXcoordinate(), rFlip.getYcoordinate(), 10, 10);
+						g.fillRect(rFlip.getXcoordinate(), rFlip.getYcoordinate()+5, 10, 30);
+						g.fillOval(rFlip.getXcoordinate(), rFlip.getYcoordinate()+30, 10, 10);
+						break;
+				case 3:	g.fillOval(rFlip.getXcoordinate(), rFlip.getYcoordinate()+30, 10, 10);
+						g.fillRect(rFlip.getXcoordinate()+5, rFlip.getYcoordinate()+30, 30, 10);
+						g.fillOval(rFlip.getXcoordinate()+30, rFlip.getYcoordinate()+30, 10, 10);
+						break;
+			}
+			}	
+		}
+		
+		public boolean addRightFlipper(int x, int y, Color color, int rotation){
+			return rightFlippers.add(new Attributes(x, y, color, rotation));
 		}
 	}
 	
 	private class Attributes{
 		int x, y;
 		Color color;
+		int rotation;
 		
-		public Attributes(int x,int y, Color color){
+		public Attributes(int x,int y, Color color, int rotation){
 			this.x=x;
 			this.y=y;
 			this.color=color;
+			this.rotation=rotation%4;
 		}
 		
 		public int getXcoordinate(){
@@ -176,6 +241,10 @@ public class RunGUI {
 		
 		public Color getColor(){
 			return color;
+		}
+		
+		public int getRotation(){
+			return rotation;
 		}
 	}
 	
