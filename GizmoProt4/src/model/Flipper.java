@@ -41,6 +41,26 @@ public class Flipper implements iGizmo {
         return gizmoName;
     }
 
+    @Override
+    public double getLeftLimit() {
+        return 0;
+    }
+
+    @Override
+    public double getRightLimit() {
+        return 0;
+    }
+
+    @Override
+    public double getUpperLimit() {
+        return 0;
+    }
+
+    @Override
+    public double getLowerLimit() {
+        return 0;
+    }
+
     public void trigger() {}
 
     public int reservedArea() {
