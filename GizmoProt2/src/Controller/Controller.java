@@ -27,6 +27,7 @@ public class Controller implements IController{
 	}
 
 	private void addBall() {
+		//currently it just makes a new ball object and adds it (testing reasons)
 		gui.addBallToGrid(new Ball(200,200,100,0));
 	}
 }

@@ -106,6 +106,10 @@ public class RunGUI {
 		frame.repaint();
 	}
 	
+	public void repaint(){
+		frame.repaint();
+	}
+	
 	private class GridView extends JPanel{
 		List<IAbsorber> absorbers = new ArrayList<IAbsorber>();
 		List<IBall> balls = new ArrayList<IBall>();
