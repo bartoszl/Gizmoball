@@ -20,6 +20,22 @@ public class Absorber implements IAbsorber {
 		color = Color.PINK;
 	}
 	
+	public double getXTopLeft(){
+		return xTopLeft;
+	}
+	
+	public double getYTopLeft(){
+		return yTopLeft;
+	}
+	
+	public double getWidth(){
+		return xBottomRight-xTopLeft;
+	}
+	
+	public double getHeight(){
+		return yBottomRight-yTopLeft;
+	}
+	
 	public ArrayList<LineSegment> getLines(){
 		ArrayList<LineSegment> lineList = new ArrayList<LineSegment>();
 		LineSegment top = new LineSegment(xTopLeft, yTopLeft,xBottomRight, yTopLeft);

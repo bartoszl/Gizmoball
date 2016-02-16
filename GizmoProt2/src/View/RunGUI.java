@@ -1,10 +1,21 @@
 package View;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import Controller.Controller;
+import Controller.IController;
+import model.Absorber;
+import model.Ball;
+import model.IAbsorber;
+import model.IBall;
+
 import javax.swing.JButton;
 
 /**
@@ -24,6 +35,8 @@ import javax.swing.JButton;
 public class RunGUI {
 
 	private JFrame frame;
+	private GridView gridView;
+	private IController controller;
 
 	/**
 	 * Launch the application.
@@ -45,6 +58,7 @@ public class RunGUI {
 	 * Create the application.
 	 */
 	public RunGUI() {
+		controller = new Controller(this);
 		initialize();
 	}
 
@@ -63,24 +77,77 @@ public class RunGUI {
 		panel.setLayout(null);
 		
 		JButton btnRun = new JButton("Fire Ball");
+		btnRun.addActionListener(controller);
+		btnRun.setActionCommand("add ball");
 		btnRun.setBounds(10, 10, 127, 58);
 		panel.add(btnRun);
 		
 		JButton btnQuit = new JButton("Quit");
+		btnQuit.addActionListener(controller);
+		btnQuit.setActionCommand("exit");
 		btnQuit.setBounds(10, 79, 127, 58);
 		panel.add(btnQuit);
 		
-		JPanel gridView = new GridView();
+		gridView = new GridView();
 		gridView.setBounds(147, 0, 405, 405);
 		frame.getContentPane().add(gridView);
+		
+		//add the absorber
+		addAbsorberToGrid(new Absorber(0,380, 400,400));
+	}
+	
+	public void addBallToGrid(IBall ball){
+		gridView.addBall(ball);
+		frame.repaint();
+	}
+	
+	public void addAbsorberToGrid(IAbsorber absorber){
+		gridView.addAbsorber(absorber);
+		frame.repaint();
+	}
+	
+	public void repaint(){
+		frame.repaint();
 	}
 	
 	private class GridView extends JPanel{
+		List<IAbsorber> absorbers = new ArrayList<IAbsorber>();
+		List<IBall> balls = new ArrayList<IBall>();
+		
 		public void paintComponent(Graphics g){
+			drawGrid(g);
+			drawAbsorber(g);
+			drawBalls(g);
+		}
+		
+		private void drawGrid(Graphics g){
 			for(int i = 0; i <= 20; i++){
 				g.drawLine(0, i*20, 400, i*20);
 				g.drawLine(i*20, 0, i*20, 400);
 			}
-		}	
+		}
+		
+		private void drawBalls(Graphics g) {
+			for(IBall ball: balls){
+				int size = (int)ball.getRadius()*2;
+				g.setColor(ball.getColor());
+				g.fillOval((int)ball.getX(), (int)ball.getY(), size, size);
+			}	
+		}
+		
+		public boolean addBall(IBall ball){
+			return balls.add(ball);
+		}
+		
+		private void drawAbsorber(Graphics g) {
+			for(IAbsorber absorb: absorbers){
+				g.setColor(absorb.getColor());
+				g.fillRect((int)absorb.getXTopLeft(), (int)absorb.getYTopLeft(), (int)absorb.getWidth(), (int)absorb.getHeight());
+			}	
+		}
+		
+		public boolean addAbsorber(IAbsorber absorber){
+			return absorbers.add(absorber);
+		}
 	}
 }
