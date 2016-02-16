@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a288197-ffcb-4eff-a0f7-ec491f8afad9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GizmoProt2/GizmoProt2.iml" afterPath="$PROJECT_DIR$/GizmoProt2/GizmoProt2.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GizmoProt3/GizmoProt3.iml" afterPath="$PROJECT_DIR$/GizmoProt3/GizmoProt3.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GizmoProt4/GizmoProt4.iml" afterPath="$PROJECT_DIR$/GizmoProt4/GizmoProt4.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Gizmoball.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,9 +31,11 @@
       <file leaf-file-name="RunGUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GizmoProt4/src/View/RunGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.0982368">
-              <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-              <folding />
+            <state vertical-scroll-proportion="0.4701087">
+              <caret line="139" column="19" selection-start-line="139" selection-start-column="19" selection-end-line="139" selection-end-column="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -59,6 +59,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/GizmoProt1/RGController.java" />
+        <option value="$PROJECT_DIR$/GizmoProt4/src/View/RunGUI.java" />
       </list>
     </option>
   </component>
@@ -676,7 +677,7 @@
       <workItem from="1455453972197" duration="963000" />
       <workItem from="1455539770614" duration="1035000" />
       <workItem from="1455619263931" duration="264000" />
-      <workItem from="1455633328852" duration="870000" />
+      <workItem from="1455633328852" duration="1150000" />
     </task>
     <task id="LOCAL-00001" summary="Added the simple GUI to each prototype.">
       <created>1455540439718</created>
@@ -688,7 +689,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3132000" />
+    <option name="totallyTimeSpent" value="3412000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -762,9 +763,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GizmoProt4/src/View/RunGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.0982368">
-          <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
+        <state vertical-scroll-proportion="0.4701087">
+          <caret line="139" column="19" selection-start-line="139" selection-start-column="19" selection-end-line="139" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
