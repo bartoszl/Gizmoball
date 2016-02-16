@@ -10,9 +10,9 @@ public class Flipper implements iGizmo {
 	};
 	
 	private boolean isLeft;
+	private int cx;
+	private int cy;
 	private Color color;
-	private Circle topCircle;
-	private Circle bottomCircle;
 	private LineSegment topSide;
 	private LineSegment leftSide;
 	private LineSegment rightSide;
@@ -29,41 +29,12 @@ public class Flipper implements iGizmo {
 		double off = isLeft ? 0 : 1.5;
 		this.isLeft = isLeft;
 		center = new Vect(cx, cy);
-		/** o **/
-		topCircle = new Circle(center.x()+0.25 +off, center.y()+0.25, 0.25);
-		/** - **/
-		topSide = new LineSegment(center.x()+off, center.y()+0.25, center.x()+off+0.5, center.y()+0.25);
-		/**| **/
-		leftSide = new LineSegment(center.x()+off, center.y()+0.25, center.x()+off, center.y()+1.75);
-		/**  |**/
-		rightSide = new LineSegment(center.x()+off+0.5, center.y()+0.25, center.x()+off+0.5, center.y()+1.75);
-		/** _ **/
-		bottomSide = new LineSegment(center.x()+off, center.y()+1.75, center.x()+off+0.5, center.y()+1.75);
-		/** o **/
-		bottomCircle = new Circle(center.x()+off+0.25, center.y()+1.75, 0.25);
-		
+		topSide = new LineSegment(cx+off, cy, cx+off+0.5, cy);
+		leftSide = new LineSegment(cx+off, cy, cx+off, cy+2);
+		rightSide = new LineSegment(cx+off+0.5, cy, cx+off+0.5, cy+2);
+		bottomSide = new LineSegment(cx+off, cy+2, cx+off+0.5, cy+2);
+		this.color = color;
 		movement = Movement.NONE;
-	}
-	
-	/**Getter for coordinates -> translated to pixels**/
-	public Vect getCenter() {
-		return center.times(20.0);
-	}
-	
-	public Vect getUpperLeft() {
-		return topSide.p1().times(20.0);
-	}
-	
-	public Vect getUpperRight() {
-		return topSide.p2().times(20.0);
-	}
-	
-	public Vect getLowerLeft() {
-		return bottomSide.p1().times(20.0);
-	}
-	
-	public Vect getLowerRight() {
-		return bottomSide.p1().times(20.0);
 	}
 	
 	//TODO or NOT TODO?
