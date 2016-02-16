@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -9,8 +9,8 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import Controller.Controller;
-import Controller.IController;
+import controller.Controller;
+import controller.IController;
 import model.Absorber;
 import model.Ball;
 import model.IAbsorber;

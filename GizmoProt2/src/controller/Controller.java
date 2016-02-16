@@ -1,12 +1,12 @@
-package Controller;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import View.RunGUI;
 import model.Ball;
+import view.RunGUI;
 
-public class Controller implements IController{
+public class Controller implements ActionListener{
 	private RunGUI gui;
 	
 	public Controller(RunGUI gui){
