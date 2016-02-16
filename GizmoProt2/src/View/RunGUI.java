@@ -1,21 +1,24 @@
+package View;
+
 import java.awt.EventQueue;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
+import javax.swing.JButton;
 
 /**
  * @author Stephen Dundas
- * 
- * Demonstrate loading files in the standard format. 
- * Given a test file, your implementation should display 
- * the gizmos specified in that file at the specified 
- * locations on the screen. You should be able to load 
- * and display all the standard gizmos.
+ *
+ * Demonstrate a working absorber, ball motion, gravity, 
+ * and friction. In running mode, with no bumpers or 
+ * flippers on the screen and the ball sitting still in 
+ * the absorber, you should be able to press a key, observe 
+ * the ball shoot up out of the absorber, slow down as it 
+ * rises, fall back to the absorber, and return to its 
+ * original position. Also demonstrate that you can shoot 
+ * it out a second time. (Note that you do not yet need to 
+ * support configurable gravity or friction constants.)
  */
 
 public class RunGUI {
@@ -49,28 +52,26 @@ public class RunGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Gizmo Proto 4");
-		frame.setBounds(100, 100, 417, 463);
+		frame = new JFrame("Gizmo Proto 2");
+		frame.setBounds(100, 100, 564, 440);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 0, 147, 441);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
 		
-		JMenu mnNewMenu = new JMenu("Model");
-		menuBar.add(mnNewMenu);
+		JButton btnRun = new JButton("Fire Ball");
+		btnRun.setBounds(10, 10, 127, 58);
+		panel.add(btnRun);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Load");
-		mnNewMenu.add(mntmNewMenuItem);
-		
-		JSeparator separator = new JSeparator();
-		mnNewMenu.add(separator);
-		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Quit");
-		mnNewMenu.add(mntmNewMenuItem_1);
+		JButton btnQuit = new JButton("Quit");
+		btnQuit.setBounds(10, 79, 127, 58);
+		panel.add(btnQuit);
 		
 		JPanel gridView = new GridView();
-		gridView.setBounds(0, 0, 405, 405);
+		gridView.setBounds(147, 0, 405, 405);
 		frame.getContentPane().add(gridView);
 	}
 	
@@ -80,6 +81,6 @@ public class RunGUI {
 				g.drawLine(0, i*20, 400, i*20);
 				g.drawLine(i*20, 0, i*20, 400);
 			}
-		}
+		}	
 	}
 }
