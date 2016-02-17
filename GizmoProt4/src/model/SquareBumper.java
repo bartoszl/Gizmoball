@@ -40,6 +40,14 @@ public class SquareBumper implements iGizmo {
         sideFour = new LineSegment(cx+1, cy, cx+1, cy+1);
     }
 
+    public double getX() {
+        return cx;
+    }
+
+    public double getY() {
+        return cy;
+    }
+
     public void rotate() {
 
     }

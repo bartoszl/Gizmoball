@@ -93,10 +93,10 @@ public class RunGUI implements Observer {
 		frame.getContentPane().add(gridView);
 
 		//square bumper
-		addSquareBumperToGrid(4*20,3*20,new Color(255,0,0));
+		//addSquareBumperToGrid(4*20,3*20,new Color(255,0,0));
 
 		//add circle
-		addCircularBumperToGrid(5*20,3*20,new Color(0,255,0));
+		//addCircularBumperToGrid(5*20,3*20,new Color(0,255,0));
 
 		//add triangle
 		addTriangleBumperToGrid(9*20,2*20,new Color(0,0,255),0);
@@ -131,8 +131,18 @@ public class RunGUI implements Observer {
             System.out.println("THIS");
             int leftX = (int) absorber.getLeftXCoordinate();
             int rightX = (int) absorber.getRightXCoordinate();
-            System.out.println(rightX);
-            addAbsorberToGrid((int) absorber.getLeftXCoordinate(), (int) absorber.getTopYCoordinate(), (int) absorber.getRightXCoordinate(), (int) absorber.getBottomYCoordinate(), Color.pink);
+            int topY = (int) absorber.getTopYCoordinate();
+            int bottomY = (int) absorber.getBottomYCoordinate();
+            addAbsorberToGrid(leftX, topY, rightX, bottomY, Color.pink);
+        }
+
+        for(iGizmo gizmo : model.getGizmos()) {
+            if(gizmo instanceof SquareBumper) {
+                SquareBumper square = (SquareBumper) gizmo;
+                int x = (int) square.getX();
+                int y = (int) square.getY();
+                addSquareBumperToGrid(x, y, Color.red);
+            }
         }
     }
 	

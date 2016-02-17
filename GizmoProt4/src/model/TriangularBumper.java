@@ -25,6 +25,14 @@ public class TriangularBumper implements iGizmo {
         this.gizmoName = gizmoName;
     }
 
+    public double getX() {
+        return cx;
+    }
+
+    public double getY() {
+        return cy;
+    }
+
     public Color getColor() {
         return color;
     }
