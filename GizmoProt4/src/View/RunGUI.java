@@ -131,6 +131,11 @@ public class RunGUI implements Observer {
                 int x = (int) triangle.getX();
                 int y = (int) triangle.getY();
                 addTriangleBumperToGrid(x, y, Color.blue, 0);
+            } else if(gizmo instanceof CircularBumper) {
+                CircularBumper circle = (CircularBumper) gizmo;
+                int x = (int) circle.getCentreX();
+                int y = (int) circle.getCentreY();
+                addCircularBumperToGrid(x, y, Color.GREEN);
             }
         }
     }
