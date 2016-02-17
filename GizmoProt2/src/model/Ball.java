@@ -12,6 +12,7 @@ public class Ball implements IBall {
 	private double y;
 	private Color color;
 	
+	private boolean absorbed;
 	private boolean moving;
 	
 	public Ball(double xpos, double ypos, double xv, double yv){
@@ -21,6 +22,15 @@ public class Ball implements IBall {
 		color = Color.YELLOW;
 		radius = 10;
 		moving = true;
+		absorbed = false;
+	}
+	
+	public boolean getAbsorbed(){
+		return absorbed;
+	}
+	
+	public void setAbsorbed(boolean b){
+		absorbed = b;
 	}
 	
 	public Vect getVelocity(){

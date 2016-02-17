@@ -1,20 +1,23 @@
-package View;
+package view;
 
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import Controller.Controller;
-import Controller.IController;
+import controller.Controller;
 import model.Absorber;
 import model.Ball;
 import model.IAbsorber;
 import model.IBall;
+import model.Model;
 
 import javax.swing.JButton;
 
@@ -32,11 +35,13 @@ import javax.swing.JButton;
  * support configurable gravity or friction constants.)
  */
 
-public class RunGUI {
+public class RunGUI{
 
 	private JFrame frame;
-	private GridView gridView;
-	private IController controller;
+	private Board board;
+	private ActionListener controller;
+	private Model model;
+	//private Board board;
 
 	/**
 	 * Launch the application.
@@ -58,7 +63,10 @@ public class RunGUI {
 	 * Create the application.
 	 */
 	public RunGUI() {
-		controller = new Controller(this);
+		
+		this.model = new Model();
+		//this.model.addObserver(this);
+		controller = new Controller(model);
 		initialize();
 	}
 
@@ -76,78 +84,30 @@ public class RunGUI {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JButton btnRun = new JButton("Fire Ball");
+		JButton btnRun = new JButton("Run");
 		btnRun.addActionListener(controller);
-		btnRun.setActionCommand("add ball");
+		btnRun.setActionCommand("run");
 		btnRun.setBounds(10, 10, 127, 58);
 		panel.add(btnRun);
+		
+		JButton btnTick = new JButton("Tick");
+		btnTick.addActionListener(controller);
+		btnTick.setActionCommand("tick");
+		btnTick.setBounds(10, 79, 127, 58);
+		panel.add(btnTick);
 		
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.addActionListener(controller);
 		btnQuit.setActionCommand("exit");
-		btnQuit.setBounds(10, 79, 127, 58);
+		btnQuit.setBounds(10, 148, 127, 58);
 		panel.add(btnQuit);
 		
-		gridView = new GridView();
-		gridView.setBounds(147, 0, 405, 405);
-		frame.getContentPane().add(gridView);
-		
-		//add the absorber
-		addAbsorberToGrid(new Absorber(0,380, 400,400));
-	}
-	
-	public void addBallToGrid(IBall ball){
-		gridView.addBall(ball);
-		frame.repaint();
-	}
-	
-	public void addAbsorberToGrid(IAbsorber absorber){
-		gridView.addAbsorber(absorber);
-		frame.repaint();
+		board = new Board(model);
+		board.setBounds(147, 0, 405, 405);
+		frame.getContentPane().add(board);
 	}
 	
 	public void repaint(){
 		frame.repaint();
-	}
-	
-	private class GridView extends JPanel{
-		List<IAbsorber> absorbers = new ArrayList<IAbsorber>();
-		List<IBall> balls = new ArrayList<IBall>();
-		
-		public void paintComponent(Graphics g){
-			drawGrid(g);
-			drawAbsorber(g);
-			drawBalls(g);
-		}
-		
-		private void drawGrid(Graphics g){
-			for(int i = 0; i <= 20; i++){
-				g.drawLine(0, i*20, 400, i*20);
-				g.drawLine(i*20, 0, i*20, 400);
-			}
-		}
-		
-		private void drawBalls(Graphics g) {
-			for(IBall ball: balls){
-				int size = (int)ball.getRadius()*2;
-				g.setColor(ball.getColor());
-				g.fillOval((int)ball.getX(), (int)ball.getY(), size, size);
-			}	
-		}
-		
-		public boolean addBall(IBall ball){
-			return balls.add(ball);
-		}
-		
-		private void drawAbsorber(Graphics g) {
-			for(IAbsorber absorb: absorbers){
-				g.setColor(absorb.getColor());
-				g.fillRect((int)absorb.getXTopLeft(), (int)absorb.getYTopLeft(), (int)absorb.getWidth(), (int)absorb.getHeight());
-			}	
-		}
-		
-		public boolean addAbsorber(IAbsorber absorber){
-			return absorbers.add(absorber);
-		}
 	}
 }
