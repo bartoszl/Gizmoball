@@ -29,10 +29,8 @@ public class Model extends Observable{
 			} else
 			if(collisionTime>moveTime){
 				ball = moveBallForTime(ball, moveTime);
-				System.out.println("no collisions");
 			} else {
 				ball = moveBallForTime(ball, collisionTime);
-				System.out.println("we have collision");
 				abs.absorb(ball);
 			}
 			this.setChanged();

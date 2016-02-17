@@ -66,7 +66,7 @@ public class RunGUI{
 		
 		this.model = new Model();
 		//this.model.addObserver(this);
-		controller = new Controller(this, model);
+		controller = new Controller(model);
 		initialize();
 	}
 
@@ -84,16 +84,22 @@ public class RunGUI{
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JButton btnRun = new JButton("Fire Ball");
+		JButton btnRun = new JButton("Run");
 		btnRun.addActionListener(controller);
-		btnRun.setActionCommand("fire ball");
+		btnRun.setActionCommand("run");
 		btnRun.setBounds(10, 10, 127, 58);
 		panel.add(btnRun);
+		
+		JButton btnTick = new JButton("Tick");
+		btnTick.addActionListener(controller);
+		btnTick.setActionCommand("tick");
+		btnTick.setBounds(10, 79, 127, 58);
+		panel.add(btnTick);
 		
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.addActionListener(controller);
 		btnQuit.setActionCommand("exit");
-		btnQuit.setBounds(10, 79, 127, 58);
+		btnQuit.setBounds(10, 148, 127, 58);
 		panel.add(btnQuit);
 		
 		board = new Board(model);
