@@ -3,18 +3,21 @@ package view;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controller.Controller;
-import controller.IController;
 import model.Absorber;
 import model.Ball;
 import model.IAbsorber;
 import model.IBall;
+import model.Model;
 
 import javax.swing.JButton;
 
@@ -32,11 +35,12 @@ import javax.swing.JButton;
  * support configurable gravity or friction constants.)
  */
 
-public class RunGUI {
+public class RunGUI implements Observer{
 
 	private JFrame frame;
 	private GridView gridView;
-	private IController controller;
+	private ActionListener controller;
+	private Model model;
 
 	/**
 	 * Launch the application.
@@ -58,7 +62,10 @@ public class RunGUI {
 	 * Create the application.
 	 */
 	public RunGUI() {
-		controller = new Controller(this);
+		
+		this.model = new Model();
+		this.model.addObserver(this);
+		controller = new Controller(this, model);
 		initialize();
 	}
 
@@ -78,7 +85,7 @@ public class RunGUI {
 		
 		JButton btnRun = new JButton("Fire Ball");
 		btnRun.addActionListener(controller);
-		btnRun.setActionCommand("add ball");
+		btnRun.setActionCommand("fire ball");
 		btnRun.setBounds(10, 10, 127, 58);
 		panel.add(btnRun);
 		
@@ -93,7 +100,8 @@ public class RunGUI {
 		frame.getContentPane().add(gridView);
 		
 		//add the absorber
-		addAbsorberToGrid(new Absorber(0,380, 400,400));
+		addAbsorberToGrid(model.getAbsorber());
+		addBallToGrid(model.getBall());
 	}
 	
 	public void addBallToGrid(IBall ball){
@@ -127,16 +135,17 @@ public class RunGUI {
 			}
 		}
 		
+		public boolean addBall(IBall ball){
+			return balls.add(ball);
+		}
+
+		
 		private void drawBalls(Graphics g) {
 			for(IBall ball: balls){
 				int size = (int)ball.getRadius()*2;
 				g.setColor(ball.getColor());
 				g.fillOval((int)ball.getX(), (int)ball.getY(), size, size);
 			}	
-		}
-		
-		public boolean addBall(IBall ball){
-			return balls.add(ball);
 		}
 		
 		private void drawAbsorber(Graphics g) {
@@ -149,5 +158,10 @@ public class RunGUI {
 		public boolean addAbsorber(IAbsorber absorber){
 			return absorbers.add(absorber);
 		}
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		repaint();
 	}
 }

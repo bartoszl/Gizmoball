@@ -1,17 +1,19 @@
 package model;
 
+import java.util.Observable;
+
 import physics.Circle;
 import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
-public class Model {
+public class Model extends Observable{
 	private Absorber abs;
 	private Ball ball;
 	//private Walls gws;
 	
 	public Model(){
-		ball = new Ball(200,200,100,0);
+		ball = new Ball(200,300,0,100);
 		//walls = new Walls(0,0,500,500);
 		abs = new Absorber(0,380, 400,400);
 	}
@@ -22,10 +24,14 @@ public class Model {
 			double collisionTime = timeUntilCollision();
 			if(collisionTime>moveTime){
 				ball = moveBallForTime(ball, moveTime);
+				System.out.println("no collisions");
 			} else {
 				ball = moveBallForTime(ball, collisionTime);
+				System.out.println("we have collision");
 				abs.absorb(ball);
 			}
+			this.setChanged();
+			this.notifyObservers();
 		} 
 	}
 	
@@ -55,11 +61,14 @@ public class Model {
 			if(time<shortestTime)
 				shortestTime=time;
 		}
-		return time;
+		return shortestTime;
 	}
 	
 	public Ball getBall(){
 		return ball;
 	}
-
+	
+	public Absorber getAbsorber(){
+		return abs;
+	}
 }
