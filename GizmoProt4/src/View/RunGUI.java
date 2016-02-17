@@ -117,18 +117,23 @@ public class RunGUI implements Observer {
 		addRightFlipperToGrid(6*20,7*20,new Color(235,197,93),3);
 		
 		//add absorber
-		addAbsorberToGrid(1*20,12*20,11*20,18*20,new Color(235,93,154));
+		//addAbsorberToGrid(1*20,12*20,11*20,18*20,new Color(235,93,154));
 
         reload();
 	}
 
     public void reload() {
-        List<iBall> balls = model.getBalls();
-        int x = (int) balls.get(0).getXCoordinate();
-        int y = (int) balls.get(0).getYCoordinate();
-        System.out.println("x: " + x + " - y: " + y);
-        //addCircularBumperToGrid(5*20,3*20,new Color(0,255,0));
-        addCircularBumperToGrid(x*20, y*20, Color.blue);
+        for(iBall ball : model.getBalls()) {
+            addCircularBumperToGrid((int) ball.getXCoordinate() * 20, (int) ball.getYCoordinate() * 20, Color.blue);
+        }
+
+        for(iAbsorber absorber : model.getAbsorbers()) {
+            System.out.println("THIS");
+            int leftX = (int) absorber.getLeftXCoordinate();
+            int rightX = (int) absorber.getRightXCoordinate();
+            System.out.println(rightX);
+            addAbsorberToGrid((int) absorber.getLeftXCoordinate(), (int) absorber.getTopYCoordinate(), (int) absorber.getRightXCoordinate(), (int) absorber.getBottomYCoordinate(), Color.pink);
+        }
     }
 	
 	public void addSquareBumperToGrid(int x, int y, Color color){
