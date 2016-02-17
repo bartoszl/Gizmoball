@@ -1,10 +1,14 @@
 package View;
 
+import model.*;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -13,9 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-/**
- * @author Stephen Dundas
- * 
+/*
  * Demonstrate loading files in the standard format. 
  * Given a test file, your implementation should display 
  * the gizmos specified in that file at the specified 
@@ -23,15 +25,20 @@ import javax.swing.JSeparator;
  * and display all the standard gizmos.
  */
 
-public class RunGUI {
+public class RunGUI implements Observer {
 
 	private JFrame frame;
 	private GridView gridView;
 
+    private GBallModel model;
+    private List<iGizmo> gizmos;
+    private List<iBall> balls;
+    private Controller controller;
+
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -42,13 +49,18 @@ public class RunGUI {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
-	 */
-	public RunGUI() {
+     * @param m
+     */
+	public RunGUI(GBallModel m) {
+        m.addObserver(this);
+        this.model = m;
+        controller = new Controller(this, model);
 		initialize();
+        frame.setVisible(true);
 	}
 
 	/**
@@ -106,7 +118,18 @@ public class RunGUI {
 		
 		//add absorber
 		addAbsorberToGrid(1*20,12*20,11*20,18*20,new Color(235,93,154));
+
+        reload();
 	}
+
+    public void reload() {
+        List<iBall> balls = model.getBalls();
+        int x = (int) balls.get(0).getXCoordinate();
+        int y = (int) balls.get(0).getYCoordinate();
+        System.out.println("x: " + x + " - y: " + y);
+        //addCircularBumperToGrid(5*20,3*20,new Color(0,255,0));
+        addCircularBumperToGrid(x*20, y*20, Color.blue);
+    }
 	
 	public void addSquareBumperToGrid(int x, int y, Color color){
 		gridView.addSquareBumper(x, y, color);
@@ -132,7 +155,11 @@ public class RunGUI {
 	public void addAbsorberToGrid(int x1, int y1, int x2, int y2, Color color){
 		gridView.addAbsorber(x1, y1, x2, y2, color);
 	}
-	
+
+	public void update(Observable o, Object arg) {
+        gridView.repaint();
+	}
+
 	private class GridView extends JPanel{
 		List<Attributes> squareBumpers = new ArrayList<Attributes>();
 		List<Attributes> circularBumpers = new ArrayList<Attributes>();

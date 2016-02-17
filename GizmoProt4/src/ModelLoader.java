@@ -7,7 +7,7 @@ import java.util.List;
 public class ModelLoader {
 
     private Reader fileReader;
-    private iGBallModel model;
+    private GBallModel model;
     private List<String[]> commands;
     private int scale;
 
@@ -17,10 +17,16 @@ public class ModelLoader {
         model = new GBallModel();
 
         try {
-            commands =  fileReader.readFromFile("text.txt");
+            commands =  fileReader.readFromFile("test.txt");
+            makeModel();
         } catch (IOException e) {
+            System.out.println("THIS");
             e.printStackTrace();
         }
+    }
+
+    public GBallModel getModel() {
+        return model;
     }
 
     public void makeModel() {
@@ -60,13 +66,13 @@ public class ModelLoader {
                     model.setFriction(getHorizontalFriction(command), getVerticalFriction(command));
                     break;
 
-                case "Connect" :
-                    model.addConnection(createConnection(command));
-                    break;
+                //case "Connect" :
+                    //model.addConnection(createConnection(command));
+                    //break;
 
-                case "KeyConnect" :
-                    model.addKeyConnection(createKeyConnection(command));
-                    break;
+                //case "KeyConnect" :
+                //    model.addKeyConnection(createKeyConnection(command));
+                //    break;
             }
         }
     }
@@ -139,6 +145,7 @@ public class ModelLoader {
     }
 
     private KeyConnection createKeyConnection(String[] command) {
+        System.out.println(command[1]);
         int keyID = Integer.parseInt(command[1]);
         String connectingTo = command[2];
         return new KeyConnection(keyID, connectingTo);
