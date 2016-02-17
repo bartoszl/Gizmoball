@@ -91,18 +91,6 @@ public class RunGUI implements Observer {
 		gridView = new GridView();
 		gridView.setBounds(0, 0, 405, 405);
 		frame.getContentPane().add(gridView);
-
-		//square bumper
-		//addSquareBumperToGrid(4*20,3*20,new Color(255,0,0));
-
-		//add circle
-		//addCircularBumperToGrid(5*20,3*20,new Color(0,255,0));
-
-		//add triangle
-		addTriangleBumperToGrid(9*20,2*20,new Color(0,0,255),0);
-		addTriangleBumperToGrid(8*20,2*20,new Color(0,0,255),1);
-		addTriangleBumperToGrid(8*20,3*20,new Color(0,0,255),2);
-		addTriangleBumperToGrid(9*20,3*20,new Color(0,0,255),3);
 		
 		//add left flipper
 		addLeftFlipperToGrid(0*20,4*20,new Color(200,100,100),0);
@@ -115,9 +103,6 @@ public class RunGUI implements Observer {
 		addRightFlipperToGrid(2*20,7*20,new Color(235,197,93),1);
 		addRightFlipperToGrid(4*20,7*20,new Color(235,197,93),2);
 		addRightFlipperToGrid(6*20,7*20,new Color(235,197,93),3);
-		
-		//add absorber
-		//addAbsorberToGrid(1*20,12*20,11*20,18*20,new Color(235,93,154));
 
         reload();
 	}
@@ -128,7 +113,6 @@ public class RunGUI implements Observer {
         }
 
         for(iAbsorber absorber : model.getAbsorbers()) {
-            System.out.println("THIS");
             int leftX = (int) absorber.getLeftXCoordinate();
             int rightX = (int) absorber.getRightXCoordinate();
             int topY = (int) absorber.getTopYCoordinate();
@@ -142,6 +126,11 @@ public class RunGUI implements Observer {
                 int x = (int) square.getX();
                 int y = (int) square.getY();
                 addSquareBumperToGrid(x, y, Color.red);
+            } else if(gizmo instanceof TriangularBumper) {
+                TriangularBumper triangle = (TriangularBumper) gizmo;
+                int x = (int) triangle.getX();
+                int y = (int) triangle.getY();
+                addTriangleBumperToGrid(x, y, Color.blue, 0);
             }
         }
     }
