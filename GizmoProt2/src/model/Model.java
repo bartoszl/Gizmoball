@@ -22,6 +22,11 @@ public class Model extends Observable{
 		double moveTime = 0.05;
 		if(ball!=null && ball.isMoving()){
 			double collisionTime = timeUntilCollision();
+			if(ball.getAbsorbed()==true){
+				moveBallForTime(ball, moveTime);
+				if(ball.getY()<abs.getYTopLeft())
+					ball.setAbsorbed(false);
+			} else
 			if(collisionTime>moveTime){
 				ball = moveBallForTime(ball, moveTime);
 				System.out.println("no collisions");

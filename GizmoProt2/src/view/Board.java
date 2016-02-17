@@ -13,8 +13,6 @@ import model.IBall;
 import model.Model;
 
 class Board extends JPanel implements Observer{
-	List<IAbsorber> absorbers = new ArrayList<IAbsorber>();
-	List<IBall> balls = new ArrayList<IBall>();
 	private Model model;
 	
 	public Board(Model m){
