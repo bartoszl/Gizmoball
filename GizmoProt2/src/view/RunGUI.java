@@ -35,12 +35,13 @@ import javax.swing.JButton;
  * support configurable gravity or friction constants.)
  */
 
-public class RunGUI implements Observer{
+public class RunGUI{
 
 	private JFrame frame;
-	private GridView gridView;
+	private Board board;
 	private ActionListener controller;
 	private Model model;
+	//private Board board;
 
 	/**
 	 * Launch the application.
@@ -64,7 +65,7 @@ public class RunGUI implements Observer{
 	public RunGUI() {
 		
 		this.model = new Model();
-		this.model.addObserver(this);
+		//this.model.addObserver(this);
 		controller = new Controller(this, model);
 		initialize();
 	}
@@ -95,73 +96,12 @@ public class RunGUI implements Observer{
 		btnQuit.setBounds(10, 79, 127, 58);
 		panel.add(btnQuit);
 		
-		gridView = new GridView();
-		gridView.setBounds(147, 0, 405, 405);
-		frame.getContentPane().add(gridView);
-		
-		//add the absorber
-		addAbsorberToGrid(model.getAbsorber());
-		addBallToGrid(model.getBall());
-	}
-	
-	public void addBallToGrid(IBall ball){
-		gridView.addBall(ball);
-		frame.repaint();
-	}
-	
-	public void addAbsorberToGrid(IAbsorber absorber){
-		gridView.addAbsorber(absorber);
-		frame.repaint();
+		board = new Board(model);
+		board.setBounds(147, 0, 405, 405);
+		frame.getContentPane().add(board);
 	}
 	
 	public void repaint(){
 		frame.repaint();
-	}
-	
-	private class GridView extends JPanel{
-		List<IAbsorber> absorbers = new ArrayList<IAbsorber>();
-		List<IBall> balls = new ArrayList<IBall>();
-		
-		public void paintComponent(Graphics g){
-			drawGrid(g);
-			drawAbsorber(g);
-			drawBalls(g);
-		}
-		
-		private void drawGrid(Graphics g){
-			for(int i = 0; i <= 20; i++){
-				g.drawLine(0, i*20, 400, i*20);
-				g.drawLine(i*20, 0, i*20, 400);
-			}
-		}
-		
-		public boolean addBall(IBall ball){
-			return balls.add(ball);
-		}
-
-		
-		private void drawBalls(Graphics g) {
-			for(IBall ball: balls){
-				int size = (int)ball.getRadius()*2;
-				g.setColor(ball.getColor());
-				g.fillOval((int)ball.getX(), (int)ball.getY(), size, size);
-			}	
-		}
-		
-		private void drawAbsorber(Graphics g) {
-			for(IAbsorber absorb: absorbers){
-				g.setColor(absorb.getColor());
-				g.fillRect((int)absorb.getXTopLeft(), (int)absorb.getYTopLeft(), (int)absorb.getWidth(), (int)absorb.getHeight());
-			}	
-		}
-		
-		public boolean addAbsorber(IAbsorber absorber){
-			return absorbers.add(absorber);
-		}
-	}
-
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		repaint();
 	}
 }
