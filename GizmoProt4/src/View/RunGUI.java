@@ -109,7 +109,10 @@ public class RunGUI implements Observer {
 
     public void reload() {
         for(iBall ball : model.getBalls()) {
-            addCircularBumperToGrid((int) ball.getXCoordinate() * 20, (int) ball.getYCoordinate() * 20, Color.blue);
+            int x = (int) ball.getXCoordinate();
+            int y = (int) ball.getYCoordinate();
+            int radius = (int) ball.getRadius();
+            addBallToGrid(x,y,radius, Color.blue);
         }
 
         for(iAbsorber absorber : model.getAbsorbers()) {
@@ -139,6 +142,10 @@ public class RunGUI implements Observer {
             }
         }
     }
+
+    public void addBallToGrid(int x, int y, int radius, Color color) {
+        gridView.addBall(x,y, radius, color);
+    }
 	
 	public void addSquareBumperToGrid(int x, int y, Color color){
 		gridView.addSquareBumper(x, y, color);
@@ -150,7 +157,6 @@ public class RunGUI implements Observer {
 	
 	public void addTriangleBumperToGrid(int x, int y, Color color, int rotation){
 		gridView.addTriangularBumper(x,y,color,rotation);
-		
 	}
 	
 	public void addLeftFlipperToGrid(int x, int y, Color color, int rotation){
@@ -176,9 +182,11 @@ public class RunGUI implements Observer {
 		List<Attributes> leftFlippers = new ArrayList<Attributes>();
 		List<Attributes> rightFlippers = new ArrayList<Attributes>();
 		List<Absorber> absorbers = new ArrayList<Absorber>();
+        List<Ball> balls = new ArrayList<>();
 		
 		public void paintComponent(Graphics g){
 			drawGrid(g);
+            drawBalls(g);
 			drawSquareBumpers(g);
 			drawCircularBumpers(g);
 			drawTriangularBumpers(g);
@@ -200,6 +208,18 @@ public class RunGUI implements Observer {
 				g.fillRect(sqBump.getXcoordinate(), sqBump.getYcoordinate(), 20, 20);
 			}	
 		}
+
+        private void drawBalls(Graphics g) {
+            for(Ball b : balls) {
+                g.setColor(b.getColor());
+                System.out.println(b.getRadius());
+                g.fillOval(b.getX() * 20 , b.getY() * 20, b.getRadius() * 5, b.getRadius() * 5);
+            }
+        }
+
+        public boolean addBall(int x, int y, int radius, Color color) {
+            return balls.add(new Ball(x,y,radius,color));
+        }
 		
 		public boolean addSquareBumper(int x, int y, Color color){
 			return squareBumpers.add(new Attributes(x, y, color, 0));
@@ -393,6 +413,33 @@ public class RunGUI implements Observer {
 			calculate();
 		}
 	}
+
+    private class Ball {
+        private int x, y, radius;
+        Color color;
+        public Ball(int x, int y, int radius, Color color) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public int getRadius() {
+            return radius;
+        }
+
+        public Color getColor() {
+            return color;
+        }
+    }
 	
 	private class Absorber{
 		int x1, x2, y1, y2;
