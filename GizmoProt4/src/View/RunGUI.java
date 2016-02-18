@@ -93,7 +93,7 @@ public class RunGUI implements Observer {
 		frame.getContentPane().add(gridView);
 		
 		//add left flipper
-		addLeftFlipperToGrid(0*20,4*20,new Color(200,100,100),0);
+		/*addLeftFlipperToGrid(0*20,4*20,new Color(200,100,100),0);
 		addLeftFlipperToGrid(2*20,4*20,new Color(200,100,100),1);
 		addLeftFlipperToGrid(4*20,4*20,new Color(200,100,100),2);
 		addLeftFlipperToGrid(6*20,4*20,new Color(200,100,100),3);
@@ -102,7 +102,7 @@ public class RunGUI implements Observer {
 		addRightFlipperToGrid(0*20,7*20,new Color(235,197,93),0);
 		addRightFlipperToGrid(2*20,7*20,new Color(235,197,93),1);
 		addRightFlipperToGrid(4*20,7*20,new Color(235,197,93),2);
-		addRightFlipperToGrid(6*20,7*20,new Color(235,197,93),3);
+		addRightFlipperToGrid(6*20,7*20,new Color(235,197,93),3);*/
 
         reload();
 	}
@@ -139,6 +139,16 @@ public class RunGUI implements Observer {
                 int x = (int) circle.getCentreX();
                 int y = (int) circle.getCentreY();
                 addCircularBumperToGrid(x, y, Color.GREEN);
+            } else if(gizmo instanceof Flipper) {
+                Flipper flipper = (Flipper) gizmo;
+                int x = (int) flipper.getX();
+                int y = (int) flipper.getY();
+                System.out.println(x + " - " + y);
+                if(flipper.getOrientation() == FlipperOrientation.LEFT) {
+                    addLeftFlipperToGrid(x,y,Color.RED,0);
+                } else {
+                    addRightFlipperToGrid(x,y,Color.RED,0);
+                }
             }
         }
     }
@@ -212,7 +222,6 @@ public class RunGUI implements Observer {
         private void drawBalls(Graphics g) {
             for(Ball b : balls) {
                 g.setColor(b.getColor());
-                System.out.println(b.getRadius());
                 g.fillOval(b.getX() * 20 , b.getY() * 20, b.getRadius() * 5, b.getRadius() * 5);
             }
         }

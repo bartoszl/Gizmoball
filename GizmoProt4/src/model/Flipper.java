@@ -7,8 +7,8 @@ import physics.*;
 public class Flipper implements iGizmo {
     private boolean isLeft;
     private boolean isVertical;
-    private int cx;
-    private int cy;
+    private double cx;
+    private double cy;
     private Color color;
     private LineSegment topSide;
     private LineSegment leftSide;
@@ -23,8 +23,10 @@ public class Flipper implements iGizmo {
     private String gizmoName;
 
     public Flipper(double cx, double cy, FlipperOrientation orientation, String gizmoName) {
-        this.gizmoName = gizmoName;
         scale = 20;
+        this.cx = cx;
+        this.cy = cy;
+        this.gizmoName = gizmoName;
         this.orientation = orientation;
         this.pivotPoint = new Vect(cx, cy);
         if(orientation == FlipperOrientation.LEFT) {
@@ -39,7 +41,19 @@ public class Flipper implements iGizmo {
 
     }
 
+    public double getX() {
+        return cx;
+    }
+
+    public double getY() {
+        return cy;
+    }
+
     public void rotate() {
+    }
+
+    public FlipperOrientation getOrientation() {
+        return orientation;
     }
 
     public String getName() {
