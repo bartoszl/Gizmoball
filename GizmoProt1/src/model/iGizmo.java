@@ -7,17 +7,26 @@ import java.awt.Color;
  *
  */
 
+<<<<<<< HEAD:GizmoProt1/model/iGizmo.java
+=======
 
+>>>>>>> master:GizmoProt1/src/model/iGizmo.java
 public interface iGizmo {
 	public Color getColor();
 	
 	public void setColor(Color color);
 	
 	public int reservedArea();
+<<<<<<< HEAD:GizmoProt1/model/iGizmo.java
+=======
 
+>>>>>>> master:GizmoProt1/src/model/iGizmo.java
 	
 	public void move(int cx, int cy);
 	
 	public void rotate();
+<<<<<<< HEAD:GizmoProt1/model/iGizmo.java
+=======
 
+>>>>>>> master:GizmoProt1/src/model/iGizmo.java
 }

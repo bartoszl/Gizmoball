@@ -26,7 +26,11 @@ public class SquareBumper implements iGizmo {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+<<<<<<< HEAD:GizmoProt1/model/SquareBumper.java
+	
+=======
 
+>>>>>>> master:GizmoProt1/src/model/SquareBumper.java
 	public void move(int cx, int cy) {
 		sideOne = new LineSegment(cx, cy, cx+1, cy);
 		sideTwo = new LineSegment(cx, cy, cx, cy+1);
@@ -37,7 +41,11 @@ public class SquareBumper implements iGizmo {
 	public void rotate() {
 		
 	}
+<<<<<<< HEAD:GizmoProt1/model/SquareBumper.java
+	
+=======
 
+>>>>>>> master:GizmoProt1/src/model/SquareBumper.java
 	public int reservedArea() {
 		return 1;
 	}
