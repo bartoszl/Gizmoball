@@ -36,22 +36,6 @@ public class RunGUI implements Observer {
     private Controller controller;
 
 	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RunGUI window = new RunGUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
 	 * Create the application.
      * @param m
      */
@@ -79,6 +63,7 @@ public class RunGUI implements Observer {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem load = new JMenuItem("Load");
+		load.addActionListener(controller);
 		mnNewMenu.add(load);
 		
 		JSeparator separator = new JSeparator();
@@ -131,6 +116,32 @@ public class RunGUI implements Observer {
                 addSquareBumperToGrid(x, y, Color.red);
             } else if(gizmo instanceof TriangularBumper) {
                 TriangularBumper triangle = (TriangularBumper) gizmo;
+                int xSideOneP1 = (int) triangle.getSideOne().getP1().getX();
+                int ySideOneP1 = (int) triangle.getSideOne().getP1().getY();
+                int xSideOneP2 = (int) triangle.getSideOne().getP2().getX();
+                int ySideOneP2 = (int) triangle.getSideOne().getP2().getY();
+
+                int xSideTwoP1 = (int) triangle.getSideTwo().getP1().getX();
+                int ySideTwoP1 = (int) triangle.getSideTwo().getP1().getY();
+                int xSideTwoP2 = (int) triangle.getSideTwo().getP2().getX();
+                int ySideTwoP2 = (int) triangle.getSideTwo().getP2().getY();
+
+                int xCP1 = (int) triangle.getHypotenuse().getP1().getX();
+                int yCP1 = (int) triangle.getHypotenuse().getP1().getY();
+                int xCP2 = (int) triangle.getHypotenuse().getP2().getX();
+                int yCP2 = (int) triangle.getHypotenuse().getP2().getY();
+
+                System.out.println("RUN GUI:");
+                System.out.println("P1");
+                System.out.println("Side one: X: " + xSideOneP1 + " Y: " + ySideOneP1);
+                System.out.println("Side two: X: " +xSideTwoP1 + " Y: " + ySideTwoP1);
+                System.out.println("C: X: " + xCP1 + " Y: " + yCP1);
+
+                System.out.println("P2:");
+                System.out.println("Side one: X: " + xSideOneP2 + " Y: " + ySideOneP2);
+                System.out.println("Side two: X: " +xSideTwoP2 + " Y: " + ySideTwoP2);
+                System.out.println("C: X: " + xCP2 + " Y: " + yCP2);
+
                 int x = (int) triangle.getX();
                 int y = (int) triangle.getY();
                 addTriangleBumperToGrid(x, y, Color.blue, 0);
@@ -143,7 +154,6 @@ public class RunGUI implements Observer {
                 Flipper flipper = (Flipper) gizmo;
                 int x = (int) flipper.getX();
                 int y = (int) flipper.getY();
-                System.out.println(x + " - " + y);
                 if(flipper.getOrientation() == FlipperOrientation.LEFT) {
                     addLeftFlipperToGrid(x,y,Color.RED,0);
                 } else {

@@ -47,7 +47,7 @@ public class ModelLoader {
 
                 case "LeftFlipper" :
                 case "RightFlipper" :
-                    System.out.println(model.addGizmo(createFlipper(command)));
+                    model.addGizmo(createFlipper(command));
                     break;
 
                 case "Absorber" :
@@ -66,6 +66,9 @@ public class ModelLoader {
                     model.setFriction(getHorizontalFriction(command), getVerticalFriction(command));
                     break;
 
+                case "Rotate" :
+                    applyRotation(command);
+
                 //case "Connect" :
                     //model.addConnection(createConnection(command));
                     //break;
@@ -75,6 +78,15 @@ public class ModelLoader {
                 //    break;
             }
         }
+    }
+
+    private boolean applyRotation(String[] command) {
+        String gizmoName = command[1];
+        if(model.getGizmo(gizmoName) == null) {
+            return false;
+        }
+        model.getGizmo(gizmoName).rotate();
+        return true;
     }
 
     private iGizmo createTriangularBumper(String[] command) {
@@ -102,12 +114,10 @@ public class ModelLoader {
         double xCoord = Double.parseDouble(command[2]) * scale;
         double yCoord = Double.parseDouble(command[3]) * scale;
         String name = command[1];
-        System.out.println("Orientation: " + command[0] + " - " + xCoord);
         if(command[0].equals("LeftFlipper")) {
             return new Flipper(xCoord, yCoord, FlipperOrientation.LEFT, name);
         }
         Flipper f = new  Flipper(xCoord, yCoord, FlipperOrientation.RIGHT, name);
-        System.out.println(f.getRightLimit());
         return f;
     }
 

@@ -11,6 +11,7 @@ public class TriangularBumper implements iGizmo {
     private Color color;
     private String gizmoName;
     private double cx, cy;
+    private Vect center;
 
     private int scale;
 
@@ -23,6 +24,7 @@ public class TriangularBumper implements iGizmo {
         sideTwo = new LineSegment(cx, cy, cx, cy - (1 * scale));
         hypotenuse = new LineSegment(cx, cy - (1 * scale), cx + (1 * scale), cy);
         this.gizmoName = gizmoName;
+        this.center = new Vect(cx+0.5, cy+0.5);
     }
 
     public double getX() {
@@ -62,7 +64,19 @@ public class TriangularBumper implements iGizmo {
     }
 
     public void rotate() {
-
+        Angle a = Angle.DEG_90;
+        Geometry.rotateAround(sideOne, center, a);
+        Geometry.rotateAround(sideTwo, center, a);
+        Geometry.rotateAround(hypotenuse, center, a);
+        System.out.println(sideOne.getP1().getX());
+        System.out.println(sideOne.getP1().getY());
+        System.out.println("Side one: X: " + sideOne.getP1().getX() + " Y: " + sideOne.getP1().getY());
+        System.out.println("Side two: X: " + sideTwo.getP1().getX() + " Y: " + sideTwo.getP1().getY());
+        System.out.println("C: X: " + hypotenuse.getP1().getX() + " Y: " + hypotenuse.getP1().getX());
+        System.out.println("P2");
+        System.out.println("Side one: X: " + sideOne.getP2().getX() + " Y: " + sideOne.getP2().getY());
+        System.out.println("Side two: X: " + sideTwo.getP2().getX() + " Y: " + sideTwo.getP2().getY());
+        System.out.println("C: X: " + hypotenuse.getP2().getX() + " Y: " + hypotenuse.getP2().getX());
     }
 
     public String getName() {
