@@ -61,19 +61,11 @@ public class Flipper implements iGizmo {
     }
 
     public double getLeftLimit() {
-        if(orientation == FlipperOrientation.LEFT) {
-            return cx;
-        } else {
-            return cx - (2 * scale);
-        }
+        return cx;
     }
 
     public double getRightLimit() {
-        if(orientation == FlipperOrientation.LEFT) {
-            return cx + (2 * scale);
-        } else {
-            return cx;
-        }
+        return cx + (2 * scale);
     }
 
     public double getUpperLimit() {
