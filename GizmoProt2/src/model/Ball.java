@@ -20,12 +20,12 @@ public class Ball implements IBall {
 		y =ypos;
 		velocity = new Vect(xv, yv);
 		color = Color.YELLOW;
-		radius = 10;
+		radius = 5;
 		moving = true;
 		absorbed = false;
 	}
 	
-	public boolean getAbsorbed(){
+	public boolean isAbsorbed(){
 		return absorbed;
 	}
 	

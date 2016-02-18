@@ -65,7 +65,7 @@ public class Absorber implements IAbsorber {
 	public void absorb(Ball ball){
 		//ball.setMoving(false);
 		ball.setXY(xBottomRight-20, yBottomRight-20);
-		Vect v = new Vect(0,-400);
+		Vect v = new Vect(0,-1000);
 		ball.setVelocity(v);
 		ball.setAbsorbed(true);
 		System.out.println("ABSORBED");

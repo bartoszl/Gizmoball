@@ -22,7 +22,7 @@ public class Model extends Observable{
 		double moveTime = 0.05;
 		if(ball!=null && ball.isMoving()){
 			double collisionTime = timeUntilCollision();
-			if(ball.getAbsorbed()==true){
+			if(ball.isAbsorbed()){
 				moveBallForTime(ball, moveTime);
 				if(ball.getY()<abs.getYTopLeft())
 					ball.setAbsorbed(false);
@@ -37,12 +37,25 @@ public class Model extends Observable{
 			this.notifyObservers();
 		} 
 	}
+
+    public void fireFromAbs(){
+        if(ball.isAbsorbed()){
+            moveBallForTime(ball, 0.05);
+        }
+    }
+
+    public double calcVelocity(double Vold, double time){
+        return  Vold * (1 - 0.25 * time - 0.0025 * Math.abs(Vold) * time);
+    }
 	
 	public Ball moveBallForTime(Ball ball, double time){
-		double xVelocity = ball.getVelocity().x();
+        Vect velocity = new Vect(calcVelocity(ball.getVelocity().x(),time), calcVelocity((ball.getVelocity().y() + 25*(time*10)),time));
+        ball.setVelocity(velocity);
+        double xVelocity = ball.getVelocity().x();
 		double yVelocity = ball.getVelocity().y();
 		double newX = ball.getX() + (xVelocity*time);
 		double newY = ball.getY() + (yVelocity*time);
+
 		ball.setXY(newX, newY);
 		return ball;
 	}
@@ -52,7 +65,7 @@ public class Model extends Observable{
 		Vect ballVelocity = ball.getVelocity();
 		
 		double shortestTime = Double.MAX_VALUE;
-		double time=0.00;
+		double time;
 		for(LineSegment line: abs.getLines()){
 			time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
 			if(time<shortestTime)
@@ -66,6 +79,8 @@ public class Model extends Observable{
 		}
 		return shortestTime;
 	}
+
+    public void setMoving(boolean b){ ball.setMoving(b);}
 	
 	public Ball getBall(){
 		return ball;
