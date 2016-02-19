@@ -5,6 +5,9 @@ import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import controller.Controller;
+
 import javax.swing.JButton;
 
 /**
@@ -23,6 +26,8 @@ import javax.swing.JButton;
 public class RunGUI {
 
 	private JFrame frame;
+	private static Controller control;
+	private static RunGUI window;
 
 	/**
 	 * Launch the application.
@@ -31,13 +36,14 @@ public class RunGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RunGUI window = new RunGUI();
+					window = new RunGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		control = new Controller(window);
 	}
 
 	/**

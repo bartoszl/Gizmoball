@@ -44,7 +44,6 @@ public class Flipper implements iGizmo {
 		
 		movement = Movement.NONE;
 	}
-<<<<<<< HEAD:GizmoProt1/model/Flipper.java
 	
 	/**Getter for coordinates -> translated to pixels**/
 	public Vect getCenter() {
@@ -67,18 +66,13 @@ public class Flipper implements iGizmo {
 		return bottomSide.p1().times(20.0);
 	}
 	
-	//TODO or NOT TODO?
 	public void rotate() {
 		
-=======
-
-	public void rotate() {
 		Angle a = Angle.DEG_90;
 		Geometry.rotateAround(topSide, center, a);
 		Geometry.rotateAround(leftSide, center, a);
 		Geometry.rotateAround(bottomSide, center, a);
 		Geometry.rotateAround(rightSide, center, a);
->>>>>>> master:GizmoProt1/src/model/Flipper.java
 	}
 	
 	public void move(int cx, int cy) {
@@ -122,14 +116,6 @@ public class Flipper implements iGizmo {
 				//DO nothing
 				return Angle.ZERO;				
 		}
-<<<<<<< HEAD:GizmoProt1/model/Flipper.java
-=======
-		Angle a = Angle.DEG_90;
-		Geometry.rotateAround(topSide, center, a);
-		Geometry.rotateAround(leftSide, center, a);
-		Geometry.rotateAround(bottomSide, center, a);
-		Geometry.rotateAround(rightSide, center, a);
->>>>>>> master:GizmoProt1/src/model/Flipper.java
 	}
 	
 	public int reservedArea() {
