@@ -17,8 +17,4 @@ public interface iGizmo{
 	public void move(int cx, int cy);
 	public void rotate();
 	public Vect getCenter();
-	public Vect getUpperLeft();
-	public Vect getUpperRight();
-	public Vect getLowerLeft();
-	public Vect getLowerRight();
 }

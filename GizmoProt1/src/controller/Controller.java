@@ -10,7 +10,7 @@ import View.RunGUI;
 import model.Flipper;
 import model.iGizmo;
 
-public class Controller implements KeyListener{
+public class Controller implements KeyListener, ActionListener{
 	private RunGUI gui;
 	private iGizmo flipper;
 	
@@ -21,20 +21,26 @@ public class Controller implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("key pressed: "+e);
+		System.out.println("key pressed: "+e.getKeyChar());
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		System.out.println("key released: "+e);
-		
+		//probably activate the flipper on release?
+		System.out.println("key released: "+e.getKeyChar());
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		System.out.println("key typed: "+e);
+		System.out.println("key typed: "+e.getKeyChar());
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand().equals("exit"))
+			System.exit(0);
 	}
 
 }
