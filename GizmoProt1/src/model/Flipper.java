@@ -1,10 +1,11 @@
 package model;
 
 import java.awt.Color;
+import java.util.Observable;
 
 import physics.*;
 
-public class Flipper implements iGizmo {
+public class Flipper extends Observable implements iGizmo{
 	public static enum Movement {
 		FORWARDS, BACKWARDS, NONE
 	};
@@ -28,7 +29,8 @@ public class Flipper implements iGizmo {
 	public Flipper(int cx, int cy, boolean isLeft, Color color) {
 		double off = isLeft ? 0 : 1.5;
 		this.isLeft = isLeft;
-		center = new Vect(cx, cy);
+		this.color=color;
+		center = new Vect((double)cx, (double)cy);
 		/** o **/
 		topCircle = new Circle(center.x()+0.25 +off, center.y()+0.25, 0.25);
 		/** - **/
@@ -44,41 +46,27 @@ public class Flipper implements iGizmo {
 		
 		movement = Movement.NONE;
 	}
-<<<<<<< HEAD:GizmoProt1/model/Flipper.java
 	
 	/**Getter for coordinates -> translated to pixels**/
 	public Vect getCenter() {
 		return center.times(20.0);
 	}
 	
-	public Vect getUpperLeft() {
-		return topSide.p1().times(20.0);
+	public Circle getOriginCircle(){
+		return topCircle;
 	}
 	
-	public Vect getUpperRight() {
-		return topSide.p2().times(20.0);
+	public Circle getEndCircle(){
+		return bottomCircle;
 	}
 	
-	public Vect getLowerLeft() {
-		return bottomSide.p1().times(20.0);
-	}
-	
-	public Vect getLowerRight() {
-		return bottomSide.p1().times(20.0);
-	}
-	
-	//TODO or NOT TODO?
 	public void rotate() {
 		
-=======
-
-	public void rotate() {
 		Angle a = Angle.DEG_90;
 		Geometry.rotateAround(topSide, center, a);
 		Geometry.rotateAround(leftSide, center, a);
 		Geometry.rotateAround(bottomSide, center, a);
 		Geometry.rotateAround(rightSide, center, a);
->>>>>>> master:GizmoProt1/src/model/Flipper.java
 	}
 	
 	public void move(int cx, int cy) {
@@ -88,6 +76,8 @@ public class Flipper implements iGizmo {
 		leftSide = new LineSegment(cx+off, cy, cx+off, cy+2);
 		rightSide = new LineSegment(cx+off+0.5, cy, cx+off+0.5, cy+2);
 		bottomSide = new LineSegment(cx+off, cy+2, cx+off+0.5, cy+2);		
+		
+		this.notifyObservers();
 	}
 	
 	public Angle movePerTick(Angle left) {
@@ -122,14 +112,6 @@ public class Flipper implements iGizmo {
 				//DO nothing
 				return Angle.ZERO;				
 		}
-<<<<<<< HEAD:GizmoProt1/model/Flipper.java
-=======
-		Angle a = Angle.DEG_90;
-		Geometry.rotateAround(topSide, center, a);
-		Geometry.rotateAround(leftSide, center, a);
-		Geometry.rotateAround(bottomSide, center, a);
-		Geometry.rotateAround(rightSide, center, a);
->>>>>>> master:GizmoProt1/src/model/Flipper.java
 	}
 	
 	public int reservedArea() {
