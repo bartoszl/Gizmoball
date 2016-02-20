@@ -2,19 +2,16 @@ package View;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 
 import controller.Controller;
 import model.Flipper;
 
-import javax.swing.JButton;
 
 /**
  * @author Stephen Dundas and Martin Peev
@@ -57,8 +54,8 @@ public class RunGUI {
 	 * Create the application.
 	 */
 	public RunGUI() {
-		control = new Controller(window);
 		flip = new Flipper(2,2,true,new Color(0,255,0));
+		control = new Controller(window, flip);	
 		initialize();
 	}
 
