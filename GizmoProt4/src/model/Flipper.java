@@ -61,10 +61,10 @@ public class Flipper implements iGizmo {
         Angle a = Angle.DEG_90;
         leftSide = Geometry.rotateAround(leftSide, center, a);
         rightSide = Geometry.rotateAround(rightSide, center, a);
-        c1.setCircle(Geometry.rotateAround(c1.getCircle(), center, a));
-        c1.updateXandY();
-        c2.setCircle(Geometry.rotateAround(c2.getCircle(), center, a));
-        c2.updateXandY();
+        Circle innerC1 = Geometry.rotateAround(c1.getCircle(), center, a);
+        Circle innerC2 = Geometry.rotateAround(c2.getCircle(), center, a);
+        c1 = new CircularBumper(innerC1.getCenter().getX(), innerC1.getCenter().getY(), innerC1.getRadius(), "N/A");
+        c2 = new CircularBumper(innerC2.getCenter().getX(), innerC2.getCenter().getY(), innerC2.getRadius(), "N/A");
     }
 
     public FlipperOrientation getOrientation() {
