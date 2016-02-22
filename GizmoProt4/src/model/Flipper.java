@@ -29,16 +29,24 @@ public class Flipper implements iGizmo {
         this.gizmoName = gizmoName;
         this.orientation = orientation;
         this.pivotPoint = new Vect(cx, cy);
+        this.center = new Vect(cx + (1*scale), cy + (1*scale));
         if(orientation == FlipperOrientation.LEFT) {
-            leftSide = new LineSegment(cx, cy, cx, cy + (1.75 * scale));
-            rightSide = new LineSegment(cx + (0.5 * scale), cy, cx + (0.5 * scale), cy + (1.75 * scale));
-            c1 = new CircularBumper(cx + (0.25 * scale), cy + (0.25 * scale), (0.25 * 20), "N/A");
-            c2 = new CircularBumper(cx + (0.25 * scale), cy + (1.75 * scale), (0.25 * 20), "N/A");
+//            leftSide = new LineSegment(cx, cy, cx, cy + (1.75 * scale));
+//            rightSide = new LineSegment(cx + (0.5 * scale), cy, cx + (0.5 * scale), cy + (1.75 * scale));
+//            c1 = new CircularBumper(cx + (0.25 * scale), cy + (0.25 * scale), (0.25 * 20), "N/A");
+//            c2 = new CircularBumper(cx + (0.25 * scale), cy + (1.75 * scale), (0.25 * 20), "N/A");
+            leftSide = new LineSegment(cx, cy + (0.25*scale), cx, cy + (1.75*scale));
+            rightSide = new LineSegment(cx + (0.5*scale), cy + (0.25*scale), cx + (0.5*scale), cy + (1.75*scale));
+            c1 = new CircularBumper(cx + (0.25*scale), leftSide.getP1().getY(), (0.25*scale), "N/A");
+            c2 = new CircularBumper(cx + (0.25*scale), leftSide.getP2().getY(), (0.25*scale), "N/A");
         } else {
-            c1 = new CircularBumper(cx - (0.25 * scale), cy + (0.25 * scale), (0.25 * 20), "N/A");
-            c2 = new CircularBumper(cx - (0.25 * scale), cy  +(1.75 * scale), (0.25 * 20), "N/A");
+//            c1 = new CircularBumper(cx - (0.25 * scale), cy + (0.25 * scale), (0.25 * 20), "N/A");
+//            c2 = new CircularBumper(cx - (0.25 * scale), cy  +(1.75 * scale), (0.25 * 20), "N/A");
+            leftSide = new LineSegment(cx + (1.5*scale), cy + (0.25*scale), cx + (1.5*scale), cy + (1.75*scale));
+            rightSide = new LineSegment(cx + (2*scale), cy + (0.25*scale), cx + (2*scale), cy + (1.75*scale));
+            c1 = new CircularBumper(leftSide.getP1().getX() + (0.25*scale), leftSide.getP1().getY(), (0.25*scale), "N/A");
+            c2 = new CircularBumper(rightSide.getP2().getX() - (0.25*scale), rightSide.getP2().getY(), (0.25*scale), "N/A");
         }
-
     }
 
     public double getX() {
@@ -50,6 +58,13 @@ public class Flipper implements iGizmo {
     }
 
     public void rotate() {
+        Angle a = Angle.DEG_90;
+        leftSide = Geometry.rotateAround(leftSide, center, a);
+        rightSide = Geometry.rotateAround(rightSide, center, a);
+        c1.setCircle(Geometry.rotateAround(c1.getCircle(), center, a));
+        c1.updateXandY();
+        c2.setCircle(Geometry.rotateAround(c2.getCircle(), center, a));
+        c2.updateXandY();
     }
 
     public FlipperOrientation getOrientation() {
@@ -96,5 +111,21 @@ public class Flipper implements iGizmo {
 
     public String getGizmoName() {
         return gizmoName;
+    }
+
+    public CircularBumper getC1() {
+        return c1;
+    }
+
+    public CircularBumper getC2() {
+        return c2;
+    }
+
+    public LineSegment getLeftSide() {
+        return leftSide;
+    }
+
+    public LineSegment getRightSide() {
+        return rightSide;
     }
 }

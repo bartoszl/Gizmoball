@@ -129,4 +129,5 @@ public class GBallModel extends Observable implements iGBallModel {
     public List<iBall> getBalls() {
         return balls;
     }
+
 }

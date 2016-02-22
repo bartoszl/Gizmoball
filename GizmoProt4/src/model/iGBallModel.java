@@ -29,5 +29,4 @@ public interface iGBallModel {
 
     public List<iBall> getBalls();
 
-
 }

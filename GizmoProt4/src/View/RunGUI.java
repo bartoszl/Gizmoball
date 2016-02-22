@@ -282,28 +282,20 @@ public class RunGUI implements Observer {
 		}
 		
 		private void drawLeftFlippers(Graphics g) {
-			for(Attributes lFlip: leftFlippers){
-				g.setColor(lFlip.getColor());
-				switch(lFlip.getRotation()){
-					case 0: g.fillOval(lFlip.getXcoordinate(), lFlip.getYcoordinate(), 10, 10);
-							g.fillRect(lFlip.getXcoordinate(), lFlip.getYcoordinate()+5, 10, 30);
-							g.fillOval(lFlip.getXcoordinate(), lFlip.getYcoordinate()+30, 10, 10);
-							break;
-					case 1:	g.fillOval(lFlip.getXcoordinate(), lFlip.getYcoordinate()+30, 10, 10);
-							g.fillRect(lFlip.getXcoordinate()+5, lFlip.getYcoordinate()+30, 30, 10);
-							g.fillOval(lFlip.getXcoordinate()+30, lFlip.getYcoordinate()+30, 10, 10);
-							break;
-					case 2: g.fillOval(lFlip.getXcoordinate()+30, lFlip.getYcoordinate(), 10, 10);
-							g.fillRect(lFlip.getXcoordinate()+30, lFlip.getYcoordinate()+5, 10, 30);
-							g.fillOval(lFlip.getXcoordinate()+30, lFlip.getYcoordinate()+30, 10, 10);
-							break;
-					case 3:	g.fillOval(lFlip.getXcoordinate(), lFlip.getYcoordinate(), 10, 10);
-							g.fillRect(lFlip.getXcoordinate()+5, lFlip.getYcoordinate(), 30, 10);
-							g.fillOval(lFlip.getXcoordinate()+30, lFlip.getYcoordinate(), 10, 10);
-							break;
-				}
-				
-			}	
+            g.setColor(Color.yellow);
+            for(iGizmo gizmo: model.getGizmos()) {
+                if(gizmo instanceof Flipper) {
+                    Flipper f = (Flipper) gizmo;
+                    if(f.getOrientation() == FlipperOrientation.LEFT) {
+                        g.fillOval((int) f.getC1().getCentreX() - 5, (int) f.getC1().getCentreY() - 5, 10, 10);
+
+                        int width = (int) f.getLeftSide().getP1().getX() - (int) f.getRightSide().getP1().getX();
+                        int height = (int) f.getLeftSide().getP2().getY() - (int) f.getLeftSide().getP1().getY();
+                        g.fillRect((int) f.getLeftSide().getP1().getX(), (int) f.getLeftSide().getP1().getY(), 10, 30);
+                        g.fillOval((int) f.getC2().getCentreX() - 5, (int) f.getC2().getCentreY() - 5, 10, 10);
+                    }
+                }
+            }
 		}
 		
 		public boolean addLeftFlipper(int x, int y, Color color, int rotation){
@@ -311,27 +303,20 @@ public class RunGUI implements Observer {
 		}
 		
 		private void drawRightFlippers(Graphics g) {
-			for(Attributes rFlip: rightFlippers){
-				g.setColor(rFlip.getColor());
-				switch(rFlip.getRotation()){
-				case 0: g.fillOval(rFlip.getXcoordinate()+30, rFlip.getYcoordinate(), 10, 10);
-						g.fillRect(rFlip.getXcoordinate()+30, rFlip.getYcoordinate()+5, 10, 30);
-						g.fillOval(rFlip.getXcoordinate()+30, rFlip.getYcoordinate()+30, 10, 10);
-						break;
-				case 1:	g.fillOval(rFlip.getXcoordinate(), rFlip.getYcoordinate(), 10, 10);
-						g.fillRect(rFlip.getXcoordinate()+5, rFlip.getYcoordinate(), 30, 10);
-						g.fillOval(rFlip.getXcoordinate()+30, rFlip.getYcoordinate(), 10, 10);
-						break;
-				case 2: g.fillOval(rFlip.getXcoordinate(), rFlip.getYcoordinate(), 10, 10);
-						g.fillRect(rFlip.getXcoordinate(), rFlip.getYcoordinate()+5, 10, 30);
-						g.fillOval(rFlip.getXcoordinate(), rFlip.getYcoordinate()+30, 10, 10);
-						break;
-				case 3:	g.fillOval(rFlip.getXcoordinate(), rFlip.getYcoordinate()+30, 10, 10);
-						g.fillRect(rFlip.getXcoordinate()+5, rFlip.getYcoordinate()+30, 30, 10);
-						g.fillOval(rFlip.getXcoordinate()+30, rFlip.getYcoordinate()+30, 10, 10);
-						break;
-				}
-			}	
+            g.setColor(Color.yellow);
+            for(iGizmo gizmo: model.getGizmos()) {
+                if(gizmo instanceof Flipper) {
+                    Flipper f = (Flipper) gizmo;
+
+                    if(f.getOrientation() == FlipperOrientation.RIGHT) {
+                        g.fillOval((int) f.getC1().getCentreX() - 5, (int) f.getC1().getCentreY() - 5, 10, 10);
+                        int width = (int) f.getLeftSide().getP1().getX() - (int) f.getRightSide().getP1().getX();
+                        int height = (int) f.getLeftSide().getP2().getY() - (int) f.getLeftSide().getP1().getY();
+                        g.fillRect((int) f.getLeftSide().getP1().getX(), (int) f.getLeftSide().getP1().getY(), 10, 30);
+                        g.fillOval((int) f.getC2().getCentreX() - 5, (int) f.getC2().getCentreY() - 5, 10, 10);
+                    }
+                }
+            }
 		}
 		
 		public boolean addRightFlipper(int x, int y, Color color, int rotation){
@@ -390,23 +375,14 @@ public class RunGUI implements Observer {
 		Color color;
 		
 		public Triangle(TriangularBumper triangle){
-			this.color=color;
-			//xCoordinate=x;
-			//yCoordinate=y;
             xCoordinate = (int) triangle.getX();
             yCoordinate = (int) triangle.getY();
             x[0] = (int) triangle.getSideOne().getP1().getX();
             y[0] = (int) triangle.getSideOne().getP1().getY();
-            //x[0] = xCoordinate;
-            //y[0] = yCoordinate;
             x[1] = (int) triangle.getSideTwo().getP2().getX();
             y[1] = (int) triangle.getSideTwo().getP2().getY();
             x[2] = (int) triangle.getHypotenuse().getP2().getX();
             y[2] = (int) triangle.getHypotenuse().getP2().getY();
-//            System.out.println("This: " +x[0] + " " + x[1] + " " + x[2]);
-//            System.out.println("Y: " + y[0] + " " + y[1] + " " + y[2]);
-            //this.rotate=rotate%4;
-			//calculate();
 		}
 		
 		public int[] getXcoordinates(){
@@ -420,44 +396,6 @@ public class RunGUI implements Observer {
 		public Color getColor(){
 			return color;
 		}
-		
-		private void calculate(){
-			/*switch(rotate){
-				case 0:	this.x[0]=xCoordinate;
-						this.y[0]=yCoordinate;
-						this.x[1]=xCoordinate+20;
-						this.y[1]=yCoordinate;
-						this.x[2]=xCoordinate+20;
-						this.y[2]=yCoordinate+20;
-						break;	
-				case 1:	this.x[0]=xCoordinate;
-						this.y[0]=yCoordinate;
-						this.x[1]=xCoordinate+20;
-						this.y[1]=yCoordinate;
-						this.x[2]=xCoordinate;
-						this.y[2]=yCoordinate+20;
-						break;
-				case 2:	this.x[0]=xCoordinate;
-						this.y[0]=yCoordinate;
-						this.x[1]=xCoordinate+20;
-						this.y[1]=yCoordinate+20;
-						this.x[2]=xCoordinate;
-						this.y[2]=yCoordinate+20;
-						break;
-				case 3:	this.x[0]=xCoordinate+20;
-						this.y[0]=yCoordinate;
-						this.x[1]=xCoordinate+20;
-						this.y[1]=yCoordinate+20;
-						this.x[2]=xCoordinate;
-						this.y[2]=yCoordinate+20;
-						break;
-			}*/
-		}
-		
-		/*public void rotate(){
-			rotate=(rotate+1)%4;
-			calculate();
-		}*/
 	}
 
     private class Ball {
