@@ -74,12 +74,20 @@ public class Flipper implements iGizmo {
     }
 
     @Override
+<<<<<<< HEAD
+    public int getX() {
+=======
     public double getX() {
+>>>>>>> master
         return cx;
     }
 
     @Override
+<<<<<<< HEAD
+    public int getY() {
+=======
     public double getY() {
+>>>>>>> master
         return cy;
     }
 

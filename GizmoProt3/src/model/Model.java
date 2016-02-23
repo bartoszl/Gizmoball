@@ -5,12 +5,88 @@ import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
+<<<<<<< HEAD
+=======
 import java.awt.*;
+>>>>>>> master
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
 public class Model extends Observable{
+<<<<<<< HEAD
+	//private Absorber abs;
+    private List<iGizmo> gizmos;
+	private Ball ball;
+	private Walls walls;
+    private LineSegment colWall;
+	
+	public Model(){
+        gizmos = initGizmos();
+		ball = new Ball(200,300,100,100);
+		walls = new Walls();
+		//abs = new Absorber(0,380, 400,400);
+	}
+	
+	public void moveBall(){
+		double moveTime = 0.05;
+		if(ball!=null && ball.isMoving()){
+			double collisionTime = timeUntilCollision();
+			if(ball.isAbsorbed()){
+				//moveBallForTime(ball, moveTime);
+				//if(ball.getY()<abs.getYTopLeft())
+					ball.setAbsorbed(false);
+			} else
+			if(collisionTime>moveTime){
+				ball = moveBallForTime(ball, moveTime);
+			} else {
+                ball.setVelocity(Geometry.reflectWall(colWall,ball.getVelocity()));
+				ball = moveBallForTime(ball, collisionTime);
+			}
+			this.setChanged();
+			this.notifyObservers();
+		} 
+	}
+
+    public double calcVelocity(double Vold, double time){
+        System.out.println("Vnew %: " + (1 - (0.002 * time) - (0.002 * Math.abs(Vold) * time)));
+        System.out.println("Vold: " + Vold);
+        return  Vold * (1 - (0.2 * time) - (0.002 * Math.abs(Vold) * time));
+    }
+	
+	public Ball moveBallForTime(Ball ball, double time){
+        //Vect velocity = new Vect(calcVelocity(ball.getVelocity().x(),time), calcVelocity((ball.getVelocity().y() + 200*(time)),time));
+        //ball.setVelocity(velocity);
+        double xVelocity = ball.getVelocity().x();
+		double yVelocity = ball.getVelocity().y();
+		double newX = ball.getX() + (xVelocity*time);
+		double newY = ball.getY() + (yVelocity*time);
+
+		ball.setXY(newX, newY);
+		return ball;
+	}
+	
+	private double timeUntilCollision(){
+		Circle ballCircle = ball.getCircle();
+		Vect ballVelocity = ball.getVelocity();
+		
+		double shortestTime = Double.MAX_VALUE;
+		double time;
+        for(int i = 0; i < walls.getWalls().size(); i++){
+            time = Geometry.timeUntilWallCollision(walls.getWalls().get(i), ballCircle, ballVelocity);
+            if(time<shortestTime) {
+                shortestTime = time;
+                colWall = walls.getWalls().get(i);
+            }
+        }
+        for(iGizmo g : this.getGizmos()){
+            if(g.getName().toCharArray()[0]=='s'){
+                //time = Geometry.timeUntilWallCollision(g.getSide, ballCircle, ballVelocity);
+            }
+        }
+		return shortestTime;
+	}
+=======
     private List<iGizmo> gizmos;
 	private Ball ball;
 	private Walls walls;
@@ -160,6 +236,7 @@ public class Model extends Observable{
         totalLines.add(tBumper.getSideOne());
         totalLines.add(tBumper.getHypotenuse());
     }
+>>>>>>> master
 
     public void setMoving(boolean b){ ball.setMoving(b);}
 	
@@ -167,6 +244,10 @@ public class Model extends Observable{
 		return ball;
 	}
 
+<<<<<<< HEAD
+    public List<iGizmo> getGizmos(){ return gizmos; }
+
+=======
     public Absorber getAbsorber() {
         return abs;
     }
@@ -177,6 +258,7 @@ public class Model extends Observable{
         ball.setVelocity(new Vect(x,y));
     }
 
+>>>>>>> master
     private List<iGizmo> initGizmos() {
         List<iGizmo> gizmos = new ArrayList<>();
         gizmos.add(new SquareBumper(18,2,"s0"));
@@ -194,8 +276,13 @@ public class Model extends Observable{
         gizmos.add(new SquareBumper(2,2,"s12"));
         gizmos.add(new SquareBumper(1,2,"s13"));
         gizmos.add(new SquareBumper(0,2,"s14"));
+<<<<<<< HEAD
+        gizmos.add(new TriangularBumper(19,0,4,"t0"));
+        gizmos.add(new TriangularBumper(1,1,1,"t1"));
+=======
         //gizmos.add(new TriangularBumper(19,0,4,"t0"));
         //gizmos.add(new TriangularBumper(1,1,1,"t1"));
+>>>>>>> master
         gizmos.add(new Flipper(9,2,FlipperOrientation.LEFT,"f0"));
         gizmos.add(new Flipper(8,7,FlipperOrientation.LEFT,"f1"));
         gizmos.add(new Flipper(11,2,FlipperOrientation.RIGHT,"f2"));

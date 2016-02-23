@@ -2,11 +2,17 @@ package View;
 
 import model.*;
 
+<<<<<<< HEAD
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+=======
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+>>>>>>> master
 
 public class Controller implements ActionListener {
 
@@ -20,6 +26,9 @@ public class Controller implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand() == "Load") {
+<<<<<<< HEAD
+            System.out.println("Load buttom is being clicked.");
+=======
             JFileChooser fc = new JFileChooser();
             fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
             int valid = fc.showOpenDialog(view.getFrame());
@@ -29,6 +38,7 @@ public class Controller implements ActionListener {
                 view.setModel(ml.getModel());
                 view.reload();
             }
+>>>>>>> master
         }
     }
 }

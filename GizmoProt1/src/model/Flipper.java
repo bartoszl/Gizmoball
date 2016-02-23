@@ -5,10 +5,14 @@ import java.util.Observable;
 
 import physics.*;
 
-public class Flipper extends Observable implements iGizmo{
+public class Flipper extends Observable implements iGizmo, Runnable{
 	public static enum Movement {
 		FORWARDS, BACKWARDS, NONE
-	};
+	}
+	
+	public static enum Position {
+		VERTICAL, HORIZONTAL, BETWEEN
+	}
 	
 	private boolean isLeft;
 	private Color color;
@@ -19,7 +23,11 @@ public class Flipper extends Observable implements iGizmo{
 	private LineSegment rightSide;
 	private LineSegment bottomSide;
 	private Vect center;
-	private Movement movement;
+	private static Movement movement;
+	private Position position;
+	private Angle rotation;
+	private Angle leftToRotate;
+	private Vect centerOfRotation;
 	
 	/**
 	 * By now just keep it simply rectangular
@@ -27,7 +35,11 @@ public class Flipper extends Observable implements iGizmo{
 	 * @param cy
 	 */
 	public Flipper(int cx, int cy, boolean isLeft, Color color) {
+		leftToRotate = Angle.DEG_90;
 		double off = isLeft ? 0 : 1.5;
+		//For the right flipper it is 54 degrees -> 0.95 rad
+		//For the left it is 360 - 54 = 304 ->
+		rotation = new Angle(0.95);
 		this.isLeft = isLeft;
 		this.color=color;
 		center = new Vect((double)cx, (double)cy);
@@ -44,7 +56,10 @@ public class Flipper extends Observable implements iGizmo{
 		/** o **/
 		bottomCircle = new Circle(center.x()+off+0.25, center.y()+1.75, 0.25);
 		
+		centerOfRotation = topCircle.getCenter();
 		movement = Movement.NONE;
+		position = Position.VERTICAL;
+		
 	}
 	
 	/**Getter for coordinates -> translated to pixels**/
@@ -80,38 +95,82 @@ public class Flipper extends Observable implements iGizmo{
 		this.notifyObservers();
 	}
 	
+	public Angle getLeft() {
+		return leftToRotate;
+	}
+	
+	public void setLeft(Angle left) {
+		leftToRotate = left;
+	}
+	
 	public Angle movePerTick(Angle left) {
 		/* Move at angular velocity of 1080 degrees per second
 		 * One tick is approx 0.05 sec -> 1080/100 * 5 = 54 (about 0.95 radians) 
 		 * degrees per tick
 		 */
 		//check the current state
-		Angle rotation = new Angle(0.95);
+		
 		switch(movement) {
 			case FORWARDS:
 				if(left.compareTo(rotation) > 0) {
 					//still much to go -> rotate it
-					Geometry.rotateAround(topSide, center,rotation);
-					Geometry.rotateAround(leftSide, center,rotation);
-					Geometry.rotateAround(rightSide, center,rotation);
-					Geometry.rotateAround(bottomSide, center,rotation);
-					return left.minus(rotation);
+					move(rotation);
+					leftToRotate = left.minus(rotation);
+					setPosition(Position.BETWEEN);
+					return leftToRotate;
+				} else if(left.compareTo(Angle.DEG_90) == 0) {
+					//nothing left -> just quit
+					movement = Movement.NONE;
+					leftToRotate = Angle.ZERO;
+					setPosition(Position.HORIZONTAL);
+					return Angle.ZERO;
 				} else {
 					//not much left -> rotate till end
-					Geometry.rotateAround(topSide, center,left);
-					Geometry.rotateAround(leftSide, center,left);
-					Geometry.rotateAround(rightSide, center,left);
-					Geometry.rotateAround(bottomSide, center,left);
+					//left = isLeft ? Angle.DEG_90.minus(left) : left;
+					move(left);
 					movement = Movement.NONE;
+					setPosition(Position.HORIZONTAL);
+					leftToRotate = Angle.ZERO;
 					return Angle.ZERO;
 				}
 			case BACKWARDS:
-				//not quite how to specify other direction yet
-				return Angle.ZERO;
+				if(left.compareTo(rotation) > 0) {
+					//still much to go -> rotate it
+					move(Angle.ZERO.minus(rotation));
+					leftToRotate = left.minus(rotation);
+					setPosition(Position.BETWEEN);
+					return leftToRotate;
+				} else if(left.compareTo(Angle.DEG_90) == 0) {
+					//nothing left -> just quit
+					movement = Movement.NONE;
+					leftToRotate = Angle.DEG_90;
+					setPosition(Position.VERTICAL);
+					return Angle.ZERO;
+				} else {
+					//not much left -> rotate till end
+					//left = isLeft ? Angle.DEG_90.minus(left) : left;
+					move(Angle.ZERO.minus(left));
+					movement = Movement.NONE;
+					leftToRotate = Angle.DEG_90;
+					setPosition(Position.VERTICAL);
+					return Angle.ZERO;
+				}
 			default:
 				//DO nothing
 				return Angle.ZERO;				
 		}
+	}
+	
+	public void move(Angle a) {
+		a = isLeft ? Angle.ZERO.minus(a) : a;
+		bottomCircle = Geometry.rotateAround(bottomCircle, centerOfRotation, a);
+		topSide = Geometry.rotateAround(topSide, centerOfRotation, a);
+		leftSide = Geometry.rotateAround(leftSide, centerOfRotation, a);
+		rightSide = Geometry.rotateAround(rightSide, centerOfRotation, a);
+		bottomSide = Geometry.rotateAround(bottomSide, centerOfRotation, a);
+		topCircle = Geometry.rotateAround(topCircle, centerOfRotation, a);
+		setChanged();
+		notifyObservers();
 	}
 	
 	public int reservedArea() {
@@ -126,7 +185,35 @@ public class Flipper extends Observable implements iGizmo{
 		this.color = color;
 	}
 	
+	public Movement getMovement() {
+		return movement;
+	}
+	
 	public void setMovement(Movement movement) {
 		this.movement = movement;
+	}
+	
+	public Position getPosition() {
+		return position;
+	}
+	
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	@Override
+	public void run() {
+		//System.out.println("forwards");
+		//setMovement(Movement.FORWARDS);
+		Angle a = Angle.DEG_90;
+		while(getMovement() == Movement.FORWARDS) {
+			a = movePerTick(a);
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 }
