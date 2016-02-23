@@ -4,22 +4,22 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import controller.Controller;
+import controller.KeyController;
+import controller.MagicKeyListener;
 import model.Absorber;
 import model.Ball;
 import model.IAbsorber;
 import model.IBall;
 import model.Model;
-
-import javax.swing.JButton;
 
 /**
  * @author Stephen Dundas
@@ -40,6 +40,8 @@ public class RunGUI{
 	private JFrame frame;
 	private Board board;
 	private ActionListener controller;
+    private KeyListener key_controller;
+    private MagicKeyListener mkl;
 	private Model model;
 	//private Board board;
 
@@ -67,6 +69,8 @@ public class RunGUI{
 		this.model = new Model();
 		//this.model.addObserver(this);
 		controller = new Controller(model);
+        key_controller = new KeyController(model);
+        mkl = new MagicKeyListener(key_controller);
 		initialize();
 	}
 
@@ -78,28 +82,37 @@ public class RunGUI{
 		frame.setBounds(100, 100, 564, 440);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+        frame.addKeyListener(mkl);
+
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 147, 441);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
-		
+
 		JButton btnRun = new JButton("Run");
 		btnRun.addActionListener(controller);
 		btnRun.setActionCommand("run");
 		btnRun.setBounds(10, 10, 127, 58);
+        btnRun.addKeyListener(mkl);
 		panel.add(btnRun);
+
+        JButton btnStop = new JButton("Stop");
+        btnStop.addActionListener(controller);
+        btnStop.setActionCommand("stop");
+        btnStop.setBounds(10, 79, 127, 58);
+        panel.add(btnStop);
 		
 		JButton btnTick = new JButton("Tick");
 		btnTick.addActionListener(controller);
 		btnTick.setActionCommand("tick");
-		btnTick.setBounds(10, 79, 127, 58);
+		btnTick.setBounds(10, 148, 127, 58);
+        btnTick.addKeyListener(mkl);
 		panel.add(btnTick);
 		
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.addActionListener(controller);
 		btnQuit.setActionCommand("exit");
-		btnQuit.setBounds(10, 148, 127, 58);
+		btnQuit.setBounds(10, 217, 127, 58);
 		panel.add(btnQuit);
 		
 		board = new Board(model);

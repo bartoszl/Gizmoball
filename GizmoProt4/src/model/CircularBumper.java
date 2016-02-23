@@ -84,4 +84,13 @@ public class CircularBumper extends Observable implements iGizmo {
     public double getRadius() {
         return radius;
     }
+
+    public void setCircle(Circle cirlce) {
+        this.circle = circle;
+    }
+
+    public void updateXandY() {
+        this.cx = circle.getCenter().getX();
+        this.cy = circle.getCenter().getY();
+    }
 }

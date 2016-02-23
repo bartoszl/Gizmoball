@@ -4,9 +4,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
-/**
- * Created by John Watt on 08/02/2016.
- */
 public class ValidatorTest {
     private Validator reader;
     @org.junit.Before

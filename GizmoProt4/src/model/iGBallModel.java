@@ -2,6 +2,8 @@ package model;
 
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 public interface iGBallModel {
 
@@ -26,6 +28,5 @@ public interface iGBallModel {
     public List<iAbsorber> getAbsorbers();
 
     public List<iBall> getBalls();
-
 
 }

@@ -22,13 +22,18 @@ public class Controller implements ActionListener{
 		// handle close
 		if(e.getSource() ==  timer){
 			model.moveBall();
-			System.out.println("Im here");
 		} else
 			switch (e.getActionCommand()) {
 				case "run":
+                    model.setMoving(true);
 					timer.start();
 					break;
+                case "stop":
+                    model.setMoving(false);
+                    break;
 				case "tick":
+                    timer.stop();
+                    model.setMoving(true);
 					model.moveBall();
 					break;
 				case "exit":
