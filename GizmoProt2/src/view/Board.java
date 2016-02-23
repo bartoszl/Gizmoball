@@ -28,10 +28,10 @@ class Board extends JPanel implements Observer{
 	}
 	
 	private void drawGrid(Graphics g){
-//		for(int i = 0; i <= 20; i++){
-//			g.drawLine(0, i*20, 400, i*20);
-//			g.drawLine(i*20, 0, i*20, 400);
-//		}
+		for(int i = 0; i <= 20; i++){
+			g.drawLine(0, i*20, 400, i*20);
+			g.drawLine(i*20, 0, i*20, 400);
+		}
         g.drawLine(0,0,400,0);
         g.drawLine(0,0,0,400);
 	}
