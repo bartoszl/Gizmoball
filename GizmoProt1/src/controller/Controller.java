@@ -12,6 +12,7 @@ import physics.Angle;
 import View.RunGUI;
 import model.Flipper;
 import model.Flipper.Movement;
+import model.Flipper.Position;
 import model.iGizmo;
 
 public class Controller implements KeyListener, ActionListener{
@@ -19,45 +20,48 @@ public class Controller implements KeyListener, ActionListener{
 	private Flipper flipper;
 	private Movement movement;
 	private Timer timer;
+	private MagicKeyListener mkl;
+	private Angle a;
 	
 	public Controller(RunGUI gui, Flipper flipper){
-		this.gui=gui;
+		this.a = Angle.DEG_90;
+		this.gui = gui;
 		this.flipper = flipper;
+		this.mkl = new MagicKeyListener(this);
+		this.timer = new Timer(50, this);
+		this.timer.start();
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		if(flipper.getPosition() == Position.VERTICAL) {
+			a = flipper.getLeft();
+			flipper.setMovement(Movement.FORWARDS);
 		//Thread t = new Thread(flipper);
 		//t.start();
-		System.out.println("forwards");
-		flipper.setMovement(Movement.FORWARDS);
-		Angle a = Angle.DEG_90;
-		while(flipper.getMovement() == Movement.FORWARDS) {
-			a = flipper.movePerTick(a);
-			/*try {
-				Thread.sleep(50);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}*/
+		} else if(flipper.getPosition() == Position.BETWEEN) {
+			if(flipper.getMovement() == Movement.BACKWARDS) {
+				//reverse it
+				flipper.setLeft(Angle.DEG_90.minus(flipper.getLeft()));
+			}
+			a = flipper.getLeft();
+			flipper.setMovement(Movement.FORWARDS);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if(flipper.getPosition() == Position.HORIZONTAL) {
 		//probably activate the flipper on release?
-		System.out.println("backwards");
-		flipper.setMovement(Movement.BACKWARDS);
-		//Angle a = Angle.DEG_90.minus(flipper.getLeft());
-		Angle a = Angle.DEG_90;
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		while(flipper.getMovement() == Movement.BACKWARDS) {
-			a = flipper.movePerTick(a);
+			a = Angle.DEG_90.minus(flipper.getLeft());
+			flipper.setMovement(Movement.BACKWARDS);
+		} else if(flipper.getPosition() == Position.BETWEEN) {
+			if(flipper.getMovement() == Movement.FORWARDS) {
+				//reverse it
+				flipper.setLeft(Angle.DEG_90.minus(flipper.getLeft()));
+			}
+			a = flipper.getLeft();
+			flipper.setMovement(Movement.BACKWARDS);
 		}
 	}
 
@@ -69,8 +73,18 @@ public class Controller implements KeyListener, ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals("exit"))
-			System.exit(0);
+		//if(e.getActionCommand().equals("exit"))
+		//	System.exit(0);
+		if(flipper.getMovement() == Movement.FORWARDS) {
+			System.out.println("forwards");
+			//System.out.println(flipper.getPosition());
+			//flipper.setMovement(Movement.FORWARDS);
+			a = flipper.movePerTick(a);	
+		} else if(flipper.getMovement() == Movement.BACKWARDS) {
+			System.out.println("backwards");
+			//System.out.println(flipper.getPosition());
+			a = flipper.movePerTick(a);		
+		}
 	}
 
 }

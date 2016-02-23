@@ -9,7 +9,10 @@ public class Flipper extends Observable implements iGizmo, Runnable{
 	public static enum Movement {
 		FORWARDS, BACKWARDS, NONE
 	}
-
+	
+	public static enum Position {
+		VERTICAL, HORIZONTAL, BETWEEN
+	}
 	
 	private boolean isLeft;
 	private Color color;
@@ -21,8 +24,10 @@ public class Flipper extends Observable implements iGizmo, Runnable{
 	private LineSegment bottomSide;
 	private Vect center;
 	private static Movement movement;
+	private Position position;
 	private Angle rotation;
 	private Angle leftToRotate;
+	private Vect centerOfRotation;
 	
 	/**
 	 * By now just keep it simply rectangular
@@ -51,7 +56,10 @@ public class Flipper extends Observable implements iGizmo, Runnable{
 		/** o **/
 		bottomCircle = new Circle(center.x()+off+0.25, center.y()+1.75, 0.25);
 		
+		centerOfRotation = topCircle.getCenter();
 		movement = Movement.NONE;
+		position = Position.VERTICAL;
+		
 	}
 	
 	/**Getter for coordinates -> translated to pixels**/
@@ -91,6 +99,10 @@ public class Flipper extends Observable implements iGizmo, Runnable{
 		return leftToRotate;
 	}
 	
+	public void setLeft(Angle left) {
+		leftToRotate = left;
+	}
+	
 	public Angle movePerTick(Angle left) {
 		/* Move at angular velocity of 1080 degrees per second
 		 * One tick is approx 0.05 sec -> 1080/100 * 5 = 54 (about 0.95 radians) 
@@ -104,12 +116,21 @@ public class Flipper extends Observable implements iGizmo, Runnable{
 					//still much to go -> rotate it
 					move(rotation);
 					leftToRotate = left.minus(rotation);
+					setPosition(Position.BETWEEN);
 					return leftToRotate;
+				} else if(left.compareTo(Angle.DEG_90) == 0) {
+					//nothing left -> just quit
+					movement = Movement.NONE;
+					leftToRotate = Angle.ZERO;
+					setPosition(Position.HORIZONTAL);
+					return Angle.ZERO;
 				} else {
 					//not much left -> rotate till end
 					//left = isLeft ? Angle.DEG_90.minus(left) : left;
 					move(left);
 					movement = Movement.NONE;
+					setPosition(Position.HORIZONTAL);
+					leftToRotate = Angle.ZERO;
 					return Angle.ZERO;
 				}
 			case BACKWARDS:
@@ -117,12 +138,21 @@ public class Flipper extends Observable implements iGizmo, Runnable{
 					//still much to go -> rotate it
 					move(Angle.ZERO.minus(rotation));
 					leftToRotate = left.minus(rotation);
+					setPosition(Position.BETWEEN);
 					return leftToRotate;
+				} else if(left.compareTo(Angle.DEG_90) == 0) {
+					//nothing left -> just quit
+					movement = Movement.NONE;
+					leftToRotate = Angle.DEG_90;
+					setPosition(Position.VERTICAL);
+					return Angle.ZERO;
 				} else {
 					//not much left -> rotate till end
 					//left = isLeft ? Angle.DEG_90.minus(left) : left;
 					move(Angle.ZERO.minus(left));
 					movement = Movement.NONE;
+					leftToRotate = Angle.DEG_90;
+					setPosition(Position.VERTICAL);
 					return Angle.ZERO;
 				}
 			default:
@@ -133,12 +163,12 @@ public class Flipper extends Observable implements iGizmo, Runnable{
 	
 	public void move(Angle a) {
 		a = isLeft ? Angle.ZERO.minus(a) : a;
-		bottomCircle = Geometry.rotateAround(bottomCircle, center, a);
-		topSide = Geometry.rotateAround(topSide, center, a);
-		leftSide = Geometry.rotateAround(leftSide, center, a);
-		rightSide = Geometry.rotateAround(rightSide, center, a);
-		bottomSide = Geometry.rotateAround(bottomSide, center, a);
-		topCircle = Geometry.rotateAround(topCircle, center, a);
+		bottomCircle = Geometry.rotateAround(bottomCircle, centerOfRotation, a);
+		topSide = Geometry.rotateAround(topSide, centerOfRotation, a);
+		leftSide = Geometry.rotateAround(leftSide, centerOfRotation, a);
+		rightSide = Geometry.rotateAround(rightSide, centerOfRotation, a);
+		bottomSide = Geometry.rotateAround(bottomSide, centerOfRotation, a);
+		topCircle = Geometry.rotateAround(topCircle, centerOfRotation, a);
 		setChanged();
 		notifyObservers();
 	}
@@ -162,11 +192,19 @@ public class Flipper extends Observable implements iGizmo, Runnable{
 	public void setMovement(Movement movement) {
 		this.movement = movement;
 	}
+	
+	public Position getPosition() {
+		return position;
+	}
+	
+	public void setPosition(Position position) {
+		this.position = position;
+	}
 
 	@Override
 	public void run() {
-		System.out.println("forwards");
-		setMovement(Movement.FORWARDS);
+		//System.out.println("forwards");
+		//setMovement(Movement.FORWARDS);
 		Angle a = Angle.DEG_90;
 		while(getMovement() == Movement.FORWARDS) {
 			a = movePerTick(a);
