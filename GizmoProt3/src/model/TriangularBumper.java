@@ -1,17 +1,11 @@
 package model;
 
-<<<<<<< HEAD
-import physics.LineSegment;
-
-import java.awt.*;
-=======
 import physics.Circle;
 import physics.LineSegment;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> master
 
 public class TriangularBumper implements iGizmo {
     private LineSegment sideOne;
@@ -19,15 +13,6 @@ public class TriangularBumper implements iGizmo {
     private LineSegment hypotenuse;
     private Color color;
     private String gizmoName;
-<<<<<<< HEAD
-    private int cx, cy, scale, rotation;
-
-
-    public TriangularBumper(int cx, int cy, int rotation, String gizmoName) {
-        this.cx = cx;
-        this.cy = cy;
-        this.rotation = rotation;
-=======
     private int scale;
     private List<Circle> circles;
     private double cx, cy;
@@ -36,14 +21,11 @@ public class TriangularBumper implements iGizmo {
     public TriangularBumper(double cx, double cy, String gizmoName) {
         this.cx = cx;
         this.cy = cy;
->>>>>>> master
         scale = 20;
         sideOne = new LineSegment(cx, cy, cx + (1* scale), cy);
         sideTwo = new LineSegment(cx, cy, cx, cy - (1 * scale));
         hypotenuse = new LineSegment(cx, cy - (1 * scale), cx + (1 * scale), cy);
         this.gizmoName = gizmoName;
-<<<<<<< HEAD
-=======
         circles = new ArrayList<>();
         x = new int[3];
         y = new int[3];
@@ -76,7 +58,6 @@ public class TriangularBumper implements iGizmo {
 
     public List<Circle> getCircles() {
         return circles;
->>>>>>> master
     }
 
     public Color getColor() {
@@ -129,14 +110,6 @@ public class TriangularBumper implements iGizmo {
     }
 
     @Override
-<<<<<<< HEAD
-    public int getX(){ return cx; }
-
-    @Override
-    public int getY(){ return cy; }
-
-    public int getRotation(){ return rotation; }
-=======
     public double getX(){ return cx; }
 
     @Override
@@ -146,12 +119,7 @@ public class TriangularBumper implements iGizmo {
     public int getRotation() {
         return 0;
     }
->>>>>>> master
 
-    @Override
-    public FlipperOrientation getOrientation() {
-        return null;
-    }
 
     public String getGizmoName() {
         return gizmoName;

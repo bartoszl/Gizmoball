@@ -20,11 +20,7 @@ public class ModelLoader {
         model = new GBallModel();
 
         try {
-<<<<<<< HEAD:GizmoProt4/src/ModelLoader.java
-            commands =  fileReader.readFromFile("test.txt");
-=======
             commands =  fileReader.readFromFile(filename);
->>>>>>> master:GizmoProt4/src/View/ModelLoader.java
             makeModel();
         } catch (IOException e) {
             System.out.println("THIS");

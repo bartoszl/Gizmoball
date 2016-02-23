@@ -1,6 +1,9 @@
 package model;
 
+import physics.LineSegment;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import physics.LineSegment;
 
@@ -24,7 +27,7 @@ public class Walls {
         ypos2 = y2;
     }
 
-    public ArrayList<LineSegment> getLineSegments() {
+    public ArrayList<LineSegment> getWalls() {
         ArrayList<LineSegment> ls = new ArrayList<LineSegment>();
         LineSegment l1 = new LineSegment(xpos1, ypos1, xpos2, ypos1);
         LineSegment l2 = new LineSegment(xpos1, ypos1, xpos1, ypos2);
@@ -35,6 +38,10 @@ public class Walls {
         ls.add(l3);
         ls.add(l4);
         return ls;
+    }
+    
+    public LineSegment getTop(){
+      return new LineSegment(xpos1, ypos2, xpos2, ypos2);
     }
 
 }

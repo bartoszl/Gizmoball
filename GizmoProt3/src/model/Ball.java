@@ -11,10 +11,7 @@ public class Ball implements IBall {
 	private double x;
 	private double y;
 	private Color color;
-<<<<<<< HEAD
-=======
 	private boolean stopped;
->>>>>>> master
 	
 	private boolean absorbed;
 	private boolean moving;
@@ -27,8 +24,6 @@ public class Ball implements IBall {
 		radius = 5;
 		moving = true;
 		absorbed = false;
-<<<<<<< HEAD
-=======
 		stopped = false;
 	}
 
@@ -38,7 +33,6 @@ public class Ball implements IBall {
 
 	public boolean stopped() {
 		return stopped;
->>>>>>> master
 	}
 	
 	public boolean isAbsorbed(){

@@ -1,6 +1,6 @@
 package main;
 
-import View.RunGUI;
+import view.RunGUI;
 import model.*;
 
 import java.awt.*;
