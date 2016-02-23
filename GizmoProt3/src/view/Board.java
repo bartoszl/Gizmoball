@@ -58,6 +58,11 @@ class Board extends JPanel implements Observer {
             int width = (int) (2 * cBumper.getRadius());
             g2.fillOval(x, y, width, width);
         }
+
+        // Draw the absorber
+        Absorber absorber = gm.getAbsorber();
+        g.setColor(absorber.getColor());
+        g.fillRect((int) absorber.getXTopLeft(), (int) absorber.getYTopLeft(), (int) absorber.getWidth(), (int) absorber.getHeight());
     }
 
     public void update(Observable o, Object arg) {

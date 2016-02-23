@@ -14,7 +14,7 @@ public class Model extends Observable{
     private List<iGizmo> gizmos;
 	private Ball ball;
 	private Walls walls;
-
+    private Absorber abs;
     private ArrayList<LineSegment> totalLines;
     private List<Circle> circles;
     private List<SquareBumper> squareBumpers;
@@ -32,7 +32,7 @@ public class Model extends Observable{
         squareBumpers = new ArrayList<>();
         triangularBumpers = new ArrayList<>();
         circularBumpers = new ArrayList<>();
-
+        abs = new Absorber(0, 380, 400, 400);
 	}
 
     public void moveBall() {
@@ -40,13 +40,21 @@ public class Model extends Observable{
         if(ball != null && !ball.stopped()) {
             CollisionDetails cd = timeUntilCollision();
             double tuc = cd.getTuc();
-            if(tuc > moveTime) {
-                // No collision occurred
-                ball = moveBallForTime(ball, moveTime);
+
+            if(ball.getAbsorbed()) {
+                moveBallForTime(ball, moveTime);
+                if(ball.getY() < abs.getYTopLeft()) {
+                    ball.setAbsorbed(false);
+                }
             } else {
-                // Collision in tuc
-                ball = moveBallForTime(ball, tuc);
-                ball.setVelocity(cd.getVelo());
+                if(tuc > moveTime) {
+                    // No collision occurred
+                    ball = moveBallForTime(ball, moveTime);
+                } else {
+                    // Collision in tuc
+                    ball = moveBallForTime(ball, tuc);
+                    ball.setVelocity(cd.getVelo());
+                }
             }
             this.setChanged();
             this.notifyObservers();
@@ -146,6 +154,10 @@ public class Model extends Observable{
 	public Ball getBall(){
 		return ball;
 	}
+
+    public Absorber getAbsorber() {
+        return abs;
+    }
 
     public List<iGizmo> getGizmos(){ return gizmos; }
 

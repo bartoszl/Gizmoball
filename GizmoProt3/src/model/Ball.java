@@ -27,6 +27,10 @@ public class Ball implements IBall {
 		stopped = false;
 	}
 
+	public boolean getAbsorbed(){
+		return absorbed;
+	}
+
 	public boolean stopped() {
 		return stopped;
 	}
