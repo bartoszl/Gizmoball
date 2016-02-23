@@ -29,9 +29,9 @@ public interface iGizmo {
 
     public double getLowerLimit();
 
-    public int getX();
+    public double getX();
 
-    public int getY();
+    public double getY();
 
     public int getRotation();
 

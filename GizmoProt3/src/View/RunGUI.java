@@ -1,7 +1,9 @@
 package View;
 
-import java.awt.EventQueue;
-import java.awt.Graphics;
+import model.Model;
+
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,11 +22,15 @@ import javax.swing.JButton;
 
 public class RunGUI {
 
-	private JFrame frame;
+	public JFrame frame;
+	private Model model;
+    private ActionListener listener; // For when we have the listener
+    private Board board;
 
 	/**
 	 * Launch the application.
 	 */
+/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -37,12 +43,15 @@ public class RunGUI {
 			}
 		});
 	}
+*/
 
 	/**
 	 * Create the application.
 	 */
-	public RunGUI() {
-		initialize();
+	public RunGUI(Model m) {
+		//initialize();
+        model = m;
+        initialize();
 	}
 
 	/**
@@ -52,11 +61,15 @@ public class RunGUI {
 		frame = new JFrame("Gizmo Proto 3");
 		frame.setBounds(100, 100, 564, 440);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
+		//frame.getContentPane().setLayout(null);
+		board = new Board(model);
+        Container contentPane = frame.getContentPane();
+
+
+
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 147, 441);
-		frame.getContentPane().add(panel);
+		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JButton btnRun = new JButton("Run");
@@ -71,9 +84,13 @@ public class RunGUI {
 		btnQuit.setBounds(10, 148, 127, 58);
 		panel.add(btnQuit);
 		
-		JPanel gridView = new GridView();
-		gridView.setBounds(147, 0, 405, 405);
-		frame.getContentPane().add(gridView);
+		//JPanel gridView = new GridView();
+		//gridView.setBounds(147, 0, 405, 405);
+		//frame.getContentPane().add(board);
+
+        //frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 	}
 	
 	private class GridView extends JPanel{

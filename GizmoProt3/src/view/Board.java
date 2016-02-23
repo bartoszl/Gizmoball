@@ -1,4 +1,4 @@
-package view;
+package View;
 
 import model.*;
 
@@ -9,19 +9,70 @@ import java.util.*;
 
 class Board extends JPanel implements Observer {
     private Model model;
-    java.util.List<Attributes> squareBumpers = new ArrayList<Attributes>();
+/*    java.util.List<Attributes> squareBumpers = new ArrayList<Attributes>();
     java.util.List<Attributes> circularBumpers = new ArrayList<Attributes>();
     java.util.List<Triangle> triangularBumpers = new ArrayList<Triangle>();
     java.util.List<Attributes> leftFlippers = new ArrayList<Attributes>();
-    java.util.List<Attributes> rightFlippers = new ArrayList<Attributes>();
+    java.util.List<Attributes> rightFlippers = new ArrayList<Attributes>();*/
+
+    private int width, height;
+    private Model gm;
 
     public Board(Model m) {
-        this.model = m;
+        //this.model = m;
+        //m.addObserver(this);
+        //addComponents();
+        width = 400;
+        height = 400;
         m.addObserver(this);
-        addComponents();
+        gm = m;
     }
 
-    public void addComponents(){
+    public Dimension getPreferredSize() {
+        return new Dimension(width, height);
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        // Draw all square bumpers
+        for (SquareBumper sBumper : gm.getSquareBumpers()) {
+            g2.fillRect((int) sBumper.getX(), (int) sBumper.getY(), 20, 20);
+        }
+
+        Ball b = gm.getBall();
+
+        if (b != null) {
+            g2.setColor(b.getColor());
+            int x = (int) (b.getX() - b.getRadius());
+            int y = (int) (b.getY() - b.getRadius());
+            int width = (int) (2 * b.getRadius());
+            g2.fillOval(x, y, width, width);
+        }
+
+        // Draw all triangle bumpers
+        for (TriangularBumper tBumper : gm.getTriangularBumpers()) {
+            g2.fillPolygon(tBumper.getXCoords(), tBumper.getYCoords(), 3);
+        }
+
+        // Draw all circular bumpers
+        for (CircularBumper cBumper : gm.getCircularBumpers()) {
+            int x = (int) (b.getX() - b.getRadius());
+            int y = (int) (b.getY() - b.getRadius());
+            int width = (int) (2 * b.getRadius());
+            g2.fillOval(x, y, width, width);
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        this.repaint();
+    }
+}
+
+    /*public void addComponents(){
         for(iGizmo g : model.getGizmos()){
             if(g.getName().toCharArray()[0]=='s'){
                 addSquareBumper(g.getX(), g.getY(), Color.red);
@@ -36,9 +87,9 @@ class Board extends JPanel implements Observer {
                 addCircularBumper(g.getX(), g.getY(), Color.green);
             }
         }
-    }
+    }*/
 
-    public void paintComponent(Graphics g) {
+    /*public void paintComponent(Graphics g) {
         super.paintComponent(g);
         //drawAbsorber(g);
         drawSquareBumpers(g);
@@ -48,8 +99,9 @@ class Board extends JPanel implements Observer {
         drawRightFlippers(g);
         drawGrid(g);
         drawBalls(g);
-    }
+    }*/
 
+/*
     private void drawGrid(Graphics g) {
         g.setColor(Color.black);
         for (int i = 0; i <= 20; i++) {
@@ -173,11 +225,9 @@ class Board extends JPanel implements Observer {
     public boolean addRightFlipper(int x, int y, Color color, int rotation) {
         return rightFlippers.add(new Attributes(x*20, y*20, color, rotation));
     }
+*/
 
-    @Override
-    public void update(Observable o, Object arg) { this.repaint(); }
-
-    private class Attributes {
+   /* private class Attributes {
         int x, y;
         Color color;
         int rotation;
@@ -276,6 +326,5 @@ class Board extends JPanel implements Observer {
         public void rotate() {
             rotate = (rotate + 1) % 4;
             calculate();
-        }
-    }
-}
+        }*/
+    //}
