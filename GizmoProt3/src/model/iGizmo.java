@@ -35,5 +35,4 @@ public interface iGizmo {
 
     public int getRotation();
 
-    abstract FlipperOrientation getOrientation();
 }

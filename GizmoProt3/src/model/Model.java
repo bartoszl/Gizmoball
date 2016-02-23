@@ -5,15 +5,12 @@ import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
-
 import java.awt.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
 public class Model extends Observable{
-	//private Absorber abs;
     private List<iGizmo> gizmos;
 	private Ball ball;
 	private Walls walls;
@@ -163,7 +160,6 @@ public class Model extends Observable{
         totalLines.add(tBumper.getHypotenuse());
     }
 
-
     public void setMoving(boolean b){ ball.setMoving(b);}
 	
 	public Ball getBall(){
@@ -179,6 +175,4 @@ public class Model extends Observable{
     public void setBallSpeed(int x, int y) {
         ball.setVelocity(new Vect(x,y));
     }
-
-    
 }

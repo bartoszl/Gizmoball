@@ -1,9 +1,6 @@
 package model;
 
-import physics.LineSegment;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import physics.LineSegment;
 

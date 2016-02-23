@@ -63,7 +63,6 @@ public class CircularBumper extends Observable implements iGizmo {
     }
 
     @Override
-
     public double getX() {
         return cx;
     }
@@ -76,11 +75,6 @@ public class CircularBumper extends Observable implements iGizmo {
     @Override
     public int getRotation() {
         return 0;
-    }
-
-    @Override
-    public FlipperOrientation getOrientation() {
-        return null;
     }
 
     public int reservedArea() {

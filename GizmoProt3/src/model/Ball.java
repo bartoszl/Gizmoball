@@ -11,9 +11,7 @@ public class Ball implements IBall {
 	private double x;
 	private double y;
 	private Color color;
-
 	private boolean stopped;
-
 	
 	private boolean absorbed;
 	private boolean moving;
@@ -26,7 +24,6 @@ public class Ball implements IBall {
 		radius = 5;
 		moving = true;
 		absorbed = false;
-
 		stopped = false;
 	}
 

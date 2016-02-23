@@ -7,7 +7,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class TriangularBumper implements iGizmo {
     private LineSegment sideOne;
     private LineSegment sideTwo;
@@ -27,7 +26,6 @@ public class TriangularBumper implements iGizmo {
         sideTwo = new LineSegment(cx, cy, cx, cy - (1 * scale));
         hypotenuse = new LineSegment(cx, cy - (1 * scale), cx + (1 * scale), cy);
         this.gizmoName = gizmoName;
-
         circles = new ArrayList<>();
         x = new int[3];
         y = new int[3];
@@ -111,7 +109,7 @@ public class TriangularBumper implements iGizmo {
         return cy + (1 * scale);
     }
 
-
+    @Override
     public double getX(){ return cx; }
 
     @Override
@@ -122,11 +120,6 @@ public class TriangularBumper implements iGizmo {
         return 0;
     }
 
-
-    @Override
-    public FlipperOrientation getOrientation() {
-        return null;
-    }
 
     public String getGizmoName() {
         return gizmoName;

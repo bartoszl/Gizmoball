@@ -1,13 +1,11 @@
 package model;
 
-
 import physics.Circle;
 import physics.LineSegment;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class SquareBumper implements iGizmo {
     private Color color;
@@ -17,9 +15,7 @@ public class SquareBumper implements iGizmo {
     private LineSegment sideFour;
     private String gizmoName;
     private int scale, cx, cy;
-
     private List<Circle> circles;
-
 
     public SquareBumper(int cx, int cy, String gizmoName) {
         scale = 20;
@@ -100,10 +96,7 @@ public class SquareBumper implements iGizmo {
         return 0;
     }
 
-    @Override
-    public FlipperOrientation getOrientation() {
-        return null;
-    }
+
 
     public int reservedArea() {
         return 1;

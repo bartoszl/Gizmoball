@@ -1,14 +1,9 @@
-
 package view;
-
 
 import model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.List;
-import java.util.*;
-
 import java.util.*;
 
 class Board extends JPanel implements Observer {
@@ -74,4 +69,3 @@ class Board extends JPanel implements Observer {
         repaint();
     }
 }
-
