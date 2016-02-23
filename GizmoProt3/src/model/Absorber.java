@@ -1,17 +1,15 @@
 package model;
 
-<<<<<<< HEAD
-=======
+
 import java.awt.Color;
 import java.awt.List;
 import java.util.ArrayList;
 
->>>>>>> master
+
 import physics.Circle;
 import physics.LineSegment;
 import physics.Vect;
 
-<<<<<<< HEAD
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -19,12 +17,7 @@ public class Absorber implements IAbsorber {
 	private double xTopLeft,yTopLeft, xBottomRight, yBottomRight;
 	private Color color;
 	
-=======
-public class Absorber implements IAbsorber {
-	private double xTopLeft,yTopLeft, xBottomRight, yBottomRight;
-	private Color color;
 
->>>>>>> master
 	public Absorber(double xTopLeft, double yTopLeft, double xBottomRight, double yBottomRight){
 		this.xTopLeft = xTopLeft;
 		this.yTopLeft = yTopLeft;
@@ -32,7 +25,6 @@ public class Absorber implements IAbsorber {
 		this.yBottomRight = yBottomRight;
 		color = Color.PINK;
 	}
-<<<<<<< HEAD
 	
 	public double getXTopLeft(){
 		return xTopLeft;
@@ -50,25 +42,7 @@ public class Absorber implements IAbsorber {
 		return yBottomRight-yTopLeft;
 	}
 	
-=======
 
-	public double getXTopLeft(){
-		return xTopLeft;
-	}
-
-	public double getYTopLeft(){
-		return yTopLeft;
-	}
-
-	public double getWidth(){
-		return xBottomRight-xTopLeft;
-	}
-
-	public double getHeight(){
-		return yBottomRight-yTopLeft;
-	}
-
->>>>>>> master
 	public ArrayList<LineSegment> getLines(){
 		ArrayList<LineSegment> lineList = new ArrayList<LineSegment>();
 		LineSegment top = new LineSegment(xTopLeft, yTopLeft,xBottomRight, yTopLeft);
@@ -81,11 +55,7 @@ public class Absorber implements IAbsorber {
 		lineList.add(right);
 		return lineList;
 	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> master
 	public ArrayList<Circle> getCircles(){
 		ArrayList<Circle> circleList = new ArrayList<Circle>();
 		Circle topLeft = new Circle(xTopLeft, yTopLeft, 0);
@@ -98,12 +68,11 @@ public class Absorber implements IAbsorber {
 		circleList.add(bottomRight);
 		return circleList;
 	}
-<<<<<<< HEAD
 	
 	public void absorb(Ball ball){
 		//ball.setMoving(false);
 		ball.setXY(xBottomRight-20, yBottomRight-20);
-		Vect v = new Vect(0,-1000);
+		Vect v = new Vect(0,-200);
 		ball.setVelocity(v);
 		ball.setAbsorbed(true);
 		//System.out.println("ABSORBED");
@@ -114,18 +83,4 @@ public class Absorber implements IAbsorber {
 	}
 	
 }
-=======
 
-	public void absorb(Ball ball){
-		ball.setXY(xBottomRight-15, yBottomRight-15);
-		Vect v = new Vect(0,-400);
-		ball.setVelocity(v);
-		ball.setAbsorbed(true);
-	}
-
-	public Color getColor(){
-		return color;
-	}
-
-}
->>>>>>> master

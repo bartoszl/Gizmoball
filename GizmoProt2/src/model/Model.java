@@ -16,7 +16,7 @@ public class Model extends Observable{
 	public Model(){
 		ball = new Ball(100,200,75,100);
 		abs = new Absorber(0,380, 400,400);
-        walls = new Walls();
+        walls = new Walls(0,0, 400, 400);
 	}
 	
 	public void moveBall(){

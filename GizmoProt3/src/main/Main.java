@@ -1,7 +1,7 @@
 package main;
 
-import View.RunGUI;
 import model.*;
+import view.RunGUI;
 
 import java.awt.*;
 

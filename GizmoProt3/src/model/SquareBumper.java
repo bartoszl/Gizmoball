@@ -1,17 +1,13 @@
 package model;
 
-<<<<<<< HEAD
-import physics.LineSegment;
 
-import java.awt.*;
-=======
 import physics.Circle;
 import physics.LineSegment;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> master
+
 
 public class SquareBumper implements iGizmo {
     private Color color;
@@ -21,10 +17,9 @@ public class SquareBumper implements iGizmo {
     private LineSegment sideFour;
     private String gizmoName;
     private int scale, cx, cy;
-<<<<<<< HEAD
-=======
+
     private List<Circle> circles;
->>>>>>> master
+
 
     public SquareBumper(int cx, int cy, String gizmoName) {
         scale = 20;
@@ -33,10 +28,6 @@ public class SquareBumper implements iGizmo {
         this.cy = cy;
         sideOne = new LineSegment(cx, cy, cx+(1 * scale), cy);
         sideTwo = new LineSegment(cx, cy, cx, cy+(1 * scale));
-<<<<<<< HEAD
-        sideThree = new LineSegment(cx, cy+1, cx+1, cy+(1 * scale));
-        sideFour = new LineSegment(cx+1, cy, cx+1, cy+(1 * scale));
-=======
         sideThree = new LineSegment(cx, cy+(1*scale), cx+(1*scale), cy+(1 * scale));
         sideFour = new LineSegment(cx+(1*scale), cy, cx+(1*scale), cy+(1 * scale));
         circles = new ArrayList<>();
@@ -52,7 +43,6 @@ public class SquareBumper implements iGizmo {
 
     public List<Circle> getCircles() {
         return circles;
->>>>>>> master
     }
 
     public Color getColor() {
@@ -101,15 +91,9 @@ public class SquareBumper implements iGizmo {
     public LineSegment getSideThree() { return sideThree; }
     public LineSegment getSideFour() { return sideFour; }
 
-<<<<<<< HEAD
-    public int getX(){ return cx; }
-
-    public int getY(){ return cy; }
-=======
     public double getX(){ return cx; }
 
     public double getY(){ return cy; }
->>>>>>> master
 
     @Override
     public int getRotation() {
