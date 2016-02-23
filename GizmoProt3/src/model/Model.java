@@ -5,18 +5,16 @@ import physics.Geometry;
 import physics.LineSegment;
 import physics.Vect;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
 public class Model extends Observable{
-	//private Absorber abs;
     private List<iGizmo> gizmos;
 	private Ball ball;
 	private Walls walls;
-    private LineSegment colWall;
 
-    // Stuff added to get the collisions to work
     private ArrayList<LineSegment> totalLines;
     private List<Circle> circles;
     private List<SquareBumper> squareBumpers;
@@ -26,14 +24,15 @@ public class Model extends Observable{
 	public Model(){
         gizmos = initGizmos();
 		ball = new Ball(250, 200, 100, 100);
+        ball.setColor(Color.BLUE);
         walls = new Walls(0, 0, 400, 400);
 
         totalLines = new ArrayList<>();
         circles = new ArrayList<>();
         squareBumpers = new ArrayList<>();
         triangularBumpers = new ArrayList<>();
-		//walls = new Walls();
-		//abs = new Absorber(0,380, 400,400);
+        circularBumpers = new ArrayList<>();
+
 	}
 
     public void moveBall() {
