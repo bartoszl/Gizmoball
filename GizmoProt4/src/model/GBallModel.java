@@ -21,6 +21,15 @@ public class GBallModel extends Observable implements iGBallModel {
         balls = new ArrayList<>();
     }
 
+    public iGizmo getGizmo(String gizmoName) {
+        for(iGizmo gizmo : gizmos) {
+            if(gizmo.getName().equals(gizmoName)) {
+                return gizmo;
+            }
+        }
+        return null; // Should probably change this to use an exception at some point instead of returning null.
+    }
+
     public boolean addGizmo(iGizmo gizmo) {
         if(safeToAddGizmo(gizmo)) {
             gizmos.add(gizmo);
@@ -120,4 +129,5 @@ public class GBallModel extends Observable implements iGBallModel {
     public List<iBall> getBalls() {
         return balls;
     }
+
 }
