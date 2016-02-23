@@ -13,7 +13,7 @@ public class TriangularBumper implements iGizmo {
     private LineSegment hypotenuse;
     private Color color;
     private String gizmoName;
-    private int scale, rotation;
+    private int scale;
     private List<Circle> circles;
     private double cx, cy;
     private int[] x, y;
@@ -21,7 +21,6 @@ public class TriangularBumper implements iGizmo {
     public TriangularBumper(double cx, double cy, String gizmoName) {
         this.cx = cx;
         this.cy = cy;
-        this.rotation = rotation;
         scale = 20;
         sideOne = new LineSegment(cx, cy, cx + (1* scale), cy);
         sideTwo = new LineSegment(cx, cy, cx, cy - (1 * scale));
@@ -116,7 +115,10 @@ public class TriangularBumper implements iGizmo {
     @Override
     public double getY(){ return cy; }
 
-    public int getRotation(){ return rotation; }
+    @Override
+    public int getRotation() {
+        return 0;
+    }
 
     @Override
     public FlipperOrientation getOrientation() {

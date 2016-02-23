@@ -24,8 +24,8 @@ public class SquareBumper implements iGizmo {
         this.cy = cy;
         sideOne = new LineSegment(cx, cy, cx+(1 * scale), cy);
         sideTwo = new LineSegment(cx, cy, cx, cy+(1 * scale));
-        sideThree = new LineSegment(cx, cy+1, cx+1, cy+(1 * scale));
-        sideFour = new LineSegment(cx+1, cy, cx+1, cy+(1 * scale));
+        sideThree = new LineSegment(cx, cy+(1*scale), cx+(1*scale), cy+(1 * scale));
+        sideFour = new LineSegment(cx+(1*scale), cy, cx+(1*scale), cy+(1 * scale));
         circles = new ArrayList<>();
         Circle c1 = new Circle((double) cx, (double) cy, 0); // Circle at sideOne P1
         Circle c2 = new Circle((double) cx+(1 * scale), (double) cy, 0); // Circle at sideOne P2

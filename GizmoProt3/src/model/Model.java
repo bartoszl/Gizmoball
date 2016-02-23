@@ -23,7 +23,7 @@ public class Model extends Observable{
 	
 	public Model(){
         gizmos = initGizmos();
-		ball = new Ball(250, 200, 100, 100);
+		ball = new Ball(390, 390, 100, 100);
         ball.setColor(Color.BLUE);
         walls = new Walls(0, 0, 400, 400);
 
@@ -53,7 +53,11 @@ public class Model extends Observable{
                 } else {
                     // Collision in tuc
                     ball = moveBallForTime(ball, tuc);
-                    ball.setVelocity(cd.getVelo());
+                    if(cd.isAbsorbed()) {
+                        abs.absorb(ball);
+                    } else {
+                        ball.setVelocity(cd.getVelo());
+                    }
                 }
             }
             this.setChanged();
@@ -112,8 +116,17 @@ public class Model extends Observable{
                 newVelo = Geometry.reflectWall(ls, ball.getVelocity(), 1.0);
             }
         }
+        boolean absorbed = false;
+        for(LineSegment ls : abs.getLines()) {
+            time = Geometry.timeUntilWallCollision(ls, ballCircle, ballVelocity);
+            if(time < shortestTime) {
+                absorbed = true;
+                shortestTime = time;
+                newVelo = Geometry.reflectWall(ls, ball.getVelocity(), 1.0);
+            }
+        }
 
-        return new CollisionDetails(shortestTime, newVelo);
+        return new CollisionDetails(shortestTime, newVelo, absorbed);
     }
 
     public List<CircularBumper> getCircularBumpers() {
@@ -138,7 +151,6 @@ public class Model extends Observable{
         totalLines.add(sBumper.getSideOne());
         totalLines.add(sBumper.getSideTwo());
         totalLines.add(sBumper.getSideThree());
-        totalLines.add(sBumper.getSideFour());
         totalLines.add(sBumper.getSideFour());
     }
 
