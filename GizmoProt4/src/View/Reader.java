@@ -1,4 +1,7 @@
+package View;
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +21,7 @@ public class Reader {
         data = new ArrayList<String[]>();
     }
 
-    public List<String[]> readFromFile(String fileName) throws IOException {
+    public List<String[]> readFromFile(File fileName) throws IOException {
         List<String[]> tempHolder = new ArrayList<String[]>();
         try {
             reader = new BufferedReader(new FileReader(fileName));
@@ -32,19 +35,19 @@ public class Reader {
         }
     }
 
-    public static void main(String[] args) {
-        Reader reader = new Reader();
-        List<String[]> result;
-        try {
-            result = reader.readFromFile("test.txt");
-            for(String[] xs : result) {
-                for(String ys : xs) {
-                    System.out.print(ys + " | " );
-                }
-                System.out.println("");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//        View.Reader reader = new View.Reader();
+//        List<String[]> result;
+//        try {
+//            result = reader.readFromFile("test.txt");
+//            for(String[] xs : result) {
+//                for(String ys : xs) {
+//                    System.out.print(ys + " | " );
+//                }
+//                System.out.println("");
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

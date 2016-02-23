@@ -80,7 +80,10 @@ public class RunGUI implements Observer {
         reload();
 	}
 
+    public void setModel(GBallModel model){ this.model = model; }
+
     public void reload() {
+        gridView.reset();
         for(iBall ball : model.getBalls()) {
             int x = (int) ball.getXCoordinate();
             int y = (int) ball.getYCoordinate();
@@ -121,7 +124,10 @@ public class RunGUI implements Observer {
                 }
             }
         }
+        gridView.repaint();
     }
+
+    public JFrame getFrame(){ return frame; }
 
     public void addBallToGrid(int x, int y, int radius, Color color) {
         gridView.addBall(x,y, radius, color);
@@ -163,7 +169,17 @@ public class RunGUI implements Observer {
 		List<Attributes> rightFlippers = new ArrayList<Attributes>();
 		List<Absorber> absorbers = new ArrayList<Absorber>();
         List<Ball> balls = new ArrayList<>();
-		
+
+        public void reset(){
+            squareBumpers = new ArrayList<Attributes>();
+            circularBumpers = new ArrayList<Attributes>();
+            triangularBumpers = new ArrayList<Triangle>();
+            leftFlippers = new ArrayList<Attributes>();
+            rightFlippers = new ArrayList<Attributes>();
+            absorbers = new ArrayList<Absorber>();
+            balls = new ArrayList<>();
+        }
+
 		public void paintComponent(Graphics g){
 			drawGrid(g);
             drawBalls(g);

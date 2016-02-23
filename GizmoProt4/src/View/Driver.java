@@ -1,3 +1,6 @@
+package View;
+
+import View.ModelLoader;
 import View.RunGUI;
 import model.*;
 
@@ -12,8 +15,8 @@ public class Driver {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    ModelLoader loader = new ModelLoader();
-                    GBallModel model = loader.getModel();
+                    //ModelLoader loader = new ModelLoader();
+                    GBallModel model = new GBallModel();//loader.getModel();
                     RunGUI window = new RunGUI(model);
                     //window.frame.setVisible(true);
                 } catch (Exception e) {
