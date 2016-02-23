@@ -1,5 +1,8 @@
+package View;
+
 import model.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -11,13 +14,13 @@ public class ModelLoader {
     private List<String[]> commands;
     private int scale;
 
-    public ModelLoader() {
+    public ModelLoader(File filename) {
         scale = 20;
         fileReader = new Reader();
         model = new GBallModel();
 
         try {
-            commands =  fileReader.readFromFile("test.txt");
+            commands =  fileReader.readFromFile(filename);
             makeModel();
         } catch (IOException e) {
             System.out.println("THIS");
