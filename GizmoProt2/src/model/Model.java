@@ -10,12 +10,13 @@ import physics.Vect;
 public class Model extends Observable{
 	private Absorber abs;
 	private Ball ball;
-	//private Walls gws;
+    private Walls walls;
+    private LineSegment colWall;
 	
 	public Model(){
-		ball = new Ball(200,300,0,100);
-		//walls = new Walls(0,0,500,500);
+		ball = new Ball(100,200,75,100);
 		abs = new Absorber(0,380, 400,400);
+        walls = new Walls();
 	}
 	
 	public void moveBall(){
@@ -23,34 +24,40 @@ public class Model extends Observable{
 		if(ball!=null && ball.isMoving()){
 			double collisionTime = timeUntilCollision();
 			if(ball.isAbsorbed()){
-				moveBallForTime(ball, moveTime);
 				if(ball.getY()<abs.getYTopLeft())
 					ball.setAbsorbed(false);
 			} else
 			if(collisionTime>moveTime){
 				ball = moveBallForTime(ball, moveTime);
-			} else {
-				ball = moveBallForTime(ball, collisionTime);
-				abs.absorb(ball);
+			} else if(colWall == walls.getTop()){
+                ball.setVelocity(Geometry.reflectWall(colWall,ball.getVelocity()));
+                ball = moveBallForTime(ball, collisionTime);
+                colWall = null;
+            } else {
+                ball = moveBallForTime(ball, collisionTime);
+                abs.absorb(ball);
 			}
 			this.setChanged();
 			this.notifyObservers();
 		} 
 	}
 
-    public void fireFromAbs(){
+    public boolean fireFromAbs(){
         if(ball.isAbsorbed()){
             moveBallForTime(ball, 0.05);
         }
+        return true;
     }
 
-    public double calcVelocity(double Vold, double time){
-        return  Vold * (1 - 0.25 * time - 0.0025 * Math.abs(Vold) * time);
+    public Vect applyFriction(Vect Vold, double time){
+        double newVect = Math.sqrt((Math.pow(Vold.x(), 2)+Math.pow(Vold.y(), 2)));
+        return Vold.times((1 - (0.025 * time) - ((0.025) * (newVect/20) * time)));
     }
 	
 	public Ball moveBallForTime(Ball ball, double time){
-        Vect velocity = new Vect(calcVelocity(ball.getVelocity().x(),time), calcVelocity((ball.getVelocity().y() + 25*(time*10)),time));
-        ball.setVelocity(velocity);
+        Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (500*time));
+        Vect Vnew = applyFriction(temp, time);
+        ball.setVelocity(Vnew);
         double xVelocity = ball.getVelocity().x();
 		double yVelocity = ball.getVelocity().y();
 		double newX = ball.getX() + (xVelocity*time);
@@ -61,22 +68,30 @@ public class Model extends Observable{
 	}
 	
 	private double timeUntilCollision(){
-		Circle ballCircle = ball.getCircle();
-		Vect ballVelocity = ball.getVelocity();
-		
-		double shortestTime = Double.MAX_VALUE;
-		double time;
+        Circle ballCircle = ball.getCircle();
+        Vect ballVelocity = ball.getVelocity();
+
+        double shortestTime = Double.MAX_VALUE;
+        double time;
 		for(LineSegment line: abs.getLines()){
 			time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
-			if(time<shortestTime)
-				shortestTime=time;
+			if(time<shortestTime) {
+                shortestTime = time;
+                colWall = abs.getLines().get(0);
+            }
 		}
-		
 		for(Circle circ: abs.getCircles()){
 			time = Geometry.timeUntilCircleCollision(circ, ballCircle, ballVelocity);
 			if(time<shortestTime)
 				shortestTime=time;
 		}
+        for(int i = 0; i < walls.getWalls().size(); i++){
+            time = Geometry.timeUntilWallCollision(walls.getWalls().get(i), ballCircle, ballVelocity);
+            if(time<shortestTime) {
+                shortestTime = time;
+                colWall = walls.getWalls().get(i);
+            }
+        }
 		return shortestTime;
 	}
 
@@ -86,7 +101,5 @@ public class Model extends Observable{
 		return ball;
 	}
 	
-	public Absorber getAbsorber(){
-		return abs;
-	}
+	public Absorber getAbsorber(){ return abs; }
 }

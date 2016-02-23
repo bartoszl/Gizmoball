@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import controller.Controller;
 import controller.KeyController;
@@ -21,8 +20,6 @@ import model.Ball;
 import model.IAbsorber;
 import model.IBall;
 import model.Model;
-
-import javax.swing.JButton;
 
 /**
  * @author Stephen Dundas
@@ -85,7 +82,6 @@ public class RunGUI{
 		frame.setBounds(100, 100, 564, 440);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.addKeyListener(key_controller);
         frame.addKeyListener(mkl);
 
 		JPanel panel = new JPanel();
@@ -97,6 +93,7 @@ public class RunGUI{
 		btnRun.addActionListener(controller);
 		btnRun.setActionCommand("run");
 		btnRun.setBounds(10, 10, 127, 58);
+        btnRun.addKeyListener(mkl);
 		panel.add(btnRun);
 
         JButton btnStop = new JButton("Stop");
@@ -109,6 +106,7 @@ public class RunGUI{
 		btnTick.addActionListener(controller);
 		btnTick.setActionCommand("tick");
 		btnTick.setBounds(10, 148, 127, 58);
+        btnTick.addKeyListener(mkl);
 		panel.add(btnTick);
 		
 		JButton btnQuit = new JButton("Quit");

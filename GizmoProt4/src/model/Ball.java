@@ -10,7 +10,7 @@ public class Ball implements iBall{
         this.yCoordinate = yCoordinate;
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
-        this.radius = 10;
+        this.radius = 2.5;
         this.name = name;
     }
 
