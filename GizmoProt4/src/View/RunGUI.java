@@ -76,18 +76,6 @@ public class RunGUI implements Observer {
 		gridView = new GridView();
 		gridView.setBounds(0, 0, 405, 405);
 		frame.getContentPane().add(gridView);
-		
-		//add left flipper
-		/*addLeftFlipperToGrid(0*20,4*20,new Color(200,100,100),0);
-		addLeftFlipperToGrid(2*20,4*20,new Color(200,100,100),1);
-		addLeftFlipperToGrid(4*20,4*20,new Color(200,100,100),2);
-		addLeftFlipperToGrid(6*20,4*20,new Color(200,100,100),3);
-		
-		//add right flipper
-		addRightFlipperToGrid(0*20,7*20,new Color(235,197,93),0);
-		addRightFlipperToGrid(2*20,7*20,new Color(235,197,93),1);
-		addRightFlipperToGrid(4*20,7*20,new Color(235,197,93),2);
-		addRightFlipperToGrid(6*20,7*20,new Color(235,197,93),3);*/
 
         reload();
 	}
@@ -116,35 +104,6 @@ public class RunGUI implements Observer {
                 addSquareBumperToGrid(x, y, Color.red);
             } else if(gizmo instanceof TriangularBumper) {
                 TriangularBumper triangle = (TriangularBumper) gizmo;
-//                int xSideOneP1 = (int) triangle.getSideOne().getP1().getX();
-//                int ySideOneP1 = (int) triangle.getSideOne().getP1().getY();
-//                int xSideOneP2 = (int) triangle.getSideOne().getP2().getX();
-//                int ySideOneP2 = (int) triangle.getSideOne().getP2().getY();
-//
-//                int xSideTwoP1 = (int) triangle.getSideTwo().getP1().getX();
-//                int ySideTwoP1 = (int) triangle.getSideTwo().getP1().getY();
-//                int xSideTwoP2 = (int) triangle.getSideTwo().getP2().getX();
-//                int ySideTwoP2 = (int) triangle.getSideTwo().getP2().getY();
-//
-//                int xCP1 = (int) triangle.getHypotenuse().getP1().getX();
-//                int yCP1 = (int) triangle.getHypotenuse().getP1().getY();
-//                int xCP2 = (int) triangle.getHypotenuse().getP2().getX();
-//                int yCP2 = (int) triangle.getHypotenuse().getP2().getY();
-
-//                System.out.println("RUN GUI:");
-//                System.out.println("P1");
-//                System.out.println("Side one: X: " + xSideOneP1 + " Y: " + ySideOneP1);
-//                System.out.println("Side two: X: " +xSideTwoP1 + " Y: " + ySideTwoP1);
-//                System.out.println("C: X: " + xCP1 + " Y: " + yCP1);
-//
-//                System.out.println("P2:");
-//                System.out.println("Side one: X: " + xSideOneP2 + " Y: " + ySideOneP2);
-//                System.out.println("Side two: X: " +xSideTwoP2 + " Y: " + ySideTwoP2);
-//                System.out.println("C: X: " + xCP2 + " Y: " + yCP2);
-//
-//                int x = (int) triangle.getX();
-//                int y = (int) triangle.getY();
-                //addTriangleBumperToGrid(x, y, Color.blue, 0);
                 addTriangleBumperToGrid(triangle);
             } else if(gizmo instanceof CircularBumper) {
                 CircularBumper circle = (CircularBumper) gizmo;
@@ -177,7 +136,6 @@ public class RunGUI implements Observer {
 	}
 	
 	public void addTriangleBumperToGrid(TriangularBumper triangle){
-		//gridView.addTriangularBumper(x,y,color,rotation);
         gridView.addTriangularBumper(triangle);
 	}
 	
@@ -212,8 +170,7 @@ public class RunGUI implements Observer {
 			drawSquareBumpers(g);
 			drawCircularBumpers(g);
 			drawTriangularBumpers(g);
-			drawLeftFlippers(g);
-			drawRightFlippers(g);
+            drawFlippers(g);
 			drawAbsorber(g);
 		}
 
@@ -259,64 +216,51 @@ public class RunGUI implements Observer {
 		
 		private void drawTriangularBumpers(Graphics g) {
 			for(Triangle tBump: triangularBumpers){
-                //System.out.println("I'm seeing a triangle. - " +tBump.getXcoordinates()[2]);
-				//System.out.println("This is executing");
 				g.setColor(tBump.getColor());
-//                System.out.print("X:");
-//                System.out.println(tBump.getXcoordinates()[0]);
-//                System.out.println(tBump.getXcoordinates()[1]);
-//                System.out.println(tBump.getXcoordinates()[2]);
-//                System.out.print("Y:");
-//                System.out.println(tBump.getYcoordinates()[0]);
-//                System.out.println(tBump.getYcoordinates()[1]);
-//                System.out.println(tBump.getYcoordinates()[2]);
                 g.fillPolygon(tBump.getXcoordinates(), tBump.getYcoordinates(), 3);
 			}
-            //g.fillPolygon(new int[]{40, 20, 40}, new int[]{40, 40, 20}, 3);
 		}
 		
 		public boolean addTriangularBumper(TriangularBumper triangle){
-			//return triangularBumpers.add(new Triangle(x, y, color, rotation));
             Triangle t = new Triangle(triangle);
             return triangularBumpers.add(t);
 		}
-		
-		private void drawLeftFlippers(Graphics g) {
+
+        private void drawFlippers(Graphics g) {
             g.setColor(Color.yellow);
             for(iGizmo gizmo: model.getGizmos()) {
                 if(gizmo instanceof Flipper) {
                     Flipper f = (Flipper) gizmo;
-                    if(f.getOrientation() == FlipperOrientation.LEFT) {
                         g.fillOval((int) f.getC1().getCentreX() - 5, (int) f.getC1().getCentreY() - 5, 10, 10);
 
-                        int width = (int) f.getLeftSide().getP1().getX() - (int) f.getRightSide().getP1().getX();
-                        int height = (int) f.getLeftSide().getP2().getY() - (int) f.getLeftSide().getP1().getY();
-                        g.fillRect((int) f.getLeftSide().getP1().getX(), (int) f.getLeftSide().getP1().getY(), 10, 30);
+                        int[] xCoords = new int[] {(int)f.getLeftSide().getP1().getX(),
+                                (int) f.getLeftSide().getP2().getX(),
+                                (int) f.getRightSide().getP1().getX(),
+                                (int) f.getRightSide().getP2().getX()};
+
+                        int[] yCoords = new int[] {(int)f.getLeftSide().getP1().getY(),
+                                (int) f.getLeftSide().getP2().getY(),
+                                (int) f.getRightSide().getP1().getY(),
+                                (int) f.getRightSide().getP2().getY()};
+
+                        g.fillPolygon(xCoords, yCoords, 3);
+
+                        xCoords = new int[] {
+                                (int) f.getLeftSide().getP2().getX(),
+                                (int) f.getRightSide().getP1().getX(),
+                                (int) f.getRightSide().getP2().getX()};
+
+                        yCoords = new int[] {
+                                (int) f.getLeftSide().getP2().getY(),
+                                (int) f.getRightSide().getP1().getY(),
+                                (int) f.getRightSide().getP2().getY()};
+                        g.fillPolygon(xCoords, yCoords, 3);
                         g.fillOval((int) f.getC2().getCentreX() - 5, (int) f.getC2().getCentreY() - 5, 10, 10);
-                    }
                 }
             }
-		}
-		
+        }
 		public boolean addLeftFlipper(int x, int y, Color color, int rotation){
 			return leftFlippers.add(new Attributes(x, y, color, rotation));
-		}
-		
-		private void drawRightFlippers(Graphics g) {
-            g.setColor(Color.yellow);
-            for(iGizmo gizmo: model.getGizmos()) {
-                if(gizmo instanceof Flipper) {
-                    Flipper f = (Flipper) gizmo;
-
-                    if(f.getOrientation() == FlipperOrientation.RIGHT) {
-                        g.fillOval((int) f.getC1().getCentreX() - 5, (int) f.getC1().getCentreY() - 5, 10, 10);
-                        int width = (int) f.getLeftSide().getP1().getX() - (int) f.getRightSide().getP1().getX();
-                        int height = (int) f.getLeftSide().getP2().getY() - (int) f.getLeftSide().getP1().getY();
-                        g.fillRect((int) f.getLeftSide().getP1().getX(), (int) f.getLeftSide().getP1().getY(), 10, 30);
-                        g.fillOval((int) f.getC2().getCentreX() - 5, (int) f.getC2().getCentreY() - 5, 10, 10);
-                    }
-                }
-            }
 		}
 		
 		public boolean addRightFlipper(int x, int y, Color color, int rotation){
