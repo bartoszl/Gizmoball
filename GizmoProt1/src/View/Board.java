@@ -25,7 +25,7 @@ public class Board extends JPanel implements Observer{
 	}
 	
 	public void drawGrid(Graphics g){
-		int gridSize = 6;//6x6
+		int gridSize = 20;//20x20
 		for(int i = 0; i <= gridSize; i++){
 			g.drawLine(0, i*20, 20*gridSize, i*20);
 			g.drawLine(i*20, 0, i*20, 20*gridSize);
@@ -49,10 +49,10 @@ public class Board extends JPanel implements Observer{
 			polyX[2]=(int)(flipper.getEndCircle().getCenter().x()*20-dx);
 			polyX[3]=(int)(flipper.getOriginCircle().getCenter().x()*20-dx);
 			
-			polyY[0]=(int)(flipper.getOriginCircle().getCenter().y()*20-dy);
-			polyY[1]=(int)(flipper.getEndCircle().getCenter().y()*20-dy);
-			polyY[2]=(int)(flipper.getEndCircle().getCenter().y()*20+dy);
-			polyY[3]=(int)(flipper.getOriginCircle().getCenter().y()*20+dy);
+			polyY[0]=(int)(flipper.getOriginCircle().getCenter().y()*20+dy);
+			polyY[1]=(int)(flipper.getEndCircle().getCenter().y()*20+dy);
+			polyY[2]=(int)(flipper.getEndCircle().getCenter().y()*20-dy);
+			polyY[3]=(int)(flipper.getOriginCircle().getCenter().y()*20-dy);
 		}
 		else{//if the flipper is horizontal, avoid division by 0
 			polyX[0]=(int)(flipper.getOriginCircle().getCenter().x()*20);

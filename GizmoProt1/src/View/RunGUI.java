@@ -54,7 +54,7 @@ public class RunGUI {
 	 * Create the application.
 	 */
 	public RunGUI() {
-		flip = new Flipper(2,2,true,new Color(0,255,0));
+		flip = new Flipper(9,9,true,new Color(0,255,0));
 		control = new Controller(window, flip);	
 		initialize();
 	}
@@ -64,7 +64,7 @@ public class RunGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame("Gizmo Proto 1");
-		frame.setBounds(0, 0, 135, 180);
+		frame.setBounds(100, 100, 407, 452);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.addKeyListener(control);
@@ -82,7 +82,7 @@ public class RunGUI {
 		mnNewMenu.add(quit);
 		
 		JPanel panel_1 = new Board(flip);
-		panel_1.setBounds(0, 0, 205, 205);
+		panel_1.setBounds(0, 0, 405, 405);
 		frame.getContentPane().add(panel_1);
 	}
 }
