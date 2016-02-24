@@ -34,6 +34,7 @@ public class Controller implements KeyListener, ActionListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		//System.out.println("key pressed");
 		if(flipper.getPosition() == Position.VERTICAL) {
 			a = flipper.getLeft();
 			flipper.setMovement(Movement.FORWARDS);
@@ -51,6 +52,7 @@ public class Controller implements KeyListener, ActionListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		//System.out.println("key released");
 		if(flipper.getPosition() == Position.HORIZONTAL) {
 		//probably activate the flipper on release?
 			a = Angle.DEG_90.minus(flipper.getLeft());
@@ -73,15 +75,17 @@ public class Controller implements KeyListener, ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//if(e.getActionCommand().equals("exit"))
-		//	System.exit(0);
+		if(e.getActionCommand()!=null){
+			if(e.getActionCommand().equals("exit"))
+				System.exit(0);
+		}
 		if(flipper.getMovement() == Movement.FORWARDS) {
-			System.out.println("forwards");
+			//System.out.println("forwards");
 			//System.out.println(flipper.getPosition());
 			//flipper.setMovement(Movement.FORWARDS);
 			a = flipper.movePerTick(a);	
 		} else if(flipper.getMovement() == Movement.BACKWARDS) {
-			System.out.println("backwards");
+			//System.out.println("backwards");
 			//System.out.println(flipper.getPosition());
 			a = flipper.movePerTick(a);		
 		}
