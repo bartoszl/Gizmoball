@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 import physics.LineSegment;
 
-/**
- * @author Murray Wood Demonstration of MVC and MIT Physics Collisions 2014
- */
 
 public class Walls {
 
@@ -15,8 +12,6 @@ public class Walls {
     private int ypos2;
     private int xpos2;
 
-    // Walls are the enclosing Rectangle - defined by top left corner and bottom
-    // right
     public Walls(int x1, int y1, int x2, int y2) {
         xpos1 = x1;
         ypos1 = y1;
