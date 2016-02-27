@@ -26,7 +26,7 @@ public class Ball implements IBall{
 	 * @param x -> double, representing Ball's position along x axis
 	 * @param y -> double, representing Ball's position along y axis
 	 * @param xv -> double, representing velocity along x axis
-	 * @param yv -> double, representing velocity along y axis
+	 * @param yv -> double, representing  along y axis
 	 */
 	public Ball(double x, double y, double xv, double yv){
 		this.x = x;
