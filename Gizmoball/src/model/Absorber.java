@@ -1,15 +1,31 @@
 package model;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 import physics.Circle;
 import physics.LineSegment;
 
+/**
+ * 
+ * @author Bartosz Lewandowski
+ * 
+ * Part of the Gimozball model, representing the Absorber.
+ * Implements IAbsorber interface.
+ *
+ */
 public class Absorber implements IAbsorber {
 	private double xTopLeft, yTopLeft, xBottomRight, yBottomRight;
 	private Color color;
-	
+	/**
+	 * Constructor for Absorber object. Initially sets color to Pink
+	 * 
+	 * @param x -> double, representing x coordinate of top left corner of the absorber.
+	 * @param y -> double, representing y coordinate of top left corner of the absorber.
+	 * @param x1 -> double, representing x coordinate of bottom right corner of the absorber.
+	 * @param y1 -> double, representing y coordinate of the bottom right corner of the absorber.
+	 */
 	public Absorber(double x, double y, double x1, double y1){
 		xTopLeft=x;
 		yTopLeft=y;
@@ -50,14 +66,30 @@ public class Absorber implements IAbsorber {
 
 	@Override
 	public List<LineSegment> getLines() {
-		// TODO Auto-generated method stub
-		return null;
+		List<LineSegment> l = new ArrayList<LineSegment>();
+		LineSegment l1 = new LineSegment(xTopLeft, yTopLeft, xBottomRight, yTopLeft);
+		LineSegment l2 = new LineSegment(xBottomRight, yTopLeft, xBottomRight, yBottomRight);
+		LineSegment l3 = new LineSegment(xTopLeft, yBottomRight, xBottomRight, yBottomRight);
+		LineSegment l4 = new LineSegment(xTopLeft, yTopLeft, xTopLeft, yBottomRight);
+		l.add(l1);
+		l.add(l2);
+		l.add(l3);
+		l.add(l4);
+		return l;
 	}
 
 	@Override
 	public List<Circle> getCircles() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Circle> l = new ArrayList<Circle>();
+		Circle c1 = new Circle(xTopLeft, yTopLeft, 0);
+		Circle c2 = new Circle(xBottomRight, yTopLeft, 0);
+		Circle c3 = new Circle(xBottomRight, yBottomRight, 0);
+		Circle c4 = new Circle(xTopLeft, yBottomRight, 0);
+		l.add(c1);
+		l.add(c2);
+		l.add(c3);
+		l.add(c4);
+		return l;
 	}
 
 	@Override
@@ -66,9 +98,15 @@ public class Absorber implements IAbsorber {
 	}
 
 	@Override
+	public void setColor(Color color) {
+		this.color=color;
+	}
+	
+	@Override
 	public void absorb(Ball ball) {
-		// TODO Auto-generated method stub
-		
+		ball.setAbsorbed(true);
+		ball.setVelocity(0, -1000);
+		ball.setXY(xBottomRight-15, yBottomRight-15);
 	}
 	
 }
