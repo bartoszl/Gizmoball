@@ -8,7 +8,7 @@ import java.awt.Color;
  * 
  * @author Bartosz Lewandowski
  * 
- * Interface representing Ball in the Gizmoball model.
+ * Interface for Ball class.
  */
 public interface IBall {
 	
