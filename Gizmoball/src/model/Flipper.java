@@ -20,6 +20,7 @@ public class Flipper extends Observable implements IFlipper {
     private Angle rotation;
     private Angle leftToRotate;
     private Vect centerOfRotation;
+    private Vect origin;
 
     /**
      * Creates a flipper on a 4-cell space, with specific color and position.
@@ -39,19 +40,19 @@ public class Flipper extends Observable implements IFlipper {
         rotation = new Angle(0.95);
         this.isLeft = isLeft;
         this.color=color;
-        Vect center = new Vect((double)cx, (double)cy);
+        origin = new Vect((double)cx, (double)cy);
         /** o **/
-        topCircle = new Circle(center.x()+0.25+off, center.y()+0.25, 0.25);
+        topCircle = new Circle(origin.x()+0.25+off, origin.y()+0.25, 0.25);
         /** - **/
-        topSide = new LineSegment(center.x()+off, center.y()+0.25, center.x()+off+0.5, center.y()+0.25);
+        topSide = new LineSegment(origin.x()+off, origin.y()+0.25, origin.x()+off+0.5, origin.y()+0.25);
         /**| **/
-        leftSide = new LineSegment(center.x()+off, center.y()+0.25, center.x()+off, center.y()+1.75);
+        leftSide = new LineSegment(origin.x()+off, origin.y()+0.25, origin.x()+off, origin.y()+1.75);
         /**  |**/
-        rightSide = new LineSegment(center.x()+off+0.5, center.y()+0.25, center.x()+off+0.5, center.y()+1.75);
+        rightSide = new LineSegment(origin.x()+off+0.5, origin.y()+0.25, origin.x()+off+0.5, origin.y()+1.75);
         /** _ **/
-        bottomSide = new LineSegment(center.x()+off, center.y()+1.75, center.x()+off+0.5, center.y()+1.75);
+        bottomSide = new LineSegment(origin.x()+off, origin.y()+1.75, origin.x()+off+0.5, origin.y()+1.75);
         /** o **/
-        bottomCircle = new Circle(center.x()+off+0.25, center.y()+1.75, 0.25);
+        bottomCircle = new Circle(origin.x()+off+0.25, origin.y()+1.75, 0.25);
 
         centerOfRotation = topCircle.getCenter();
         movement = Movement.NONE;
@@ -66,7 +67,7 @@ public class Flipper extends Observable implements IFlipper {
      */
     public void move(int cx, int cy) {
         double off = isLeft ? 0 : 1.5;
-        Vect center = new Vect(cx, cy);
+        origin = new Vect(cx, cy);
         topSide = new LineSegment(cx+off, cy, cx+off+0.5, cy);
         leftSide = new LineSegment(cx+off, cy, cx+off, cy+2);
         rightSide = new LineSegment(cx+off+0.5, cy, cx+off+0.5, cy+2);
@@ -79,47 +80,51 @@ public class Flipper extends Observable implements IFlipper {
      * One tick is approx 0.05 sec -> 1080/100 * 5 = 54 (about 0.95 radians)
      * degrees per tick.
      * If possible rotate to 0.95 radians, if not -> rotate the remaining number of degrees.
-     * @param left the number of degrees left to rotare
+     * @param left the number of degrees left to rotate
      * @return number of degrees left to rotate for the next rotation
      */
     public Angle rotatePerTick(Angle left) {
         switch(movement) {
             case FORWARDS:
                 //moving forwards
-                if(left.compareTo(rotation) > 0) {
-                    //there are more than 0.95 left -> rotate at 0.95 and return remainder
-                    rotate(rotation);
-                    leftToRotate = left.minus(rotation);
-                    setPosition(Position.BETWEEN);
-                    return leftToRotate;
-                } else {
-                    //there are less than 0.95 left -> rotate the remainder, stop movement, return 0
-                    rotate(left);
-                    setMovement(Movement.NONE);
-                    setPosition(Position.HORIZONTAL);
-                    leftToRotate = Angle.ZERO;
-                    return Angle.ZERO;
+                if(getPosition() != Position.HORIZONTAL) {
+                    if (left.compareTo(rotation) > 0) {
+                        //there are more than 0.95 left -> rotate at 0.95 and return remainder
+                        rotate(rotation);
+                        leftToRotate = left.minus(rotation);
+                        setPosition(Position.BETWEEN);
+                        return leftToRotate;
+                    } else {
+                        //there are less than 0.95 left -> rotate the remainder, stop movement, return 0
+                        rotate(left);
+                        setMovement(Movement.NONE);
+                        setPosition(Position.HORIZONTAL);
+                        leftToRotate = Angle.ZERO;
+                        return Angle.ZERO;
+                    }
                 }
+                break;
             case BACKWARDS:
                 //moving backwards
-                if(left.compareTo(rotation) > 0) {
-                    //there are more than 0.95 left -> rotate at 0.95 and return remainder
-                    rotate(Angle.ZERO.minus(rotation));
-                    leftToRotate = left.minus(rotation);
-                    setPosition(Position.BETWEEN);
-                    return leftToRotate;
-                } else {
-                    //there are less than 0.95 left -> rotate the remainder, stop movement, return 0
-                    rotate(Angle.ZERO.minus(left));
-                    movement = Movement.NONE;
-                    leftToRotate = Angle.DEG_90;
-                    setPosition(Position.VERTICAL);
-                    return Angle.ZERO;
+                if(getPosition() != Position.VERTICAL) {
+                    if (left.compareTo(rotation) > 0) {
+                        //there are more than 0.95 left -> rotate at 0.95 and return remainder
+                        rotate(Angle.ZERO.minus(rotation));
+                        leftToRotate = left.minus(rotation);
+                        setPosition(Position.BETWEEN);
+                        return leftToRotate;
+                    } else {
+                        //there are less than 0.95 left -> rotate the remainder, stop movement, return 0
+                        rotate(Angle.ZERO.minus(left));
+                        movement = Movement.NONE;
+                        leftToRotate = Angle.DEG_90;
+                        setPosition(Position.VERTICAL);
+                        return Angle.ZERO;
+                    }
                 }
-            default:
-                //return 0
-                return Angle.ZERO;
+                break;
         }
+        return Angle.ZERO;
     }
 
     /**
@@ -216,5 +221,16 @@ public class Flipper extends Observable implements IFlipper {
      */
     public Circle getEndCircle() {
         return bottomCircle;
+    }
+
+    /**
+     * @return origin
+     */
+    public Vect getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Vect origin) {
+        this.origin = origin;
     }
 }
