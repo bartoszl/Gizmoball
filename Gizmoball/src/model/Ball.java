@@ -22,13 +22,14 @@ public class Ball implements IBall{
 	 * Constructor for Ball object. Initially sets color to Yellow,
 	 * Radius to 5px, marks ball as moving and sets the ball as 
 	 * not absorbed.
-	 * 
+	 *
+	 * @param name -> string, representing the name of the ball
 	 * @param x -> double, representing Ball's position along x axis
 	 * @param y -> double, representing Ball's position along y axis
 	 * @param xv -> double, representing velocity along x axis
 	 * @param yv -> double, representing  along y axis
 	 */
-	public Ball(double x, double y, double xv, double yv){
+	public Ball(String name, double x, double y, double xv, double yv){
 		this.x = x;
 		this.y = y;
 		this.velocity = new Vect(xv, yv);
