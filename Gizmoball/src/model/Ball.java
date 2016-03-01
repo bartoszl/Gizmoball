@@ -27,7 +27,7 @@ public class Ball implements IBall{
 	 * @param x -> double, representing Ball's position along x axis
 	 * @param y -> double, representing Ball's position along y axis
 	 * @param xv -> double, representing velocity along x axis
-	 * @param yv -> double, representing  along y axis
+	 * @param yv -> double, representing velocity along y axis
 	 */
 	public Ball(String name, double x, double y, double xv, double yv){
 		this.x = x;
@@ -78,7 +78,6 @@ public class Ball implements IBall{
 	@Override
 	public void setColor(Color color) {
 		this.color = color;
-		
 	}
 	
 	@Override
@@ -115,5 +114,25 @@ public class Ball implements IBall{
 	public Circle getCircle() {
 		return new Circle(x,y,r);
 	}
+
+    @Override
+    public double getLeftLimit() {
+        return x - r;
+    }
+
+    @Override
+    public double getUpperLimit() {
+        return y - r;
+    }
+
+    @Override
+    public double getRightLimit() {
+        return x + r;
+    }
+
+    @Override
+    public double getLowerLimit() {
+        return y + r;
+    }
 
 }
