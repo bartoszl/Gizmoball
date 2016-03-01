@@ -3,6 +3,9 @@ package view;
 import model.Absorber;
 import model.Ball;
 import model.CircularBumper;
+import model.IAbsorber;
+import model.IFlipper;
+import model.iAbsorber;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +15,7 @@ import java.util.Observer;
 class Board extends JPanel implements Observer {
 
     private boolean isBuild;
+    
 
     public Board(boolean isBuild){
         this.isBuild = isBuild;
@@ -93,6 +97,53 @@ class Board extends JPanel implements Observer {
         g.drawLine(400, 0, 400, 400);
     }
 
+    private void drawFlippers(Graphics g) {
+    	
+    	for(IFlipper flipper: model.getFlippers()){
+			//only needs the center of the top and bottom circles
+			g.setColor(flipper.getColor());
+			g.fillOval((int)((flipper.getOriginCircle().getCenter().x()-0.25)*20), (int)((flipper.getOriginCircle().getCenter().y()-0.25)*20), 10, 10);
+			//evil math magic to get the polygon values
+			int[] polyX = new int[4];
+			int[] polyY = new int[4];
+			if(flipper.getEndCircle().getCenter().y()-flipper.getOriginCircle().getCenter().y()!=0){
+				double alpha = Math.atan((flipper.getOriginCircle().getCenter().x()-flipper.getEndCircle().getCenter().x())/(flipper.getEndCircle().getCenter().y()-flipper.getOriginCircle().getCenter().y()));
+				double dx = 5*Math.cos(alpha);
+				double dy = 5*Math.sin(alpha);
+				
+				polyX[0]=(int)(flipper.getOriginCircle().getCenter().x()*20+dx);
+				polyX[1]=(int)(flipper.getEndCircle().getCenter().x()*20+dx);
+				polyX[2]=(int)(flipper.getEndCircle().getCenter().x()*20-dx);
+				polyX[3]=(int)(flipper.getOriginCircle().getCenter().x()*20-dx);
+				
+				polyY[0]=(int)(flipper.getOriginCircle().getCenter().y()*20+dy);
+				polyY[1]=(int)(flipper.getEndCircle().getCenter().y()*20+dy);
+				polyY[2]=(int)(flipper.getEndCircle().getCenter().y()*20-dy);
+				polyY[3]=(int)(flipper.getOriginCircle().getCenter().y()*20-dy);
+			}
+			else{//if the flipper is horizontal, avoid division by 0
+				polyX[0]=(int)(flipper.getOriginCircle().getCenter().x()*20);
+				polyX[1]=(int)(flipper.getEndCircle().getCenter().x()*20);
+				polyX[2]=(int)(flipper.getEndCircle().getCenter().x()*20);
+				polyX[3]=(int)(flipper.getOriginCircle().getCenter().x()*20);
+				
+				polyY[0]=(int)(flipper.getOriginCircle().getCenter().y()*20-5);
+				polyY[1]=(int)(flipper.getEndCircle().getCenter().y()*20-5);
+				polyY[2]=(int)(flipper.getEndCircle().getCenter().y()*20+5);
+				polyY[3]=(int)(flipper.getOriginCircle().getCenter().y()*20+5);
+			}
+			g.fillPolygon(polyX ,polyY, 4);
+			g.fillOval((int)((flipper.getEndCircle().getCenter().x()-0.25)*20), (int)((flipper.getEndCircle().getCenter().y()-0.25)*20), 10, 10);
+    	}
+	}
+    
+    public void drawAbsorbers(Graphics g){
+    	for(IAbsorber absorber : model.getAbsorbers()) {
+    		g.setColor(absorber.getColor());
+			g.fillRect((int)absorber.getXTopLeft(), (int)absorber.getYTopLeft(), (int)absorber.getWidth(), (int)absorber.getHeight());
+        }
+    }
+    
     public void update(Observable o, Object arg) {
         repaint();
     }
