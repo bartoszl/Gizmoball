@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,8 +8,20 @@ import java.util.List;
  */
 public class GBallModel implements IGBallModel {
 
-    public GBallModel() {
+    private double gravity, xFriction, yFriction;
+    private List<iGizmo> gizmos;
+    private List<IFlipper> flippers;
+    private List<Connection> connections;
+    private List<KeyConnection> keyConnections;
+    private List<IBall> balls;
+    private List<IAbsorber> absorbers;
 
+    public GBallModel() {
+        gizmos = new ArrayList<>();
+        connections = new ArrayList<>();
+        keyConnections = new ArrayList<>();
+        absorbers = new ArrayList<>();
+        balls = new ArrayList<>();
     }
 
     @Override
