@@ -2,12 +2,16 @@ package view;
 
 import model.Absorber;
 import model.Ball;
+import model.Bumper;
 import model.CircularBumper;
 import model.IAbsorber;
 import model.IFlipper;
 import model.iAbsorber;
 
 import javax.swing.*;
+
+import View.RunGUI.Attributes;
+
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -143,6 +147,13 @@ class Board extends JPanel implements Observer {
 			g.fillRect((int)absorber.getXTopLeft(), (int)absorber.getYTopLeft(), (int)absorber.getWidth(), (int)absorber.getHeight());
         }
     }
+    
+    private void drawCircularBumpers(Graphics g) {
+		for(Bumper cBump: model.getCircularBumpers()){
+			g.setColor(cBump.getColor());
+			g.fillOval(cBump.getXcoordinate(), cBump.getYcoordinate(), 20, 20);
+		}	
+	}
     
     public void update(Observable o, Object arg) {
         repaint();
