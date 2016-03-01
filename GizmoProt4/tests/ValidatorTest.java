@@ -18,6 +18,7 @@ public class ValidatorTest {
         boolean actual = localValidator.validateExistingIdentifier("T1");
         assertThat(actual, is(equalTo(true)));
     }
+
     @Test
     public void testValidateRotateAndDelete_Correct_Semantics_Expected_True() {
         Validator localValidator = new Validator();

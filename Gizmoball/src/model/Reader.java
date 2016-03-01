@@ -31,20 +31,4 @@ public class Reader {
             throw new IOException();
         }
     }
-
-//    public static void main(String[] args) {
-//        View.Reader reader = new View.Reader();
-//        List<String[]> result;
-//        try {
-//            result = reader.readFromFile("test.txt");
-//            for(String[] xs : result) {
-//                for(String ys : xs) {
-//                    System.out.print(ys + " | " );
-//                }
-//                System.out.println("");
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
