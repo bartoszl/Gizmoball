@@ -12,7 +12,7 @@ public class BallTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		ball = new Ball(200, 200, 200, 200);
+		ball = new Ball("B2", 200, 200, 200, 200);
 	}
 
 	@Test

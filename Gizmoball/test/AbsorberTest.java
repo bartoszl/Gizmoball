@@ -18,7 +18,7 @@ public class AbsorberTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		abs = new Absorber(0, 380, 400, 400);
+		abs = new Absorber("ABS1", 0, 380, 400, 400);
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class AbsorberTest {
 	
 	@Test
 	public void testAbsorbed() {
-		Ball ball = new Ball(200, 200, 100, 100);
+		Ball ball = new Ball("B1", 200, 200, 100, 100);
 		abs.absorb(ball);
 		assertTrue(ball.getVelocity().x()==0);
 		assertTrue(ball.getVelocity().y()==-1000);

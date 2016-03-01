@@ -108,10 +108,11 @@ public class ModelLoader {
     }
 
     private iGizmo createCircularBumper(String[] command) {
-        double xCoord = Double.parseDouble(command[2]) * scale;
+        /*double xCoord = Double.parseDouble(command[2]) * scale;
         double yCoord = Double.parseDouble(command[3]) * scale;
         String name = command[1];
-        return new CircularBumper(xCoord, yCoord, 10, name);
+        return new CircularBumper(xCoord, yCoord, 10, name);*/
+        return null;
     }
 
     /*private IFlipper createFlipper(String[] command) {
