@@ -7,6 +7,13 @@ import java.util.List;
 import physics.Circle;
 import physics.LineSegment;
 
+/**
+ * 
+ * @author Bartosz Lewandowski
+ * 
+ * Square Bumper class, represent Square bumpers.
+ * Implements Bumper interface.
+ */
 public class SquareBumper implements Bumper {
 	private double x,y;
 	private String name;
@@ -14,6 +21,14 @@ public class SquareBumper implements Bumper {
 	private int rotation;
 	private static final double L = 20;
 	
+	/**
+	 * Constructor for Square Bumper.
+	 * 
+	 * @param x -> double, representing top left corner of the square along x axis.
+	 * @param y -> double, representing top left corner of the square along u axis.
+	 * @param rotation -> int, represents how many times was the bumper rotated by 90 degrees.
+	 * @param name -> String, represents the name of the square.
+	 */
 	public SquareBumper(double x, double y,int rotation, String name){
 		this.x =x;
 		this.y = y;
