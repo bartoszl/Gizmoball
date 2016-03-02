@@ -17,7 +17,7 @@ public interface IGBallModel    {
 
     public boolean addAbsorber(Absorber absorber);
 
-    public boolean addBall(String name, );
+    public boolean addBall(String name, double x, double y, double xv, double yv);
 
     public void setGravity(double gravity);
 

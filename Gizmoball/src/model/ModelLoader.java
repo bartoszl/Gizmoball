@@ -90,10 +90,11 @@ public class ModelLoader {
     }
 
     private iGizmo createTriangularBumper(String[] command) {
-        double xCoord = Double.parseDouble(command[2]) * scale;
+        /*double xCoord = Double.parseDouble(command[2]) * scale;
         double yCoord = Double.parseDouble(command[3]) * scale;
         String name = command[1];
-        return new TriangularBumper(xCoord, yCoord, name);
+        return new TriangularBumper(xCoord, yCoord, name);*/
+        return null;
     }
 
     private iGizmo createSquareBumper(String[] command) {

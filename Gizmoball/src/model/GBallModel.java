@@ -73,13 +73,19 @@ public class GBallModel implements IGBallModel {
     }
 
     @Override
-    public boolean addBall(Ball ball) {
+    public boolean addBall(String name, double x, double y, double xv, double yv) {
+        if(!occupiedSpaces[(int) x][(int) y]) {
+            occupiedSpaces[(int) x][(int) y] = true;
+            Ball b = new Ball(name, x, y, xv, yv);
+            balls.add(b);
+            return true;
+        }
         return false;
     }
 
     @Override
     public void setGravity(double gravity) {
-
+        this.gravity = gravity;
     }
 
     @Override
@@ -89,7 +95,8 @@ public class GBallModel implements IGBallModel {
 
     @Override
     public void setFriction(double xFriction, double yFriction) {
-
+        this.xFriction = xFriction;
+        this.yFriction = yFriction;
     }
 
     @Override
