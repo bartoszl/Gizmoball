@@ -7,13 +7,17 @@ import java.util.List;
  */
 public interface IGBallModel    {
 
-    public boolean addGizmo(iGizmo gizmo);
+    public boolean addSquareBumper(int x, int y, String name);
+
+    public boolean addTriangularBumper(int x, int y, String name);
+
+    public boolean addCircularBumper(int x, int y, String name);
 
     public iGizmo getGizmo(String gizmoName);
 
-    public boolean addAbsorber(IAbsorber absorber);
+    public boolean addAbsorber(Absorber absorber);
 
-    public boolean addBall(IBall ball);
+    public boolean addBall(Ball ball);
 
     public void setGravity(double gravity);
 
@@ -29,11 +33,11 @@ public interface IGBallModel    {
 
     public boolean addKeyConnection(KeyConnection keyConnection);
 
-    public List<iGizmo> getGizmos();
+    public List<Bumper> getGizmos();
 
-    public List<IAbsorber> getAbsorbers();
+    public Absorber getAbsorber();
 
-    public List<IBall> getBalls();
+    public List<Ball> getBalls();
 
 
 }

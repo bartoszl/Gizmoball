@@ -9,23 +9,46 @@ import java.util.List;
 public class GBallModel implements IGBallModel {
 
     private double gravity, xFriction, yFriction;
-    private List<iGizmo> gizmos;
-    private List<IFlipper> flippers;
+    private List<Bumper> gizmos;
+    private List<Flipper> flippers;
     private List<Connection> connections;
     private List<KeyConnection> keyConnections;
-    private List<IBall> balls;
-    private List<IAbsorber> absorbers;
+    private List<Ball> balls;
+    private Absorber absorber;
+    private boolean [][] occupiedSpaces;
 
     public GBallModel() {
         gizmos = new ArrayList<>();
         connections = new ArrayList<>();
         keyConnections = new ArrayList<>();
-        absorbers = new ArrayList<>();
         balls = new ArrayList<>();
+        occupiedSpaces = new boolean [20][20];
     }
 
     @Override
-    public boolean addGizmo(iGizmo gizmo) {
+    public boolean addSquareBumper(int x, int y, String name) {
+        int x1 = (int) x; int y1 = (int) y;
+        if(!occupiedSpaces[x1][y1]) {
+            occupiedSpaces[x1][y1] = true;
+            // Create a new square bumper and add it to the gizmos array list
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addTriangularBumper(int x, int y, String name) {
+        return false;
+    }
+
+    @Override
+    public boolean addCircularBumper(int x, int y, String name) {
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            CircularBumper cBumper = new CircularBumper((double) x, (double) y, name);
+            gizmos.add(cBumper);
+            return true;
+        }
         return false;
     }
 
@@ -35,12 +58,12 @@ public class GBallModel implements IGBallModel {
     }
 
     @Override
-    public boolean addAbsorber(IAbsorber absorber) {
+    public boolean addAbsorber(Absorber absorber) {
         return false;
     }
 
     @Override
-    public boolean addBall(IBall ball) {
+    public boolean addBall(Ball ball) {
         return false;
     }
 
@@ -80,17 +103,17 @@ public class GBallModel implements IGBallModel {
     }
 
     @Override
-    public List<iGizmo> getGizmos() {
+    public List<Bumper> getGizmos() {
         return null;
     }
 
     @Override
-    public List<IAbsorber> getAbsorbers() {
-        return null;
+    public Absorber getAbsorber() {
+        return absorber;
     }
 
     @Override
-    public List<IBall> getBalls() {
+    public List<Ball> getBalls() {
         return null;
     }
 }

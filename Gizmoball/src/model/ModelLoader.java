@@ -1,7 +1,5 @@
 package model;
 
-import model.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -44,7 +42,7 @@ public class ModelLoader {
                     break;
 
                 case "Circle" :
-                    model.addGizmo(createCircularBumper(command));
+                    createCircularBumper(command);
                     break;
 
                 /*case "LeftFlipper" :
@@ -107,12 +105,8 @@ public class ModelLoader {
         return new SquareBumper(xCoord, yCoord, name);
     }
 
-    private iGizmo createCircularBumper(String[] command) {
-        /*double xCoord = Double.parseDouble(command[2]) * scale;
-        double yCoord = Double.parseDouble(command[3]) * scale;
-        String name = command[1];
-        return new CircularBumper(xCoord, yCoord, 10, name);*/
-        return null;
+    private void createCircularBumper(String[] command) {
+        model.addCircularBumper(Integer.parseInt(command[2]), Integer.parseInt(command[3]), command[1]);
     }
 
     /*private IFlipper createFlipper(String[] command) {
@@ -132,7 +126,7 @@ public class ModelLoader {
         double topY = Double.parseDouble(command[3]) * scale;
         double bottomY = Double.parseDouble(command[5]) * scale;
         String name = command[1];
-        return new Absorber(name, leftX, rightX, topY, bottomY);
+        return new Absorber(leftX, rightX, topY, bottomY);
     }
 
     private IBall createBall(String[] command) {
