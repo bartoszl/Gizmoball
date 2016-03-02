@@ -25,7 +25,7 @@ public class CircularBumper implements Bumper {
 	 * Constructor for CircularBumper.
 	 * @param x ->double, position of the left top corner of the grid along x axis in which the bumper is placed.
 	 * @param y	->double, position of the left top corner of the grid along y axis in which the bumper is placed.
-	// * @param rotation -> int, representing how many times the Bumper was rotated by 90 degress.
+	 * @param rotation -> int, representing how many times the Bumper was rotated by 90 degrees.
 	 * 					  If bigger than 3 the modulus of 4 is taken.
 	 * @param name -> String, representing the name of this Bumper.
 	 */
