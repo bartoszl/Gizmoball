@@ -1,5 +1,6 @@
 package model;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -19,10 +20,10 @@ public class GBallModel extends Observable implements IGBallModel {
     private boolean [][] occupiedSpaces;
 
     public GBallModel() {
-        gizmos = new ArrayList<>();
-        connections = new ArrayList<>();
-        keyConnections = new ArrayList<>();
-        balls = new ArrayList<>();
+        gizmos = new ArrayList<Bumper>();
+        connections = new ArrayList<Connection>();
+        keyConnections = new ArrayList<KeyConnection>();
+        balls = new ArrayList<Ball>();
         occupiedSpaces = new boolean [20][20];
     }
 

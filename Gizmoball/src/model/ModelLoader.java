@@ -96,11 +96,11 @@ public class ModelLoader {
         model.addTriangularBumper(xCoord, yCoord, name);
     }
 
-    private iGizmo createSquareBumper(String[] command) {
+    private void createSquareBumper(String[] command) {
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
         String name = command[1];
-        return new SquareBumper(xCoord, yCoord, name);
+        //return new SquareBumper(xCoord, yCoord, name);
     }
 
     private void createCircularBumper(String[] command) {
