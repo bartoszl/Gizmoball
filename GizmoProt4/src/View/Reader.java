@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by John Watt on 09/02/2016.
- */
 public class Reader {
 
     private BufferedReader reader;
