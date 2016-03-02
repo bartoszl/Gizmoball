@@ -34,11 +34,11 @@ public class ModelLoader {
             String gizmoOp = command[0];
             switch (gizmoOp) {
                 case "Triangle" :
-                    model.addGizmo(createTriangularBumper(command));
+                    //model.addGizmo(createTriangularBumper(command));
                     break;
 
                 case "Square" :
-                    model.addGizmo((createSquareBumper(command)));
+                    //model.addGizmo((createSquareBumper(command)));
                     break;
 
                 case "Circle" :
@@ -51,11 +51,11 @@ public class ModelLoader {
                     break;*/
 
                 case "Absorber" :
-                    model.addAbsorber(createAbsorber(command));
+                    //model.addAbsorber(createAbsorber(command));
                     break;
 
                 case "Ball" :
-                    model.addBall(createBall(command));
+                    //model.addBall(createBall(command));
                     break;
 
                 case "Gravity" :
