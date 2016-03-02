@@ -20,13 +20,14 @@ public class Absorber implements IAbsorber {
 	private Color color;
 	/**
 	 * Constructor for Absorber object. Initially sets color to Pink
-	 * 
+	 *
+	 * @param name -> string, representing the name of the absorber
 	 * @param x -> double, representing x coordinate of top left corner of the absorber.
 	 * @param y -> double, representing y coordinate of top left corner of the absorber.
 	 * @param x1 -> double, representing x coordinate of bottom right corner of the absorber.
 	 * @param y1 -> double, representing y coordinate of the bottom right corner of the absorber.
 	 */
-	public Absorber(double x, double y, double x1, double y1){
+	public Absorber(String name, double x, double y, double x1, double y1){
 		xTopLeft=x;
 		yTopLeft=y;
 		xBottomRight=x1;

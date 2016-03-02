@@ -25,13 +25,13 @@ public class CircularBumper implements Bumper {
 	 * Constructor for CircularBumper.
 	 * @param x ->double, position of the left top corner of the grid along x axis in which the bumper is placed.
 	 * @param y	->double, position of the left top corner of the grid along y axis in which the bumper is placed.
-	 * @param rotation -> int, representing how many times the Bumper was rotated by 90 degress.
+	// * @param rotation -> int, representing how many times the Bumper was rotated by 90 degress.
 	 * 					  If bigger than 3 the modulus of 4 is taken.
 	 * @param name -> String, representing the name of this Bumper.
 	 */
-	public CircularBumper(double x, double y, int rotation, String name){
+	public CircularBumper(double x, double y, String name){
 		this.circle = new Circle(x,y,RADIUS);
-		this.rotation = rotation%4;
+		//this.rotation = rotation%4;
 		this.name = name;
 		color = color.GREEN;
 	}

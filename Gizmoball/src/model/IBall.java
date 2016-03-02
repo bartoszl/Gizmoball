@@ -118,4 +118,12 @@ public interface IBall {
 	 * @return Circle, representing the ball.
 	 */
 	public Circle getCircle();
+
+	public double getLeftLimit();
+
+	public double getUpperLimit();
+
+	public double getRightLimit();
+
+	public double getLowerLimit();
 }
