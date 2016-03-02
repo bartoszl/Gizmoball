@@ -5,85 +5,40 @@ import model.Ball;
 import model.Bumper;
 import model.CircularBumper;
 import model.IAbsorber;
+import model.IBall;
 import model.IFlipper;
-import model.iAbsorber;
+import model.IGBallModel;
+import physics.Circle;
 
 import javax.swing.*;
 
-import View.RunGUI.Attributes;
-
 import java.awt.*;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 class Board extends JPanel implements Observer {
 
     private boolean isBuild;
-    
+    private IGBallModel model;
 
-    public Board(boolean isBuild){
+    public Board(boolean isBuild, IGBallModel model){
         this.isBuild = isBuild;
+        this.model=model;
     }
 
-//    private int width, height;
-//    //private Model gm;
-//
-//    public Board(Model m) {
-//        width = 400;
-//        height = 400;
-//        m.addObserver(this);
-//        gm = m;
-//        this.setBorder(BorderFactory.createLineBorder(Color.black));
-//    }
-//
-//    public Dimension getPreferredSize() {
-//        return new Dimension(width, height);
-//    }
-//
     public void paintComponent(Graphics g) {
-        if(isBuild) drawGrid(g);
-        else drawBorder(g);
+        if(isBuild){//is in build mode
+        	drawGrid(g);
+        }
+        else{//is in run mode
+        	drawBorder(g);
+        }
 
-//        super.paintComponent(g);
-//
-//        Graphics2D g2 = (Graphics2D) g;
-//
-//        // Draw all square bumpers
-//        for (SquareBumper sBumper : gm.getSquareBumpers()) {
-//            g2.setColor(sBumper.getColor());
-//            g2.fillRect((int) sBumper.getX(), (int) sBumper.getY(), 20, 20);
-//        }
-//
-//        Ball b = gm.getBall();
-//
-//        // Draw the ball
-//        if (b != null) {
-//            g2.setColor(b.getColor());
-//            int x = (int) (b.getX() - b.getRadius());
-//            int y = (int) (b.getY() - b.getRadius());
-//            int width = (int) (2 * b.getRadius());
-//            g2.fillOval(x, y, width, width);
-//        }
-//
-//        // Draw all triangle bumpers
-//        for (TriangularBumper tBumper : gm.getTriangularBumpers()) {
-//            g2.setColor(tBumper.getColor());
-//            g2.fillPolygon(tBumper.getXCoords(), tBumper.getYCoords(), 3);
-//        }
-//
-//        //Draw all circular bumpers
-//        for (CircularBumper cBumper : gm.getCircularBumpers()) {
-//            g2.setColor(cBumper.getColor());
-//            int x = (int) (cBumper.getX() - cBumper.getRadius());
-//            int y = (int) (cBumper.getY() - cBumper.getRadius());
-//            int width = (int) (2 * cBumper.getRadius());
-//            g2.fillOval(x, y, width, width);
-//        }
-//
-//        // Draw the absorber
-//        Absorber absorber = gm.getAbsorber();
-//        g.setColor(absorber.getColor());
-//        g.fillRect((int) absorber.getXTopLeft(), (int) absorber.getYTopLeft(), (int) absorber.getWidth(), (int) absorber.getHeight());
+        drawFlippers(g);
+        drawAbsorber(g);
+        drawBumpers(g);
+        drawBalls(g);
     }
 
     private void drawGrid(Graphics g){
@@ -101,8 +56,7 @@ class Board extends JPanel implements Observer {
         g.drawLine(400, 0, 400, 400);
     }
 
-    private void drawFlippers(Graphics g) {
-    	
+    private void drawFlippers(Graphics g) { 	
     	for(IFlipper flipper: model.getFlippers()){
 			//only needs the center of the top and bottom circles
 			g.setColor(flipper.getColor());
@@ -141,19 +95,45 @@ class Board extends JPanel implements Observer {
     	}
 	}
     
-    public void drawAbsorbers(Graphics g){
-    	for(IAbsorber absorber : model.getAbsorbers()) {
-    		g.setColor(absorber.getColor());
+    private void drawAbsorber(Graphics g){
+    	IAbsorber absorber = model.getAbsorber();
+    	if(absorber!=null){
+	    	g.setColor(absorber.getColor());
 			g.fillRect((int)absorber.getXTopLeft(), (int)absorber.getYTopLeft(), (int)absorber.getWidth(), (int)absorber.getHeight());
-        }
+    	}
     }
     
-    private void drawCircularBumpers(Graphics g) {
-		for(Bumper cBump: model.getCircularBumpers()){
-			g.setColor(cBump.getColor());
-			g.fillOval(cBump.getXcoordinate(), cBump.getYcoordinate(), 20, 20);
+    private void drawBumpers(Graphics g){
+		for(Bumper gizmo: model.getGizmos()){
+			List<Circle> circles = gizmo.getCircles();
+			g.setColor(gizmo.getColor());
+			if(circles.size()==1){//circular bumper
+				int radius = (int)circles.get(0).getRadius();
+				g.fillOval((int)circles.get(0).getCenter().x()-radius, (int)circles.get(0).getCenter().y()-radius, radius*2, radius*2);
+			}else if(circles.size()==3){//triangular bumper
+				int[] polyX = new int[3];
+				int[] polyY = new int[3];
+				
+				for(int i=0; i<3; i++){
+					polyX[i] = (int)circles.get(i).getCenter().x();
+					polyY[i] = (int)circles.get(i).getCenter().x();
+				}
+				g.fillPolygon(polyX, polyY, 3);
+			}else if(circles.size()==4){//square bumper
+				int x = (int)circles.get(0).getCenter().x();
+				int y = (int)circles.get(0).getCenter().y();
+				g.fillRect(x, y, 20, 20);
+			}
 		}	
 	}
+    
+    private void drawBalls(Graphics g){
+    	for(IBall ball: model.getBalls()){
+    		g.setColor(ball.getColor());
+    		int radius = (int)ball.getRadius();
+			g.fillOval((int)ball.getX()-radius, (int)ball.getY()-radius, radius*2, radius*2);
+    	}
+    }
     
     public void update(Observable o, Object arg) {
         repaint();

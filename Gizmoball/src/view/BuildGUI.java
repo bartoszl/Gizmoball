@@ -3,6 +3,7 @@ package view;
 import model.Absorber;
 import model.Ball;
 import model.CircularBumper;
+import model.IGBallModel;
 
 import java.awt.*;
 import javax.swing.*;
@@ -14,12 +15,14 @@ public class BuildGUI implements IGUI{
 	public JFrame frame;
     private Main main;
 	private ActionListener controller;
+	private IGBallModel model;
 
 	/**
 	 * Create the application.
 	 */
-	public BuildGUI(Main main) {
+	public BuildGUI(Main main, IGBallModel model) {
         this.main = main;
+        this.model = model;
 		initialize();
 	}
 
@@ -37,7 +40,7 @@ public class BuildGUI implements IGUI{
 		frame.getContentPane().add(buildMenu);
 		buildMenu.setLayout(null);
 		
-		Board gridView = new Board(true);
+		Board gridView = new Board(true, model);
 		gridView.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(gridView);
 		

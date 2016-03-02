@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+
+import model.IGBallModel;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -17,14 +20,16 @@ import java.awt.Color;
 
 public class RunGUI implements IGUI{
 
-	public JFrame frame;
+	private JFrame frame;
     private Main main;
+    private IGBallModel model;
 
 	/**
 	 * Create the application.
 	 */
-	public RunGUI(Main main) {
+	public RunGUI(Main main, IGBallModel model) {
 		this.main = main;
+		this.model = model;
         initialize();
 	}
 
@@ -69,7 +74,7 @@ public class RunGUI implements IGUI{
         separator_1.setBounds(10, 331, 180, 2);
         panel.add(separator_1);
 
-        Board board = new Board(false);
+        Board board = new Board(false, model);
         board.setBounds(200, 0, 434, 405);
         frame.getContentPane().add(board);
 

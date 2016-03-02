@@ -155,4 +155,10 @@ public class GBallModel extends Observable implements IGBallModel {
     public List<Ball> getBalls() {
         return balls;
     }
+
+	@Override
+	public List<Flipper> getFlippers() {
+		// TODO Auto-generated method stub
+		return flippers;
+	}
 }

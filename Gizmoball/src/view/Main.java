@@ -2,26 +2,33 @@ package view;
 
 import java.awt.*;
 
+import model.GBallModel;
+import model.IGBallModel;
+
 /**
  * Created by Stephen on 01/03/2016.
  */
 public class Main {
-    private static IGUI gui;
+    private IGUI gui;
+    private IGBallModel model;
     /**
      * Launch the application.
      */
-    public Main() { switchToRun(); }
+    public Main() {
+    	model = new GBallModel();
+    	switchToRun();
+    }
 
     public void switchToBuild(){
-        gui = new BuildGUI(this);
+        gui = new BuildGUI(this, model);
     }
 
     public void switchToRun(){
-        gui = new RunGUI(this);
+        gui = new RunGUI(this, model);
     }
 
     public static void main(String[] args) {
-
+    	
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
