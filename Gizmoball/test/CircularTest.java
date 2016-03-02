@@ -13,8 +13,7 @@ public class CircularTest {
 	private CircularBumper c;
 	@Before
 	public void setUp() throws Exception {
-		//c = new CircularBumper(100,150,0, "CB1");
-		c = new CircularBumper(100,150,"CB1");
+		c = new CircularBumper(100,150, 0,"CB1");
 	}
 
 	@Test

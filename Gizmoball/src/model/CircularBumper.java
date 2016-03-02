@@ -29,9 +29,9 @@ public class CircularBumper implements Bumper {
 	 * 					  If bigger than 3 the modulus of 4 is taken.
 	 * @param name -> String, representing the name of this Bumper.
 	 */
-	public CircularBumper(double x, double y, String name){
+	public CircularBumper(double x, double y, int rotation, String name){
 		this.circle = new Circle(x,y,RADIUS);
-		//this.rotation = rotation%4;
+		this.rotation = rotation%4;
 		this.name = name;
 		color = color.GREEN;
 	}
