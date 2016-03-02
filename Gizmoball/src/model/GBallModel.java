@@ -27,9 +27,8 @@ public class GBallModel implements IGBallModel {
 
     @Override
     public boolean addSquareBumper(int x, int y, String name) {
-        int x1 = (int) x; int y1 = (int) y;
-        if(!occupiedSpaces[x1][y1]) {
-            occupiedSpaces[x1][y1] = true;
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
             // Create a new square bumper and add it to the gizmos array list
             return true;
         }
@@ -38,6 +37,12 @@ public class GBallModel implements IGBallModel {
 
     @Override
     public boolean addTriangularBumper(int x, int y, String name) {
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            TriangularBumper tBumper = new TriangularBumper((double) x, (double) y, name);
+            gizmos.add(tBumper);
+            return true;
+        }
         return false;
     }
 
@@ -53,7 +58,12 @@ public class GBallModel implements IGBallModel {
     }
 
     @Override
-    public iGizmo getGizmo(String gizmoName) {
+    public Bumper getGizmo(String gizmoName) {
+        for(Bumper b : gizmos) {
+            if(b.getName().equals(gizmoName)) {
+                return b;
+            }
+        }
         return null;
     }
 

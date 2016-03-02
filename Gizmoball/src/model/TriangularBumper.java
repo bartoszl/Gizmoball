@@ -70,6 +70,7 @@ public class TriangularBumper implements Bumper {
 
     @Override
     public List<Circle> getCircles() {
+        List<Circle> circles = new ArrayList<>();
         return null;
     }
 
