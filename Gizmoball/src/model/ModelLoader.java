@@ -118,7 +118,7 @@ public class ModelLoader {
         return f;
     }*/
 
-    private IAbsorber createAbsorber(String[] command) {
+    private void createAbsorber(String[] command) {
         int leftX = Integer.parseInt(command[2]) * scale;
         int rightX = Integer.parseInt(command[4]) * scale;
         int topY = Integer.parseInt(command[3]) * scale;

@@ -2,11 +2,12 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by John Watt on 01/03/2016.
  */
-public class GBallModel implements IGBallModel {
+public class GBallModel extends Observable implements IGBallModel {
 
     private double gravity, xFriction, yFriction;
     private List<Bumper> gizmos;
@@ -25,11 +26,17 @@ public class GBallModel implements IGBallModel {
         occupiedSpaces = new boolean [20][20];
     }
 
+    private void notifyObs() {
+        setChanged();
+        notifyObservers();
+    }
+
     @Override
     public boolean addSquareBumper(int x, int y, String name) {
         if(!occupiedSpaces[x][y]) {
             occupiedSpaces[x][y] = true;
-            // Create a new square bumper and add it to the gizmos array list
+            // Create a new square bumper and add it to the gizmos array list - still to be implemented, requires the SquareBumper class
+            notifyObs();
             return true;
         }
         return false;
@@ -41,6 +48,7 @@ public class GBallModel implements IGBallModel {
             occupiedSpaces[x][y] = true;
             TriangularBumper tBumper = new TriangularBumper((double) x, (double) y, name);
             gizmos.add(tBumper);
+            notifyObs();
             return true;
         }
         return false;
@@ -52,6 +60,7 @@ public class GBallModel implements IGBallModel {
             occupiedSpaces[x][y] = true;
             CircularBumper cBumper = new CircularBumper((double) x, (double) y, name);
             gizmos.add(cBumper);
+            notifyObs();
             return true;
         }
         return false;
@@ -77,6 +86,7 @@ public class GBallModel implements IGBallModel {
             }
         }
         absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
+        notifyObs();
         return true;
     }
 
@@ -86,6 +96,7 @@ public class GBallModel implements IGBallModel {
             occupiedSpaces[(int) x][(int) y] = true;
             Ball b = new Ball(name, x, y, xv, yv);
             balls.add(b);
+            notifyObs();
             return true;
         }
         return false;
@@ -94,27 +105,29 @@ public class GBallModel implements IGBallModel {
     @Override
     public void setGravity(double gravity) {
         this.gravity = gravity;
+        notifyObs();
     }
 
     @Override
     public double getGravity() {
-        return 0;
+        return gravity;
     }
 
     @Override
     public void setFriction(double xFriction, double yFriction) {
         this.xFriction = xFriction;
         this.yFriction = yFriction;
+        notifyObs();
     }
 
     @Override
     public double getFrictionX() {
-        return 0;
+        return xFriction;
     }
 
     @Override
     public double getFrictionY() {
-        return 0;
+        return yFriction;
     }
 
     @Override
@@ -129,7 +142,7 @@ public class GBallModel implements IGBallModel {
 
     @Override
     public List<Bumper> getGizmos() {
-        return null;
+        return gizmos;
     }
 
     @Override
@@ -139,6 +152,6 @@ public class GBallModel implements IGBallModel {
 
     @Override
     public List<Ball> getBalls() {
-        return null;
+        return balls;
     }
 }
