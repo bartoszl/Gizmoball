@@ -34,7 +34,7 @@ public class ModelLoader {
             String gizmoOp = command[0];
             switch (gizmoOp) {
                 case "Triangle" :
-                    //model.addGizmo(createTriangularBumper(command));
+                    createTriangularBumper(command);
                     break;
 
                 case "Square" :
@@ -51,11 +51,11 @@ public class ModelLoader {
                     break;*/
 
                 case "Absorber" :
-                    //model.addAbsorber(createAbsorber(command));
+                    createAbsorber(command);
                     break;
 
                 case "Ball" :
-                    //model.addBall(createBall(command));
+                    createBall(command);
                     break;
 
                 case "Gravity" :
@@ -89,17 +89,14 @@ public class ModelLoader {
         return true;
     }
 
-    private iGizmo createTriangularBumper(String[] command) {
-        /*double xCoord = Double.parseDouble(command[2]) * scale;
-        double yCoord = Double.parseDouble(command[3]) * scale;
+    private void createTriangularBumper(String[] command) {
+        int xCoord = Integer.parseInt(command[2]) * scale;
+        int yCoord = Integer.parseInt(command[3]) * scale;
         String name = command[1];
-        return new TriangularBumper(xCoord, yCoord, name);*/
-        return null;
+        model.addTriangularBumper(xCoord, yCoord, name);
     }
 
     private iGizmo createSquareBumper(String[] command) {
-        //double xCoord = Double.parseDouble(command[2]) * scale;
-        //double yCoord = Double.parseDouble(command[3]) * scale;
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
         String name = command[1];
@@ -107,7 +104,7 @@ public class ModelLoader {
     }
 
     private void createCircularBumper(String[] command) {
-        model.addCircularBumper(Integer.parseInt(command[2]), Integer.parseInt(command[3]), command[1]);
+        model.addCircularBumper(Integer.parseInt(command[2]) * scale, Integer.parseInt(command[3]) * scale, command[1]);
     }
 
     /*private IFlipper createFlipper(String[] command) {
@@ -122,21 +119,21 @@ public class ModelLoader {
     }*/
 
     private IAbsorber createAbsorber(String[] command) {
-        double leftX = Double.parseDouble(command[2]) * scale;
-        double rightX = Double.parseDouble(command[4]) * scale;
-        double topY = Double.parseDouble(command[3]) * scale;
-        double bottomY = Double.parseDouble(command[5]) * scale;
+        int leftX = Integer.parseInt(command[2]) * scale;
+        int rightX = Integer.parseInt(command[4]) * scale;
+        int topY = Integer.parseInt(command[3]) * scale;
+        int bottomY = Integer.parseInt(command[5]) * scale;
         String name = command[1];
-        return new Absorber(leftX, rightX, topY, bottomY);
+        model.addAbsorber(name, leftX, topY, rightX, bottomY);
     }
 
-    private IBall createBall(String[] command) {
+    private void createBall(String[] command) {
         double xCoord = Double.parseDouble(command[2]);
         double yCoord = Double.parseDouble(command[3]);
         double xVelo = Double.parseDouble(command[4]);
         double yVelo = Double.parseDouble(command[5]);
         String name = command[1];
-        return new Ball(name, xCoord, yCoord, xVelo, yVelo);
+        model.addBall(name, xCoord, yCoord, xVelo, yVelo);
     }
 
     private double getGravityValue(String[] command) {

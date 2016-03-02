@@ -68,8 +68,16 @@ public class GBallModel implements IGBallModel {
     }
 
     @Override
-    public boolean addAbsorber(Absorber absorber) {
-        return false;
+    public boolean addAbsorber(String name, int x, int y, int x1, int y1) {
+        for(int i = x; i <= x1; i++) {
+            for(int j = y; j <= y1; j++) {
+                if(occupiedSpaces[i][j]) {
+                    return false;
+                }
+            }
+        }
+        absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
+        return true;
     }
 
     @Override

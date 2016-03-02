@@ -15,7 +15,7 @@ public interface IGBallModel    {
 
     public Bumper getGizmo(String gizmoName);
 
-    public boolean addAbsorber(Absorber absorber);
+    public boolean addAbsorber(String name, int x, int y, int x1, int y1);
 
     public boolean addBall(String name, double x, double y, double xv, double yv);
 
