@@ -23,6 +23,7 @@ public class GBallModel extends Observable implements IGBallModel {
         gizmos = new ArrayList<Bumper>();
         connections = new ArrayList<Connection>();
         keyConnections = new ArrayList<KeyConnection>();
+        flippers = new ArrayList<Flipper>();
         balls = new ArrayList<Ball>();
         occupiedSpaces = new boolean [20][20];
     }
