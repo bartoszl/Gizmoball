@@ -23,6 +23,7 @@ public class GBallModel extends Observable implements IGBallModel {
         gizmos = new ArrayList<Bumper>();
         connections = new ArrayList<Connection>();
         keyConnections = new ArrayList<KeyConnection>();
+        flippers = new ArrayList<Flipper>();
         balls = new ArrayList<Ball>();
         occupiedSpaces = new boolean [20][20];
     }
@@ -33,10 +34,10 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public boolean addSquareBumper(int x, int y, String name) {
+    public boolean addSquareBumper(int x, int y, int rotation, String name) {
         if(!occupiedSpaces[x][y]) {
             occupiedSpaces[x][y] = true;
-            // Create a new square bumper and add it to the gizmos array list - still to be implemented, requires the SquareBumper class
+            gizmos.add(new SquareBumper((double) x, (double) y, rotation, name));
             notifyObs();
             return true;
         }
@@ -44,10 +45,10 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public boolean addTriangularBumper(int x, int y, String name) {
+    public boolean addTriangularBumper(int x, int y, int rotation, String name) {
         if(!occupiedSpaces[x][y]) {
             occupiedSpaces[x][y] = true;
-            TriangularBumper tBumper = new TriangularBumper((double) x, (double) y, name);
+            TriangularBumper tBumper = new TriangularBumper((double) x, (double) y, rotation, name);
             gizmos.add(tBumper);
             notifyObs();
             return true;
@@ -56,10 +57,10 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public boolean addCircularBumper(int x, int y, String name) {
+    public boolean addCircularBumper(int x, int y, int rotation, String name) {
         if(!occupiedSpaces[x][y]) {
             occupiedSpaces[x][y] = true;
-            CircularBumper cBumper = new CircularBumper((double) x, (double) y, name);
+            CircularBumper cBumper = new CircularBumper((double) x, (double) y, rotation, name);
             gizmos.add(cBumper);
             notifyObs();
             return true;
@@ -161,4 +162,6 @@ public class GBallModel extends Observable implements IGBallModel {
 		// TODO Auto-generated method stub
 		return flippers;
 	}
+	
+	//TODO move functionality needs to be added
 }

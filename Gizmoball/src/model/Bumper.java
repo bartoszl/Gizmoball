@@ -71,4 +71,8 @@ public interface Bumper {
 	 * @param y -> double representing position of a bumper along y axis.
 	 */
 	public void move(double x, double y);
+	
+	public double getX();
+	
+	public double getY();
 }

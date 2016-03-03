@@ -13,8 +13,7 @@ public class CircularTest {
 	private CircularBumper c;
 	@Before
 	public void setUp() throws Exception {
-		//c = new CircularBumper(100,150,0, "CB1");
-		c = new CircularBumper(100,150,"CB1");
+		c = new CircularBumper(100,150, 0,"CB1");
 	}
 
 	@Test
@@ -27,8 +26,8 @@ public class CircularTest {
 		assertTrue(c.getCircles().size()==1);
 		Circle circ = c.getCircles().get(0);
 		assertTrue(circ.getRadius()==10);
-		assertTrue(circ.getCenter().x()==100);
-		assertTrue(circ.getCenter().y()==150);
+		assertTrue(circ.getCenter().x()==100+10);
+		assertTrue(circ.getCenter().y()==150+10);
 	}
 	
 	@Test
@@ -54,11 +53,12 @@ public class CircularTest {
 		assertTrue(c.getRotation()==0);
 	}
 	
-	/*@Test
+	@Test
 	public void testConstructorRotationBiggerThan4(){
-		CircularBumper ci = new CircularBumper(100, 150, "CB2");
+		CircularBumper ci = new CircularBumper(100, 150, 21, "CB2");
 		assertTrue(ci.getRotation()==1);
-	}*/
+	}
 	
+	//TODO add test after move and test move;
 
 }

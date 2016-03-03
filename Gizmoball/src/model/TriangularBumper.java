@@ -15,12 +15,14 @@ public class TriangularBumper implements Bumper {
     private String gizmoName;
     private double cx, cy;
     private Vect center;
+    private int rotation;
 
     private int scale;
 
-    public TriangularBumper(double cx, double cy, String gizmoName) {
+    public TriangularBumper(double cx, double cy, int rotation, String gizmoName) {
         this.cx = cx;
         this.cy = cy;
+        this.rotation = rotation%4;
         scale = 20;
         sideOne = new LineSegment(cx, cy, cx + (1* scale), cy);
         sideTwo = new LineSegment(cx, cy, cx, cy + (1 * scale));
@@ -71,7 +73,9 @@ public class TriangularBumper implements Bumper {
     @Override
     public List<Circle> getCircles() {
         List<Circle> circles = new ArrayList<>();
-        return null;
+        //TODO -> add circles on the corners;
+        
+        return circles;
     }
 
     public Color getColor() {
@@ -80,7 +84,7 @@ public class TriangularBumper implements Bumper {
 
     @Override
     public int getRotation() {
-        return 0;
+        return rotation;
     }
 
     public LineSegment getHypotenuse() {
@@ -101,18 +105,11 @@ public class TriangularBumper implements Bumper {
 
     @Override
     public void move(double x, double y) {
-
-    }
-
-    public int reservedArea() {
-        return 1;
-    }
-
-    public void move(int cx, int cy) {
-
+    	//TODO -> implement move method.
     }
 
     public void rotate() {
+    	rotation=++rotation%4;
         Angle a = Angle.DEG_90;
         sideOne = Geometry.rotateAround(sideOne, center, a);
         sideTwo = Geometry.rotateAround(sideTwo, center, a);

@@ -93,18 +93,18 @@ public class ModelLoader {
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
         String name = command[1];
-        model.addTriangularBumper(xCoord, yCoord, name);
+        model.addTriangularBumper(xCoord, yCoord,0, name);
     }
 
     private void createSquareBumper(String[] command) {
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
         String name = command[1];
-        //return new SquareBumper(xCoord, yCoord, name);
+        model.addSquareBumper(xCoord, yCoord, 0, name);
     }
 
     private void createCircularBumper(String[] command) {
-        model.addCircularBumper(Integer.parseInt(command[2]) * scale, Integer.parseInt(command[3]) * scale, command[1]);
+        model.addCircularBumper(Integer.parseInt(command[2]) * scale, Integer.parseInt(command[3]) * scale, 0, command[1]);
     }
 
     /*private IFlipper createFlipper(String[] command) {
