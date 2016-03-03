@@ -12,7 +12,9 @@ import java.awt.event.*;
 
 public class BuildGUI implements IGUI{
 
-	public JFrame frame;
+	private JFrame frame;
+	private JPanel panel;
+	private BuildBoard board;
     private Main main;
 	private ActionListener controller;
 	private IGBallModel model;
@@ -23,26 +25,43 @@ public class BuildGUI implements IGUI{
 	public BuildGUI(Main main, IGBallModel model) {
         this.main = main;
         this.model = model;
+        createFrame();
 		initialize();
+	}
+	
+	/**
+	 * Alternate constructor that takes in a JFrame object
+	 */
+	public BuildGUI(Main main, IGBallModel model, JFrame frame) {
+        this.main = main;
+        this.model = model;
+        this.frame = frame;
+		initialize();
+		frame.repaint();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the frame.
 	 */
-	private void initialize() {
+	private void createFrame(){
 		frame = new JFrame("GizmoBall - Build Mode");
 		frame.setBounds(100, 100, 650, 485);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+	}
+	
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
 		JPanel buildMenu = create_buildMenu();
 		buildMenu.setBounds(0, 0, 220, 405);
 		frame.getContentPane().add(buildMenu);
 		buildMenu.setLayout(null);
 		
-		Board gridView = new Board(true, model);
-		gridView.setBounds(220, 0, 405, 405);
-		frame.getContentPane().add(gridView);
+		board = new BuildBoard(model);
+		board.setBounds(220, 0, 405, 405);
+		frame.getContentPane().add(board);
 		
 		JTextField txtOutput = new JTextField();
 		txtOutput.setText("[Example Text]");
@@ -56,7 +75,7 @@ public class BuildGUI implements IGUI{
 	}
 	
 	private JPanel create_buildMenu() {
-        JPanel panel = new JPanel();
+        panel = new JPanel();
 
         JRadioButton rdbtnGizmo = new JRadioButton("Gizmo");
         rdbtnGizmo.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -115,8 +134,12 @@ public class BuildGUI implements IGUI{
         btnRunMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.switchToRun();
-                frame.dispose();
+            	board.delete();
+            	board = null;
+            	frame.remove(frame.getContentPane());
+            	frame.remove(frame.getJMenuBar());
+            	frame.remove(panel);
+                main.switchToRun(frame);
             }
         });
 

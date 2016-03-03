@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.WindowConstants;
 
 import model.IGBallModel;
 
@@ -21,6 +22,8 @@ import java.awt.Color;
 public class RunGUI implements IGUI{
 
 	private JFrame frame;
+	private JPanel panel;
+	private RunBoard board;
     private Main main;
     private IGBallModel model;
 
@@ -30,19 +33,36 @@ public class RunGUI implements IGUI{
 	public RunGUI(Main main, IGBallModel model) {
 		this.main = main;
 		this.model = model;
+		createFrame();
         initialize();
 	}
 
+	/**
+	 * Alternate constructor that takes in a JFrame object
+	 */
+	public RunGUI(Main main, IGBallModel model, JFrame frame) {
+        this.main = main;
+        this.model = model;
+        this.frame = frame;
+		initialize();
+		frame.repaint();
+	}
+	
+	/**
+	 * Initialize the frame.
+	 */
+	private void createFrame(){
+		frame = new JFrame("GizmoBall - Build Mode");
+		frame.setBounds(100, 100, 650, 485);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+	}
+	
     /**
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        frame = new JFrame("GizmoBall - Run Mode");
-        frame.setBounds(100, 100, 650, 485);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
-
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setBounds(0, 0, 200, 405);
         frame.getContentPane().add(panel);
         panel.setLayout(null);
@@ -65,8 +85,12 @@ public class RunGUI implements IGUI{
         btnBuildMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.switchToBuild();
-                frame.dispose();
+            	board.delete();
+            	board=null;
+            	frame.remove(frame.getContentPane());
+            	frame.remove(frame.getJMenuBar());
+            	frame.remove(panel);
+                main.switchToBuild(frame);
             }
         });
 
@@ -74,7 +98,7 @@ public class RunGUI implements IGUI{
         separator_1.setBounds(10, 331, 180, 2);
         panel.add(separator_1);
 
-        Board board = new Board(false, model);
+        board = new RunBoard(model);
         board.setBounds(200, 0, 434, 405);
         frame.getContentPane().add(board);
 
