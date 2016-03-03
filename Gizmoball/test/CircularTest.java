@@ -53,11 +53,12 @@ public class CircularTest {
 		assertTrue(c.getRotation()==0);
 	}
 	
-	/*@Test
+	@Test
 	public void testConstructorRotationBiggerThan4(){
-		CircularBumper ci = new CircularBumper(100, 150, "CB2");
+		CircularBumper ci = new CircularBumper(100, 150, 21, "CB2");
 		assertTrue(ci.getRotation()==1);
-	}*/
+	}
 	
+	//TODO add test after move and test move;
 
 }
