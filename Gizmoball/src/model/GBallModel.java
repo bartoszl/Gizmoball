@@ -14,7 +14,8 @@ public class GBallModel extends Observable implements IGBallModel {
     private List<Bumper> gizmos;
     private List<Flipper> flippers;
     private List<Connection> connections;
-    private List<KeyConnection> keyConnections;
+    private List<KeyConnectionAbs> keyConnectionsAbs;
+    private List<KeyConnectionFlipper> keyConnectionsFlipper;
     private List<Ball> balls;
     private Absorber absorber;
     private boolean [][] occupiedSpaces;
@@ -22,7 +23,8 @@ public class GBallModel extends Observable implements IGBallModel {
     public GBallModel() {
         gizmos = new ArrayList<Bumper>();
         connections = new ArrayList<Connection>();
-        keyConnections = new ArrayList<KeyConnection>();
+        keyConnectionsAbs = new ArrayList<KeyConnectionAbs>();
+        keyConnectionsFlipper = new ArrayList<KeyConnectionFlipper>();
         flippers = new ArrayList<Flipper>();
         balls = new ArrayList<Ball>();
         occupiedSpaces = new boolean [20][20];
@@ -134,12 +136,15 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addConnection(Connection connection) {
-        return false;
+        return connections.add(connection);
     }
 
-    @Override
-    public boolean addKeyConnection(KeyConnection keyConnection) {
-        return false;
+    public boolean addKeyConnectionAbs(KeyConnectionAbs keyConnectionAbs) {
+        return keyConnectionsAbs.add(keyConnectionAbs);
+    }
+
+    public boolean addKeyConnectionFlipper(KeyConnectionFlipper keyConnectionFlipper) {
+        return keyConnectionsFlipper.add(keyConnectionFlipper);
     }
 
     @Override

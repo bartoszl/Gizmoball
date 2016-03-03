@@ -18,6 +18,7 @@ import physics.LineSegment;
 public class Absorber implements IAbsorber {
 	private double xTopLeft, yTopLeft, xBottomRight, yBottomRight;
 	private Color color;
+	private String name;
 	/**
 	 * Constructor for Absorber object. Initially sets color to Pink
 	 *
@@ -33,6 +34,7 @@ public class Absorber implements IAbsorber {
 		xBottomRight=x1;
 		yBottomRight=y1;
 		color=Color.PINK;
+		this.name = name;
 	}
 
 	@Override
@@ -108,6 +110,10 @@ public class Absorber implements IAbsorber {
 		ball.setAbsorbed(true);
 		ball.setVelocity(0, -1000);
 		ball.setXY(xBottomRight-15, yBottomRight-15);
+	}
+
+	public String getName() {
+		return name;
 	}
 	
 }
