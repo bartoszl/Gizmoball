@@ -1,11 +1,8 @@
 package view;
 
-import model.Absorber;
-import model.Ball;
-import model.CircularBumper;
-import model.IGBallModel;
+import controller.AddGizmoListener;
+import model.*;
 
-import java.awt.*;
 import javax.swing.*;
 import java.awt.Font;
 import java.awt.event.*;
@@ -16,6 +13,7 @@ public class BuildGUI implements IGUI{
     private Main main;
 	private ActionListener controller;
 	private IGBallModel model;
+    private Board gridView;
 
 	/**
 	 * Create the application.
@@ -23,10 +21,16 @@ public class BuildGUI implements IGUI{
 	public BuildGUI(Main main, IGBallModel model) {
         this.main = main;
         this.model = model;
+
+        gridView = new Board(true, model);
 		initialize();
 	}
 
-	/**
+    public Board getGridView() {
+        return gridView;
+    }
+
+    /**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
@@ -34,21 +38,26 @@ public class BuildGUI implements IGUI{
 		frame.setBounds(100, 100, 650, 485);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
+
+
+
 		JPanel buildMenu = create_buildMenu();
 		buildMenu.setBounds(0, 0, 220, 405);
 		frame.getContentPane().add(buildMenu);
 		buildMenu.setLayout(null);
-		
-		Board gridView = new Board(true, model);
-		gridView.setBounds(220, 0, 405, 405);
-		frame.getContentPane().add(gridView);
+
+
 		
 		JTextField txtOutput = new JTextField();
 		txtOutput.setText("[Example Text]");
 		txtOutput.setEnabled(false);
 		txtOutput.setBounds(0, 405, 634, 20);
 		frame.getContentPane().add(txtOutput);
+
+        gridView.setBounds(220, 0, 405, 405);
+        gridView.addMouseListener(new AddGizmoListener(gridView, model));
+        frame.getContentPane().add(gridView);
 		
 		JMenuBar menuBar = create_menuBar();
 		frame.setJMenuBar(menuBar);
@@ -122,6 +131,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnAddComp = new JToggleButton("Add Component");
         tglbtnAddComp.setBounds(10, 11, 195, 23);
+        tglbtnAddComp.addActionListener(new AddGizmoListener(gridView, model));
         panel.add(tglbtnAddComp);
 
         JToggleButton tglbtnRotate = new JToggleButton("Rotate");

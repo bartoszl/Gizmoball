@@ -17,18 +17,34 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-class Board extends JPanel implements Observer {
+public class Board extends JPanel implements Observer {
+	public enum Adding {
+		NONE, FLIPPER, ABSORBER, GIZMO
+	}
 
     private boolean isBuild;
     private IGBallModel model;
+	private Adding adding;
 
     public Board(boolean isBuild, IGBallModel model){
+		this.adding = Adding.NONE;
         this.isBuild = isBuild;
         this.model=model;
+		model.addCircularBumper(15, 12, 0, "hey");
     }
 
+	public Adding getAdding() {
+		return adding;
+	}
+
+	public void setAdding(Adding adding) {
+		this.adding = adding;
+	}
+
     public void paintComponent(Graphics g) {
-        if(isBuild){//is in build mode
+		System.out.println("!!!!");
+		super.paintComponent(g);
+		if(isBuild){//is in build mode
         	drawGrid(g);
         }
         else{//is in run mode
@@ -104,7 +120,9 @@ class Board extends JPanel implements Observer {
     }
     
     private void drawBumpers(Graphics g){
+		System.out.println("asda");
 		for(Bumper gizmo: model.getGizmos()){
+
 			List<Circle> circles = gizmo.getCircles();
 			g.setColor(gizmo.getColor());
 			if(circles.size()==1){//circular bumper
@@ -136,6 +154,6 @@ class Board extends JPanel implements Observer {
     }
     
     public void update(Observable o, Object arg) {
-        repaint();
+		this.repaint(40);
     }
 }

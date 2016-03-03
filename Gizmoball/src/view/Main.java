@@ -10,7 +10,7 @@ import model.IGBallModel;
  */
 public class Main {
     private IGUI gui;
-    private IGBallModel model;
+    private GBallModel model;
     /**
      * Launch the application.
      */
@@ -24,7 +24,9 @@ public class Main {
     }
 
     public void switchToRun(){
+
         gui = new RunGUI(this, model);
+        model.addObserver(gui.getGridView());
     }
 
     public static void main(String[] args) {

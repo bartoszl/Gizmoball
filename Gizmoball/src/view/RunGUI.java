@@ -23,15 +23,21 @@ public class RunGUI implements IGUI{
 	private JFrame frame;
     private Main main;
     private IGBallModel model;
+    private Board board;
 
 	/**
 	 * Create the application.
 	 */
 	public RunGUI(Main main, IGBallModel model) {
+        board = new Board(false, model);
 		this.main = main;
 		this.model = model;
         initialize();
 	}
+
+    public Board getGridView() {
+        return board;
+    }
 
     /**
      * Initialize the contents of the frame.
@@ -74,7 +80,7 @@ public class RunGUI implements IGUI{
         separator_1.setBounds(10, 331, 180, 2);
         panel.add(separator_1);
 
-        Board board = new Board(false, model);
+
         board.setBounds(200, 0, 434, 405);
         frame.getContentPane().add(board);
 
@@ -105,4 +111,5 @@ public class RunGUI implements IGUI{
 
         frame.setVisible(true);
     }
+
 }

@@ -1,5 +1,7 @@
 package model;
 
+import view.Board;
+
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
