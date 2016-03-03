@@ -21,6 +21,7 @@ public class Main {
 
     public void switchToBuild(){
         gui = new BuildGUI(this, model);
+        model.addObserver(gui.getGridView());
     }
 
     public void switchToRun(){

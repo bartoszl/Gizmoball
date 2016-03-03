@@ -30,7 +30,6 @@ public class Board extends JPanel implements Observer {
 		this.adding = Adding.NONE;
         this.isBuild = isBuild;
         this.model=model;
-		model.addCircularBumper(15, 12, 0, "hey");
     }
 
 	public Adding getAdding() {
@@ -42,7 +41,6 @@ public class Board extends JPanel implements Observer {
 	}
 
     public void paintComponent(Graphics g) {
-		System.out.println("!!!!");
 		super.paintComponent(g);
 		if(isBuild){//is in build mode
         	drawGrid(g);
@@ -120,7 +118,6 @@ public class Board extends JPanel implements Observer {
     }
     
     private void drawBumpers(Graphics g){
-		System.out.println("asda");
 		for(Bumper gizmo: model.getGizmos()){
 
 			List<Circle> circles = gizmo.getCircles();
@@ -154,6 +151,6 @@ public class Board extends JPanel implements Observer {
     }
     
     public void update(Observable o, Object arg) {
-		this.repaint(40);
+		this.repaint();
     }
 }

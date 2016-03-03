@@ -33,7 +33,7 @@ public class AddGizmoListener implements ActionListener, MouseListener {
             //paint it
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            m.addCircularBumper(10, 12, 0, "hey");
+            m.addCircularBumper(Math.round(x/20), Math.round(y/20), 0, "hey");
         }
     }
 
