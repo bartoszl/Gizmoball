@@ -2,6 +2,8 @@ package view;
 
 import java.awt.*;
 
+import javax.swing.JFrame;
+
 import model.GBallModel;
 import model.IGBallModel;
 
@@ -16,15 +18,15 @@ public class Main {
      */
     public Main() {
     	model = new GBallModel();
-    	switchToRun();
+    	gui = new RunGUI(this, model);
     }
 
-    public void switchToBuild(){
-        gui = new BuildGUI(this, model);
+    public void switchToBuild(JFrame frame){
+        gui = new BuildGUI(this, model, frame);
     }
 
-    public void switchToRun(){
-        gui = new RunGUI(this, model);
+    public void switchToRun(JFrame frame){
+        gui = new RunGUI(this, model, frame);
     }
 
     public static void main(String[] args) {
