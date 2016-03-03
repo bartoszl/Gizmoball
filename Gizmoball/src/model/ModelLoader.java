@@ -175,13 +175,14 @@ public class ModelLoader {
         CircularBumper trigger = null;
         Flipper flipper = null;
 
-        for(Flipper f : model.getFlippers()) {
-            if(f.getName().equals(connectingTo)) {
+        for (Flipper f : model.getFlippers()) {
+            if (f.getName().equals(connectingTo)) {
                 flipper = f;
             }
         }
 
         return new KeyConnectionFlipper(connectingFrom, flipper);
+    }
 
     private KeyConnectionAbs createKeyConnectionAbs(String[] command) {
         Integer connectingFrom = Integer.parseInt(command[1]);
