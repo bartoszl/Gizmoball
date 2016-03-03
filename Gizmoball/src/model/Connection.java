@@ -2,18 +2,19 @@ package model;
 
 public class Connection {
 
-    private String connectingFrom, connectingTo;
+    private CircularBumper trigger;
+    private Flipper flipper;
 
-    public Connection(String connectingFrom, String connectingTo) {
-        this.connectingFrom = connectingFrom;
-        this.connectingTo = connectingTo;
+    public Connection(CircularBumper trigger, Flipper flipper) {
+        this.trigger = trigger;
+        this.flipper = flipper;
     }
 
-    public String getConnectingFrom() {
-        return connectingFrom;
+    public CircularBumper getTrigger() {
+        return trigger;
     }
 
-    public String getConnectingTo() {
-        return connectingTo;
+    public Flipper getFlipper() {
+        return flipper;
     }
 }
