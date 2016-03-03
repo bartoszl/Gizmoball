@@ -162,4 +162,6 @@ public class GBallModel extends Observable implements IGBallModel {
 		// TODO Auto-generated method stub
 		return flippers;
 	}
+	
+	//TODO move functionality needs to be added
 }

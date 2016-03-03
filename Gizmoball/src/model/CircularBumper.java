@@ -16,6 +16,7 @@ import physics.LineSegment;
 public class CircularBumper implements Bumper {
 	
 	private Circle circle;
+	private double x,y;
 	private Color color;
 	private int rotation;
 	private String name;
@@ -30,6 +31,8 @@ public class CircularBumper implements Bumper {
 	 * @param name -> String, representing the name of this Bumper.
 	 */
 	public CircularBumper(double x, double y, int rotation, String name){
+		this.x = x;
+		this.y = y;
 		this.circle = new Circle(x,y,RADIUS);
 		this.rotation = rotation%4;
 		this.name = name;
@@ -74,6 +77,14 @@ public class CircularBumper implements Bumper {
 	@Override
 	public void move(double x, double y) {
 		circle = new Circle(x, y, RADIUS);
+	}
+	@Override
+	public double getX() {
+		return x;
+	}
+	@Override
+	public double getY() {
+		return y;
 	}
 
 }

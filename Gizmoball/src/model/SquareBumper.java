@@ -62,7 +62,7 @@ public class SquareBumper implements Bumper {
 		c.add(c2);
 		c.add(c3);
 		c.add(c4);
-		return null;
+		return c;
 	}
 
 	@Override
@@ -95,6 +95,16 @@ public class SquareBumper implements Bumper {
 	public void move(double x, double y) {
 		this.x=x;
 		this.y=y;
+	}
+
+	@Override
+	public double getX() {
+		return x;
+	}
+
+	@Override
+	public double getY() {
+		return y;
 	}
 
 }
