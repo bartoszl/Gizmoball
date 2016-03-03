@@ -42,7 +42,7 @@ public class Flipper extends Observable implements IFlipper {
         rotation = new Angle(0.95);
         this.isLeft = isLeft;
         this.color=color;
-        origin = new Vect((double)cx, (double)cy);
+        origin = new Vect((double)cx*20, (double)cy*20);
         /** o **/
         topCircle = new Circle(origin.x()+0.25+off, origin.y()+0.25, 0.25);
         /** - **/

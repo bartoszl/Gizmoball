@@ -19,7 +19,7 @@ import java.util.Observer;
 
 public class Board extends JPanel implements Observer {
 	public enum Adding {
-		NONE, FLIPPER, ABSORBER, GIZMO
+		NONE, FLIPPER, ABSORBER, GIZMO, BALL
 	}
 
     private boolean isBuild;

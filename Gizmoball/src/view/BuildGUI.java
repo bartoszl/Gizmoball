@@ -1,11 +1,15 @@
 package view;
 
+import controller.AddBallListener;
+import controller.AddComponentListener;
+import controller.AddFlipperListener;
 import controller.AddGizmoListener;
 import model.*;
 
 import javax.swing.*;
 import java.awt.Font;
 import java.awt.event.*;
+import java.util.Enumeration;
 
 public class BuildGUI implements IGUI{
 
@@ -14,6 +18,8 @@ public class BuildGUI implements IGUI{
 	private ActionListener controller;
 	private IGBallModel model;
     private Board gridView;
+
+    private ButtonGroup componentGroup;
 
 	/**
 	 * Create the application.
@@ -57,6 +63,8 @@ public class BuildGUI implements IGUI{
 
         gridView.setBounds(220, 0, 405, 405);
         gridView.addMouseListener(new AddGizmoListener(gridView, model));
+        gridView.addMouseListener(new AddBallListener(gridView, model));
+        gridView.addMouseListener(new AddFlipperListener(gridView, model));
         frame.getContentPane().add(gridView);
 		
 		JMenuBar menuBar = create_menuBar();
@@ -93,7 +101,7 @@ public class BuildGUI implements IGUI{
         rdbtnFlipper.setBounds(10, 119, 84, 23);
         panel.add(rdbtnFlipper);
 
-        ButtonGroup componentGroup = new ButtonGroup();
+        componentGroup = new ButtonGroup();
         componentGroup.add(rdbtnGizmo);
         componentGroup.add(rdbtnBall);
         componentGroup.add(rdbtnAbsorber);
@@ -131,7 +139,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnAddComp = new JToggleButton("Add Component");
         tglbtnAddComp.setBounds(10, 11, 195, 23);
-        tglbtnAddComp.addActionListener(new AddGizmoListener(gridView, model));
+        tglbtnAddComp.addActionListener(new AddComponentListener(this));
         panel.add(tglbtnAddComp);
 
         JToggleButton tglbtnRotate = new JToggleButton("Rotate");
@@ -214,6 +222,17 @@ public class BuildGUI implements IGUI{
         mnModel.add(mntmQuit);
 
         return mnModel;
+    }
+
+    public String getSelectedButtonText() {
+        for (Enumeration<AbstractButton> buttons = componentGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
     }
 
     private JMenu create_PhysicsMenu(){

@@ -2,6 +2,7 @@ package model;
 
 import view.Board;
 
+import java.awt.*;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,18 @@ public class GBallModel extends Observable implements IGBallModel {
         if(!occupiedSpaces[x][y]) {
             occupiedSpaces[x][y] = true;
             gizmos.add(new SquareBumper((double) x, (double) y, rotation, name));
+            notifyObs();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addFlipper(int x, int y, boolean isLeft, String name) {
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            Flipper f = new Flipper(x, y, isLeft, Color.RED, name);
+            flippers.add(f);
             notifyObs();
             return true;
         }
