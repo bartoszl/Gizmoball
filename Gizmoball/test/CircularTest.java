@@ -26,8 +26,8 @@ public class CircularTest {
 		assertTrue(c.getCircles().size()==1);
 		Circle circ = c.getCircles().get(0);
 		assertTrue(circ.getRadius()==10);
-		assertTrue(circ.getCenter().x()==100);
-		assertTrue(circ.getCenter().y()==150);
+		assertTrue(circ.getCenter().x()==100+10);
+		assertTrue(circ.getCenter().y()==150+10);
 	}
 	
 	@Test

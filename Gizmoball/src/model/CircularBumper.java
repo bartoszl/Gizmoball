@@ -21,6 +21,7 @@ public class CircularBumper implements Bumper {
 	private int rotation;
 	private String name;
 	private static final double RADIUS=10;
+	private static final double L=20;
 
 	/**
 	 * Constructor for CircularBumper.
@@ -33,7 +34,7 @@ public class CircularBumper implements Bumper {
 	public CircularBumper(double x, double y, int rotation, String name){
 		this.x = x;
 		this.y = y;
-		this.circle = new Circle(x,y,RADIUS);
+		this.circle = new Circle(x+L/2,y+L/2,RADIUS);
 		this.rotation = rotation%4;
 		this.name = name;
 		color = color.GREEN;
