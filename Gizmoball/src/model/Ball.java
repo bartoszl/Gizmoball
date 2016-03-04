@@ -30,8 +30,8 @@ public class Ball implements IBall{
 	 * @param yv -> double, representing velocity along y axis
 	 */
 	public Ball(String name, double x, double y, double xv, double yv){
-		this.x = x*20;
-		this.y = y*20;
+		this.x = x;
+		this.y = y;
 		this.velocity = new Vect(xv, yv);
 		this.color = Color.YELLOW;
 		this.r = 5;
