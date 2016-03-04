@@ -18,7 +18,20 @@ public class AddComponentListener implements ActionListener {
         String choice = bgui.getSelectedButtonText();
         switch(choice) {
             case "Gizmo":
-                bgui.getGridView().setAdding(Board.Adding.GIZMO);
+                String gizmoShape = bgui.getGizmoShape();
+                switch(gizmoShape) {
+                    case "Circle":
+                        bgui.getGridView().setAdding(Board.Adding.CIRCLE);
+                        break;
+                    case "Triangle":
+                        bgui.getGridView().setAdding(Board.Adding.TRIANGLE);
+                        break;
+                    case "Square":
+                        bgui.getGridView().setAdding(Board.Adding.SQUARE);
+                        break;
+                    default:
+                }
+
                 break;
             case "Ball":
                 bgui.getGridView().setAdding(Board.Adding.BALL);

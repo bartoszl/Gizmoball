@@ -23,13 +23,20 @@ public class AddGizmoListener implements MouseListener{
     public void mouseClicked(MouseEvent mouseEvent) {
         Point mouseP = MouseInfo.getPointerInfo().getLocation();
         Point gridP = b.getLocationOnScreen();
-        if(b.getAdding() == Board.Adding.GIZMO) {
+        int x = mouseP.x - gridP.x;
+        int y = mouseP.y - gridP.y;
+        if(b.getAdding() == Board.Adding.CIRCLE) {
             //paint it
-            int x = mouseP.x - gridP.x;
-            int y = mouseP.y - gridP.y;
             m.addCircularBumper(x, y, 0, "circle");
-            b.setAdding(Board.Adding.NONE);
+
+        } else if(b.getAdding() == Board.Adding.TRIANGLE) {
+            //paint it
+            m.addTriangularBumper(x, y, 0, "triangle");
+        } else if(b.getAdding() == Board.Adding.SQUARE) {
+            //paint it
+            m.addSquareBumper(x, y, 0, "square");
         }
+        b.setAdding(Board.Adding.NONE);
     }
 
     @Override
