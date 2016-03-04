@@ -54,7 +54,7 @@ public class RunGUI {
 	 * Create the application.
 	 */
 	public RunGUI() {
-		flip = new Flipper(9,9,true,new Color(0,255,0));
+		flip = new Flipper(9,9,true,new Color(0,255,0), "asd");
 		control = new Controller(window, flip);	
 		initialize();
 	}

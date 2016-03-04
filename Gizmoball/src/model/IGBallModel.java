@@ -25,4 +25,6 @@ public interface IGBallModel    {
     public Absorber getAbsorber();
     public List<Ball> getBalls();
     public List<Flipper> getFlippers();
+    public boolean addFlipper(int i, int i1, boolean b, String flipper);
+
 }
