@@ -130,7 +130,7 @@ public abstract class Board extends JPanel implements Observer {
     
 	public boolean getDelete() {
 		return delete;
-	}
+	}d
     
     public void update(Observable o, Object arg) {
         repaint();
