@@ -1,5 +1,9 @@
 package view;
 
+import controller.AddBallListener;
+import controller.AddComponentListener;
+import controller.AddFlipperListener;
+import controller.AddGizmoListener;
 import model.Absorber;
 import model.Ball;
 import model.CircularBumper;
@@ -32,7 +36,7 @@ public class BuildGUI implements IGUI{
         createFrame();
 		initialize();
 	}
-	
+
 	/**
 	 * Alternate constructor that takes in a JFrame object
 	 */
@@ -73,6 +77,10 @@ public class BuildGUI implements IGUI{
         board.addMouseListener(new AddGizmoListener(gridView, model));
         board.addMouseListener(new AddBallListener(gridView, model));
         board.addMouseListener(new AddFlipperListener(gridView, model));
+		
+		board = new BuildBoard(model);
+		board.setBounds(220, 0, 405, 405);
+		frame.getContentPane().add(board);
 		
 		JTextField txtOutput = new JTextField();
 		txtOutput.setText("[Example Text]");

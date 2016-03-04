@@ -18,7 +18,7 @@ public class AbsorberTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		//abs = new Absorber("ABS1", 0, 380, 400, 400);
+		abs = new Absorber("ABS1", 0, 380, 400, 400);
 	}
 
 	@Test
