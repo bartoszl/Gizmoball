@@ -21,6 +21,7 @@ public class Flipper extends Observable implements IFlipper {
     private Angle leftToRotate;
     private Vect centerOfRotation;
     private Vect origin;
+    private String name;
 
     /**
      * Creates a flipper on a 4-cell space, with specific color and position.
@@ -32,7 +33,8 @@ public class Flipper extends Observable implements IFlipper {
      * @param isLeft specifies whether flipper is on a left or right side of space reserved
      * @param color specifies the color of flipper
      */
-    public Flipper(int cx, int cy, boolean isLeft, Color color) {
+    public Flipper(int cx, int cy, boolean isLeft, Color color, String name) {
+        this.name = name;
         leftToRotate = Angle.DEG_90;
         double off = isLeft ? 0 : 1.5;
         //For the right flipper it is 54 degrees -> 0.95 rad
@@ -40,7 +42,7 @@ public class Flipper extends Observable implements IFlipper {
         rotation = new Angle(0.95);
         this.isLeft = isLeft;
         this.color=color;
-        origin = new Vect((double)cx, (double)cy);
+        origin = new Vect((double)cx*20, (double)cy*20);
         /** o **/
         topCircle = new Circle(origin.x()+0.25+off, origin.y()+0.25, 0.25);
         /** - **/
@@ -232,5 +234,9 @@ public class Flipper extends Observable implements IFlipper {
 
     public void setOrigin(Vect origin) {
         this.origin = origin;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -16,10 +16,17 @@ import java.util.Observer;
 
 public abstract class Board extends JPanel implements Observer {
 
+
+	public enum Adding {
+		NONE, FLIPPER, ABSORBER, GIZMO, BALL
+	}
+
     private boolean delete;
     private IGBallModel model;
+	private Adding adding;
 
     public Board(IGBallModel model){
+		adding = Adding.NONE;
         this.model=model;
         delete = false;
     }
@@ -131,4 +138,11 @@ public abstract class Board extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         repaint();
     }
+
+	public Adding getAdding() {return adding;}
+
+	public void setAdding(Adding adding) {
+		this.adding = adding;
+	}
 }
+

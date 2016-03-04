@@ -1,5 +1,9 @@
 package view;
 
+import controller.AddBallListener;
+import controller.AddComponentListener;
+import controller.AddFlipperListener;
+import controller.AddGizmoListener;
 import model.Absorber;
 import model.Ball;
 import model.CircularBumper;
@@ -9,6 +13,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.Font;
 import java.awt.event.*;
+import java.util.Enumeration;
 
 public class BuildGUI implements IGUI{
 
@@ -18,6 +23,8 @@ public class BuildGUI implements IGUI{
     private Main main;
 	private ActionListener controller;
 	private IGBallModel model;
+    private Board gridView;
+    private ButtonGroup componentGroup;
 
 	/**
 	 * Create the application.
@@ -25,10 +32,11 @@ public class BuildGUI implements IGUI{
 	public BuildGUI(Main main, IGBallModel model) {
         this.main = main;
         this.model = model;
+        this.board = new BuildBoard(model);
         createFrame();
 		initialize();
 	}
-	
+
 	/**
 	 * Alternate constructor that takes in a JFrame object
 	 */
@@ -36,9 +44,14 @@ public class BuildGUI implements IGUI{
         this.main = main;
         this.model = model;
         this.frame = frame;
+        this.board = new BuildBoard(model);
 		initialize();
 		frame.repaint();
 	}
+
+    public Board getGridView() {
+        return board;
+    }
 
 	/**
 	 * Initialize the frame.
@@ -58,6 +71,12 @@ public class BuildGUI implements IGUI{
 		buildMenu.setBounds(0, 0, 220, 405);
 		frame.getContentPane().add(buildMenu);
 		buildMenu.setLayout(null);
+
+		board.setBounds(220, 0, 405, 405);
+		frame.getContentPane().add(board);
+        board.addMouseListener(new AddGizmoListener(gridView, model));
+        board.addMouseListener(new AddBallListener(gridView, model));
+        board.addMouseListener(new AddFlipperListener(gridView, model));
 		
 		board = new BuildBoard(model);
 		board.setBounds(220, 0, 405, 405);
@@ -103,7 +122,7 @@ public class BuildGUI implements IGUI{
         rdbtnFlipper.setBounds(10, 119, 84, 23);
         panel.add(rdbtnFlipper);
 
-        ButtonGroup componentGroup = new ButtonGroup();
+        componentGroup = new ButtonGroup();
         componentGroup.add(rdbtnGizmo);
         componentGroup.add(rdbtnBall);
         componentGroup.add(rdbtnAbsorber);
@@ -145,6 +164,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnAddComp = new JToggleButton("Add Component");
         tglbtnAddComp.setBounds(10, 11, 195, 23);
+        tglbtnAddComp.addActionListener(new AddComponentListener(this));
         panel.add(tglbtnAddComp);
 
         JToggleButton tglbtnRotate = new JToggleButton("Rotate");
@@ -227,6 +247,17 @@ public class BuildGUI implements IGUI{
         mnModel.add(mntmQuit);
 
         return mnModel;
+    }
+
+    public String getSelectedButtonText() {
+        for (Enumeration<AbstractButton> buttons = componentGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
     }
 
     private JMenu create_PhysicsMenu(){

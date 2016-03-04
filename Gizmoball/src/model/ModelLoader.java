@@ -151,13 +151,49 @@ public class ModelLoader {
     private Connection createConnection(String[] command) {
         String connectingFrom = command[1];
         String connectingTo = command[2];
-        return new Connection(connectingFrom, connectingTo);
+        CircularBumper trigger = null;
+        Flipper flipper = null;
+
+        for(Bumper cb : model.getGizmos()) {
+            if(cb instanceof CircularBumper) {
+                trigger = (CircularBumper) cb;
+            }
+        }
+
+        for(Flipper f : model.getFlippers()) {
+            if(f.getName().equals(connectingTo)) {
+                flipper = f;
+            }
+        }
+
+        return new Connection(trigger, flipper);
     }
 
-    private KeyConnection createKeyConnection(String[] command) {
-        System.out.println(command[1]);
-        int keyID = Integer.parseInt(command[1]);
+    private KeyConnectionFlipper createKeyConnectionFlipper(String[] command) {
+        Integer connectingFrom = Integer.parseInt(command[1]);
         String connectingTo = command[2];
-        return new KeyConnection(keyID, connectingTo);
+        CircularBumper trigger = null;
+        Flipper flipper = null;
+
+        for (Flipper f : model.getFlippers()) {
+            if (f.getName().equals(connectingTo)) {
+                flipper = f;
+            }
+        }
+
+        return new KeyConnectionFlipper(connectingFrom, flipper);
+    }
+
+    private KeyConnectionAbs createKeyConnectionAbs(String[] command) {
+        Integer connectingFrom = Integer.parseInt(command[1]);
+        String connectingTo = command[2];
+        Absorber abs = null;
+
+
+        if(model.getAbsorber().getName().equals(connectingTo)) {
+            return new KeyConnectionAbs(connectingFrom, model.getAbsorber());
+        } else {
+            return null;
+        }
     }
 }

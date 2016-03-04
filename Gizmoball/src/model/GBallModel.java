@@ -1,5 +1,8 @@
 package model;
 
+import view.Board;
+
+import java.awt.*;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +17,8 @@ public class GBallModel extends Observable implements IGBallModel {
     private List<Bumper> gizmos;
     private List<Flipper> flippers;
     private List<Connection> connections;
-    private List<KeyConnection> keyConnections;
+    private List<KeyConnectionAbs> keyConnectionsAbs;
+    private List<KeyConnectionFlipper> keyConnectionsFlipper;
     private List<Ball> balls;
     private Absorber absorber;
     private boolean [][] occupiedSpaces;
@@ -22,7 +26,8 @@ public class GBallModel extends Observable implements IGBallModel {
     public GBallModel() {
         gizmos = new ArrayList<Bumper>();
         connections = new ArrayList<Connection>();
-        keyConnections = new ArrayList<KeyConnection>();
+        keyConnectionsAbs = new ArrayList<KeyConnectionAbs>();
+        keyConnectionsFlipper = new ArrayList<KeyConnectionFlipper>();
         flippers = new ArrayList<Flipper>();
         balls = new ArrayList<Ball>();
         occupiedSpaces = new boolean [20][20];
@@ -38,6 +43,18 @@ public class GBallModel extends Observable implements IGBallModel {
         if(!occupiedSpaces[x][y]) {
             occupiedSpaces[x][y] = true;
             gizmos.add(new SquareBumper((double) x, (double) y, rotation, name));
+            notifyObs();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addFlipper(int x, int y, boolean isLeft, String name) {
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            Flipper f = new Flipper(x, y, isLeft, Color.RED, name);
+            flippers.add(f);
             notifyObs();
             return true;
         }
@@ -134,12 +151,15 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addConnection(Connection connection) {
-        return false;
+        return connections.add(connection);
     }
 
-    @Override
-    public boolean addKeyConnection(KeyConnection keyConnection) {
-        return false;
+    public boolean addKeyConnectionAbs(KeyConnectionAbs keyConnectionAbs) {
+        return keyConnectionsAbs.add(keyConnectionAbs);
+    }
+
+    public boolean addKeyConnectionFlipper(KeyConnectionFlipper keyConnectionFlipper) {
+        return keyConnectionsFlipper.add(keyConnectionFlipper);
     }
 
     @Override

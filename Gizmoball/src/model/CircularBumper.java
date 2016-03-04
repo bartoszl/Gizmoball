@@ -34,7 +34,7 @@ public class CircularBumper implements Bumper {
 	public CircularBumper(double x, double y, int rotation, String name){
 		this.x = x;
 		this.y = y;
-		this.circle = new Circle(x+L/2,y+L/2,RADIUS);
+		this.circle = new Circle(x*20+L/2,y*20+L/2,RADIUS);
 		this.rotation = rotation%4;
 		this.name = name;
 		color = color.GREEN;
@@ -77,15 +77,15 @@ public class CircularBumper implements Bumper {
 	}
 	@Override
 	public void move(double x, double y) {
-		circle = new Circle(x, y, RADIUS);
+		circle = new Circle(x*20, y*20, RADIUS);
 	}
 	@Override
 	public double getX() {
-		return x;
+		return x*20;
 	}
 	@Override
 	public double getY() {
-		return y;
+		return y*20;
 	}
 
 }
