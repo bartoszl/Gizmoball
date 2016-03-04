@@ -2,6 +2,8 @@ package view;
 
 import java.awt.*;
 
+import javax.swing.JFrame;
+
 import model.GBallModel;
 import model.IGBallModel;
 
@@ -10,24 +12,21 @@ import model.IGBallModel;
  */
 public class Main {
     private IGUI gui;
-    private GBallModel model;
+    private IGBallModel model;
     /**
      * Launch the application.
      */
     public Main() {
     	model = new GBallModel();
-    	switchToRun();
+    	gui = new RunGUI(this, model);
     }
 
-    public void switchToBuild(){
-        gui = new BuildGUI(this, model);
-        model.addObserver(gui.getGridView());
+    public void switchToBuild(JFrame frame){
+        gui = new BuildGUI(this, model, frame);
     }
 
-    public void switchToRun(){
-
-        gui = new RunGUI(this, model);
-        model.addObserver(gui.getGridView());
+    public void switchToRun(JFrame frame){
+        gui = new RunGUI(this, model, frame);
     }
 
     public static void main(String[] args) {
