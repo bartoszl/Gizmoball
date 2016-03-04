@@ -16,6 +16,10 @@ import java.util.Observer;
 
 public abstract class Board extends JPanel implements Observer {
 
+	public enum Adding {
+		NONE, FLIPPER, ABSORBER, GIZMO, BALL
+	}
+
     private boolean delete;
     private IGBallModel model;
 

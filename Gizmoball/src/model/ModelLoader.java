@@ -175,8 +175,8 @@ public class ModelLoader {
         CircularBumper trigger = null;
         Flipper flipper = null;
 
-        for(Flipper f : model.getFlippers()) {
-            if(f.getName().equals(connectingTo)) {
+        for (Flipper f : model.getFlippers()) {
+            if (f.getName().equals(connectingTo)) {
                 flipper = f;
             }
         }
