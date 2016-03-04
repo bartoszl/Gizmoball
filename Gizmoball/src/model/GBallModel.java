@@ -45,7 +45,7 @@ public class GBallModel extends Observable implements IGBallModel {
         lY = x/20;
         if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
-            gizmos.add(new SquareBumper((double) x, (double) y, rotation, name));
+            gizmos.add(new SquareBumper((double) x - x%20, (double) y - y%20, rotation, name));
             notifyObs();
             return true;
         }
@@ -58,7 +58,7 @@ public class GBallModel extends Observable implements IGBallModel {
         lY = x/20;
         if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
-            Flipper f = new Flipper(x, y, isLeft, Color.RED, name);
+            Flipper f = new Flipper(x-x%20, y-y%20, isLeft, Color.RED, name);
             flippers.add(f);
             notifyObs();
             return true;
@@ -72,7 +72,7 @@ public class GBallModel extends Observable implements IGBallModel {
         lY = x/20;
         if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
-            TriangularBumper tBumper = new TriangularBumper((double) x, (double) y, rotation, name);
+            TriangularBumper tBumper = new TriangularBumper((double) x - x%20, (double) y - y%20, rotation, name);
             gizmos.add(tBumper);
             notifyObs();
             return true;
@@ -86,7 +86,7 @@ public class GBallModel extends Observable implements IGBallModel {
         lY = x/20;
         if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
-            CircularBumper cBumper = new CircularBumper((double) x, (double) y, rotation, name);
+            CircularBumper cBumper = new CircularBumper((double) x - x%20, (double) y - y%20, rotation, name);
             gizmos.add(cBumper);
             notifyObs();
             return true;
@@ -115,7 +115,7 @@ public class GBallModel extends Observable implements IGBallModel {
                 }
             }
         }
-        absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
+        absorber = new Absorber(name, (double) x - x%20, (double) y - y%20, (double) x1, (double) y1);
         notifyObs();
         return true;
     }
@@ -126,7 +126,7 @@ public class GBallModel extends Observable implements IGBallModel {
         lY = (int) x/20;
         if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
-            Ball b = new Ball(name, x, y, xv, yv);
+            Ball b = new Ball(name, x-x%20, y-y%20, xv, yv);
             balls.add(b);
             notifyObs();
             return true;
