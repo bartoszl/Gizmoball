@@ -132,6 +132,6 @@ public class RunGUI implements IGUI{
 
     @Override
     public Board getGridView() {
-        return null;
+        return board;
     }
 }

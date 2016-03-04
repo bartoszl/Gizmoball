@@ -28,7 +28,7 @@ public class AddBallListener implements MouseListener {
             //paint it
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            m.addBall("ball", Math.round(x/20), Math.round(y/20), 3, 3);
+            m.addBall("ball", x, y, 3, 3);
             b.setAdding(Board.Adding.NONE);
         }
     }

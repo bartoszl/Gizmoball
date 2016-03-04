@@ -28,7 +28,7 @@ public class AddFlipperListener implements MouseListener {
             //paint it
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            m.addFlipper(Math.round(x/20), Math.round(y/20), false, "flipper");
+            m.addFlipper(x, y, false, "flipper");
             b.setAdding(Board.Adding.NONE);
         }
     }

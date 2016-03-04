@@ -12,7 +12,7 @@ import model.IGBallModel;
  */
 public class Main {
     private IGUI gui;
-    private IGBallModel model;
+    private GBallModel model;
     /**
      * Launch the application.
      */
@@ -22,11 +22,14 @@ public class Main {
     }
 
     public void switchToBuild(JFrame frame){
+
         gui = new BuildGUI(this, model, frame);
+        model.addObserver(gui.getGridView());
     }
 
     public void switchToRun(JFrame frame){
         gui = new RunGUI(this, model, frame);
+        model.addObserver(gui.getGridView());
     }
 
     public static void main(String[] args) {
