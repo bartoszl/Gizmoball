@@ -22,6 +22,7 @@ public class GBallModel extends Observable implements IGBallModel {
     private List<Ball> balls;
     private Absorber absorber;
     private boolean [][] occupiedSpaces;
+    private int lX, lY;
 
     public GBallModel() {
         gizmos = new ArrayList<Bumper>();
@@ -40,8 +41,10 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addSquareBumper(int x, int y, int rotation, String name) {
-        if(!occupiedSpaces[x][y]) {
-            occupiedSpaces[x][y] = true;
+        lX = x/20;
+        lY = x/20;
+        if(!occupiedSpaces[lX][lY]) {
+            occupiedSpaces[lX][lY] = true;
             gizmos.add(new SquareBumper((double) x, (double) y, rotation, name));
             notifyObs();
             return true;
@@ -51,8 +54,10 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addFlipper(int x, int y, boolean isLeft, String name) {
-        if(!occupiedSpaces[x][y]) {
-            occupiedSpaces[x][y] = true;
+        lX = x/20;
+        lY = x/20;
+        if(!occupiedSpaces[lX][lY]) {
+            occupiedSpaces[lX][lY] = true;
             Flipper f = new Flipper(x, y, isLeft, Color.RED, name);
             flippers.add(f);
             notifyObs();
@@ -63,8 +68,10 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addTriangularBumper(int x, int y, int rotation, String name) {
-        if(!occupiedSpaces[x][y]) {
-            occupiedSpaces[x][y] = true;
+        lX = x/20;
+        lY = x/20;
+        if(!occupiedSpaces[lX][lY]) {
+            occupiedSpaces[lX][lY] = true;
             TriangularBumper tBumper = new TriangularBumper((double) x, (double) y, rotation, name);
             gizmos.add(tBumper);
             notifyObs();
@@ -75,8 +82,10 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addCircularBumper(int x, int y, int rotation, String name) {
-        if(!occupiedSpaces[x][y]) {
-            occupiedSpaces[x][y] = true;
+        lX = x/20;
+        lY = x/20;
+        if(!occupiedSpaces[lX][lY]) {
+            occupiedSpaces[lX][lY] = true;
             CircularBumper cBumper = new CircularBumper((double) x, (double) y, rotation, name);
             gizmos.add(cBumper);
             notifyObs();
@@ -97,9 +106,11 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addAbsorber(String name, int x, int y, int x1, int y1) {
+        lX = x/20;
+        lY = x/20;
         for(int i = x; i <= x1; i++) {
             for(int j = y; j <= y1; j++) {
-                if(occupiedSpaces[i][j]) {
+                if(occupiedSpaces[lX][lY]) {
                     return false;
                 }
             }
@@ -111,8 +122,10 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addBall(String name, double x, double y, double xv, double yv) {
-        if(!occupiedSpaces[(int) x][(int) y]) {
-            occupiedSpaces[(int) x][(int) y] = true;
+        lX = (int) x/20;
+        lY = (int) x/20;
+        if(!occupiedSpaces[lX][lY]) {
+            occupiedSpaces[lX][lY] = true;
             Ball b = new Ball(name, x, y, xv, yv);
             balls.add(b);
             notifyObs();
