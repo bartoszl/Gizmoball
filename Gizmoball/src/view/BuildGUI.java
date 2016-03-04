@@ -23,7 +23,6 @@ public class BuildGUI implements IGUI{
     private Main main;
 	private ActionListener controller;
 	private IGBallModel model;
-    private Board gridView;
     private ButtonGroup componentGroup;
 
 	/**
@@ -74,11 +73,9 @@ public class BuildGUI implements IGUI{
 
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
-        board.addMouseListener(new AddGizmoListener(gridView, model));
-        board.addMouseListener(new AddBallListener(gridView, model));
-        board.addMouseListener(new AddFlipperListener(gridView, model));
-		
-		board = new BuildBoard(model);
+        board.addMouseListener(new AddGizmoListener(board, model));
+        board.addMouseListener(new AddBallListener(board, model));
+        board.addMouseListener(new AddFlipperListener(board, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
 		

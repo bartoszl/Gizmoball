@@ -136,7 +136,7 @@ public abstract class Board extends JPanel implements Observer {
 	}
     
     public void update(Observable o, Object arg) {
-        repaint();
+		repaint();
     }
 
 	public Adding getAdding() {return adding;}
