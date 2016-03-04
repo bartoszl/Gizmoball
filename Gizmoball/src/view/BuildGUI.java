@@ -24,6 +24,7 @@ public class BuildGUI implements IGUI{
 	private ActionListener controller;
 	private IGBallModel model;
     private ButtonGroup componentGroup;
+    private DefaultComboBoxModel gizmoShapes;
 
 	/**
 	 * Create the application.
@@ -100,7 +101,8 @@ public class BuildGUI implements IGUI{
 
         JComboBox cbCompType = new JComboBox();
         cbCompType.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        cbCompType.setModel(new DefaultComboBoxModel(new String[]{"Circle", "Square", "Triangle"}));
+        gizmoShapes = new DefaultComboBoxModel(new String[]{"Circle", "Square", "Triangle"});
+        cbCompType.setModel(gizmoShapes);
         cbCompType.setBounds(100, 41, 105, 22);
         panel.add(cbCompType);
 
@@ -255,6 +257,10 @@ public class BuildGUI implements IGUI{
         }
 
         return null;
+    }
+
+    public String getGizmoShape() {
+        return gizmoShapes.getSelectedItem().toString();
     }
 
     private JMenu create_PhysicsMenu(){
