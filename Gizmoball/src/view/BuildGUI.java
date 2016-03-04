@@ -1,11 +1,11 @@
 package view;
 
-import controller.AddBallListener;
-import controller.AddComponentListener;
-import controller.AddFlipperListener;
-import controller.AddGizmoListener;
-import model.*;
+import model.Absorber;
+import model.Ball;
+import model.CircularBumper;
+import model.IGBallModel;
 
+import java.awt.*;
 import javax.swing.*;
 import java.awt.Font;
 import java.awt.event.*;
@@ -13,12 +13,13 @@ import java.util.Enumeration;
 
 public class BuildGUI implements IGUI{
 
-	public JFrame frame;
+	private JFrame frame;
+	private JPanel panel;
+	private BuildBoard board;
     private Main main;
 	private ActionListener controller;
 	private IGBallModel model;
     private Board gridView;
-
     private ButtonGroup componentGroup;
 
 	/**
@@ -27,45 +28,57 @@ public class BuildGUI implements IGUI{
 	public BuildGUI(Main main, IGBallModel model) {
         this.main = main;
         this.model = model;
-
-        gridView = new Board(true, model);
+        this.board = new BuildBoard(model);
+        createFrame();
 		initialize();
+	}
+	
+	/**
+	 * Alternate constructor that takes in a JFrame object
+	 */
+	public BuildGUI(Main main, IGBallModel model, JFrame frame) {
+        this.main = main;
+        this.model = model;
+        this.frame = frame;
+        this.board = new BuildBoard(model);
+		initialize();
+		frame.repaint();
 	}
 
     public Board getGridView() {
-        return gridView;
+        return board;
     }
 
-    /**
-	 * Initialize the contents of the frame.
+	/**
+	 * Initialize the frame.
 	 */
-	private void initialize() {
+	private void createFrame(){
 		frame = new JFrame("GizmoBall - Build Mode");
 		frame.setBounds(100, 100, 650, 485);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
-
-
-
+	}
+	
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
 		JPanel buildMenu = create_buildMenu();
 		buildMenu.setBounds(0, 0, 220, 405);
 		frame.getContentPane().add(buildMenu);
 		buildMenu.setLayout(null);
 
-
+		board.setBounds(220, 0, 405, 405);
+		frame.getContentPane().add(board);
+        board.addMouseListener(new AddGizmoListener(gridView, model));
+        board.addMouseListener(new AddBallListener(gridView, model));
+        board.addMouseListener(new AddFlipperListener(gridView, model));
 		
 		JTextField txtOutput = new JTextField();
 		txtOutput.setText("[Example Text]");
 		txtOutput.setEnabled(false);
 		txtOutput.setBounds(0, 405, 634, 20);
 		frame.getContentPane().add(txtOutput);
-
-        gridView.setBounds(220, 0, 405, 405);
-        gridView.addMouseListener(new AddGizmoListener(gridView, model));
-        gridView.addMouseListener(new AddBallListener(gridView, model));
-        gridView.addMouseListener(new AddFlipperListener(gridView, model));
-        frame.getContentPane().add(gridView);
 		
 		JMenuBar menuBar = create_menuBar();
 		frame.setJMenuBar(menuBar);
@@ -73,7 +86,7 @@ public class BuildGUI implements IGUI{
 	}
 	
 	private JPanel create_buildMenu() {
-        JPanel panel = new JPanel();
+        panel = new JPanel();
 
         JRadioButton rdbtnGizmo = new JRadioButton("Gizmo");
         rdbtnGizmo.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -132,8 +145,12 @@ public class BuildGUI implements IGUI{
         btnRunMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.switchToRun();
-                frame.dispose();
+            	board.delete();
+            	board = null;
+            	frame.remove(frame.getContentPane());
+            	frame.remove(frame.getJMenuBar());
+            	frame.remove(panel);
+                main.switchToRun(frame);
             }
         });
 
