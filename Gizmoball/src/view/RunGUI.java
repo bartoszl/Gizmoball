@@ -129,4 +129,9 @@ public class RunGUI implements IGUI{
 
         frame.setVisible(true);
     }
+
+    @Override
+    public Board getGridView() {
+        return null;
+    }
 }
