@@ -216,6 +216,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		if(b==null) return false;
 		if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
 		b.move(newX, newY);
+        notifyObs();
 		return true;
 	}
 	
