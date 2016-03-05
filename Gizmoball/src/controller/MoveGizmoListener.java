@@ -40,6 +40,7 @@ public class MoveGizmoListener implements MouseListener {
                 clicks[3] = y;
                 model.moveElement(clicks[0],clicks[1],clicks[2],clicks[3]);
                 first = true;
+                board.repaint();
             }
         }
     }

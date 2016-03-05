@@ -32,6 +32,10 @@ public abstract class Board extends JPanel implements Observer {
         moving = false;
     }
 
+    public void superPaint(Graphics g){
+    	super.paintComponent(g);
+    }
+    
     public void paintComponent(Graphics g) {
     	if(!delete){
 	        drawFlippers(g);
@@ -93,6 +97,7 @@ public abstract class Board extends JPanel implements Observer {
     
     private void drawBumpers(Graphics g){
     	if(model.getGizmos()!=null){
+    		System.out.println("number of g:"+model.getGizmos().size());
 			for(Bumper gizmo: model.getGizmos()){
 				List<Circle> circles = gizmo.getCircles();
 				g.setColor(gizmo.getColor());
