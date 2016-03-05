@@ -103,7 +103,7 @@ public class RunGUI implements IGUI{
         panel.add(separator_1);
 
         board = new RunBoard(model);
-        board.setBounds(200, 0, 434, 405);
+        board.setBounds(220, 0, 405, 405);
         frame.getContentPane().add(board);
 
         JTextPane textPane = new JTextPane();
