@@ -1,9 +1,6 @@
 package view;
 
-import controller.AddBallListener;
-import controller.AddComponentListener;
-import controller.AddFlipperListener;
-import controller.AddGizmoListener;
+import controller.*;
 import model.Absorber;
 import model.Ball;
 import model.CircularBumper;
@@ -77,6 +74,7 @@ public class BuildGUI implements IGUI{
         board.addMouseListener(new AddGizmoListener(board, model));
         board.addMouseListener(new AddBallListener(board, model));
         board.addMouseListener(new AddFlipperListener(board, model));
+        board.addMouseListener(new MoveGizmoListener(board, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
 		
@@ -176,6 +174,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnMove = new JToggleButton("Move");
         tglbtnMove.setBounds(10, 200, 93, 23);
+        tglbtnMove.addActionListener(new BuildModeBtnListener(board, model));
         panel.add(tglbtnMove);
 
         JButton btnClear = new JButton("Clear");

@@ -21,7 +21,7 @@ public abstract class Board extends JPanel implements Observer {
 		NONE, FLIPPER, ABSORBER, CIRCLE, TRIANGLE, SQUARE, BALL
 	}
 
-    private boolean delete;
+    private boolean delete, moving;
     private IGBallModel model;
 	private Adding adding;
 
@@ -29,6 +29,7 @@ public abstract class Board extends JPanel implements Observer {
 		adding = Adding.NONE;
         this.model=model;
         delete = false;
+        moving = false;
     }
 
     public void paintComponent(Graphics g) {
@@ -144,5 +145,11 @@ public abstract class Board extends JPanel implements Observer {
 	public void setAdding(Adding adding) {
 		this.adding = adding;
 	}
+
+    public boolean getMoving() {return moving;}
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
 }
 
