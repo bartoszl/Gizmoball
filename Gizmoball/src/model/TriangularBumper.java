@@ -22,7 +22,6 @@ public class TriangularBumper implements Bumper {
     public TriangularBumper(double cx, double cy, int rotation, String gizmoName) {
         this.cx = cx;
         this.cy = cy;
-        this.rotation = rotation%4;
         scale = 20;
         sideOne = new LineSegment(cx, cy, cx + (1* scale), cy);
         sideTwo = new LineSegment(cx, cy, cx, cy + (1 * scale));
@@ -51,6 +50,9 @@ public class TriangularBumper implements Bumper {
                 }
             }
         }
+        for(int i=0;i<rotation%4;i++){
+        	this.rotate();
+        }
     }
 
     public double getX() {
@@ -73,7 +75,28 @@ public class TriangularBumper implements Bumper {
     @Override
     public List<Circle> getCircles() {
         List<Circle> circles = new ArrayList<>();
-        //TODO -> add circles on the corners;
+        switch(rotation){
+        	case(0):
+        		circles.add(new Circle(cx,cy,0));
+        		circles.add(new Circle(cx+20,cy,0));
+        		circles.add(new Circle(cx,cy+20,0));
+        		break;
+        	case(1):
+        		circles.add(new Circle(cx,cy,0));
+        		circles.add(new Circle(cx+20,cy,0));
+        		circles.add(new Circle(cx+20,cy+20,0));
+        		break;
+        	case(2):
+        		circles.add(new Circle(cx+20,cy,0));
+        		circles.add(new Circle(cx+20,cy+20,0));
+        		circles.add(new Circle(cx,cy+20,0));
+        		break;
+        	case(3):
+        		circles.add(new Circle(cx,cy,0));
+        		circles.add(new Circle(cx+20,cy+20,0));
+        		circles.add(new Circle(cx,cy+20,0));
+        		break;
+        }
         
         return circles;
     }
