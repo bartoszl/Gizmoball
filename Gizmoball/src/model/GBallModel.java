@@ -227,5 +227,14 @@ public class GBallModel extends Observable implements IGBallModel {
 		}
 		return null;
 	}
-	//TODO move functionality needs to be added
+	
+	private Flipper findFlipper(double x, double y){
+		for(Flipper f:flippers){
+			double xx = f.getOrigin().x();
+			double yy = f.getOrigin().y();
+			if(xx==x && yy==y) return f;
+		}
+		return null;
+	}
+	
 }
