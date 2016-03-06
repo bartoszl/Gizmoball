@@ -77,7 +77,9 @@ public class CircularBumper implements Bumper {
 	}
 	@Override
 	public void move(double x, double y) {
-		circle = new Circle(x, y, RADIUS);
+		circle = new Circle(x+10, y+10, RADIUS);
+		this.x = x;
+		this.y = y;
 	}
 	@Override
 	public double getX() {

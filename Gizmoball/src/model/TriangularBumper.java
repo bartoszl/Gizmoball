@@ -22,7 +22,9 @@ public class TriangularBumper implements Bumper {
     public TriangularBumper(double cx, double cy, int rotation, String gizmoName) {
         this.cx = cx;
         this.cy = cy;
+        this.gizmoName = gizmoName;
         this.rotation = rotation%4;
+        /*
         scale = 20;
         sideOne = new LineSegment(cx, cy, cx + (1* scale), cy);
         sideTwo = new LineSegment(cx, cy, cx, cy + (1 * scale));
@@ -51,33 +53,82 @@ public class TriangularBumper implements Bumper {
                 }
             }
         }
+        for(int i=0;i<rotation%4;i++){
+        	this.rotate();
+        }*/
     }
-
+    @Override
     public double getX() {
         return cx;
     }
-
+    @Override
     public double getY() {
         return cy;
     }
 
     @Override
     public List<LineSegment> getLines() {
-        List<LineSegment> lines = new ArrayList<>();
+        /*List<LineSegment> lines = new ArrayList<>();
         lines.add(sideOne);
         lines.add(sideTwo);
         lines.add(hypotenuse);
         return null;
+        */
+        List<LineSegment> l = new ArrayList<LineSegment>();
+        switch(rotation){
+        	case(0):
+        		l.add(new LineSegment(cx,cy,cx+20,cy));
+        		l.add(new LineSegment(cx+20,cy,cx,cy+20));
+        		l.add(new LineSegment(cx,cy,cx,cy+20));
+        		break;
+        	case(1):
+        		l.add(new LineSegment(cx,cy,cx+20,cy));
+        		l.add(new LineSegment(cx+20,cy,cx+20,cy+20));
+        		l.add(new LineSegment(cx,cy,cx+20,cy+20));
+        		break;
+        	case(2):
+        		l.add(new LineSegment(cx+20,cy,cx+20,cy+20));
+        		l.add(new LineSegment(cx+20,cy+20,cx,cy+20));
+        		l.add(new LineSegment(cx,cy+20,cx+20,cy+20));
+        		break;
+        	case(3):
+        		l.add(new LineSegment(cx,cy,cx+20,cy+20));
+        		l.add(new LineSegment(cx+20,cy+20,cx,cy+20));
+        		l.add(new LineSegment(cx,cy,cx,cy+20));
+        		break;
+        }
+        return l;
     }
 
     @Override
     public List<Circle> getCircles() {
-        List<Circle> circles = new ArrayList<>();
-        //TODO -> add circles on the corners;
+        List<Circle> circles = new ArrayList<Circle>();
+        switch(rotation){
+        	case(0):
+        		circles.add(new Circle(cx,cy,0));
+        		circles.add(new Circle(cx+20,cy,0));
+        		circles.add(new Circle(cx,cy+20,0));
+        		break;
+        	case(1):
+        		circles.add(new Circle(cx,cy,0));
+        		circles.add(new Circle(cx+20,cy,0));
+        		circles.add(new Circle(cx+20,cy+20,0));
+        		break;
+        	case(2):
+        		circles.add(new Circle(cx+20,cy,0));
+        		circles.add(new Circle(cx+20,cy+20,0));
+        		circles.add(new Circle(cx,cy+20,0));
+        		break;
+        	case(3):
+        		circles.add(new Circle(cx,cy,0));
+        		circles.add(new Circle(cx+20,cy+20,0));
+        		circles.add(new Circle(cx,cy+20,0));
+        		break;
+        }
         
         return circles;
     }
-
+    @Override
     public Color getColor() {
         return color;
     }
@@ -98,18 +149,19 @@ public class TriangularBumper implements Bumper {
     public LineSegment getSideTwo() {
         return sideTwo;
     }
-
+    @Override
     public void setColor(Color color) {
         this.color = color;
     }
 
     @Override
     public void move(double x, double y) {
-    	//TODO -> implement move method.
+    	
     }
-
+    @Override
     public void rotate() {
     	rotation=++rotation%4;
+    	/*
         Angle a = Angle.DEG_90;
         sideOne = Geometry.rotateAround(sideOne, center, a);
         sideTwo = Geometry.rotateAround(sideTwo, center, a);
@@ -136,9 +188,9 @@ public class TriangularBumper implements Bumper {
                     this.center = new Vect(hypotenuse.p1().x() - centerX, hypotenuse.p1().y() + centerY);
                 }
             }
-        }
+        }*/
     }
-
+    @Override
     public String getName() {
         return gizmoName;
     }
@@ -157,9 +209,5 @@ public class TriangularBumper implements Bumper {
 
     public double getLowerLimit() {
         return cy + (1 * scale);
-    }
-
-    public String getGizmoName() {
-        return gizmoName;
     }
 }

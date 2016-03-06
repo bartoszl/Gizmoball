@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
 
+import controller.RunModeBtnListener;
 import model.IGBallModel;
 
 import javax.swing.JButton;
@@ -69,14 +70,17 @@ public class RunGUI implements IGUI{
 
         JButton btnStart = new JButton("Start");
         btnStart.setBounds(10, 11, 180, 50);
+        btnStart.addActionListener(new RunModeBtnListener(model));
         panel.add(btnStart);
 
         JButton btnStop = new JButton("Stop");
         btnStop.setBounds(10, 133, 180, 50);
+        btnStop.addActionListener(new RunModeBtnListener(model));
         panel.add(btnStop);
 
         JButton btnTick = new JButton("Tick");
         btnTick.setBounds(10, 72, 180, 50);
+        btnTick.addActionListener(new RunModeBtnListener(model));
         panel.add(btnTick);
 
         JButton btnBuildMode = new JButton("Build Mode");
@@ -85,11 +89,11 @@ public class RunGUI implements IGUI{
         btnBuildMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	board.delete();
-            	board=null;
-            	frame.remove(frame.getContentPane());
-            	frame.remove(frame.getJMenuBar());
-            	frame.remove(panel);
+                board.delete();
+                board=null;
+                frame.remove(frame.getContentPane());
+                frame.remove(frame.getJMenuBar());
+                frame.remove(panel);
                 main.switchToBuild(frame);
             }
         });
@@ -99,15 +103,21 @@ public class RunGUI implements IGUI{
         panel.add(separator_1);
 
         board = new RunBoard(model);
-        board.setBounds(200, 0, 434, 405);
+        board.setBounds(220, 0, 405, 405);
         frame.getContentPane().add(board);
 
         JTextPane textPane = new JTextPane();
         textPane.setBounds(0, 405, 634, 20);
         frame.getContentPane().add(textPane);
 
-        JMenuBar menuBar = new JMenuBar();
+        JMenuBar menuBar = createMenuBar();
         frame.setJMenuBar(menuBar);
+
+        frame.setVisible(true);
+    }
+
+    private JMenuBar createMenuBar(){
+        JMenuBar menuBar = new JMenuBar();
 
         JMenu mnFile = new JMenu("Model");
         menuBar.add(mnFile);
@@ -127,7 +137,7 @@ public class RunGUI implements IGUI{
         JMenuItem mntmQuit = new JMenuItem("Quit");
         mnFile.add(mntmQuit);
 
-        frame.setVisible(true);
+        return menuBar;
     }
 
     @Override

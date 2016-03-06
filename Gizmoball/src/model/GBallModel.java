@@ -207,6 +207,46 @@ public class GBallModel extends Observable implements IGBallModel {
 		// TODO Auto-generated method stub
 		return flippers;
 	}
+
+	@Override
+	public boolean rotateElement(double x, double y) {
+		x=x-(x%20);
+		y=y-(y%20);
+		Bumper b = findBumper(x,y);
+		if(b==null) return false;
+		b.rotate();
+		return true;
+	}
+
+	@Override
+	public boolean moveElement(double x, double y, double newX, double newY) {
+		x=x-(x%20);
+		y=y-(y%20);
+		newX=newX-(newX%20);
+		newY=newY-(newY%20);
+		Bumper b = findBumper(x,y);
+		if(b==null) return false;
+		if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
+		b.move(newX, newY);
+        notifyObs();
+		return true;
+	}
 	
-	//TODO move functionality needs to be added
+	private Bumper findBumper(double x, double y){
+		for(Bumper b: gizmos){
+			if(b.getX()==x && b.getY()==y)
+				return b;
+		}
+		return null;
+	}
+	
+	private Flipper findFlipper(double x, double y){
+		for(Flipper f:flippers){
+			double xx = f.getOrigin().x();
+			double yy = f.getOrigin().y();
+			if(xx==x && yy==y) return f;
+		}
+		return null;
+	}
+	
 }

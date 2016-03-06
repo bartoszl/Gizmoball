@@ -20,7 +20,7 @@ public abstract class Board extends JPanel implements Observer {
 		NONE, ADD, DELETE, MOVE, ROTATE, CONNECT, DISCONNECT
 	}
 
-    private boolean delete;
+    private boolean delete, moving;
     private IGBallModel model;
 	private Action action;
 
@@ -28,8 +28,13 @@ public abstract class Board extends JPanel implements Observer {
 		action = Action.NONE;
         this.model=model;
         delete = false;
+        moving = false;
     }
 
+    public void superPaint(Graphics g){
+    	super.paintComponent(g);
+    }
+    
     public void paintComponent(Graphics g) {
     	if(!delete){
 	        drawFlippers(g);
@@ -91,6 +96,7 @@ public abstract class Board extends JPanel implements Observer {
     
     private void drawBumpers(Graphics g){
     	if(model.getGizmos()!=null){
+    		System.out.println("number of g:"+model.getGizmos().size());
 			for(Bumper gizmo: model.getGizmos()){
 				List<Circle> circles = gizmo.getCircles();
 				g.setColor(gizmo.getColor());
@@ -145,5 +151,11 @@ public abstract class Board extends JPanel implements Observer {
 	public void setAction(Action action) {
 		this.action = action;
 	}
+
+    public boolean getMoving() {return moving;}
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
 }
 
