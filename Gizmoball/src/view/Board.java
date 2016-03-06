@@ -16,17 +16,16 @@ import java.util.Observer;
 
 public abstract class Board extends JPanel implements Observer {
 
-
-	public enum Adding {
-		NONE, FLIPPER, ABSORBER, CIRCLE, TRIANGLE, SQUARE, BALL
+	public enum Action {
+		NONE, ADD, DELETE, MOVE, ROTATE, CONNECT, DISCONNECT
 	}
 
     private boolean delete;
     private IGBallModel model;
-	private Adding adding;
+	private Action action;
 
     public Board(IGBallModel model){
-		adding = Adding.NONE;
+		action = Action.NONE;
         this.model=model;
         delete = false;
     }
@@ -139,10 +138,12 @@ public abstract class Board extends JPanel implements Observer {
 		repaint();
     }
 
-	public Adding getAdding() {return adding;}
+	public Action getAction() {
+		return action;
+	}
 
-	public void setAdding(Adding adding) {
-		this.adding = adding;
+	public void setAction(Action action) {
+		this.action = action;
 	}
 }
 

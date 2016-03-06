@@ -10,11 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class AddFlipperListener implements MouseListener {
+public class AddAbsorberListener implements MouseListener {
     private BuildGUI bgui;
     private IGBallModel m;
 
-    public AddFlipperListener(BuildGUI bgui, IGBallModel m) {
+    public AddAbsorberListener(BuildGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
     }
@@ -23,21 +23,13 @@ public class AddFlipperListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
-        if(b.getAction() == Board.Action.ADD && bgui.getSelectedButtonText().equals("Flipper")) {
-            //paint it
+        if(b.getAction() == Board.Action.ADD && bgui.getSelectedButtonText().equals("Absorber")) {
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
+            //paint it
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            switch(bgui.getFlipperPosition()) {
-                case "Left":
-                    m.addFlipper(x, y, true, "flipper");
-                    break;
-                case "Right":
-                    m.addFlipper(x, y, false, "flipper");
-                    break;
-                default:
-            }
+            m.addAbsorber("absorber", x, y, 7, 7);
         }
     }
 

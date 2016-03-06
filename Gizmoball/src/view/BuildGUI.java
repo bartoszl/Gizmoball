@@ -25,6 +25,7 @@ public class BuildGUI implements IGUI{
 	private IGBallModel model;
     private ButtonGroup componentGroup;
     private DefaultComboBoxModel gizmoShapes;
+    private DefaultComboBoxModel flipperPositions;
 
 	/**
 	 * Create the application.
@@ -74,9 +75,9 @@ public class BuildGUI implements IGUI{
 
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
-        board.addMouseListener(new AddGizmoListener(board, model));
-        board.addMouseListener(new AddBallListener(board, model));
-        board.addMouseListener(new AddFlipperListener(board, model));
+        board.addMouseListener(new AddGizmoListener(this, model));
+        board.addMouseListener(new AddBallListener(this, model));
+        board.addMouseListener(new AddFlipperListener(this, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
 		
@@ -130,7 +131,8 @@ public class BuildGUI implements IGUI{
 
         JComboBox cbFlipSide = new JComboBox();
         cbFlipSide.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        cbFlipSide.setModel(new DefaultComboBoxModel(new String[]{"Right", "Left"}));
+        flipperPositions = new DefaultComboBoxModel(new String[]{"Right", "Left"});
+        cbFlipSide.setModel(flipperPositions);
         cbFlipSide.setBounds(100, 119, 105, 22);
         panel.add(cbFlipSide);
 
@@ -258,6 +260,8 @@ public class BuildGUI implements IGUI{
 
         return null;
     }
+
+    public String getFlipperPosition() { return flipperPositions.getSelectedItem().toString(); }
 
     public String getGizmoShape() {
         return gizmoShapes.getSelectedItem().toString();
