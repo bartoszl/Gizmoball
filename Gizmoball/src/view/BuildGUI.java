@@ -75,6 +75,7 @@ public class BuildGUI implements IGUI{
         board.addMouseListener(new AddGizmoListener(this, model));
         board.addMouseListener(new AddBallListener(this, model));
         board.addMouseListener(new AddFlipperListener(this, model));
+        board.addMouseListener(new RotateComponentListener(this, model));
         board.addMouseListener(new MoveGizmoListener(board, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
@@ -168,6 +169,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnRotate = new JToggleButton("Rotate");
         tglbtnRotate.setBounds(10, 166, 93, 23);
+        tglbtnRotate.addActionListener(new RotateComponentListener(this, model));
         panel.add(tglbtnRotate);
 
         JToggleButton tglbtnDelete = new JToggleButton("Delete");

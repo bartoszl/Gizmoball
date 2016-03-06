@@ -248,5 +248,8 @@ public class GBallModel extends Observable implements IGBallModel {
 		}
 		return null;
 	}
-	
+
+    public boolean[][] getOccupiedSpaces() {
+        return occupiedSpaces;
+    }
 }
