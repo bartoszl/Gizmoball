@@ -13,17 +13,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class RotateComponentListener implements ActionListener, MouseListener {
+public class RotateComponentListener implements MouseListener {
     private BuildGUI bgui;
     private IGBallModel model;
 
     public RotateComponentListener(BuildGUI bgui, IGBallModel model) {
         this.model = model;
         this.bgui = bgui;
-    }
-
-    public void actionPerformed(ActionEvent actionEvent) {
-        bgui.getGridView().setAction(Board.Action.ROTATE);
     }
 
     @Override

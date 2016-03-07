@@ -18,9 +18,21 @@ public class BuildModeBtnListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("Move")){
-            System.out.println("In Move Action");
-            board.setMoving(true);
+        switch (e.getActionCommand()) {
+            case "Move":
+                board.setAction(Board.Action.MOVE);
+                break;
+            case "Rotate":
+                board.setAction(Board.Action.ROTATE);
+                break;
+            case "Add Component":
+                board.setAction(Board.Action.ADD);
+                break;
+            case "Delete":
+                board.setAction(Board.Action.DELETE);
+                break;
+            default:
+                board.setAction(Board.Action.NONE);
         }
     }
 }

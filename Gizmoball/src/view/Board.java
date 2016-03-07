@@ -152,10 +152,10 @@ public abstract class Board extends JPanel implements Observer {
 		this.action = action;
 	}
 
-    public boolean getMoving() {return moving;}
+    //public boolean getMoving() {return moving;}
 
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
+    //public void setMoving(boolean moving) {
+     //   this.moving = moving;
+    //}
 }
 

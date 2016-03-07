@@ -22,6 +22,7 @@ public class AddGizmoListener implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
+        System.out.println(b);
         if(b.getAction() == Board.Action.ADD && bgui.getSelectedButtonText().equals("Gizmo")) {
             String gizmoShape = bgui.getGizmoShape();
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
