@@ -16,7 +16,7 @@ public interface IFlipper {
 
     public Angle rotatePerTick(Angle left);
 
-    public void rotate(Angle a);
+    public void rotate();
 
     public int reservedArea();
 

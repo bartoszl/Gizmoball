@@ -45,7 +45,7 @@ public class RotateComponentListener implements MouseListener {
                 }
                 for(Flipper flipper : model.getFlippers()) {
                     if(flipper.getOrigin().x() == x*20 && flipper.getOrigin().y() == y*20) {
-                        flipper.rotate(Angle.DEG_90);
+                        flipper.rotate();
                         b.repaint();
                         break;
                     }
