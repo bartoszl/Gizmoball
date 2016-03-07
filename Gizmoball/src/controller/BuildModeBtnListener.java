@@ -1,10 +1,14 @@
 package controller;
 
+import model.Ball;
+import model.Bumper;
+import model.Flipper;
 import model.IGBallModel;
 import view.Board;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 public class BuildModeBtnListener implements ActionListener {
@@ -30,6 +34,14 @@ public class BuildModeBtnListener implements ActionListener {
                 break;
             case "Delete":
                 board.setAction(Board.Action.DELETE);
+                break;
+            case "Clear":
+                model.setGizmos(new ArrayList<Bumper>());
+                model.setAbsorber(null);
+                model.setFlippers(new ArrayList<Flipper>());
+                model.setBalls(new ArrayList<Ball>());
+                board.repaint();
+                board.setAction(Board.Action.NONE);
                 break;
             default:
                 board.setAction(Board.Action.NONE);

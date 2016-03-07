@@ -27,6 +27,7 @@ public class BuildGUI implements IGUI{
     private AddBallListener addBall;
     private AddFlipperListener addFlipper;
     private RotateComponentListener rotateComponent;
+    private DeleteComponentListener deleteComponent;
 
 	/**
 	 * Create the application.
@@ -36,10 +37,10 @@ public class BuildGUI implements IGUI{
         this.addBall = new AddBallListener(this, model);
         this.addFlipper = new AddFlipperListener(this, model);
         this.rotateComponent = new RotateComponentListener(this, model);
+        this.deleteComponent = new DeleteComponentListener(this, model);
         this.main = main;
         this.model = model;
         this.board = new BuildBoard(model);
-        System.out.println(board);
         createFrame();
 		initialize();
 	}
@@ -52,6 +53,7 @@ public class BuildGUI implements IGUI{
         this.addBall = new AddBallListener(this, model);
         this.rotateComponent = new RotateComponentListener(this, model);
         this.addFlipper = new AddFlipperListener(this, model);
+        this.deleteComponent = new DeleteComponentListener(this, model);
         this.main = main;
         this.model = model;
         this.frame = frame;
@@ -86,11 +88,11 @@ public class BuildGUI implements IGUI{
 
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
-        System.out.println("added");
         board.addMouseListener(addGizmo);
         board.addMouseListener(addBall);
         board.addMouseListener(addFlipper);
         board.addMouseListener(rotateComponent);
+        board.addMouseListener(deleteComponent);
         board.addMouseListener(new MoveGizmoListener(board, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
@@ -173,6 +175,7 @@ public class BuildGUI implements IGUI{
                 board.removeMouseListener(addBall);
                 board.removeMouseListener(addFlipper);
                 board.removeMouseListener(rotateComponent);
+                board.removeMouseListener(deleteComponent);
             	board = null;
             	frame.remove(frame.getContentPane());
             	frame.remove(frame.getJMenuBar());
@@ -195,6 +198,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnDelete = new JToggleButton("Delete");
         tglbtnDelete.setBounds(112, 166, 93, 23);
+        tglbtnDelete.addActionListener(btnListener);
         panel.add(tglbtnDelete);
 
         JToggleButton tglbtnMove = new JToggleButton("Move");
@@ -204,6 +208,7 @@ public class BuildGUI implements IGUI{
 
         JButton btnClear = new JButton("Clear");
         btnClear.setBounds(112, 200, 93, 23);
+        btnClear.addActionListener(btnListener);
         panel.add(btnClear);
 
         JToggleButton tglbtnConnect = new JToggleButton("Connect");

@@ -25,6 +25,10 @@ public interface IGBallModel    {
     public Absorber getAbsorber();
     public List<Ball> getBalls();
     public List<Flipper> getFlippers();
+    public void setGizmos(List<Bumper> bumpers);
+    public void setBalls(List<Ball> balls);
+    public void setAbsorber(Absorber absorber);
+    public void setFlippers(List<Flipper> flippers);
     public boolean addFlipper(int i, int i1, boolean b, String flipper);
     
     public boolean rotateElement(double x, double y);

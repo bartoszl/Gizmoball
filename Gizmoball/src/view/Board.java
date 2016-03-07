@@ -17,7 +17,7 @@ import java.util.Observer;
 public abstract class Board extends JPanel implements Observer {
 
 	public enum Action {
-		NONE, ADD, DELETE, MOVE, ROTATE, CONNECT, DISCONNECT
+		NONE, ADD, DELETE, MOVE, ROTATE, CLEAR, CONNECT, DISCONNECT
 	}
 
     private boolean delete, moving;
@@ -109,7 +109,7 @@ public abstract class Board extends JPanel implements Observer {
 					
 					for(int i=0; i<3; i++){
 						polyX[i] = (int)circles.get(i).getCenter().x();
-						polyY[i] = (int)circles.get(i).getCenter().x();
+						polyY[i] = (int)circles.get(i).getCenter().y();
 					}
 					g.fillPolygon(polyX, polyY, 3);
 				}else if(circles.size()==4){//square bumper

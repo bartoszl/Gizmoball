@@ -27,6 +27,7 @@ public class RunGUI implements IGUI{
 	private RunBoard board;
     private Main main;
     private IGBallModel model;
+    private RunModeBtnListener runModeBtnListener;
 
 	/**
 	 * Create the application.
@@ -63,6 +64,7 @@ public class RunGUI implements IGUI{
      * Initialize the contents of the frame.
      */
     private void initialize() {
+        runModeBtnListener = new RunModeBtnListener(model);
         panel = new JPanel();
         panel.setBounds(0, 0, 200, 405);
         frame.getContentPane().add(panel);
@@ -70,17 +72,17 @@ public class RunGUI implements IGUI{
 
         JButton btnStart = new JButton("Start");
         btnStart.setBounds(10, 11, 180, 50);
-        btnStart.addActionListener(new RunModeBtnListener(model));
+        btnStart.addActionListener(runModeBtnListener);
         panel.add(btnStart);
 
         JButton btnStop = new JButton("Stop");
         btnStop.setBounds(10, 133, 180, 50);
-        btnStop.addActionListener(new RunModeBtnListener(model));
+        btnStop.addActionListener(runModeBtnListener);
         panel.add(btnStop);
 
         JButton btnTick = new JButton("Tick");
         btnTick.setBounds(10, 72, 180, 50);
-        btnTick.addActionListener(new RunModeBtnListener(model));
+        btnTick.addActionListener(runModeBtnListener);
         panel.add(btnTick);
 
         JButton btnBuildMode = new JButton("Build Mode");
