@@ -27,7 +27,7 @@ public class MoveGizmoListener implements MouseListener {
         Point gridP = board.getLocationOnScreen();
         int x = mouseP.x - gridP.x;
         int y = mouseP.y - gridP.y;
-        if(board.getMoving()) {
+        if(board.getAction() == Board.Action.MOVE) {
             if(first){
                 System.out.println("First Click: x="+x+", y="+y);
                 clicks[0] = x;

@@ -23,14 +23,23 @@ public class BuildGUI implements IGUI{
     private ButtonGroup componentGroup;
     private DefaultComboBoxModel gizmoShapes;
     private DefaultComboBoxModel flipperPositions;
+    private AddGizmoListener addGizmo;
+    private AddBallListener addBall;
+    private AddFlipperListener addFlipper;
+    private RotateComponentListener rotateComponent;
 
 	/**
 	 * Create the application.
 	 */
 	public BuildGUI(Main main, IGBallModel model) {
+        this.addGizmo = new AddGizmoListener(this, model);
+        this.addBall = new AddBallListener(this, model);
+        this.addFlipper = new AddFlipperListener(this, model);
+        this.rotateComponent = new RotateComponentListener(this, model);
         this.main = main;
         this.model = model;
         this.board = new BuildBoard(model);
+        System.out.println(board);
         createFrame();
 		initialize();
 	}
@@ -39,9 +48,14 @@ public class BuildGUI implements IGUI{
 	 * Alternate constructor that takes in a JFrame object
 	 */
 	public BuildGUI(Main main, IGBallModel model, JFrame frame) {
+        this.addGizmo = new AddGizmoListener(this, model);
+        this.addBall = new AddBallListener(this, model);
+        this.rotateComponent = new RotateComponentListener(this, model);
+        this.addFlipper = new AddFlipperListener(this, model);
         this.main = main;
         this.model = model;
         this.frame = frame;
+
         this.board = new BuildBoard(model);
 		initialize();
 		frame.repaint();
@@ -72,10 +86,11 @@ public class BuildGUI implements IGUI{
 
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
-        board.addMouseListener(new AddGizmoListener(this, model));
-        board.addMouseListener(new AddBallListener(this, model));
-        board.addMouseListener(new AddFlipperListener(this, model));
-        board.addMouseListener(new RotateComponentListener(this, model));
+        System.out.println("added");
+        board.addMouseListener(addGizmo);
+        board.addMouseListener(addBall);
+        board.addMouseListener(addFlipper);
+        board.addMouseListener(rotateComponent);
         board.addMouseListener(new MoveGizmoListener(board, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
@@ -154,6 +169,10 @@ public class BuildGUI implements IGUI{
             @Override
             public void actionPerformed(ActionEvent e) {
             	board.delete();
+                board.removeMouseListener(addGizmo);
+                board.removeMouseListener(addBall);
+                board.removeMouseListener(addFlipper);
+                board.removeMouseListener(rotateComponent);
             	board = null;
             	frame.remove(frame.getContentPane());
             	frame.remove(frame.getJMenuBar());
@@ -162,14 +181,16 @@ public class BuildGUI implements IGUI{
             }
         });
 
+        BuildModeBtnListener btnListener = new BuildModeBtnListener(board, model);
+
         JToggleButton tglbtnAddComp = new JToggleButton("Add Component");
         tglbtnAddComp.setBounds(10, 11, 195, 23);
-        tglbtnAddComp.addActionListener(new AddComponentListener(this));
+        tglbtnAddComp.addActionListener(btnListener);
         panel.add(tglbtnAddComp);
 
         JToggleButton tglbtnRotate = new JToggleButton("Rotate");
         tglbtnRotate.setBounds(10, 166, 93, 23);
-        tglbtnRotate.addActionListener(new RotateComponentListener(this, model));
+        tglbtnRotate.addActionListener(btnListener);
         panel.add(tglbtnRotate);
 
         JToggleButton tglbtnDelete = new JToggleButton("Delete");
@@ -178,7 +199,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnMove = new JToggleButton("Move");
         tglbtnMove.setBounds(10, 200, 93, 23);
-        tglbtnMove.addActionListener(new BuildModeBtnListener(board, model));
+        tglbtnMove.addActionListener(btnListener);
         panel.add(tglbtnMove);
 
         JButton btnClear = new JButton("Clear");
