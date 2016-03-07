@@ -208,7 +208,27 @@ public class GBallModel extends Observable implements IGBallModel {
 		return flippers;
 	}
 
-	@Override
+    @Override
+    public void setGizmos(List<Bumper> bumpers) {
+        this.gizmos = bumpers;
+    }
+
+    @Override
+    public void setBalls(List<Ball> balls) {
+        this.balls = balls;
+    }
+
+    @Override
+    public void setAbsorber(Absorber absorber) {
+        this.absorber = absorber;
+    }
+
+    @Override
+    public void setFlippers(List<Flipper> flippers) {
+        this.flippers = flippers;
+    }
+
+    @Override
 	public boolean rotateElement(double x, double y) {
 		x=x-(x%20);
 		y=y-(y%20);
