@@ -23,6 +23,7 @@ public class GBallModel extends Observable implements IGBallModel {
     private Absorber absorber;
     private boolean [][] occupiedSpaces;
     private int lX, lY;
+    private Walls walls;
 
     public GBallModel() {
         gizmos = new ArrayList<Bumper>();
@@ -31,6 +32,7 @@ public class GBallModel extends Observable implements IGBallModel {
         keyConnectionsFlipper = new ArrayList<KeyConnectionFlipper>();
         flippers = new ArrayList<Flipper>();
         balls = new ArrayList<Ball>();
+        walls = new Walls(0,0,400,400);
         occupiedSpaces = new boolean [20][20];
     }
 
