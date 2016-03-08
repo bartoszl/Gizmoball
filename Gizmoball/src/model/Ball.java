@@ -17,6 +17,7 @@ public class Ball implements IBall{
 	private double x, y, r;
 	private Color color;
 	private boolean moving, absorbed;
+	private static final double L=20;
 	
 	/**
 	 * Constructor for Ball object. Initially sets color to Yellow,
@@ -30,8 +31,8 @@ public class Ball implements IBall{
 	 * @param yv -> double, representing velocity along y axis
 	 */
 	public Ball(String name, double x, double y, double xv, double yv){
-		this.x = x;
-		this.y = y;
+		this.x = x+L/2;
+		this.y = y+L/2;
 		this.velocity = new Vect(xv, yv);
 		this.color = Color.YELLOW;
 		this.r = 5;
