@@ -262,4 +262,9 @@ public class Flipper extends Observable implements IFlipper {
     public void setOrigin(Vect origin) {
         this.origin = origin;
     }
+
+	@Override
+	public boolean isLeft() {
+		return isLeft;
+	}
 }

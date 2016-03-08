@@ -60,8 +60,8 @@ public class GBallModel extends Observable implements IGBallModel {
         y -= y%20;
         lX = x/20;
         lY = y/20;
-        if(!occupiedSpaces[lX][lY]) {
-            occupiedSpaces[lX][lY] = true;
+        if(occupiedSpacesFlipper(lX, lY, isLeft)) {
+            occupyFlipper(lX,lY,isLeft);
             Flipper f = new Flipper(x, y, isLeft, Color.RED, name);
             flippers.add(f);
             notifyObs();
@@ -237,6 +237,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		Bumper b = findBumper(x,y);
 		if(b==null) return false;
 		b.rotate();
+		notifyObs();
 		return true;
 	}
 
@@ -247,12 +248,53 @@ public class GBallModel extends Observable implements IGBallModel {
 		newX=newX-(newX%20);
 		newY=newY-(newY%20);
 		Bumper b = findBumper(x,y);
-		if(b==null) return false;
-		if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
-		b.move(newX, newY);
-        occupiedSpaces[(int)x/20][(int)y/20] = false;
-        occupiedSpaces[(int)newX/20][(int)newY/20] = true;
-        notifyObs();
+		Flipper f = findFlipper(x,y);
+		if(b==null && f==null) return false;
+		if(b!=null){
+			System.out.println("bumper");
+			if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
+			b.move(newX, newY);
+	        occupiedSpaces[(int)x/20][(int)y/20] = false;
+	        occupiedSpaces[(int)newX/20][(int)newY/20] = true;
+	        notifyObs();
+			return true;
+		}
+		if(f!=null){
+			System.out.println("flipper");
+			if(!occupiedSpacesFlipper((int)newX/20, (int)newY/20, f.isLeft())) return false;
+			f.move(newX, newY);
+			System.out.println(newX+ " "+newY);
+			occupyFlipper((int)newX/20, (int)newY/20, f.isLeft());
+			unoccupyFlipper((int)x/20, (int)y/20, f.isLeft());
+			notifyObs();
+			return true;
+		}
+		return false;
+	}
+	
+	private void unoccupyFlipper(int x, int y, boolean left){
+		for(int i=0;i<2;i++){
+			for(int j=0;j<2;j++){
+					occupiedSpaces[x+i][y+j]=false;
+			}
+		}
+	}
+	
+	private void occupyFlipper(int x, int y, boolean left){
+		for(int i=0;i<2;i++){
+			for(int j=0;j<2;j++){
+					occupiedSpaces[x+i][y+j]=true;
+					System.out.println((x+i)+" "+(y+i));
+			}
+		}
+	}
+	
+	private boolean occupiedSpacesFlipper(int x, int y, boolean left){
+		for(int i=0;i<2;i++){
+			for(int j=0;j<2;j++){
+					if(occupiedSpaces[x+i][y+j]==true) return false;
+			}
+		}
 		return true;
 	}
 	
@@ -275,5 +317,16 @@ public class GBallModel extends Observable implements IGBallModel {
 
     public boolean[][] getOccupiedSpaces() {
         return occupiedSpaces;
+    }
+    
+    public void clear(){
+    	gizmos = new ArrayList<Bumper>();
+        connections = new ArrayList<Connection>();
+        keyConnectionsAbs = new ArrayList<KeyConnectionAbs>();
+        keyConnectionsFlipper = new ArrayList<KeyConnectionFlipper>();
+        flippers = new ArrayList<Flipper>();
+        balls = new ArrayList<Ball>();
+        occupiedSpaces = new boolean [20][20];
+        notifyObs();
     }
 }
