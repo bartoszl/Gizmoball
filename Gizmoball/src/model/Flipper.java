@@ -69,6 +69,7 @@ public class Flipper extends Observable implements IFlipper {
     public void move(double cx, double cy) {
         double off = isLeft ? 0 : 30;
         origin = new Vect(cx, cy);
+        topCircle = new Circle(origin.x()+5+off, origin.y()+5, 5);
         List<LineSegment> newLines = new ArrayList<>();
         newLines.add(new LineSegment(cx+off, cy, cx+off+10, cy));
         newLines.add(new LineSegment(cx+off, cy, cx+off, cy+40));
