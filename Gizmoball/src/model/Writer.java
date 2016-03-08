@@ -33,8 +33,29 @@ public class Writer {
 
     }
 
-    public String[] convertToFileSyntax(Bumper bumper) {
+    public String[] convertBumperToFileSyntax(Bumper bumper) {
+        if(bumper instanceof SquareBumper) {
+            SquareBumper sBumper = (SquareBumper) bumper;
+            return generateSquareBumperSyntax(sBumper);
+        } else if(bumper instanceof TriangularBumper) {
+            TriangularBumper tBumper = (TriangularBumper) bumper;
+            return generateTriangularBumperSyntax(tBumper);
+        } else if(bumper instanceof CircularBumper) {
+            CircularBumper cBumper = (CircularBumper) bumper;
+            return generateCircularBumperSyntax(cBumper);
+        }
+        return null;
+    }
 
+    public String[] generateSquareBumperSyntax(SquareBumper bumper) {
+        return null;
+    }
+
+    public String[] generateTriangularBumperSyntax(TriangularBumper bumper) {
+        return null;
+    }
+
+    public String[] generateCircularBumperSyntax(CircularBumper bumper) {
         return null;
     }
 }

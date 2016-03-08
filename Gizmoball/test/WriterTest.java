@@ -1,5 +1,4 @@
-package model;
-
+import model.Writer;
 import org.junit.Before;
 
 import static org.junit.Assert.*;
