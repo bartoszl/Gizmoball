@@ -25,9 +25,12 @@ public class Writer {
             file.createNewFile();
             writer = new FileWriter(file);
 
+            /* Write all bumpers */
             for(Bumper bumper : model.getGizmos()) {
-
+                List<String> syntax = convertBumperToFileSyntax(bumper);
+                writer.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3));
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
