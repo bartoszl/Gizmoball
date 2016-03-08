@@ -26,6 +26,7 @@ public class BuildGUI implements IGUI{
     private AddGizmoListener addGizmo;
     private AddBallListener addBall;
     private AddFlipperListener addFlipper;
+    private AddAbsorberListener addAbsorber;
     private RotateComponentListener rotateComponent;
     private DeleteComponentListener deleteComponent;
 
@@ -36,6 +37,7 @@ public class BuildGUI implements IGUI{
         this.addGizmo = new AddGizmoListener(this, model);
         this.addBall = new AddBallListener(this, model);
         this.addFlipper = new AddFlipperListener(this, model);
+        this.addAbsorber = new AddAbsorberListener(this, model);
         this.rotateComponent = new RotateComponentListener(this, model);
         this.deleteComponent = new DeleteComponentListener(this, model);
         this.main = main;
@@ -53,6 +55,7 @@ public class BuildGUI implements IGUI{
         this.addBall = new AddBallListener(this, model);
         this.rotateComponent = new RotateComponentListener(this, model);
         this.addFlipper = new AddFlipperListener(this, model);
+        this.addAbsorber = new AddAbsorberListener(this, model);
         this.deleteComponent = new DeleteComponentListener(this, model);
         this.main = main;
         this.model = model;
@@ -91,6 +94,7 @@ public class BuildGUI implements IGUI{
         board.addMouseListener(addGizmo);
         board.addMouseListener(addBall);
         board.addMouseListener(addFlipper);
+        board.addMouseListener(addAbsorber);
         board.addMouseListener(rotateComponent);
         board.addMouseListener(deleteComponent);
         board.addMouseListener(new MoveGizmoListener(board, model));
@@ -174,6 +178,7 @@ public class BuildGUI implements IGUI{
                 board.removeMouseListener(addGizmo);
                 board.removeMouseListener(addBall);
                 board.removeMouseListener(addFlipper);
+                board.removeMouseListener(addAbsorber);
                 board.removeMouseListener(rotateComponent);
                 board.removeMouseListener(deleteComponent);
             	board = null;
@@ -298,7 +303,6 @@ public class BuildGUI implements IGUI{
                 return button.getText();
             }
         }
-
         return null;
     }
 
