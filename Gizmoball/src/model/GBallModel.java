@@ -118,8 +118,8 @@ public class GBallModel extends Observable implements IGBallModel {
     public boolean addAbsorber(String name, int x, int y, int x1, int y1) {
         x -= x%20;
         y -= y%20;
-        x1 -= (x1%20) - 20;
-        y1 -= (y1%20) - 20;
+        x1 -= (x1%20);
+        y1 -= (y1%20);
         lX = x/20;
         lY = y/20;
         for(int i = x; i <= x1; i++) {
