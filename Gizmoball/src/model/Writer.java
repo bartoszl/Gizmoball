@@ -76,6 +76,15 @@ public class Writer {
     }
 
     public List<String> generateCircularBumperSyntax(CircularBumper bumper) {
-        return null;
+        String gizmoOp = "Circle",
+                xCoordinate = String.valueOf(bumper.getX() / scale),
+                yCoordinate = String.valueOf(bumper.getY() / scale),
+                name = bumper.getName();
+        List<String> syntax = new ArrayList<String>();
+        syntax.add(gizmoOp);
+        syntax.add(name);
+        syntax.add(xCoordinate);
+        syntax.add(yCoordinate);
+        return syntax;
     }
 }
