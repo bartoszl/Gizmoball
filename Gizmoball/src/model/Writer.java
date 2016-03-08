@@ -44,8 +44,18 @@ public class Writer {
     public List<String> convertAbsorberToFileSyntax(IAbsorber absorber) {
         String gizmoOp = "Absorber",
                 name = absorber.getName(),
-                x1 = String.valueOf(absorber.getXTopLeft());
-        return null;
+                x1 = String.valueOf(absorber.getXTopLeft() / scale),
+                y1 = String.valueOf(absorber.getYTopLeft() / scale),
+                x2 = String.valueOf(absorber.getXBottomRight() / scale),
+                y2 = String.valueOf(absorber.getYBottomRight() / scale);
+        List<String> syntax = new ArrayList<String>();
+        syntax.add(gizmoOp);
+        syntax.add(name);
+        syntax.add(x1);
+        syntax.add(y1);
+        syntax.add(x2);
+        syntax.add(y2);
+        return syntax;
     }
 
     public List<String> convertBumperToFileSyntax(Bumper bumper) {
