@@ -250,8 +250,12 @@ public class GBallModel extends Observable implements IGBallModel {
 		x=x-(x%20);
 		y=y-(y%20);
 		Bumper b = findBumper(x,y);
-		if(b==null) return false;
-		b.rotate();
+		Flipper f = findFlipper(x,y);
+		if(b==null && f==null) return false;
+		if(b!=null)
+			b.rotate();
+		if(f!=null)
+			f.rotate();
 		notifyObs();
 		return true;
 	}
