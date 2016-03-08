@@ -1,9 +1,6 @@
 package view;
 
-import controller.AddBallListener;
-import controller.AddComponentListener;
-import controller.AddFlipperListener;
-import controller.AddGizmoListener;
+import controller.*;
 import model.Absorber;
 import model.Ball;
 import model.CircularBumper;
@@ -25,11 +22,22 @@ public class BuildGUI implements IGUI{
 	private IGBallModel model;
     private ButtonGroup componentGroup;
     private DefaultComboBoxModel gizmoShapes;
+    private DefaultComboBoxModel flipperPositions;
+    private AddGizmoListener addGizmo;
+    private AddBallListener addBall;
+    private AddFlipperListener addFlipper;
+    private RotateComponentListener rotateComponent;
+    private DeleteComponentListener deleteComponent;
 
 	/**
 	 * Create the application.
 	 */
 	public BuildGUI(Main main, IGBallModel model) {
+        this.addGizmo = new AddGizmoListener(this, model);
+        this.addBall = new AddBallListener(this, model);
+        this.addFlipper = new AddFlipperListener(this, model);
+        this.rotateComponent = new RotateComponentListener(this, model);
+        this.deleteComponent = new DeleteComponentListener(this, model);
         this.main = main;
         this.model = model;
         this.board = new BuildBoard(model);
@@ -41,9 +49,15 @@ public class BuildGUI implements IGUI{
 	 * Alternate constructor that takes in a JFrame object
 	 */
 	public BuildGUI(Main main, IGBallModel model, JFrame frame) {
+        this.addGizmo = new AddGizmoListener(this, model);
+        this.addBall = new AddBallListener(this, model);
+        this.rotateComponent = new RotateComponentListener(this, model);
+        this.addFlipper = new AddFlipperListener(this, model);
+        this.deleteComponent = new DeleteComponentListener(this, model);
         this.main = main;
         this.model = model;
         this.frame = frame;
+
         this.board = new BuildBoard(model);
 		initialize();
 		frame.repaint();
@@ -74,9 +88,12 @@ public class BuildGUI implements IGUI{
 
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
-        board.addMouseListener(new AddGizmoListener(board, model));
-        board.addMouseListener(new AddBallListener(board, model));
-        board.addMouseListener(new AddFlipperListener(board, model));
+        board.addMouseListener(addGizmo);
+        board.addMouseListener(addBall);
+        board.addMouseListener(addFlipper);
+        board.addMouseListener(rotateComponent);
+        board.addMouseListener(deleteComponent);
+        board.addMouseListener(new MoveGizmoListener(board, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
 		
@@ -130,7 +147,8 @@ public class BuildGUI implements IGUI{
 
         JComboBox cbFlipSide = new JComboBox();
         cbFlipSide.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        cbFlipSide.setModel(new DefaultComboBoxModel(new String[]{"Right", "Left"}));
+        flipperPositions = new DefaultComboBoxModel(new String[]{"Right", "Left"});
+        cbFlipSide.setModel(flipperPositions);
         cbFlipSide.setBounds(100, 119, 105, 22);
         panel.add(cbFlipSide);
 
@@ -153,6 +171,11 @@ public class BuildGUI implements IGUI{
             @Override
             public void actionPerformed(ActionEvent e) {
             	board.delete();
+                board.removeMouseListener(addGizmo);
+                board.removeMouseListener(addBall);
+                board.removeMouseListener(addFlipper);
+                board.removeMouseListener(rotateComponent);
+                board.removeMouseListener(deleteComponent);
             	board = null;
             	frame.remove(frame.getContentPane());
             	frame.remove(frame.getJMenuBar());
@@ -161,25 +184,31 @@ public class BuildGUI implements IGUI{
             }
         });
 
+        BuildModeBtnListener btnListener = new BuildModeBtnListener(board, model);
+
         JToggleButton tglbtnAddComp = new JToggleButton("Add Component");
         tglbtnAddComp.setBounds(10, 11, 195, 23);
-        tglbtnAddComp.addActionListener(new AddComponentListener(this));
+        tglbtnAddComp.addActionListener(btnListener);
         panel.add(tglbtnAddComp);
 
         JToggleButton tglbtnRotate = new JToggleButton("Rotate");
         tglbtnRotate.setBounds(10, 166, 93, 23);
+        tglbtnRotate.addActionListener(btnListener);
         panel.add(tglbtnRotate);
 
         JToggleButton tglbtnDelete = new JToggleButton("Delete");
         tglbtnDelete.setBounds(112, 166, 93, 23);
+        tglbtnDelete.addActionListener(btnListener);
         panel.add(tglbtnDelete);
 
         JToggleButton tglbtnMove = new JToggleButton("Move");
         tglbtnMove.setBounds(10, 200, 93, 23);
+        tglbtnMove.addActionListener(btnListener);
         panel.add(tglbtnMove);
 
         JButton btnClear = new JButton("Clear");
         btnClear.setBounds(112, 200, 93, 23);
+        btnClear.addActionListener(btnListener);
         panel.add(btnClear);
 
         JToggleButton tglbtnConnect = new JToggleButton("Connect");
@@ -248,6 +277,20 @@ public class BuildGUI implements IGUI{
         return mnModel;
     }
 
+    private JMenu create_PhysicsMenu(){
+        JMenu mnPhysics = new JMenu("Physics");
+        JMenuItem mntmFriction, mntmGravity;
+
+        mntmFriction = new JMenuItem("Friction");
+        mntmFriction.addActionListener(new BuildModeBtnListener(board, model));
+        mnPhysics.add(mntmFriction);
+        mntmGravity = new JMenuItem("Gravity");
+        mntmGravity.addActionListener(new BuildModeBtnListener(board, model));
+        mnPhysics.add(mntmGravity);
+
+        return mnPhysics;
+    }
+
     public String getSelectedButtonText() {
         for (Enumeration<AbstractButton> buttons = componentGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
@@ -259,19 +302,9 @@ public class BuildGUI implements IGUI{
         return null;
     }
 
+    public String getFlipperPosition() { return flipperPositions.getSelectedItem().toString(); }
+
     public String getGizmoShape() {
         return gizmoShapes.getSelectedItem().toString();
-    }
-
-    private JMenu create_PhysicsMenu(){
-        JMenu mnPhysics = new JMenu("Physics");
-        JMenuItem mntmFriction, mntmGravity;
-
-        mntmFriction = new JMenuItem("Friction");
-        mnPhysics.add(mntmFriction);
-        mntmGravity = new JMenuItem("Gravity");
-        mnPhysics.add(mntmGravity);
-
-        return mnPhysics;
     }
 }

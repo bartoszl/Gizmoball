@@ -16,21 +16,25 @@ import java.util.Observer;
 
 public abstract class Board extends JPanel implements Observer {
 
-
-	public enum Adding {
-		NONE, FLIPPER, ABSORBER, CIRCLE, TRIANGLE, SQUARE, BALL
+	public enum Action {
+		NONE, ADD, DELETE, MOVE, ROTATE, CLEAR, CONNECT, DISCONNECT
 	}
 
-    private boolean delete;
+    private boolean delete, moving;
     private IGBallModel model;
-	private Adding adding;
+	private Action action;
 
     public Board(IGBallModel model){
-		adding = Adding.NONE;
+		action = Action.NONE;
         this.model=model;
         delete = false;
+        moving = false;
     }
 
+    public void superPaint(Graphics g){
+    	super.paintComponent(g);
+    }
+    
     public void paintComponent(Graphics g) {
     	if(!delete){
 	        drawFlippers(g);
@@ -39,7 +43,6 @@ public abstract class Board extends JPanel implements Observer {
 	        drawBalls(g);
     	}
     }
-
 
     private void drawFlippers(Graphics g) {
     	if(model.getFlippers()!=null){
@@ -92,6 +95,7 @@ public abstract class Board extends JPanel implements Observer {
     
     private void drawBumpers(Graphics g){
     	if(model.getGizmos()!=null){
+    		System.out.println("number of g:"+model.getGizmos().size());
 			for(Bumper gizmo: model.getGizmos()){
 				List<Circle> circles = gizmo.getCircles();
 				g.setColor(gizmo.getColor());
@@ -104,7 +108,7 @@ public abstract class Board extends JPanel implements Observer {
 					
 					for(int i=0; i<3; i++){
 						polyX[i] = (int)circles.get(i).getCenter().x();
-						polyY[i] = (int)circles.get(i).getCenter().x();
+						polyY[i] = (int)circles.get(i).getCenter().y();
 					}
 					g.fillPolygon(polyX, polyY, 3);
 				}else if(circles.size()==4){//square bumper
@@ -139,10 +143,18 @@ public abstract class Board extends JPanel implements Observer {
 		repaint();
     }
 
-	public Adding getAdding() {return adding;}
-
-	public void setAdding(Adding adding) {
-		this.adding = adding;
+	public Action getAction() {
+		return action;
 	}
+
+	public void setAction(Action action) {
+		this.action = action;
+	}
+
+    //public boolean getMoving() {return moving;}
+
+    //public void setMoving(boolean moving) {
+     //   this.moving = moving;
+    //}
 }
 

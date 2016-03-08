@@ -41,11 +41,13 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addSquareBumper(int x, int y, int rotation, String name) {
+        x -= x%20;
+        y -= y%20;
         lX = x/20;
-        lY = x/20;
+        lY = y/20;
         if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
-            gizmos.add(new SquareBumper((double) x - x%20, (double) y - y%20, rotation, name));
+            gizmos.add(new SquareBumper((double) x, (double) y, rotation, name));
             notifyObs();
             return true;
         }
@@ -54,11 +56,13 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addFlipper(int x, int y, boolean isLeft, String name) {
+        x -= x%20;
+        y -= y%20;
         lX = x/20;
-        lY = x/20;
+        lY = y/20;
         if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
-            Flipper f = new Flipper(x-x%20, y-y%20, isLeft, Color.RED, name);
+            Flipper f = new Flipper(x, y, isLeft, Color.RED, name);
             flippers.add(f);
             notifyObs();
             return true;
@@ -68,8 +72,10 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addTriangularBumper(int x, int y, int rotation, String name) {
+        x -= x%20;
+        y -= y%20;
         lX = x/20;
-        lY = x/20;
+        lY = y/20;
         if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
             TriangularBumper tBumper = new TriangularBumper((double) x - x%20, (double) y - y%20, rotation, name);
@@ -82,11 +88,13 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addCircularBumper(int x, int y, int rotation, String name) {
+        x -= x%20;
+        y -= y%20;
         lX = x/20;
-        lY = x/20;
+        lY = y/20;
         if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
-            CircularBumper cBumper = new CircularBumper((double) x - x%20, (double) y - y%20, rotation, name);
+            CircularBumper cBumper = new CircularBumper((double) x, (double) y, rotation, name);
             gizmos.add(cBumper);
             notifyObs();
             return true;
@@ -106,8 +114,10 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addAbsorber(String name, int x, int y, int x1, int y1) {
+        x -= x%20;
+        y -= y%20;
         lX = x/20;
-        lY = x/20;
+        lY = y/20;
         for(int i = x; i <= x1; i++) {
             for(int j = y; j <= y1; j++) {
                 if(occupiedSpaces[lX][lY]) {
@@ -115,18 +125,20 @@ public class GBallModel extends Observable implements IGBallModel {
                 }
             }
         }
-        absorber = new Absorber(name, (double) x - x%20, (double) y - y%20, (double) x1, (double) y1);
+        absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
         notifyObs();
         return true;
     }
 
     @Override
     public boolean addBall(String name, double x, double y, double xv, double yv) {
+        x -= x%20;
+        y -= y%20;
         lX = (int) x/20;
-        lY = (int) x/20;
+        lY = (int) y/20;
         if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
-            Ball b = new Ball(name, x-x%20, y-y%20, xv, yv);
+            Ball b = new Ball(name, x, y, xv, yv);
             balls.add(b);
             notifyObs();
             return true;
@@ -196,7 +208,27 @@ public class GBallModel extends Observable implements IGBallModel {
 		return flippers;
 	}
 
-	@Override
+    @Override
+    public void setGizmos(List<Bumper> bumpers) {
+        this.gizmos = bumpers;
+    }
+
+    @Override
+    public void setBalls(List<Ball> balls) {
+        this.balls = balls;
+    }
+
+    @Override
+    public void setAbsorber(Absorber absorber) {
+        this.absorber = absorber;
+    }
+
+    @Override
+    public void setFlippers(List<Flipper> flippers) {
+        this.flippers = flippers;
+    }
+
+    @Override
 	public boolean rotateElement(double x, double y) {
 		x=x-(x%20);
 		y=y-(y%20);
@@ -217,7 +249,9 @@ public class GBallModel extends Observable implements IGBallModel {
 		if(b==null) return false;
 		if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
 		b.move(newX, newY);
-		notifyObs();
+        occupiedSpaces[(int)x/20][(int)y/20] = false;
+        occupiedSpaces[(int)newX/20][(int)newY/20] = true;
+        notifyObs();
 		return true;
 	}
 	
@@ -237,5 +271,8 @@ public class GBallModel extends Observable implements IGBallModel {
 		}
 		return null;
 	}
-	
+
+    public boolean[][] getOccupiedSpaces() {
+        return occupiedSpaces;
+    }
 }

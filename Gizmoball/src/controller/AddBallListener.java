@@ -11,25 +11,25 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddBallListener implements MouseListener {
-    private Board b;
+    private BuildGUI bgui;
     private IGBallModel m;
 
-    public AddBallListener(Board b, IGBallModel m) {
+    public AddBallListener(BuildGUI bgui, IGBallModel m) {
         this.m = m;
-        this.b = b;
+        this.bgui = bgui;
     }
 
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        Point mouseP = MouseInfo.getPointerInfo().getLocation();
-        Point gridP = b.getLocationOnScreen();
-        if(b.getAdding() == Board.Adding.BALL) {
+        Board b = bgui.getGridView();
+        if(b.getAction() == Board.Action.ADD && bgui.getSelectedButtonText().equals("Ball")) {
+            Point mouseP = MouseInfo.getPointerInfo().getLocation();
+            Point gridP = b.getLocationOnScreen();
             //paint it
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
             m.addBall("ball", x, y, 3, 3);
-            b.setAdding(Board.Adding.NONE);
         }
     }
 

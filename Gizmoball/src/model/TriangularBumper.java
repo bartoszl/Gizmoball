@@ -24,6 +24,7 @@ public class TriangularBumper implements Bumper {
         this.cy = cy;
         this.gizmoName = gizmoName;
         this.rotation = rotation%4;
+        this.color = Color.BLUE;
         /*
         scale = 20;
         sideOne = new LineSegment(cx, cy, cx + (1* scale), cy);
@@ -155,8 +156,9 @@ public class TriangularBumper implements Bumper {
     }
 
     @Override
-    public void move(double x, double y) {
-    	
+    public void move(double cx, double cy){
+        this.cx=cx;
+        this.cy=cy;
     }
     @Override
     public void rotate() {

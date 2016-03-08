@@ -11,32 +11,36 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddGizmoListener implements MouseListener{
-    private Board b;
+    private BuildGUI bgui;
     private IGBallModel m;
 
-    public AddGizmoListener(Board b, IGBallModel m) {
+    public AddGizmoListener(BuildGUI bgui, IGBallModel m) {
         this.m = m;
-        this.b = b;
+        this.bgui = bgui;
     }
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        Point mouseP = MouseInfo.getPointerInfo().getLocation();
-        Point gridP = b.getLocationOnScreen();
-        int x = mouseP.x - gridP.x;
-        int y = mouseP.y - gridP.y;
-        if(b.getAdding() == Board.Adding.CIRCLE) {
-            //paint it
-            m.addCircularBumper(x, y, 0, "circle");
-
-        } else if(b.getAdding() == Board.Adding.TRIANGLE) {
-            //paint it
-            m.addTriangularBumper(x, y, 0, "triangle");
-        } else if(b.getAdding() == Board.Adding.SQUARE) {
-            //paint it
-            m.addSquareBumper(x, y, 0, "square");
+        Board b = bgui.getGridView();
+        if(b.getAction() == Board.Action.ADD && bgui.getSelectedButtonText().equals("Gizmo")) {
+            String gizmoShape = bgui.getGizmoShape();
+            Point mouseP = MouseInfo.getPointerInfo().getLocation();
+            Point gridP = b.getLocationOnScreen();
+            int x = mouseP.x - gridP.x;
+            int y = mouseP.y - gridP.y;
+            switch(gizmoShape) {
+                case "Circle":
+                    m.addCircularBumper(x, y, 0, "circle");
+                    break;
+                case "Triangle":
+                    m.addTriangularBumper(x, y, 0, "triangle");
+                    break;
+                case "Square":
+                    m.addSquareBumper(x, y, 0, "square");
+                    break;
+                default:
+            }
         }
-        b.setAdding(Board.Adding.NONE);
     }
 
     @Override

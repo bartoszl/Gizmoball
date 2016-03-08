@@ -22,7 +22,6 @@ public class Main {
     }
 
     public void switchToBuild(JFrame frame){
-
         gui = new BuildGUI(this, model, frame);
         model.addObserver(gui.getGridView());
     }
