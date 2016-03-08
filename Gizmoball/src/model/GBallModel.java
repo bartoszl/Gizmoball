@@ -325,7 +325,12 @@ public class GBallModel extends Observable implements IGBallModel {
 		for(Flipper f:flippers){
 			double xx = f.getOrigin().x();
 			double yy = f.getOrigin().y();
-			if(xx==x && yy==y) return f;
+			System.out.println(xx+" "+yy);
+			for(int i=0;i<2;i++){
+				for(int j=0;j<2;j++){
+					if(xx==x-(i*20) && yy==y-(20*j)) return f;
+				}
+			}
 		}
 		return null;
 	}
