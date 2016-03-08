@@ -126,4 +126,6 @@ public interface IBall {
 	public double getRightLimit();
 
 	public double getLowerLimit();
+	
+	public void move(double x,double y);
 }

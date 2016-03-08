@@ -135,5 +135,10 @@ public class Ball implements IBall{
     public double getLowerLimit() {
         return y + r;
     }
+    
+    public void move(double x, double y){
+    	this.x = x+L/2;
+    	this.y = y+L/2;
+    }
 
 }
