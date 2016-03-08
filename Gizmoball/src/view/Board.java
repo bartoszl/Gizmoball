@@ -44,7 +44,6 @@ public abstract class Board extends JPanel implements Observer {
     	}
     }
 
-
     private void drawFlippers(Graphics g) {
     	if(model.getFlippers()!=null){
 	    	for(IFlipper flipper: model.getFlippers()){
