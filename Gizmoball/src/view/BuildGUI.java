@@ -277,6 +277,20 @@ public class BuildGUI implements IGUI{
         return mnModel;
     }
 
+    private JMenu create_PhysicsMenu(){
+        JMenu mnPhysics = new JMenu("Physics");
+        JMenuItem mntmFriction, mntmGravity;
+
+        mntmFriction = new JMenuItem("Friction");
+        mntmFriction.addActionListener(new BuildModeBtnListener(board, model));
+        mnPhysics.add(mntmFriction);
+        mntmGravity = new JMenuItem("Gravity");
+        mntmGravity.addActionListener(new BuildModeBtnListener(board, model));
+        mnPhysics.add(mntmGravity);
+
+        return mnPhysics;
+    }
+
     public String getSelectedButtonText() {
         for (Enumeration<AbstractButton> buttons = componentGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
@@ -292,17 +306,5 @@ public class BuildGUI implements IGUI{
 
     public String getGizmoShape() {
         return gizmoShapes.getSelectedItem().toString();
-    }
-
-    private JMenu create_PhysicsMenu(){
-        JMenu mnPhysics = new JMenu("Physics");
-        JMenuItem mntmFriction, mntmGravity;
-
-        mntmFriction = new JMenuItem("Friction");
-        mnPhysics.add(mntmFriction);
-        mntmGravity = new JMenuItem("Gravity");
-        mnPhysics.add(mntmGravity);
-
-        return mnPhysics;
     }
 }
