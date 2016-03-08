@@ -127,7 +127,20 @@ public class GBallModel extends Observable implements IGBallModel {
                 }
             }
         }
+        if(this.getAbsorber()!=null){
+            Absorber a = this.getAbsorber();
+            for(int i = (int)a.getXTopLeft()/20; i < a.getXBottomRight()/20; i++){
+                for(int j = (int)a.getYTopLeft()/20; j < a.getYBottomRight()/20; j++){
+                    occupiedSpaces[i][j] = false;
+                }
+            }
+        }
         absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
+        for(int i = x; i < x1; i++) {
+            for(int j = y; j < y1; j++) {
+                occupiedSpaces[(i/20)][(j/20)] = true;
+            }
+        }
         notifyObs();
         return true;
     }
