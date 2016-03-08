@@ -51,8 +51,8 @@ public class Writer {
 
     public List<String> generateSquareBumperSyntax(SquareBumper bumper) {
         String gizmoOp = "Square",
-                xCoordinate = String.valueOf(bumper.getX() / 20),
-                yCoordinate = String.valueOf(bumper.getY() / 20),
+                xCoordinate = String.valueOf(bumper.getX() / scale),
+                yCoordinate = String.valueOf(bumper.getY() / scale),
                 name = bumper.getName();
         List<String> syntax = new ArrayList<String>();
         syntax.add(gizmoOp);
@@ -63,7 +63,16 @@ public class Writer {
     }
 
     public List<String> generateTriangularBumperSyntax(TriangularBumper bumper) {
-        return null;
+        String gizmoOp = "Triangle",
+                xCoordinate = String.valueOf(bumper.getX() / scale),
+                yCoordinate = String.valueOf(bumper.getY() / scale),
+                name = bumper.getName();
+        List<String> syntax = new ArrayList<String>();
+        syntax.add(gizmoOp);
+        syntax.add(name);
+        syntax.add(xCoordinate);
+        syntax.add(yCoordinate);
+        return syntax;
     }
 
     public List<String> generateCircularBumperSyntax(CircularBumper bumper) {

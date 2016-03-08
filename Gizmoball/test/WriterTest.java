@@ -39,15 +39,23 @@ public class WriterTest {
     public void testGenerateTriangularBumperSyntax() {
         TriangularBumper tBumper = new TriangularBumper(60, 60, 0, "T1");
         List<String> actual = writer.generateTriangularBumperSyntax(tBumper);
-        String[] expected = new String[]{"Triangle", "T1", "60", "60"};
-        assertTrue(expected.equals(actual));
+        List<String> expected = new ArrayList<String>();
+        expected.add("Triangle");
+        expected.add("T1");
+        expected.add("3.0");
+        expected.add("3.0");
+        assertEquals(actual, expected);
     }
 
     @Test
     public void testGenerateCircularBumperSyntax() {
         CircularBumper cBumper = new CircularBumper(80, 80, 0, "C1");
         List<String> actual = writer.generateCircularBumperSyntax(cBumper);
-        String[] expected = new String[]{"Circle", "C1", "80", "80"};
-        assertTrue(expected.equals(actual));
+        List<String> expected = new ArrayList<String>();
+        expected.add("Circle");
+        expected.add("C1");
+        expected.add("4.0");
+        expected.add("4.0");
+        assertEquals(actual, expected);
     }
 }
