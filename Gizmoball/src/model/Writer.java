@@ -3,6 +3,8 @@ package model;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by John Watt on 08/03/2016.
@@ -11,9 +13,10 @@ public class Writer {
 
     private File file;
     private FileWriter writer;
+    private int scale;
 
     public Writer () {
-
+        scale = 20;
     }
 
     public void writeModelToFile(IGBallModel model, String fileName) {
@@ -25,7 +28,6 @@ public class Writer {
             for(Bumper bumper : model.getGizmos()) {
 
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,7 +35,7 @@ public class Writer {
 
     }
 
-    public String[] convertBumperToFileSyntax(Bumper bumper) {
+    public List<String> convertBumperToFileSyntax(Bumper bumper) {
         if(bumper instanceof SquareBumper) {
             SquareBumper sBumper = (SquareBumper) bumper;
             return generateSquareBumperSyntax(sBumper);
@@ -47,15 +49,24 @@ public class Writer {
         return null;
     }
 
-    public String[] generateSquareBumperSyntax(SquareBumper bumper) {
+    public List<String> generateSquareBumperSyntax(SquareBumper bumper) {
+        String gizmoOp = "Square",
+                xCoordinate = String.valueOf(bumper.getX() / 20),
+                yCoordinate = String.valueOf(bumper.getY() / 20),
+                name = bumper.getName();
+        List<String> syntax = new ArrayList<String>();
+        syntax.add(gizmoOp);
+        syntax.add(name);
+        syntax.add(xCoordinate);
+        syntax.add(yCoordinate);
+        return syntax;
+    }
+
+    public List<String> generateTriangularBumperSyntax(TriangularBumper bumper) {
         return null;
     }
 
-    public String[] generateTriangularBumperSyntax(TriangularBumper bumper) {
-        return null;
-    }
-
-    public String[] generateCircularBumperSyntax(CircularBumper bumper) {
+    public List<String> generateCircularBumperSyntax(CircularBumper bumper) {
         return null;
     }
 }

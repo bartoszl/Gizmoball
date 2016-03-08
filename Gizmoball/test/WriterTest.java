@@ -5,6 +5,9 @@ import model.Writer;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -23,15 +26,19 @@ public class WriterTest {
     @Test
     public void testGenerateSquareBumperSyntax() {
         SquareBumper sBumper = new SquareBumper(20, 40, 0, "S1");
-        String[] actual = writer.generateSquareBumperSyntax(sBumper);
-        String[] expected = new String[]{"Square", "S1", "20", "40"};
-        assertTrue(expected.equals(actual));
+        List<String> actual = writer.generateSquareBumperSyntax(sBumper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Square");
+        expected.add("S1");
+        expected.add("1.0");
+        expected.add("2.0");
+        assertEquals(actual, expected);
     }
 
     @Test
     public void testGenerateTriangularBumperSyntax() {
         TriangularBumper tBumper = new TriangularBumper(60, 60, 0, "T1");
-        String[] actual = writer.generateTriangularBumperSyntax(tBumper);
+        List<String> actual = writer.generateTriangularBumperSyntax(tBumper);
         String[] expected = new String[]{"Triangle", "T1", "60", "60"};
         assertTrue(expected.equals(actual));
     }
@@ -39,7 +46,7 @@ public class WriterTest {
     @Test
     public void testGenerateCircularBumperSyntax() {
         CircularBumper cBumper = new CircularBumper(80, 80, 0, "C1");
-        String[] actual = writer.generateCircularBumperSyntax(cBumper);
+        List<String> actual = writer.generateCircularBumperSyntax(cBumper);
         String[] expected = new String[]{"Circle", "C1", "80", "80"};
         assertTrue(expected.equals(actual));
     }
