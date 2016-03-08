@@ -327,6 +327,7 @@ public class GBallModel extends Observable implements IGBallModel {
         flippers = new ArrayList<Flipper>();
         balls = new ArrayList<Ball>();
         occupiedSpaces = new boolean [20][20];
+        absorber = null;
         notifyObs();
     }
 }
