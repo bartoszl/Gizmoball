@@ -39,10 +39,7 @@ public class BuildModeBtnListener implements ActionListener {
                 break;
             case "Clear":
                 if(JOptionPane.showConfirmDialog(null, "Are you sure you want to Clear?") == 0) {
-                    model.setGizmos(new ArrayList<Bumper>());
-                    model.setAbsorber(null);
-                    model.setFlippers(new ArrayList<Flipper>());
-                    model.setBalls(new ArrayList<Ball>());
+                    model.clear();
                     board.repaint();
                     board.setAction(Board.Action.NONE);
                 }
