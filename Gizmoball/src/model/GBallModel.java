@@ -268,7 +268,8 @@ public class GBallModel extends Observable implements IGBallModel {
 		newY=newY-(newY%20);
 		Bumper b = findBumper(x,y);
 		Flipper f = findFlipper(x,y);
-		if(b==null && f==null) return false;
+		Ball ball = findBall(x,y);
+		if(b==null && f==null && ball==null) return false;
 		if(b!=null){
 			System.out.println("bumper");
 			if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
@@ -286,6 +287,14 @@ public class GBallModel extends Observable implements IGBallModel {
 			occupyFlipper((int)newX/20, (int)newY/20, f.isLeft());
 			unoccupyFlipper((int)x/20, (int)y/20, f.isLeft());
 			notifyObs();
+			return true;
+		}
+		if(ball!=null){
+			if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
+			ball.move(newX, newY);
+	        occupiedSpaces[(int)x/20][(int)y/20] = false;
+	        occupiedSpaces[(int)newX/20][(int)newY/20] = true;
+	        notifyObs();
 			return true;
 		}
 		return false;
@@ -315,6 +324,14 @@ public class GBallModel extends Observable implements IGBallModel {
 			}
 		}
 		return true;
+	}
+	
+	private Ball findBall(double x, double y){
+		for(Ball b: balls){
+			if(b.getX()-10==x && b.getY()-10==y)
+				return b;
+		}
+		return null;
 	}
 	
 	private Bumper findBumper(double x, double y){
