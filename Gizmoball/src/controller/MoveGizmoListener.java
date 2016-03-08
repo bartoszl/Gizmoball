@@ -29,13 +29,11 @@ public class MoveGizmoListener implements MouseListener {
         int y = mouseP.y - gridP.y;
         if(board.getAction() == Board.Action.MOVE) {
             if(first){
-                System.out.println("First Click: x="+x+", y="+y);
                 clicks[0] = x;
                 clicks[1] = y;
                 first = false;
             }
             else {
-                System.out.println("Second Click: x="+x+", y="+y);
                 clicks[2] = x;
                 clicks[3] = y;
                 model.moveElement(clicks[0],clicks[1],clicks[2],clicks[3]);
