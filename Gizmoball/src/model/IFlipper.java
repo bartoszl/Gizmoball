@@ -39,4 +39,6 @@ public interface IFlipper {
     public Movement getMovement();
 
     public void setMovement(Movement movement);
+    
+    public boolean isLeft();
 }
