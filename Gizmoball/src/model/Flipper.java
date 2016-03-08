@@ -181,7 +181,6 @@ public class Flipper extends Observable implements IFlipper {
         Circle temp = bottomCircle;
         bottomCircle = topCircle;
         topCircle = temp;
-        setOrigin(topCircle.getCenter());
         rotation += 90;
     }
 
