@@ -1,7 +1,4 @@
-import model.CircularBumper;
-import model.SquareBumper;
-import model.TriangularBumper;
-import model.Writer;
+import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -54,6 +51,20 @@ public class WriterTest {
         List<String> expected = new ArrayList<String>();
         expected.add("Circle");
         expected.add("C1");
+        expected.add("4.0");
+        expected.add("4.0");
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testConvertAbsorberToFileSyntax() {
+        Absorber absorber = new Absorber("ABS", 20, 20, 80, 80);
+        List<String> actual = writer.convertAbsorberToFileSyntax(absorber);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Absorber");
+        expected.add("ABS");
+        expected.add("1.0");
+        expected.add("1.0");
         expected.add("4.0");
         expected.add("4.0");
         assertEquals(actual, expected);

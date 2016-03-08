@@ -31,11 +31,21 @@ public class Writer {
                 writer.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3));
             }
 
+            /* Write absorber */
+            IAbsorber absorber = model.getAbsorber();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
+    }
+
+    public List<String> convertAbsorberToFileSyntax(IAbsorber absorber) {
+        String gizmoOp = "Absorber",
+                name = absorber.getName(),
+                x1 = String.valueOf(absorber.getXTopLeft());
+        return null;
     }
 
     public List<String> convertBumperToFileSyntax(Bumper bumper) {
