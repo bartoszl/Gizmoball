@@ -1,5 +1,6 @@
 package model;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,7 +13,8 @@ import java.util.List;
 public class Writer {
 
     private File file;
-    private FileWriter writer;
+    private FileWriter fileWriter;
+    private BufferedWriter bufferedWriter;
     private int scale;
 
     public Writer () {
@@ -23,19 +25,26 @@ public class Writer {
         file = new File(fileName + ".txt");
         List<String> syntax;
         try {
-            file.createNewFile();
-            writer = new FileWriter(file);
+            //file.createNewFile();
 
+            if(!file.exists()) {
+                file.createNewFile();
+            }
+            fileWriter = new FileWriter(file.getAbsoluteFile());
+            bufferedWriter = new BufferedWriter(fileWriter);
             /* Write all bumpers */
             for(Bumper bumper : model.getGizmos()) {
                 syntax = convertBumperToFileSyntax(bumper);
-                writer.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3));
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + "\n");
             }
 
             /* Write absorber */
             IAbsorber absorber = model.getAbsorber();
-            syntax = convertAbsorberToFileSyntax(absorber);
-            writer.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5));
+            if(absorber != null) {
+                syntax = convertAbsorberToFileSyntax(absorber);
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5));
+            }
+            bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,10 +55,10 @@ public class Writer {
     public List<String> convertAbsorberToFileSyntax(IAbsorber absorber) {
         String gizmoOp = "Absorber",
                 name = absorber.getName(),
-                x1 = String.valueOf(absorber.getXTopLeft() / scale),
-                y1 = String.valueOf(absorber.getYTopLeft() / scale),
-                x2 = String.valueOf(absorber.getXBottomRight() / scale),
-                y2 = String.valueOf(absorber.getYBottomRight() / scale);
+                x1 = String.valueOf((int) absorber.getXTopLeft() / scale),
+                y1 = String.valueOf((int) absorber.getYTopLeft() / scale),
+                x2 = String.valueOf((int) absorber.getXBottomRight() / scale),
+                y2 = String.valueOf((int)absorber.getYBottomRight() / scale);
         List<String> syntax = new ArrayList<String>();
         syntax.add(gizmoOp);
         syntax.add(name);
@@ -76,8 +85,8 @@ public class Writer {
 
     public List<String> generateSquareBumperSyntax(SquareBumper bumper) {
         String gizmoOp = "Square",
-                xCoordinate = String.valueOf(bumper.getX() / scale),
-                yCoordinate = String.valueOf(bumper.getY() / scale),
+                xCoordinate = String.valueOf((int) bumper.getX() / scale),
+                yCoordinate = String.valueOf((int) bumper.getY() / scale),
                 name = bumper.getName();
         List<String> syntax = new ArrayList<String>();
         syntax.add(gizmoOp);
@@ -89,8 +98,8 @@ public class Writer {
 
     public List<String> generateTriangularBumperSyntax(TriangularBumper bumper) {
         String gizmoOp = "Triangle",
-                xCoordinate = String.valueOf(bumper.getX() / scale),
-                yCoordinate = String.valueOf(bumper.getY() / scale),
+                xCoordinate = String.valueOf((int) bumper.getX() / scale),
+                yCoordinate = String.valueOf((int) bumper.getY() / scale),
                 name = bumper.getName();
         List<String> syntax = new ArrayList<String>();
         syntax.add(gizmoOp);
@@ -102,8 +111,8 @@ public class Writer {
 
     public List<String> generateCircularBumperSyntax(CircularBumper bumper) {
         String gizmoOp = "Circle",
-                xCoordinate = String.valueOf(bumper.getX() / scale),
-                yCoordinate = String.valueOf(bumper.getY() / scale),
+                xCoordinate = String.valueOf((int) bumper.getX() / scale),
+                yCoordinate = String.valueOf((int) bumper.getY() / scale),
                 name = bumper.getName();
         List<String> syntax = new ArrayList<String>();
         syntax.add(gizmoOp);

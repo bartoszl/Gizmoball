@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import model.GBallModel;
 import model.IGBallModel;
+import model.Writer;
 
 /**
  * Created by Stephen on 01/03/2016.
@@ -33,7 +34,7 @@ public class Main {
 
     public static void main(String[] args) {
     	
-        EventQueue.invokeLater(new Runnable() {
+        /*EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     Main m = new Main();
@@ -41,6 +42,12 @@ public class Main {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
+        GBallModel m = new GBallModel();
+        Writer writer = new Writer();
+        m.addCircularBumper(40, 40, 0, "Circle1");
+        m.addSquareBumper(80, 80, 0, "Square1");
+        m.addAbsorber("Absorber1", 100, 100, 200, 200);
+        writer.writeModelToFile(m, "Save1");
     }
 }

@@ -27,8 +27,8 @@ public class WriterTest {
         List<String> expected = new ArrayList<String>();
         expected.add("Square");
         expected.add("S1");
-        expected.add("1.0");
-        expected.add("2.0");
+        expected.add("1");
+        expected.add("2");
         assertEquals(actual, expected);
     }
 
@@ -39,8 +39,8 @@ public class WriterTest {
         List<String> expected = new ArrayList<String>();
         expected.add("Triangle");
         expected.add("T1");
-        expected.add("3.0");
-        expected.add("3.0");
+        expected.add("3");
+        expected.add("3");
         assertEquals(actual, expected);
     }
 
@@ -51,8 +51,8 @@ public class WriterTest {
         List<String> expected = new ArrayList<String>();
         expected.add("Circle");
         expected.add("C1");
-        expected.add("4.0");
-        expected.add("4.0");
+        expected.add("4");
+        expected.add("4");
         assertEquals(actual, expected);
     }
 
@@ -63,10 +63,10 @@ public class WriterTest {
         List<String> expected = new ArrayList<String>();
         expected.add("Absorber");
         expected.add("ABS");
-        expected.add("1.0");
-        expected.add("1.0");
-        expected.add("4.0");
-        expected.add("4.0");
+        expected.add("1");
+        expected.add("1");
+        expected.add("4");
+        expected.add("4");
         assertEquals(actual, expected);
     }
 }

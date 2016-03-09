@@ -1,0 +1,3 @@
+Circle Circle1 2 2
+Square Square1 4 4
+Absorber Absorber1 5 5 10 10
