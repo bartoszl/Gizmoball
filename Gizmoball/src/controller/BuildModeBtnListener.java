@@ -1,24 +1,27 @@
 package controller;
 
-import model.Ball;
-import model.Bumper;
-import model.Flipper;
 import model.IGBallModel;
 import view.Board;
+import view.IGUI;
+import view.Main;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.MouseListener;
 
 
 public class BuildModeBtnListener implements ActionListener {
     private Board board;
     private IGBallModel model;
+    private IGUI gui;
+    private Main main;
 
-    public BuildModeBtnListener(Board board, IGBallModel model) {
+    public BuildModeBtnListener(IGUI gui, Board board, IGBallModel model, Main main) {
+    	this.gui = gui;
         this.board = board;
         this.model = model;
+        this.main = main;
     }
 
     @Override
@@ -68,6 +71,20 @@ public class BuildModeBtnListener implements ActionListener {
                     //Ask again for input
                 }
                 break;
+            case "Swap":
+            	board.delete();
+            	MouseListener[] mListeners = board.getMouseListeners();
+            	for(int i=0; i<mListeners.length;i++){
+            		board.removeMouseListener(mListeners[i]);
+            	}
+                board.setVisible(false);
+            	board = null;
+            	gui.getFrame().remove(gui.getFrame().getContentPane());
+            	gui.getFrame().remove(gui.getFrame().getJMenuBar());
+            	gui.getFrame().remove(gui.getPanel());
+            	System.gc();
+                main.switchToRun(gui.getFrame());
+            	break;
             default:
                 board.setAction(Board.Action.NONE);
         }
