@@ -66,7 +66,7 @@ public class RunGUI implements IGUI{
         frame.getContentPane().add(panel);
         panel.setLayout(null);
 
-        JButton btnStart = new JButton("Start");
+        final JButton btnStart = new JButton("Start");
         btnStart.setBounds(10, 11, 180, 50);
         btnStart.addActionListener(runModeBtnListener);
         panel.add(btnStart);

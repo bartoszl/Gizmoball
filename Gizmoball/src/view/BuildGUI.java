@@ -25,6 +25,9 @@ public class BuildGUI implements IGUI{
 	 */
 	public BuildGUI(Main main, IGBallModel model) {
         constructor(main, model);
+        this.main = main;
+        this.model = model;
+        this.board = new BuildBoard(model);
         createFrame();
 		initialize();
 	}
@@ -43,7 +46,6 @@ public class BuildGUI implements IGUI{
 	 * Method that merges common constructor code to avoid duplication.
 	 */
 	private void constructor(Main main, IGBallModel model){
-		
         this.main = main;
         this.model = model;
         this.board = new BuildBoard(model);
@@ -74,15 +76,23 @@ public class BuildGUI implements IGUI{
 
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
+		
         board.addMouseListener(new AddGizmoListener(this, model));
         board.addMouseListener(new AddBallListener(this, model));
         board.addMouseListener(new AddAbsorberListener(this, model));
         board.addMouseListener(new AddFlipperListener(this, model));
         board.addMouseListener(new RotateComponentListener(this, model));
         board.addMouseListener(new DeleteComponentListener(this, model));
+        board.addMouseListener(new AddKeyConnectListener(this, model));
+        board.addMouseListener(new AddConnectListener(this, model));
         board.addMouseListener(new MoveGizmoListener(board, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
+		board.setBounds(220, 0, 405, 405);
+		frame.getContentPane().add(board);
+        board.addMouseListener(new AddGizmoListener(this, model));
+        board.addMouseListener(new AddBallListener(this, model));
+        board.addMouseListener(new AddFlipperListener(this, model));
 		
 		JTextField txtOutput = new JTextField();
 		txtOutput.setText("[Example Text]");
@@ -187,6 +197,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnConnect = new JToggleButton("Connect");
         tglbtnConnect.setBounds(10, 247, 93, 23);
+        tglbtnConnect.addActionListener(btnListener);
         panel.add(tglbtnConnect);
 
         JToggleButton tglbtnDisconnect = new JToggleButton("Disconnect");
@@ -196,6 +207,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnKeyConnect = new JToggleButton("Key Connect");
         tglbtnKeyConnect.setBounds(10, 281, 195, 23);
+        tglbtnKeyConnect.addActionListener(btnListener);
         panel.add(tglbtnKeyConnect);
 
         JToggleButton tglbtnKeyDisconnect = new JToggleButton("Key Disconnect");

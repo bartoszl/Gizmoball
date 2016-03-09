@@ -40,6 +40,12 @@ public class BuildModeBtnListener implements ActionListener {
             case "Delete":
                 board.setAction(Board.Action.DELETE);
                 break;
+            case "Key Connect":
+                board.setAction(Board.Action.KEY_CONNECT);
+                break;
+            case "Connect":
+                board.setAction(Board.Action.CONNECT);
+                break;
             case "Clear":
                 if(JOptionPane.showConfirmDialog(null, "Are you sure you want to Clear?") == 0) {
                     model.clear();
