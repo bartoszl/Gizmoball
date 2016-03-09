@@ -57,6 +57,13 @@ public class Writer {
                     bufferedWriter.write(s + "\n");
                 }
             }
+
+            /* Write left and right flippers */
+            for(Flipper flipper : model.getFlippers()) {
+                System.out.println("Flipper");
+                syntax = generateFlipperSyntax(flipper);
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + "\n");
+            }
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

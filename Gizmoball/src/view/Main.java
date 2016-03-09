@@ -45,11 +45,12 @@ public class Main {
         });*/
         GBallModel m = new GBallModel();
         Writer writer = new Writer();
-        m.addCircularBumper(40, 40, 0, "Circle1");
+        /*m.addCircularBumper(40, 40, 0, "Circle1");
         m.addSquareBumper(80, 80, 0, "Square1");
         m.addAbsorber("Absorber1", 100, 100, 200, 200);
         m.addBall("Ball1", 60, 60, 50, 50);
-        m.rotateElement(40, 40);
+        m.rotateElement(40, 40);*/
+        m.addFlipper(9, 2, true, "LF92");
         writer.writeModelToFile(m, "Save1");
     }
 }
