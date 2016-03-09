@@ -157,4 +157,9 @@ public class Writer {
         }
         return syntax;
     }
+
+    public List<String> generateFlipperSyntax(Flipper flipper) {
+        List<String> syntax = new ArrayList<String>();
+        return syntax;
+    }
 }

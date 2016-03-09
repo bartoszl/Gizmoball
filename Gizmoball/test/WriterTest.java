@@ -2,6 +2,7 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
 import java.sql.SQLInvalidAuthorizationSpecException;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +101,18 @@ public class WriterTest {
         SquareBumper squareBumper = new SquareBumper(100, 100, 0, "S1");
         List<String> actual = writer.generateRotateSyntax(squareBumper);
         List<String> expected = new ArrayList<String>();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGenerateFlipperSyntax_LeftFlipper() {
+        Flipper flipper = new Flipper(9, 2, true, Color.RED, "LF92");
+        List<String> actual = writer.generateFlipperSyntax(flipper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("LeftFlipper");
+        expected.add("LF92");
+        expected.add("9");
+        expected.add("2");
         assertEquals(expected, actual);
     }
 }
