@@ -1,12 +1,8 @@
 package view;
 
 import controller.*;
-import model.Absorber;
-import model.Ball;
-import model.CircularBumper;
 import model.IGBallModel;
 
-import java.awt.*;
 import javax.swing.*;
 import java.awt.Font;
 import java.awt.event.*;
@@ -23,14 +19,6 @@ public class BuildGUI implements IGUI{
     private ButtonGroup componentGroup;
     private DefaultComboBoxModel gizmoShapes;
     private DefaultComboBoxModel flipperPositions;
-    private AddGizmoListener addGizmo;
-    private AddBallListener addBall;
-    private AddAbsorberListener addAbsorber;
-    private AddFlipperListener addFlipper;
-    private RotateComponentListener rotateComponent;
-    private DeleteComponentListener deleteComponent;
-    private AddKeyConnectListener keyConnect;
-    private AddConnectListener connect;
 
 	/**
 	 * Create the application.
@@ -58,14 +46,6 @@ public class BuildGUI implements IGUI{
 	 * Method that merges common constructor code to avoid duplication.
 	 */
 	private void constructor(Main main, IGBallModel model){
-		this.addGizmo = new AddGizmoListener(this, model);
-        this.addBall = new AddBallListener(this, model);
-        this.addAbsorber = new AddAbsorberListener(this, model);
-        this.addFlipper = new AddFlipperListener(this, model);
-        this.rotateComponent = new RotateComponentListener(this, model);
-        this.deleteComponent = new DeleteComponentListener(this, model);
-        this.keyConnect = new AddKeyConnectListener(this, model);
-        this.connect = new AddConnectListener(this, model);
         this.main = main;
         this.model = model;
         this.board = new BuildBoard(model);
@@ -96,15 +76,15 @@ public class BuildGUI implements IGUI{
 
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
-        board.addKeyListener(keyConnect);
-        board.addMouseListener(addGizmo);
-        board.addMouseListener(addBall);
-        board.addMouseListener(addAbsorber);
-        board.addMouseListener(addFlipper);
-        board.addMouseListener(rotateComponent);
-        board.addMouseListener(deleteComponent);
-        board.addMouseListener(keyConnect);
-        board.addMouseListener(connect);
+		
+        board.addMouseListener(new AddGizmoListener(this, model));
+        board.addMouseListener(new AddBallListener(this, model));
+        board.addMouseListener(new AddAbsorberListener(this, model));
+        board.addMouseListener(new AddFlipperListener(this, model));
+        board.addMouseListener(new RotateComponentListener(this, model));
+        board.addMouseListener(new DeleteComponentListener(this, model));
+        board.addMouseListener(new AddKeyConnectListener(this, model));
+        board.addMouseListener(new AddConnectListener(this, model));
         board.addMouseListener(new MoveGizmoListener(board, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
@@ -181,33 +161,14 @@ public class BuildGUI implements IGUI{
         separator_3.setBounds(10, 349, 195, 2);
         panel.add(separator_3);
 
+        
+        BuildModeBtnListener btnListener = new BuildModeBtnListener(this, board, model, main);
+        
         JButton btnRunMode = new JButton("Run Mode");
         btnRunMode.setBounds(10, 362, 195, 23);
+        btnRunMode.setActionCommand("Swap");
+        btnRunMode.addActionListener(btnListener);
         panel.add(btnRunMode);
-        btnRunMode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	board.delete();
-                board.removeMouseListener(addGizmo);
-                board.removeMouseListener(addBall);
-                board.removeMouseListener(addAbsorber);
-                board.removeMouseListener(addFlipper);
-                board.removeMouseListener(rotateComponent);
-                board.removeMouseListener(deleteComponent);
-            	board = null;
-                addGizmo = null;
-                addBall = null;
-                addFlipper = null;
-                rotateComponent = null;
-                deleteComponent = null;
-            	frame.remove(frame.getContentPane());
-            	frame.remove(frame.getJMenuBar());
-            	frame.remove(panel);
-                main.switchToRun(frame);
-            }
-        });
-
-        BuildModeBtnListener btnListener = new BuildModeBtnListener(board, model);
 
         JToggleButton tglbtnAddComp = new JToggleButton("Add Component");
         tglbtnAddComp.setBounds(10, 11, 195, 23);
@@ -307,10 +268,10 @@ public class BuildGUI implements IGUI{
         JMenuItem mntmFriction, mntmGravity;
 
         mntmFriction = new JMenuItem("Friction");
-        mntmFriction.addActionListener(new BuildModeBtnListener(board, model));
+        mntmFriction.addActionListener(new BuildModeBtnListener(this, board, model, main));
         mnPhysics.add(mntmFriction);
         mntmGravity = new JMenuItem("Gravity");
-        mntmGravity.addActionListener(new BuildModeBtnListener(board, model));
+        mntmGravity.addActionListener(new BuildModeBtnListener(this, board, model, main));
         mnPhysics.add(mntmGravity);
 
         return mnPhysics;
@@ -332,4 +293,14 @@ public class BuildGUI implements IGUI{
     public String getGizmoShape() {
         return gizmoShapes.getSelectedItem().toString();
     }
+
+	@Override
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	@Override
+	public JPanel getPanel() {
+		return panel;
+	}
 }
