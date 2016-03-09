@@ -41,7 +41,7 @@ public class CircularBumper implements Bumper {
 	}
 	@Override
 	public List<LineSegment> getLines() {
-		return null;
+		return new ArrayList<LineSegment>();
 	}
 
 	@Override

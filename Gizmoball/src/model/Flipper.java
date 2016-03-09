@@ -266,4 +266,15 @@ public class Flipper extends Observable implements IFlipper {
 	public boolean isLeft() {
 		return isLeft;
 	}
+	
+	public List<LineSegment> getLines(){
+		return lines;
+	}
+	
+	public List<Circle> getCircles(){
+		List<Circle> l = new ArrayList<Circle>();
+		l.add(topCircle);
+		l.add(bottomCircle);
+		return l;
+	}
 }

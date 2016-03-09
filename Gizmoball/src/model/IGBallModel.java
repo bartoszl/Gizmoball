@@ -42,5 +42,9 @@ public interface IGBallModel    {
     public List<Connection> getConnections();
     public List<KeyConnectionFlipper> getKeyConnectionsFlipper();
     public List<KeyConnectionAbs> getKeyConnectionsAbs();
+    
+    public void moveBall();
+    
+    public Ball moveBallForTime(Ball ball, double time);
 
 }
