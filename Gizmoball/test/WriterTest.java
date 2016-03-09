@@ -115,4 +115,16 @@ public class WriterTest {
         expected.add("2");
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testGenerateFlipperSyntax_RightFlipper() {
+        Flipper flipper = new Flipper(10, 3, false, Color.RED, "RF103");
+        List<String> actual = writer.generateFlipperSyntax(flipper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("RightFlipper");
+        expected.add("RF103");
+        expected.add("10");
+        expected.add("3");
+        assertEquals(expected, actual);
+    }
 }
