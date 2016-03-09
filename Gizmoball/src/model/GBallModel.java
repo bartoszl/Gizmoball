@@ -409,7 +409,7 @@ public class GBallModel extends Observable implements IGBallModel {
     public List<Connection> getConnections() {
         return connections;
     }
-
+    // ?
 	@Override
 	public void moveBall() {
 		double moveTime = 0.05;
