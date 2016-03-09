@@ -260,6 +260,23 @@ public class GBallModel extends Observable implements IGBallModel {
 		return true;
 	}
 
+    public boolean deleteElement(double x, double y) {
+        x=x-(x%20);
+        y=y-(y%20);
+        Bumper b = findBumper(x,y);
+        Flipper f = findFlipper(x,y);
+        Ball ball = findBall(x, y);
+        if(b==null && f==null && ball == null) return false;
+        if(b!=null)
+            getGizmos().remove(b);
+        if(f!=null)
+            getFlippers().remove(f);
+        if(ball!=null)
+            getBalls().remove(ball);
+        notifyObs();
+        return true;
+    }
+
 	@Override
 	public boolean moveElement(double x, double y, double newX, double newY) {
 		x=x-(x%20);
@@ -334,7 +351,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		return null;
 	}
 	
-	private Bumper findBumper(double x, double y){
+	public Bumper findBumper(double x, double y){
 		for(Bumper b: gizmos){
 			if(b.getX()==x && b.getY()==y)
 				return b;
@@ -342,7 +359,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		return null;
 	}
 	
-	private Flipper findFlipper(double x, double y){
+	public Flipper findFlipper(double x, double y){
 		for(Flipper f:flippers){
 			double xx = f.getOrigin().x();
 			double yy = f.getOrigin().y();
@@ -370,5 +387,17 @@ public class GBallModel extends Observable implements IGBallModel {
         occupiedSpaces = new boolean [20][20];
         absorber = null;
         notifyObs();
+    }
+
+    public List<KeyConnectionAbs> getKeyConnectionsAbs() {
+        return keyConnectionsAbs;
+    }
+
+    public List<KeyConnectionFlipper> getKeyConnectionsFlipper() {
+        return keyConnectionsFlipper;
+    }
+
+    public List<Connection> getConnections() {
+        return connections;
     }
 }

@@ -29,12 +29,17 @@ public class BuildGUI implements IGUI{
     private AddFlipperListener addFlipper;
     private RotateComponentListener rotateComponent;
     private DeleteComponentListener deleteComponent;
+    private AddKeyConnectListener keyConnect;
+    private AddConnectListener connect;
 
 	/**
 	 * Create the application.
 	 */
 	public BuildGUI(Main main, IGBallModel model) {
         constructor(main, model);
+        this.main = main;
+        this.model = model;
+        this.board = new BuildBoard(model);
         createFrame();
 		initialize();
 	}
@@ -59,6 +64,8 @@ public class BuildGUI implements IGUI{
         this.addFlipper = new AddFlipperListener(this, model);
         this.rotateComponent = new RotateComponentListener(this, model);
         this.deleteComponent = new DeleteComponentListener(this, model);
+        this.keyConnect = new AddKeyConnectListener(this, model);
+        this.connect = new AddConnectListener(this, model);
         this.main = main;
         this.model = model;
         this.board = new BuildBoard(model);
@@ -89,15 +96,23 @@ public class BuildGUI implements IGUI{
 
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
+        board.addKeyListener(keyConnect);
         board.addMouseListener(addGizmo);
         board.addMouseListener(addBall);
         board.addMouseListener(addAbsorber);
         board.addMouseListener(addFlipper);
         board.addMouseListener(rotateComponent);
         board.addMouseListener(deleteComponent);
+        board.addMouseListener(keyConnect);
+        board.addMouseListener(connect);
         board.addMouseListener(new MoveGizmoListener(board, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
+		board.setBounds(220, 0, 405, 405);
+		frame.getContentPane().add(board);
+        board.addMouseListener(new AddGizmoListener(this, model));
+        board.addMouseListener(new AddBallListener(this, model));
+        board.addMouseListener(new AddFlipperListener(this, model));
 		
 		JTextField txtOutput = new JTextField();
 		txtOutput.setText("[Example Text]");
@@ -221,6 +236,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnConnect = new JToggleButton("Connect");
         tglbtnConnect.setBounds(10, 247, 93, 23);
+        tglbtnConnect.addActionListener(btnListener);
         panel.add(tglbtnConnect);
 
         JToggleButton tglbtnDisconnect = new JToggleButton("Disconnect");
@@ -230,6 +246,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnKeyConnect = new JToggleButton("Key Connect");
         tglbtnKeyConnect.setBounds(10, 281, 195, 23);
+        tglbtnKeyConnect.addActionListener(btnListener);
         panel.add(tglbtnKeyConnect);
 
         JToggleButton tglbtnKeyDisconnect = new JToggleButton("Key Disconnect");

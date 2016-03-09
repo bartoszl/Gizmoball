@@ -1,39 +1,39 @@
 package controller;
 
-import model.Bumper;
+import model.Absorber;
 import model.Flipper;
 import model.IGBallModel;
-import physics.Angle;
+import model.KeyConnectionAbs;
 import view.Board;
 import view.BuildGUI;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class RotateComponentListener implements MouseListener {
+public class DeleteKeyConnectListener implements MouseListener {
     private BuildGUI bgui;
-    private IGBallModel model;
+    private IGBallModel m;
 
-    public RotateComponentListener(BuildGUI bgui, IGBallModel model) {
-        this.model = model;
+    public DeleteKeyConnectListener(BuildGUI bgui, IGBallModel m) {
+        this.m = m;
         this.bgui = bgui;
     }
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
-        if(b.getAction() == Board.Action.ROTATE) {
-            boolean[][] spaces = model.getOccupiedSpaces();
+        if(b.getAction() == Board.Action.KEY_DISCONNECT) {
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            model.rotateElement(x, y);
-        }
+            x -= x%20;
+            y -= y%20;
+            for(KeyConnectionAbs kca : m.getKeyConnectionsAbs()) {
 
+            }
+        }
     }
 
     @Override
