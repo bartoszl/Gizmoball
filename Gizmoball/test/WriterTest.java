@@ -2,6 +2,7 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.SQLInvalidAuthorizationSpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +82,24 @@ public class WriterTest {
         expected.add("5.0");
         expected.add("50.0");
         expected.add("50.0");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGenerateRotationSyntax_2_Rotations() {
+        SquareBumper squareBumper = new SquareBumper(100, 100, 2, "S1");
+        List<String> actual = writer.generateRotateSyntax(squareBumper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Rotate S1");
+        expected.add("Rotate S1");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGenerateRotationSyntax_0_Rotations() {
+        SquareBumper squareBumper = new SquareBumper(100, 100, 0, "S1");
+        List<String> actual = writer.generateRotateSyntax(squareBumper);
+        List<String> expected = new ArrayList<String>();
         assertEquals(expected, actual);
     }
 }

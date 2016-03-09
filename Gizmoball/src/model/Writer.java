@@ -144,4 +144,12 @@ public class Writer {
         syntax.add(yVelo);
         return syntax;
     }
+
+    public List<String> generateRotateSyntax(Bumper bumper) {
+        List<String> syntax = new ArrayList<String>();
+        for(int i = 0; i < bumper.getRotation(); i++) {
+            syntax.add("Rotate " + bumper.getName());
+        }
+        return syntax;
+    }
 }
