@@ -42,7 +42,13 @@ public class Writer {
             IAbsorber absorber = model.getAbsorber();
             if(absorber != null) {
                 syntax = convertAbsorberToFileSyntax(absorber);
-                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5));
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5) + "\n");
+            }
+
+            /* Write balls */
+            for(Ball ball : model.getBalls()) {
+                syntax = generateBallSyntax(ball);
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5) + "\n");
             }
             bufferedWriter.close();
         } catch (IOException e) {
@@ -125,8 +131,8 @@ public class Writer {
     public List<String> generateBallSyntax(Ball ball) {
         List<String> syntax = new ArrayList<String>();
         String gizmoOp = "Ball",
-                xCoordinate = String.valueOf((int) ball.getX() / scale),
-                yCoordinate = String.valueOf((int) ball.getY() / scale),
+                xCoordinate = String.valueOf((ball.getX() - 10) / scale),
+                yCoordinate = String.valueOf((ball.getY() - 10)/ scale),
                 xVelo = String.valueOf(ball.getVelocity().x()),
                 yVelo = String.valueOf(ball.getVelocity().y()),
                 name = ball.getName();

@@ -128,4 +128,6 @@ public interface IBall {
 	public double getLowerLimit();
 	
 	public void move(double x,double y);
+
+	public String getName();
 }

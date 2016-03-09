@@ -77,8 +77,8 @@ public class WriterTest {
         List<String> expected = new ArrayList<String>();
         expected.add("Ball");
         expected.add("Ball1");
-        expected.add("5");
-        expected.add("5");
+        expected.add("5.0");
+        expected.add("5.0");
         expected.add("50.0");
         expected.add("50.0");
         assertEquals(expected, actual);

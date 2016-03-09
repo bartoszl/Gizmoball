@@ -48,6 +48,7 @@ public class Main {
         m.addCircularBumper(40, 40, 0, "Circle1");
         m.addSquareBumper(80, 80, 0, "Square1");
         m.addAbsorber("Absorber1", 100, 100, 200, 200);
+        m.addBall("Ball1", 60, 60, 50, 50);
         writer.writeModelToFile(m, "Save1");
     }
 }
