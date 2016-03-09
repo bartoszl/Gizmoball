@@ -32,33 +32,7 @@ public class DeleteComponentListener implements MouseListener {
             Point gridP = b.getLocationOnScreen();
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            x -= x%20;
-            y -= y%20;
-            x /= 20;
-            y /= 20;
-            if(spaces[x][y]) {
-                for(Bumper bumper : model.getGizmos()) {
-                    if(bumper.getX() == x*20 && bumper.getY() == y*20) {
-                        model.getGizmos().remove(bumper);
-                        b.repaint();
-                        break;
-                    }
-                }
-                for(Flipper flipper : model.getFlippers()) {
-                    if(flipper.getOrigin().x() == x*20 && flipper.getOrigin().y() == y*20) {
-                        model.getFlippers().remove(flipper);
-                        b.repaint();
-                        break;
-                    }
-                }
-                for(Ball ball : model.getBalls()) {
-                    if(ball.getX() == x*20 && ball.getY() == y*20) {
-                        model.getBalls().remove(ball);
-                        b.repaint();
-                        break;
-                    }
-                }
-            }
+            model.deleteElement(x, y);
         }
 
     }

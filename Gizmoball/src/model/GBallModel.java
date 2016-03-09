@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import physics.Circle;
+import physics.Geometry;
+import physics.Geometry.VectPair;
+import physics.LineSegment;
+import physics.Vect;
+
 /**
  * Created by John Watt on 01/03/2016.
  */
@@ -39,6 +45,7 @@ public class GBallModel extends Observable implements IGBallModel {
     private void notifyObs() {
         setChanged();
         notifyObservers();
+        //System.out.println("changed");
     }
 
     @Override
@@ -62,8 +69,9 @@ public class GBallModel extends Observable implements IGBallModel {
         y -= y%20;
         lX = x/20;
         lY = y/20;
-        if(occupiedSpacesFlipper(lX, lY, isLeft)) {
-            occupyFlipper(lX,lY,isLeft);
+        if(lX > 18 || lY > 18) return false;
+        if(occupiedSpacesFlipper(lX, lY)) {
+            occupyFlipper(lX,lY);
             Flipper f = new Flipper(x, y, isLeft, Color.RED, name);
             flippers.add(f);
             notifyObs();
@@ -122,27 +130,18 @@ public class GBallModel extends Observable implements IGBallModel {
         y1 -= (y1%20);
         lX = x/20;
         lY = y/20;
-        for(int i = x; i <= x1; i++) {
-            for(int j = y; j <= y1; j++) {
-                if(occupiedSpaces[lX][lY]) {
+        for(int i = x; i < x1; i++) {
+            for(int j = y; j < y1; j++) {
+                if(occupiedSpaces[i/20][j/20]) {
                     return false;
                 }
             }
         }
         if(this.getAbsorber()!=null){
-            Absorber a = this.getAbsorber();
-            for(int i = (int)a.getXTopLeft()/20; i < a.getXBottomRight()/20; i++){
-                for(int j = (int)a.getYTopLeft()/20; j < a.getYBottomRight()/20; j++){
-                    occupiedSpaces[i][j] = false;
-                }
-            }
+            if(occupiedSpacesAbs()) return false;
         }
         absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
-        for(int i = x; i < x1; i++) {
-            for(int j = y; j < y1; j++) {
-                occupiedSpaces[(i/20)][(j/20)] = true;
-            }
-        }
+        occupyAbs(x, y, x1, y1);
         notifyObs();
         return true;
     }
@@ -260,6 +259,34 @@ public class GBallModel extends Observable implements IGBallModel {
 		return true;
 	}
 
+    public boolean deleteElement(double x, double y) {
+        x=x-(x%20);
+        y=y-(y%20);
+        Bumper b = findBumper(x,y);
+        Flipper f = findFlipper(x,y);
+        Ball ball = findBall(x, y);
+        if(b==null && f==null && ball == null && absorber == null) return false;
+        if(b!=null) {
+            getGizmos().remove(b);
+            occupiedSpaces[(int) x / 20][(int) y / 20] = false;
+        }
+        if(f!=null) {
+            getFlippers().remove(f);
+            unoccupyFlipper((int) f.getOrigin().x() / 20, (int) f.getOrigin().y() / 20);
+        }
+        if(ball!=null) {
+            getBalls().remove(ball);
+            occupiedSpaces[(int) x / 20][(int) y / 20] = false;
+        }
+        if(absorber!=null && findAbs(x,y)){
+            unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
+                    absorber.getXBottomRight(), absorber.getYBottomRight());
+            absorber=null;
+        }
+        notifyObs();
+        return true;
+    }
+
 	@Override
 	public boolean moveElement(double x, double y, double newX, double newY) {
 		x=x-(x%20);
@@ -269,9 +296,8 @@ public class GBallModel extends Observable implements IGBallModel {
 		Bumper b = findBumper(x,y);
 		Flipper f = findFlipper(x,y);
 		Ball ball = findBall(x,y);
-		if(b==null && f==null && ball==null) return false;
+        if(b==null && f==null && ball==null && absorber==null) return false;
 		if(b!=null){
-			System.out.println("bumper");
 			if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
 			b.move(newX, newY);
 	        occupiedSpaces[(int)x/20][(int)y/20] = false;
@@ -280,12 +306,10 @@ public class GBallModel extends Observable implements IGBallModel {
 			return true;
 		}
 		if(f!=null){
-			System.out.println("flipper");
-			if(!occupiedSpacesFlipper((int)newX/20, (int)newY/20, f.isLeft())) return false;
+			if(occupiedSpacesFlipper((int)newX/20, (int)newY/20)) return false;
+            unoccupyFlipper((int) f.getOrigin().x() / 20, (int) f.getOrigin().y() / 20);
 			f.move(newX, newY);
-			System.out.println(newX+ " "+newY);
-			occupyFlipper((int)newX/20, (int)newY/20, f.isLeft());
-			unoccupyFlipper((int)x/20, (int)y/20, f.isLeft());
+			occupyFlipper((int)newX/20, (int)newY/20);
 			notifyObs();
 			return true;
 		}
@@ -297,33 +321,79 @@ public class GBallModel extends Observable implements IGBallModel {
 	        notifyObs();
 			return true;
 		}
+        if(absorber!=null && findAbs(x,y)){
+            if(occupiedSpacesAbs()) return false;
+            if((newX/20) > 20-(absorber.getWidth()/20)) return false;
+            if((newY/20) > 20-(absorber.getHeight()/20)) return false;
+            unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
+                        absorber.getXBottomRight(), absorber.getYBottomRight());
+            absorber.move(newX,newY);
+            occupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
+                      absorber.getXBottomRight(), absorber.getYBottomRight());
+            notifyObs();
+            return true;
+        }
 		return false;
 	}
+
+    private boolean occupiedSpacesAbs(){
+        for(int i = (int)absorber.getXTopLeft(); i < absorber.getWidth(); i++){
+            for(int j = (int)absorber.getYTopLeft(); j < absorber.getHeight(); j++){
+                if(occupiedSpaces[i][j]) return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean findAbs(double x, double y){
+        if(x < absorber.getXTopLeft() || x > absorber.getXBottomRight()){
+            return false;
+        }
+        if(y < absorber.getYTopLeft() || y > absorber.getYBottomRight()){
+            return false;
+        }
+        return true;
+    }
+
+    private void occupyAbs(double x, double y, double x1, double y1){
+        for(int i = (int)x; i < x1; i++) {
+            for(int j = (int)y; j < y1; j++) {
+                occupiedSpaces[(i/20)][(j/20)] = true;
+            }
+        }
+    }
+
+    private void unoccupyAbs(double x, double y, double x1, double y1){
+        for(int i = (int)x; i < x1; i++) {
+            for(int j = (int)y; j < y1; j++) {
+                occupiedSpaces[(i/20)][(j/20)] = false;
+            }
+        }
+    }
 	
-	private void unoccupyFlipper(int x, int y, boolean left){
+	private void unoccupyFlipper(int x, int y){
 		for(int i=0;i<2;i++){
 			for(int j=0;j<2;j++){
-					occupiedSpaces[x+i][y+j]=false;
+                occupiedSpaces[x+i][y+j]=false;
 			}
 		}
 	}
 	
-	private void occupyFlipper(int x, int y, boolean left){
+	private void occupyFlipper(int x, int y){
 		for(int i=0;i<2;i++){
 			for(int j=0;j<2;j++){
-					occupiedSpaces[x+i][y+j]=true;
-					System.out.println((x+i)+" "+(y+i));
+                occupiedSpaces[x+i][y+j]=true;
 			}
 		}
 	}
 	
-	private boolean occupiedSpacesFlipper(int x, int y, boolean left){
+	private boolean occupiedSpacesFlipper(int x, int y){
 		for(int i=0;i<2;i++){
 			for(int j=0;j<2;j++){
-					if(occupiedSpaces[x+i][y+j]==true) return false;
+                if(occupiedSpaces[x+i][y+j]) return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	private Ball findBall(double x, double y){
@@ -334,7 +404,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		return null;
 	}
 	
-	private Bumper findBumper(double x, double y){
+	public Bumper findBumper(double x, double y){
 		for(Bumper b: gizmos){
 			if(b.getX()==x && b.getY()==y)
 				return b;
@@ -342,7 +412,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		return null;
 	}
 	
-	private Flipper findFlipper(double x, double y){
+	public Flipper findFlipper(double x, double y){
 		for(Flipper f:flippers){
 			double xx = f.getOrigin().x();
 			double yy = f.getOrigin().y();
@@ -371,4 +441,148 @@ public class GBallModel extends Observable implements IGBallModel {
         absorber = null;
         notifyObs();
     }
+
+    public List<KeyConnectionAbs> getKeyConnectionsAbs() {
+        return keyConnectionsAbs;
+    }
+
+    public List<KeyConnectionFlipper> getKeyConnectionsFlipper() {
+        return keyConnectionsFlipper;
+    }
+
+    public List<Connection> getConnections() {
+        return connections;
+    }
+    // ?
+	@Override
+	public void moveBall() {
+		double moveTime = 0.05;
+		for(Ball ball: balls){
+			
+			if(ball!=null && ball.isMoving()){
+				if(ball.isAbsorbed()){
+					ball = moveBallForTime(ball, moveTime);
+					if(ball.getY()<absorber.getYTopLeft()) 
+						ball.setAbsorbed(false);
+				} else {
+					CollisionDetails cd = timeUntilCollision(ball);
+					double tuc = cd.getTime();
+					if(tuc>moveTime){
+						ball = moveBallForTime(ball, moveTime);
+					} else {
+						if(!cd.getAbsorbed()){
+							ball = moveBallForTime(ball, tuc);
+							ball.setVelocity(cd.getVelocity());
+						} else {
+							absorber.absorb(ball);
+						}
+					}
+				}
+				notifyObs();
+			}
+			
+		}
+	}
+
+	@Override
+	public Ball moveBallForTime(Ball ball, double time) {
+		double vx = ball.getVelocity().x();
+		double vy = ball.getVelocity().y();
+		double newX = ball.getX() + (vx*time);
+		double newY = ball.getY() + (vy*time);
+		ball.setXY(newX, newY);
+		return ball;
+	}
+	
+	private CollisionDetails timeUntilCollision(Ball ball) {
+		Circle ballCircle = ball.getCircle();
+		Vect ballVelocity = ball.getVelocity();
+		Vect newVelocity = new Vect(0,0);
+		double shortest = Double.MAX_VALUE;
+		double time = 0.0;
+		// Check walls
+		for(LineSegment line: walls.getLines()){
+			time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+			if(time<shortest){
+				shortest=time;
+				newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+			}
+		}
+		// Check Bumpers
+		for(Bumper bumper: gizmos){
+			for(LineSegment line: bumper.getLines()){
+				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+				if(time<shortest){
+					shortest=time;
+					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+				}
+			}
+			for(Circle circle: bumper.getCircles()){
+				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
+				if(time<shortest){
+					shortest=time;
+					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+				}
+			}
+		}
+		// Check flippers
+		for(Flipper flipper: flippers){
+			for(LineSegment line: flipper.getLines()){
+				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+				if(time<shortest){
+					shortest=time;
+					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+				}
+			}
+			for(Circle circle: flipper.getCircles()){
+				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
+				if(time<shortest){
+					shortest=time;
+					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+				}
+			}
+		}
+		// Check absorber
+		boolean abs=false;
+		if(absorber!=null){
+			for(LineSegment line: absorber.getLines()){
+				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+				if(time<shortest){
+					abs=true;
+					shortest=time;
+					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+					
+				}
+			}
+			for(Circle circle: absorber.getCircles()){
+				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
+				if(time<shortest){
+					abs=true;
+					shortest=time;
+					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+				}
+			}
+		}
+		
+		//Check other balls
+		for(Ball anotherBall:balls){
+			if(!anotherBall.equals(ball)){
+				time = Geometry.timeUntilBallBallCollision(ballCircle, ballVelocity, anotherBall.getCircle(), anotherBall.getVelocity());
+				if(time<shortest){
+					shortest=time;
+					VectPair velocities = Geometry.reflectBalls(ballCircle.getCenter(),
+																1,
+																ballVelocity,
+																anotherBall.getCircle().getCenter(),
+																1, 
+																anotherBall.getVelocity());
+					newVelocity = velocities.v1;
+					//anotherBall.setVelocity(velocities.v2);
+					abs=false;
+				}
+			}
+		}
+		
+		return new CollisionDetails(shortest, newVelocity, abs);
+	}
 }

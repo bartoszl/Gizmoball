@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
@@ -17,8 +15,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
-import javax.swing.JLabel;
-import java.awt.Color;
 
 public class RunGUI implements IGUI{
 
@@ -64,13 +60,13 @@ public class RunGUI implements IGUI{
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        runModeBtnListener = new RunModeBtnListener(model);
+        runModeBtnListener = new RunModeBtnListener(this, model, main);
         panel = new JPanel();
         panel.setBounds(0, 0, 200, 405);
         frame.getContentPane().add(panel);
         panel.setLayout(null);
 
-        JButton btnStart = new JButton("Start");
+        final JButton btnStart = new JButton("Start");
         btnStart.setBounds(10, 11, 180, 50);
         btnStart.addActionListener(runModeBtnListener);
         panel.add(btnStart);
@@ -87,18 +83,9 @@ public class RunGUI implements IGUI{
 
         JButton btnBuildMode = new JButton("Build Mode");
         btnBuildMode.setBounds(10, 344, 180, 50);
+        btnBuildMode.setActionCommand("Swap");
+        btnBuildMode.addActionListener(runModeBtnListener);
         panel.add(btnBuildMode);
-        btnBuildMode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                board.delete();
-                board=null;
-                frame.remove(frame.getContentPane());
-                frame.remove(frame.getJMenuBar());
-                frame.remove(panel);
-                main.switchToBuild(frame);
-            }
-        });
 
         JSeparator separator_1 = new JSeparator();
         separator_1.setBounds(10, 331, 180, 2);
@@ -146,4 +133,14 @@ public class RunGUI implements IGUI{
     public Board getGridView() {
         return board;
     }
+
+	@Override
+	public JFrame getFrame() {
+		return frame;
+	}
+	
+	@Override
+	public JPanel getPanel() {
+		return panel;
+	}
 }
