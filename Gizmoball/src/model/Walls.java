@@ -8,7 +8,7 @@ import physics.LineSegment;
 public class Walls {
 	private double x,y,x1,y1;
 	
-	public Walls(double x, double y, double x1, double x2){
+	public Walls(double x, double y, double x1, double y1){
 		this.x = x;
 		this.y = y;
 		this.x1 = x1;
