@@ -420,17 +420,18 @@ public class GBallModel extends Observable implements IGBallModel {
 					ball = moveBallForTime(ball, moveTime);
 					if(ball.getY()<absorber.getYTopLeft()) 
 						ball.setAbsorbed(false);
-				}
-				CollisionDetails cd = timeUntilCollision(ball);
-				double tuc = cd.getTime();
-				if(tuc>moveTime){
-					ball = moveBallForTime(ball, moveTime);
 				} else {
-					if(!cd.getAbsorbed()){
-						ball = moveBallForTime(ball, tuc);
-						ball.setVelocity(cd.getVelocity());
+					CollisionDetails cd = timeUntilCollision(ball);
+					double tuc = cd.getTime();
+					if(tuc>moveTime){
+						ball = moveBallForTime(ball, moveTime);
 					} else {
-						absorber.absorb(ball);
+						if(!cd.getAbsorbed()){
+							ball = moveBallForTime(ball, tuc);
+							ball.setVelocity(cd.getVelocity());
+						} else {
+							absorber.absorb(ball);
+						}
 					}
 				}
 				notifyObs();
