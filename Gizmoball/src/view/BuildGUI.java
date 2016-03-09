@@ -76,7 +76,8 @@ public class BuildGUI implements IGUI{
 
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
-		
+		AddKeyConnectListener akcl = new AddKeyConnectListener(this, model);
+        board.addKeyListener(akcl);
         board.addMouseListener(new AddGizmoListener(this, model));
         board.addMouseListener(new AddBallListener(this, model));
         board.addMouseListener(new AddAbsorberListener(this, model));
@@ -86,13 +87,13 @@ public class BuildGUI implements IGUI{
         board.addMouseListener(new AddKeyConnectListener(this, model));
         board.addMouseListener(new AddConnectListener(this, model));
         board.addMouseListener(new MoveGizmoListener(board, model));
+        board.addMouseListener(akcl);
+        board.addMouseListener(new DeleteConnectionListener(this, model));
+        board.addMouseListener(new DeleteKeyConnectListener(this, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
-        board.addMouseListener(new AddGizmoListener(this, model));
-        board.addMouseListener(new AddBallListener(this, model));
-        board.addMouseListener(new AddFlipperListener(this, model));
 		
 		JTextField txtOutput = new JTextField();
 		txtOutput.setText("[Example Text]");
@@ -203,6 +204,7 @@ public class BuildGUI implements IGUI{
         JToggleButton tglbtnDisconnect = new JToggleButton("Disconnect");
         tglbtnDisconnect.setFont(new Font("Tahoma", Font.PLAIN, 11));
         tglbtnDisconnect.setBounds(112, 247, 93, 23);
+        tglbtnDisconnect.addActionListener(btnListener);
         panel.add(tglbtnDisconnect);
 
         JToggleButton tglbtnKeyConnect = new JToggleButton("Key Connect");
@@ -212,6 +214,7 @@ public class BuildGUI implements IGUI{
 
         JToggleButton tglbtnKeyDisconnect = new JToggleButton("Key Disconnect");
         tglbtnKeyDisconnect.setBounds(10, 315, 195, 23);
+        tglbtnKeyDisconnect.addActionListener(btnListener);
         panel.add(tglbtnKeyDisconnect);
 
         ButtonGroup mainGroup = new ButtonGroup();
