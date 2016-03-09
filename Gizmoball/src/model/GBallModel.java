@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import physics.Circle;
+import physics.Geometry;
+import physics.LineSegment;
+import physics.Vect;
+
 /**
  * Created by John Watt on 01/03/2016.
  */
@@ -403,4 +408,94 @@ public class GBallModel extends Observable implements IGBallModel {
     public List<Connection> getConnections() {
         return connections;
     }
+
+	@Override
+	public void moveBall() {
+		double moveTime = 0.05;
+		for(Ball ball: balls){
+			
+			if(ball!=null && !ball.isMoving()){
+				CollisionDetails cd = timeUntilCollision(ball);
+				double tuc = cd.getTime();
+				if(tuc>moveTime){
+					ball = moveBallForTime(ball, moveTime);
+				} else {
+					ball = moveBallForTime(ball, tuc);
+					ball.setVelocity(cd.getVelocity());
+				}
+				notifyObs();
+			}
+			
+		}
+	}
+
+	@Override
+	public Ball moveBallForTime(Ball ball, double time) {
+		double vx = ball.getVelocity().x();
+		double vy = ball.getVelocity().y();
+		double newX = ball.getX() + (vx*time);
+		double newY = ball.getY() + (vy*time);
+		ball.setXY(newX, newY);
+		return ball;
+	}
+	
+	private CollisionDetails timeUntilCollision(Ball ball) {
+		Circle ballCircle = ball.getCircle();
+		Vect ballVelocity = ball.getVelocity();
+		Vect newVelocity = new Vect(0,0);
+		double shortest = Double.MAX_VALUE;
+		double time = 0.0;
+		// Check walls
+		for(LineSegment line: walls.getLines()){
+			time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+			shortest = shortest<time ? shortest : time;
+			if(shortest==time)
+				newVelocity = Geometry.reflectWall(line, ballVelocity);
+		}
+		// Check Bumpers
+		for(Bumper bumper: gizmos){
+			for(LineSegment line: bumper.getLines()){
+				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+				shortest = shortest<time ? shortest : time;
+				if(shortest==time)
+					newVelocity = Geometry.reflectWall(line, ballVelocity);
+			}
+			for(Circle circle: bumper.getCircles()){
+				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
+				shortest = shortest<time ? shortest : time;
+				if(shortest==time)
+					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+			}
+		}
+		// Check absorber
+		for(LineSegment line: absorber.getLines()){
+			time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+			shortest = shortest<time ? shortest : time;
+			if(shortest==time)
+				newVelocity = Geometry.reflectWall(line, ballVelocity);
+		}
+		for(Circle circle: absorber.getCircles()){
+			time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
+			shortest = shortest<time ? shortest : time;
+			if(shortest==time)
+				newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+		}
+		
+		for(Flipper flipper: flippers){
+			for(LineSegment line: flipper.getLines()){
+				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+				shortest = shortest<time ? shortest : time;
+				if(shortest==time)
+					newVelocity = Geometry.reflectWall(line, ballVelocity);
+			}
+			for(Circle circle: flipper.getCircles()){
+				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
+				shortest = shortest<time ? shortest : time;
+				if(shortest==time)
+					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+			}
+		}
+		
+		return new CollisionDetails(time, newVelocity);
+	}
 }
