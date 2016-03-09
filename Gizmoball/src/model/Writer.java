@@ -21,19 +21,21 @@ public class Writer {
 
     public void writeModelToFile(IGBallModel model, String fileName) {
         file = new File(fileName + ".txt");
+        List<String> syntax;
         try {
             file.createNewFile();
             writer = new FileWriter(file);
 
             /* Write all bumpers */
             for(Bumper bumper : model.getGizmos()) {
-                List<String> syntax = convertBumperToFileSyntax(bumper);
+                syntax = convertBumperToFileSyntax(bumper);
                 writer.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3));
             }
 
             /* Write absorber */
             IAbsorber absorber = model.getAbsorber();
-
+            syntax = convertAbsorberToFileSyntax(absorber);
+            writer.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5));
         } catch (IOException e) {
             e.printStackTrace();
         }
