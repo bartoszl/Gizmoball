@@ -8,11 +8,11 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class DeleteKeyConnectListener implements MouseListener {
+public class DeleteConnectionListener implements MouseListener {
     private BuildGUI bgui;
     private IGBallModel m;
 
-    public DeleteKeyConnectListener(BuildGUI bgui, IGBallModel m) {
+    public DeleteConnectionListener(BuildGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
     }
@@ -20,7 +20,7 @@ public class DeleteKeyConnectListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
-        if(b.getAction() == Board.Action.KEY_DISCONNECT) {
+        if(b.getAction() == Board.Action.DISCONNECT) {
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
             int x = mouseP.x - gridP.x;
@@ -29,20 +29,15 @@ public class DeleteKeyConnectListener implements MouseListener {
             y -= y%20;
             Flipper f = m.findFlipper(x, y);
             if(f != null) {
-                for(KeyConnectionFlipper kcf: m.getKeyConnectionsFlipper()) {
-                    if(kcf.getFlipper().equals(f)) {
+                for(Connection c : m.getConnections()) {
+                    if(c.getFlipper().equals(f)) {
                         System.out.println("Disconnected");
-                        m.getKeyConnectionsFlipper().remove(kcf);
+                        m.getConnections().remove(c);
                         break;
                     }
                 }
-            } else if( m.getAbsorber() != null &&
-                    x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&
-                    y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
-                    ) {
-                System.out.println("Disconnected");
-                m.getKeyConnectionsAbs().clear();
             }
+
         }
     }
 
