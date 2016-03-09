@@ -61,8 +61,6 @@ public class Writer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public List<String> convertAbsorberToFileSyntax(IAbsorber absorber) {
