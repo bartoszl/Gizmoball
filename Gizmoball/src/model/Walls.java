@@ -15,7 +15,7 @@ public class Walls {
 		this.y1 = y1;
 	}
 	
-	public List<LineSegment> getLineSegments(){
+	public List<LineSegment> getLines(){
 		List<LineSegment> l = new ArrayList<LineSegment>();
 		l.add(new LineSegment(x,y,x1,y));
 		l.add(new LineSegment(x1,y,x1,y1));
