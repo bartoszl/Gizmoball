@@ -121,4 +121,10 @@ public class Writer {
         syntax.add(yCoordinate);
         return syntax;
     }
+
+    public List<String> generateBallSyntax(Ball ball) {
+        List<String> syntax = new ArrayList<String>();
+
+        return syntax;
+    }
 }

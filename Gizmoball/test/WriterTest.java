@@ -29,7 +29,7 @@ public class WriterTest {
         expected.add("S1");
         expected.add("1");
         expected.add("2");
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class WriterTest {
         expected.add("T1");
         expected.add("3");
         expected.add("3");
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class WriterTest {
         expected.add("C1");
         expected.add("4");
         expected.add("4");
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -67,6 +67,20 @@ public class WriterTest {
         expected.add("1");
         expected.add("4");
         expected.add("4");
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGenerateBallSyntax() {
+        Ball ball = new Ball("Ball1", 100, 100, 50, 50);
+        List<String> actual = writer.generateBallSyntax(ball);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Ball");
+        expected.add("Ball1");
+        expected.add("5.0");
+        expected.add("5.0");
+        expected.add("50.0");
+        expected.add("50.0");
+        assertEquals(expected, actual);
     }
 }
