@@ -54,27 +54,79 @@ public class BuildModeBtnListener implements ActionListener {
                 }
                 break;
             case "Friction":
-                double inputX = Double.parseDouble(JOptionPane.showInputDialog("Please enter a new value for 'X' Friction, Current X: "
-                                                    + model.getFrictionX()));
-                double inputY = Double.parseDouble(JOptionPane.showInputDialog("Please enter a new value for 'Y' Friction, Current Y: "
-                                                    + model.getFrictionY()));
-                if(inputX > 0 && inputX < 10 && inputY > 0 && inputY < 10){
-                    //Both inputs are within a "Range"
-                    model.setFriction(inputX, inputY);
-                }
-                else{
-                    //Ask again for input
+                boolean invalidX = true, invalidY = true;
+                double x = 0, y = 0;
+                String inputX = JOptionPane.showInputDialog("Please enter a new value for 'X' Friction, Current X: "
+                        + model.getFrictionX()); if(inputX == null) return;
+                String inputY = JOptionPane.showInputDialog("Please enter a new value for 'Y' Friction, Current Y: "
+                        + model.getFrictionY()); if(inputY == null) return;
+                while (invalidX || invalidY) {
+                    invalidX = false; invalidY = false;
+                    if(inputX == null || inputY == null) break;
+                    if(inputX.equals("")){
+                        invalidX = true;
+                    }
+                    else if(inputY.equals("")){
+                        invalidY = true;
+                    }
+                    else {
+                        invalidX = false; invalidY = false;
+                        try {
+                            x = Double.parseDouble(inputX);
+                        } catch (NumberFormatException err){
+                            invalidX = true;
+                        }
+                        try {
+                            y = Double.parseDouble(inputY);
+                        } catch (NumberFormatException err){
+                            invalidY = true;
+                        }
+                        if(!invalidX && !invalidY) {
+                            if (x < 0 || x > 10) {
+                                invalidX = true;
+                            } else if (y < 0 || y > 10) {
+                                invalidY = true;
+                            } else {
+                                model.setFriction(x, y); // May have to add Rounding
+                                invalidX = false;
+                                invalidY = false;
+                            }
+                        }
+                    }
+                    if(invalidX) inputX = JOptionPane.showInputDialog("Please re-enter a valid value for 'X' Friction, Current X: "
+                                                                        + model.getFrictionX());
+                    if(invalidY) inputY = JOptionPane.showInputDialog("Please re-enter a valid value for 'Y' Friction, Current Y: "
+                                                                        + model.getFrictionY());
                 }
                 break;
             case "Gravity":
-                double newG = Double.parseDouble(JOptionPane.showInputDialog("Please enter a new value for Gravity, Current Gravity: "
-                        + model.getGravity()));
-                if(newG > 0 && newG < 10){
-                    //Input is within a "Range"
-                    model.setGravity(newG);
-                }
-                else{
-                    //Ask again for input
+                boolean invalidG = true;
+                double g = 0;
+                String inputG = JOptionPane.showInputDialog("Please enter a new value for Gravity, Current Gravity: "
+                        + model.getGravity()); if(inputG == null) return;
+                while (invalidG) {
+                    if (inputG == null) break;
+                    if (inputG.equals("")) {
+                        invalidG = true;
+                    } else {
+                        invalidG = false;
+                        try {
+                            g = Double.parseDouble(inputG);
+                        } catch (NumberFormatException err) {
+                            invalidG = true;
+                        }
+                        if (!invalidG) {
+                            if (g < 0 || g > 10) {
+                                invalidG = true;
+                            } else {
+                                System.out.println("G: " + g);
+                                model.setGravity(g); // May have to add Rounding
+                                invalidG = false;
+                            }
+                        }
+                    }
+                    if (invalidG) inputG = JOptionPane.showInputDialog("Please re-enter a valid value for Gravity, Current Gravity: "
+                                + model.getGravity());
                 }
                 break;
             case "Swap":
