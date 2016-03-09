@@ -160,6 +160,14 @@ public class Writer {
 
     public List<String> generateFlipperSyntax(Flipper flipper) {
         List<String> syntax = new ArrayList<String>();
+        if(flipper.isLeft()) {
+            syntax.add("LeftFlipper");
+        } else {
+            syntax.add("RightFlipper");
+        }
+        syntax.add(flipper.getName());
+        syntax.add(String.valueOf((int) flipper.getOrigin().x()));
+        syntax.add(String.valueOf((int) flipper.getOrigin().y()));
         return syntax;
     }
 }
