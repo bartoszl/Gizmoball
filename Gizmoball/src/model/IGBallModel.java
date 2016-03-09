@@ -36,5 +36,11 @@ public interface IGBallModel    {
     public boolean[][] getOccupiedSpaces();
     
     public void clear();
+    public Flipper findFlipper(double x, double y);
+    public Bumper findBumper(double x, double y);
+    public boolean deleteElement(double x, double y);
+    public List<Connection> getConnections();
+    public List<KeyConnectionFlipper> getKeyConnectionsFlipper();
+    public List<KeyConnectionAbs> getKeyConnectionsAbs();
 
 }

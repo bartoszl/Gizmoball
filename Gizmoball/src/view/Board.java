@@ -17,7 +17,7 @@ import java.util.Observer;
 public abstract class Board extends JPanel implements Observer {
 
 	public enum Action {
-		NONE, ADD, DELETE, MOVE, ROTATE, CLEAR, CONNECT, DISCONNECT
+		NONE, ADD, DELETE, MOVE, ROTATE, CLEAR, KEY_CONNECT, KEY_DISCONNECT, CONNECT, DISCONNECT
 	}
 
     private boolean delete, moving;
