@@ -44,6 +44,7 @@ public class GBallModel extends Observable implements IGBallModel {
     private void notifyObs() {
         setChanged();
         notifyObservers();
+        //System.out.println("changed");
     }
 
     @Override
@@ -414,7 +415,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		double moveTime = 0.05;
 		for(Ball ball: balls){
 			
-			if(ball!=null && !ball.isMoving()){
+			if(ball!=null && ball.isMoving()){
 				CollisionDetails cd = timeUntilCollision(ball);
 				double tuc = cd.getTime();
 				if(tuc>moveTime){
@@ -448,54 +449,63 @@ public class GBallModel extends Observable implements IGBallModel {
 		// Check walls
 		for(LineSegment line: walls.getLines()){
 			time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
-			shortest = shortest<time ? shortest : time;
-			if(shortest==time)
-				newVelocity = Geometry.reflectWall(line, ballVelocity);
+			if(time<shortest){
+				shortest=time;
+				newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+			}
 		}
 		// Check Bumpers
 		for(Bumper bumper: gizmos){
 			for(LineSegment line: bumper.getLines()){
 				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
-				shortest = shortest<time ? shortest : time;
-				if(shortest==time)
-					newVelocity = Geometry.reflectWall(line, ballVelocity);
+				if(time<shortest){
+					shortest=time;
+					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+				}
 			}
 			for(Circle circle: bumper.getCircles()){
 				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
-				shortest = shortest<time ? shortest : time;
-				if(shortest==time)
+				if(time<shortest){
+					shortest=time;
 					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+				}
 			}
 		}
 		// Check absorber
-		for(LineSegment line: absorber.getLines()){
-			time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
-			shortest = shortest<time ? shortest : time;
-			if(shortest==time)
-				newVelocity = Geometry.reflectWall(line, ballVelocity);
-		}
-		for(Circle circle: absorber.getCircles()){
-			time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
-			shortest = shortest<time ? shortest : time;
-			if(shortest==time)
-				newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+		if(absorber!=null){
+			for(LineSegment line: absorber.getLines()){
+				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+				if(time<shortest){
+					shortest=time;
+					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+				}
+			}
+			for(Circle circle: absorber.getCircles()){
+				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
+				if(time<shortest){
+					shortest=time;
+					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+				}
+			}
 		}
 		
 		for(Flipper flipper: flippers){
 			for(LineSegment line: flipper.getLines()){
 				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
-				shortest = shortest<time ? shortest : time;
-				if(shortest==time)
-					newVelocity = Geometry.reflectWall(line, ballVelocity);
+				if(time<shortest){
+					shortest=time;
+					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+				}
 			}
 			for(Circle circle: flipper.getCircles()){
 				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
-				shortest = shortest<time ? shortest : time;
-				if(shortest==time)
+				if(time<shortest){
+					shortest=time;
 					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+				}
 			}
 		}
 		
-		return new CollisionDetails(time, newVelocity);
+		return new CollisionDetails(shortest, newVelocity);
 	}
 }

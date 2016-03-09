@@ -25,7 +25,7 @@ public class RunModeBtnListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Source: " + e.getActionCommand());
+        //System.out.println("Source: " + e.getActionCommand());
         if(e.getSource()==timer){
         	model.moveBall();
         } else 
