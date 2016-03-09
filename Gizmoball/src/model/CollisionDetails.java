@@ -5,10 +5,12 @@ import physics.Vect;
 public class CollisionDetails {
 	private double time;
 	private Vect velocity;
+	private boolean absorbed;
 	
-	public CollisionDetails(double t, Vect v){
+	public CollisionDetails(double t, Vect v, boolean abs){
 		this.time = t;
 		this.velocity = v;
+		this.absorbed = abs;
 	}
 	
 	public double getTime(){
@@ -17,5 +19,9 @@ public class CollisionDetails {
 	
 	public Vect getVelocity(){
 		return velocity;
+	}
+	
+	public boolean getAbsorbed(){
+		return absorbed;
 	}
 }
