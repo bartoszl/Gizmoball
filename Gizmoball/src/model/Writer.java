@@ -124,7 +124,18 @@ public class Writer {
 
     public List<String> generateBallSyntax(Ball ball) {
         List<String> syntax = new ArrayList<String>();
-
+        String gizmoOp = "Ball",
+                xCoordinate = String.valueOf((int) ball.getX() / scale),
+                yCoordinate = String.valueOf((int) ball.getY() / scale),
+                xVelo = String.valueOf(ball.getVelocity().x()),
+                yVelo = String.valueOf(ball.getVelocity().y()),
+                name = ball.getName();
+        syntax.add(gizmoOp);
+        syntax.add(name);
+        syntax.add(xCoordinate);
+        syntax.add(yCoordinate);
+        syntax.add(xVelo);
+        syntax.add(yVelo);
         return syntax;
     }
 }

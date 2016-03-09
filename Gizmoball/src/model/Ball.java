@@ -18,6 +18,7 @@ public class Ball implements IBall{
 	private Color color;
 	private boolean moving, absorbed;
 	private static final double L=20;
+	private String name;
 	
 	/**
 	 * Constructor for Ball object. Initially sets color to Yellow,
@@ -38,6 +39,7 @@ public class Ball implements IBall{
 		this.r = 5;
 		moving = true;
 		absorbed = false;
+		this.name = name;
 	}
 	
 	@Override
@@ -141,4 +143,7 @@ public class Ball implements IBall{
     	this.y = y+L/2;
     }
 
+	public String getName() {
+		return name;
+	}
 }
