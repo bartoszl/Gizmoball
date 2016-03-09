@@ -10,6 +10,7 @@ import java.util.Observable;
 
 import physics.Circle;
 import physics.Geometry;
+import physics.Geometry.VectPair;
 import physics.LineSegment;
 import physics.Vect;
 
@@ -516,6 +517,25 @@ public class GBallModel extends Observable implements IGBallModel {
 					abs=true;
 					shortest=time;
 					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+				}
+			}
+		}
+		
+		//Check other balls
+		for(Ball anotherBall:balls){
+			if(!anotherBall.equals(ball)){
+				time = Geometry.timeUntilBallBallCollision(ballCircle, ballVelocity, anotherBall.getCircle(), anotherBall.getVelocity());
+				if(time<shortest){
+					shortest=time;
+					VectPair velocities = Geometry.reflectBalls(ballCircle.getCenter(),
+																1,
+																ballVelocity,
+																anotherBall.getCircle().getCenter(),
+																1, 
+																anotherBall.getVelocity());
+					newVelocity = velocities.v1;
+					anotherBall.setVelocity(velocities.v2);
+					abs=false;
 				}
 			}
 		}
