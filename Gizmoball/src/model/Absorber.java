@@ -95,6 +95,14 @@ public class Absorber implements IAbsorber {
 		return l;
 	}
 
+    public void move(double x, double y) {
+        double width = getWidth(), height = getHeight();
+        this.xTopLeft=x;
+        this.yTopLeft=y;
+        this.xBottomRight=xTopLeft+width;
+        this.yBottomRight=yTopLeft+height;
+    }
+
 	@Override
 	public Color getColor() {
 		return color;
