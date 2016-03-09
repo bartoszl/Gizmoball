@@ -534,7 +534,7 @@ public class GBallModel extends Observable implements IGBallModel {
 																1, 
 																anotherBall.getVelocity());
 					newVelocity = velocities.v1;
-					anotherBall.setVelocity(velocities.v2);
+					//anotherBall.setVelocity(velocities.v2);
 					abs=false;
 				}
 			}
