@@ -138,19 +138,10 @@ public class GBallModel extends Observable implements IGBallModel {
             }
         }
         if(this.getAbsorber()!=null){
-            Absorber a = this.getAbsorber();
-            for(int i = (int)a.getXTopLeft()/20; i < a.getXBottomRight()/20; i++){
-                for(int j = (int)a.getYTopLeft()/20; j < a.getYBottomRight()/20; j++){
-                    occupiedSpaces[i][j] = false;
-                }
-            }
+            if(occupiedSpacesAbs()) return false;
         }
         absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
-        for(int i = x; i < x1; i++) {
-            for(int j = y; j < y1; j++) {
-                occupiedSpaces[(i/20)][(j/20)] = true;
-            }
-        }
+        occupyAbs(x, y, x1, y1);
         notifyObs();
         return true;
     }
@@ -274,7 +265,7 @@ public class GBallModel extends Observable implements IGBallModel {
         Bumper b = findBumper(x,y);
         Flipper f = findFlipper(x,y);
         Ball ball = findBall(x, y);
-        if(b==null && f==null && ball == null) return false;
+        if(b==null && f==null && ball == null && absorber == null) return false;
         if(b!=null) {
             getGizmos().remove(b);
             occupiedSpaces[(int) x / 20][(int) y / 20] = false;
@@ -286,6 +277,11 @@ public class GBallModel extends Observable implements IGBallModel {
         if(ball!=null) {
             getBalls().remove(ball);
             occupiedSpaces[(int) x / 20][(int) y / 20] = false;
+        }
+        if(absorber!=null && findAbs(x,y)){
+            unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
+                    absorber.getXBottomRight(), absorber.getYBottomRight());
+            absorber=null;
         }
         notifyObs();
         return true;
@@ -300,7 +296,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		Bumper b = findBumper(x,y);
 		Flipper f = findFlipper(x,y);
 		Ball ball = findBall(x,y);
-		if(b==null && f==null && ball==null) return false;
+        if(b==null && f==null && ball==null && absorber==null) return false;
 		if(b!=null){
 			if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
 			b.move(newX, newY);
@@ -310,7 +306,7 @@ public class GBallModel extends Observable implements IGBallModel {
 			return true;
 		}
 		if(f!=null){
-			if(!occupiedSpacesFlipper((int)newX/20, (int)newY/20)) return false;
+			if(occupiedSpacesFlipper((int)newX/20, (int)newY/20)) return false;
             unoccupyFlipper((int) f.getOrigin().x() / 20, (int) f.getOrigin().y() / 20);
 			f.move(newX, newY);
 			occupyFlipper((int)newX/20, (int)newY/20);
@@ -325,8 +321,55 @@ public class GBallModel extends Observable implements IGBallModel {
 	        notifyObs();
 			return true;
 		}
+        if(absorber!=null && findAbs(x,y)){
+            if(occupiedSpacesAbs()) return false;
+            if((newX/20) > 20-(absorber.getWidth()/20)) return false;
+            if((newY/20) > 20-(absorber.getHeight()/20)) return false;
+            unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
+                        absorber.getXBottomRight(), absorber.getYBottomRight());
+            absorber.move(newX,newY);
+            occupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
+                      absorber.getXBottomRight(), absorber.getYBottomRight());
+            notifyObs();
+            return true;
+        }
 		return false;
 	}
+
+    private boolean occupiedSpacesAbs(){
+        for(int i = (int)absorber.getXTopLeft(); i < absorber.getWidth(); i++){
+            for(int j = (int)absorber.getYTopLeft(); j < absorber.getHeight(); j++){
+                if(occupiedSpaces[i][j]) return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean findAbs(double x, double y){
+        if(x < absorber.getXTopLeft() || x > absorber.getXBottomRight()){
+            return false;
+        }
+        if(y < absorber.getYTopLeft() || y > absorber.getYBottomRight()){
+            return false;
+        }
+        return true;
+    }
+
+    private void occupyAbs(double x, double y, double x1, double y1){
+        for(int i = (int)x; i < x1; i++) {
+            for(int j = (int)y; j < y1; j++) {
+                occupiedSpaces[(i/20)][(j/20)] = true;
+            }
+        }
+    }
+
+    private void unoccupyAbs(double x, double y, double x1, double y1){
+        for(int i = (int)x; i < x1; i++) {
+            for(int j = (int)y; j < y1; j++) {
+                occupiedSpaces[(i/20)][(j/20)] = false;
+            }
+        }
+    }
 	
 	private void unoccupyFlipper(int x, int y){
 		for(int i=0;i<2;i++){
@@ -347,10 +390,10 @@ public class GBallModel extends Observable implements IGBallModel {
 	private boolean occupiedSpacesFlipper(int x, int y){
 		for(int i=0;i<2;i++){
 			for(int j=0;j<2;j++){
-                if(occupiedSpaces[x+i][y+j]==true) return false;
+                if(occupiedSpaces[x+i][y+j]) return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	private Ball findBall(double x, double y){
