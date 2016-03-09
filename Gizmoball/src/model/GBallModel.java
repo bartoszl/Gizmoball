@@ -123,9 +123,9 @@ public class GBallModel extends Observable implements IGBallModel {
         y1 -= (y1%20);
         lX = x/20;
         lY = y/20;
-        for(int i = x; i <= x1; i++) {
-            for(int j = y; j <= y1; j++) {
-                if(occupiedSpaces[lX][lY]) {
+        for(int i = x; i < x1; i++) {
+            for(int j = y; j < y1; j++) {
+                if(occupiedSpaces[i/20][j/20]) {
                     return false;
                 }
             }
