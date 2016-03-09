@@ -50,6 +50,13 @@ public class Writer {
                 syntax = generateBallSyntax(ball);
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5) + "\n");
             }
+
+            /* Write rotations */
+            for(Bumper bumper : model.getGizmos()) {
+                for(String s : generateRotateSyntax(bumper)) {
+                    bufferedWriter.write(s + "\n");
+                }
+            }
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -49,6 +49,7 @@ public class Main {
         m.addSquareBumper(80, 80, 0, "Square1");
         m.addAbsorber("Absorber1", 100, 100, 200, 200);
         m.addBall("Ball1", 60, 60, 50, 50);
+        m.rotateElement(40, 40);
         writer.writeModelToFile(m, "Save1");
     }
 }
