@@ -29,10 +29,10 @@ public class Absorber implements IAbsorber {
 	 * @param y1 -> double, representing y coordinate of the bottom right corner of the absorber.
 	 */
 	public Absorber(String name, double x, double y, double x1, double y1){
-		xTopLeft=x;
-		yTopLeft=y;
-		xBottomRight=x1;
-		yBottomRight=y1;
+		xTopLeft=Math.min(x,x1);
+		yTopLeft=Math.min(y,y1);
+		xBottomRight=Math.max(x,x1);
+		yBottomRight=Math.max(y,y1);
 		color=Color.PINK;
 		this.name = name;
 	}

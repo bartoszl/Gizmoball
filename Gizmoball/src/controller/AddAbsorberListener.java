@@ -13,12 +13,15 @@ import java.awt.event.MouseListener;
 public class AddAbsorberListener implements MouseListener {
     private BuildGUI bgui;
     private IGBallModel m;
+    private int[] clicks;
+    private boolean first;
 
     public AddAbsorberListener(BuildGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
+        first = true;
+        clicks = new int[4];
     }
-
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
@@ -26,10 +29,31 @@ public class AddAbsorberListener implements MouseListener {
         if(b.getAction() == Board.Action.ADD && bgui.getSelectedButtonText().equals("Absorber")) {
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
-            //paint it
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            m.addAbsorber("absorber", x, y, 7, 7);
+            x=(x/20)*20;
+            y=(y/20)*20;
+            if(first){
+                clicks[0] = x;
+                clicks[1] = y;
+                first = false;
+            }
+            else {
+                clicks[2] = x ;
+                clicks[3] = y ;
+                if((clicks[0]<clicks[2])||(clicks[1]<clicks[3])){
+                	clicks[2]+=20;
+                	clicks[3]+=20;
+                }
+                else{
+                	clicks[0]+=20;
+                    clicks[1]+=20;
+                }
+                //System.out.println("absorber "+clicks[0]+","+clicks[1]+" "+clicks[2]+","+clicks[3]);
+                m.addAbsorber("absorber",clicks[0],clicks[1],clicks[2],clicks[3]);
+                first = true;
+                b.repaint();
+            }
         }
     }
 

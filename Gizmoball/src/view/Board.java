@@ -44,13 +44,12 @@ public abstract class Board extends JPanel implements Observer {
     	}
     }
 
-
     private void drawFlippers(Graphics g) {
     	if(model.getFlippers()!=null){
 	    	for(IFlipper flipper: model.getFlippers()){
 				//only needs the center of the top and bottom circles
 				g.setColor(flipper.getColor());
-				g.fillOval((int)((flipper.getOriginCircle().getCenter().x()-0.25)), (int)((flipper.getOriginCircle().getCenter().y()-0.25)), 10, 10);
+				g.fillOval((int)((flipper.getOriginCircle().getCenter().x()-5)), (int)((flipper.getOriginCircle().getCenter().y()-5)), 10, 10);
 				//evil math magic to get the polygon values
 				int[] polyX = new int[4];
 				int[] polyY = new int[4];
@@ -81,7 +80,7 @@ public abstract class Board extends JPanel implements Observer {
 					polyY[3]=(int)(flipper.getOriginCircle().getCenter().y()+5);
 				}
 				g.fillPolygon(polyX ,polyY, 4);
-				g.fillOval((int)((flipper.getEndCircle().getCenter().x()-0.25)), (int)((flipper.getEndCircle().getCenter().y()-0.25)), 10, 10);
+				g.fillOval((int)((flipper.getEndCircle().getCenter().x()-5)), (int)((flipper.getEndCircle().getCenter().y()-5)), 10, 10);
 	    	}
     	}
 	}
@@ -96,7 +95,6 @@ public abstract class Board extends JPanel implements Observer {
     
     private void drawBumpers(Graphics g){
     	if(model.getGizmos()!=null){
-    		System.out.println("number of g:"+model.getGizmos().size());
 			for(Bumper gizmo: model.getGizmos()){
 				List<Circle> circles = gizmo.getCircles();
 				g.setColor(gizmo.getColor());

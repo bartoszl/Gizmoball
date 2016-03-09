@@ -44,7 +44,10 @@ public class RotateComponentListener implements MouseListener {
                     }
                 }
                 for(Flipper flipper : model.getFlippers()) {
-                    if(flipper.getOrigin().x() == x*20 && flipper.getOrigin().y() == y*20) {
+                    double fX = flipper.getOrigin().x();
+                    double fY = flipper.getOrigin().y();
+                    if((fX == x*20 || (fX+20) == (x*20)) &&
+                            (fY == y*20) || (fY+20) == (y*20)) {
                         flipper.rotate();
                         b.repaint();
                         break;

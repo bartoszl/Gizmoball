@@ -35,7 +35,7 @@ public class Flipper extends Observable implements IFlipper {
     public Flipper(int cx, int cy, boolean isLeft, Color color, String name) {
         this.name = name;
         leftToRotate = Angle.DEG_90;
-        double off = isLeft ? 0 : 1.5;
+        double off = isLeft ? 0 : 30;
         //For the right flipper it is 54 degrees -> 0.95 rad
         //For the left it is 360 - 54 = 304 ->
         rotationPerTick = new Angle(0.95);
@@ -45,17 +45,17 @@ public class Flipper extends Observable implements IFlipper {
         origin = new Vect((double)cx, (double)cy);
         lines = new ArrayList<>();
         /** o **/
-        topCircle = new Circle(origin.x()+0.25+off, origin.y()+0.25, 0.25);
+        topCircle = new Circle(origin.x()+5+off, origin.y()+5, 5);
         /** - **/
-        lines.add(new LineSegment(origin.x()+off, origin.y()+0.25, origin.x()+off+0.5, origin.y()+0.25));
+        lines.add(new LineSegment(origin.x()+off, origin.y()+5, origin.x()+off+10, origin.y()+5));
         /**| **/
-        lines.add(new LineSegment(origin.x()+off, origin.y()+0.25, origin.x()+off, origin.y()+1.75));
+        lines.add(new LineSegment(origin.x()+off, origin.y()+5, origin.x()+off, origin.y()+35));
         /**  |**/
-        lines.add(new LineSegment(origin.x()+off+0.5, origin.y()+0.25, origin.x()+off+0.5, origin.y()+1.75));
+        lines.add(new LineSegment(origin.x()+off+10, origin.y()+5, origin.x()+off+10, origin.y()+35));
         /** _ **/
-        lines.add(new LineSegment(origin.x()+off, origin.y()+1.75, origin.x()+off+0.5, origin.y()+1.75));
+        lines.add(new LineSegment(origin.x()+off, origin.y()+35, origin.x()+off+10, origin.y()+35));
         /** o **/
-        bottomCircle = new Circle(origin.x()+off+0.25, origin.y()+1.75, 0.25);
+        bottomCircle = new Circle(origin.x()+off+5, origin.y()+35, 5);
         movement = Movement.NONE;
         position = Position.VERTICAL;
 
@@ -67,14 +67,16 @@ public class Flipper extends Observable implements IFlipper {
      * @param cy new coordinate of left upper cell which is used for flipper
      */
     public void move(double cx, double cy) {
-        double off = isLeft ? 0 : 1.5;
+        double off = isLeft ? 0 : 30;
         origin = new Vect(cx, cy);
+        topCircle = new Circle(origin.x()+5+off, origin.y()+5, 5);
         List<LineSegment> newLines = new ArrayList<>();
-        newLines.add(new LineSegment(cx+off, cy, cx+off+0.5, cy));
-        newLines.add(new LineSegment(cx+off, cy, cx+off, cy+2));
-        newLines.add(new LineSegment(cx+off+0.5, cy, cx+off+0.5, cy+2));
-        newLines.add(new LineSegment(cx+off, cy+2, cx+off+0.5, cy+2));
+        newLines.add(new LineSegment(cx+off, cy, cx+off+10, cy));
+        newLines.add(new LineSegment(cx+off, cy, cx+off, cy+40));
+        newLines.add(new LineSegment(cx+off+10, cy, cx+off+10, cy+40));
+        newLines.add(new LineSegment(cx+off, cy+40, cx+off+10, cy+40));
         lines = newLines;
+        bottomCircle = new Circle(origin.x()+off+5, origin.y()+35, 5);
         this.notifyObservers();
         this.setChanged();
     }
@@ -179,7 +181,6 @@ public class Flipper extends Observable implements IFlipper {
         Circle temp = bottomCircle;
         bottomCircle = topCircle;
         topCircle = temp;
-        setOrigin(topCircle.getCenter());
         rotation += 90;
     }
 
@@ -260,4 +261,9 @@ public class Flipper extends Observable implements IFlipper {
     public void setOrigin(Vect origin) {
         this.origin = origin;
     }
+
+	@Override
+	public boolean isLeft() {
+		return isLeft;
+	}
 }

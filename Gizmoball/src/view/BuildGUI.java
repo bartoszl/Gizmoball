@@ -25,6 +25,7 @@ public class BuildGUI implements IGUI{
     private DefaultComboBoxModel flipperPositions;
     private AddGizmoListener addGizmo;
     private AddBallListener addBall;
+    private AddAbsorberListener addAbsorber;
     private AddFlipperListener addFlipper;
     private RotateComponentListener rotateComponent;
     private DeleteComponentListener deleteComponent;
@@ -33,14 +34,7 @@ public class BuildGUI implements IGUI{
 	 * Create the application.
 	 */
 	public BuildGUI(Main main, IGBallModel model) {
-        this.addGizmo = new AddGizmoListener(this, model);
-        this.addBall = new AddBallListener(this, model);
-        this.addFlipper = new AddFlipperListener(this, model);
-        this.rotateComponent = new RotateComponentListener(this, model);
-        this.deleteComponent = new DeleteComponentListener(this, model);
-        this.main = main;
-        this.model = model;
-        this.board = new BuildBoard(model);
+        constructor(main, model);
         createFrame();
 		initialize();
 	}
@@ -49,18 +43,25 @@ public class BuildGUI implements IGUI{
 	 * Alternate constructor that takes in a JFrame object
 	 */
 	public BuildGUI(Main main, IGBallModel model, JFrame frame) {
-        this.addGizmo = new AddGizmoListener(this, model);
+		constructor(main, model);
+        this.frame = frame;
+		initialize();
+		frame.repaint();
+	}
+	
+	/**
+	 * Method that merges common constructor code to avoid duplication.
+	 */
+	private void constructor(Main main, IGBallModel model){
+		this.addGizmo = new AddGizmoListener(this, model);
         this.addBall = new AddBallListener(this, model);
-        this.rotateComponent = new RotateComponentListener(this, model);
+        this.addAbsorber = new AddAbsorberListener(this, model);
         this.addFlipper = new AddFlipperListener(this, model);
+        this.rotateComponent = new RotateComponentListener(this, model);
         this.deleteComponent = new DeleteComponentListener(this, model);
         this.main = main;
         this.model = model;
-        this.frame = frame;
-
         this.board = new BuildBoard(model);
-		initialize();
-		frame.repaint();
 	}
 
     public Board getGridView() {
@@ -90,6 +91,7 @@ public class BuildGUI implements IGUI{
 		frame.getContentPane().add(board);
         board.addMouseListener(addGizmo);
         board.addMouseListener(addBall);
+        board.addMouseListener(addAbsorber);
         board.addMouseListener(addFlipper);
         board.addMouseListener(rotateComponent);
         board.addMouseListener(deleteComponent);
@@ -173,10 +175,16 @@ public class BuildGUI implements IGUI{
             	board.delete();
                 board.removeMouseListener(addGizmo);
                 board.removeMouseListener(addBall);
+                board.removeMouseListener(addAbsorber);
                 board.removeMouseListener(addFlipper);
                 board.removeMouseListener(rotateComponent);
                 board.removeMouseListener(deleteComponent);
             	board = null;
+                addGizmo = null;
+                addBall = null;
+                addFlipper = null;
+                rotateComponent = null;
+                deleteComponent = null;
             	frame.remove(frame.getContentPane());
             	frame.remove(frame.getJMenuBar());
             	frame.remove(panel);
@@ -277,6 +285,20 @@ public class BuildGUI implements IGUI{
         return mnModel;
     }
 
+    private JMenu create_PhysicsMenu(){
+        JMenu mnPhysics = new JMenu("Physics");
+        JMenuItem mntmFriction, mntmGravity;
+
+        mntmFriction = new JMenuItem("Friction");
+        mntmFriction.addActionListener(new BuildModeBtnListener(board, model));
+        mnPhysics.add(mntmFriction);
+        mntmGravity = new JMenuItem("Gravity");
+        mntmGravity.addActionListener(new BuildModeBtnListener(board, model));
+        mnPhysics.add(mntmGravity);
+
+        return mnPhysics;
+    }
+
     public String getSelectedButtonText() {
         for (Enumeration<AbstractButton> buttons = componentGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
@@ -292,17 +314,5 @@ public class BuildGUI implements IGUI{
 
     public String getGizmoShape() {
         return gizmoShapes.getSelectedItem().toString();
-    }
-
-    private JMenu create_PhysicsMenu(){
-        JMenu mnPhysics = new JMenu("Physics");
-        JMenuItem mntmFriction, mntmGravity;
-
-        mntmFriction = new JMenuItem("Friction");
-        mnPhysics.add(mntmFriction);
-        mntmGravity = new JMenuItem("Gravity");
-        mnPhysics.add(mntmGravity);
-
-        return mnPhysics;
     }
 }
