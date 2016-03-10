@@ -39,6 +39,7 @@ public class ModelLoader {
 
                 case "Square" :
                     //model.addGizmo((createSquareBumper(command)));
+                    createSquareBumper(command);
                     break;
 
                 case "Circle" :

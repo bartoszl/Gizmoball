@@ -6,6 +6,7 @@ import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
 
 import controller.RunModeBtnListener;
+import model.GBallModel;
 import model.IGBallModel;
 
 import javax.swing.JButton;
@@ -111,19 +112,23 @@ public class RunGUI implements IGUI{
         JMenu mnFile = new JMenu("Model");
         menuBar.add(mnFile);
 
-        JMenuItem mntmNewMenuItem = new JMenuItem("Load");
-        mnFile.add(mntmNewMenuItem);
+        JMenuItem mntmLoadModel = new JMenuItem("Load");
+        mntmLoadModel.addActionListener(runModeBtnListener);
+        mnFile.add(mntmLoadModel);
 
         JMenuItem mntmReloadModel = new JMenuItem("Reload");
+        mntmReloadModel.addActionListener(runModeBtnListener);
         mnFile.add(mntmReloadModel);
 
         JMenuItem mntmSaveModel = new JMenuItem("Save");
+        mntmSaveModel.addActionListener(runModeBtnListener);
         mnFile.add(mntmSaveModel);
 
         JSeparator separator = new JSeparator();
         mnFile.add(separator);
 
         JMenuItem mntmQuit = new JMenuItem("Quit");
+        mntmQuit.addActionListener(runModeBtnListener);
         mnFile.add(mntmQuit);
 
         return menuBar;
@@ -143,4 +148,8 @@ public class RunGUI implements IGUI{
 	public JPanel getPanel() {
 		return panel;
 	}
+
+    public void setModel(GBallModel model){
+        main.setModel(model);
+    }
 }

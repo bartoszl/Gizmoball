@@ -1,6 +1,7 @@
 package view;
 
 import controller.*;
+import model.GBallModel;
 import model.IGBallModel;
 
 import javax.swing.*;
@@ -249,7 +250,7 @@ public class BuildGUI implements IGUI{
         JMenuItem mntmLoad, mntmReload, mntmSave, mntmQuit;
 
         mntmLoad = new JMenuItem("Load");
-        mntmLoad.addActionListener(controller);
+        mntmLoad.addActionListener(new BuildModeBtnListener(this,board,model,main));
         mnModel.add(mntmLoad);
         mntmReload = new JMenuItem("Reload");
         mntmReload.addActionListener(controller);
@@ -306,4 +307,9 @@ public class BuildGUI implements IGUI{
 	public JPanel getPanel() {
 		return panel;
 	}
+
+    @Override
+    public void setModel(GBallModel model) {
+        main.setModel(model);
+    }
 }

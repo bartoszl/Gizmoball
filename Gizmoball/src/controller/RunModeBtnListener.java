@@ -58,8 +58,7 @@ public class RunModeBtnListener implements ActionListener {
                     if(valid == JFileChooser.APPROVE_OPTION) {
                         File f = fc.getSelectedFile();
                         ModelLoader ml = new ModelLoader(f);
-                        model = ml.getModel();
-                        System.out.println(model.getGizmos().toString()); // REMOVE
+                        gui.setModel(ml.getModel());
                     }
                     break;
                 case "Reload":
