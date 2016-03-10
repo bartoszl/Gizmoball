@@ -25,13 +25,14 @@ public class Writer {
         file = new File(fileName + ".txt");
         List<String> syntax;
         try {
-            //file.createNewFile();
 
             if(!file.exists()) {
                 file.createNewFile();
             }
+
             fileWriter = new FileWriter(file.getAbsoluteFile());
             bufferedWriter = new BufferedWriter(fileWriter);
+
             /* Write all bumpers */
             for(Bumper bumper : model.getGizmos()) {
                 syntax = convertBumperToFileSyntax(bumper);
