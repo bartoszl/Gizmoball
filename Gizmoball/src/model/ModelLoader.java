@@ -191,7 +191,7 @@ public class ModelLoader {
 
 
         if(model.getAbsorber().getName().equals(connectingTo)) {
-            return new KeyConnectionAbs(connectingFrom, model.getAbsorber());
+            return new KeyConnectionAbs(connectingFrom, model.getAbsorber(), "down");
         } else {
             return null;
         }

@@ -83,7 +83,7 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
                 m.addKeyConnectionFlipper(new KeyConnectionFlipper(keyEvent.getKeyCode(), f, "down"));
                 System.out.println("Added Key Connection! with key code " + keyEvent.getKeyCode());
             } else if(abs != null) {
-                m.addKeyConnectionAbs(new KeyConnectionAbs(keyEvent.getKeyCode(), abs));
+                m.addKeyConnectionAbs(new KeyConnectionAbs(keyEvent.getKeyCode(), abs, "down"));
             }
         }
     }

@@ -153,4 +153,18 @@ public class WriterTest {
         expected.add("RF103");
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testGenerateKeyConnectionAbsSyntax() {
+        Absorber abs = new Absorber("ABS1", 100, 100, 200, 200);
+        KeyConnectionAbs conn = new KeyConnectionAbs(50, abs, "down");
+        List<String> actual = writer.generateKeyconnectionAbsSyntax(conn);
+        List<String> expected = new ArrayList<String>();
+        expected.add("KeyConnect");
+        expected.add("key");
+        expected.add("50");
+        expected.add("down");
+        expected.add("ABS1");
+        assertEquals(expected, actual);
+    }
 }

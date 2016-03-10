@@ -75,6 +75,9 @@ public class Writer {
                 syntax = generateKeyConnectionFlipperSyntax(connF);
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4));
             }
+
+            /* Write KeyConnectionAbs */
+
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -204,6 +207,11 @@ public class Writer {
         syntax.add(String.valueOf(conn.getKeyID()));
         syntax.add(conn.getUpDown());
         syntax.add(conn.getFlipper().getName());
+        return syntax;
+    }
+
+    public List<String> generateKeyconnectionAbsSyntax(KeyConnectionAbs conn) {
+        ArrayList<String> syntax = new ArrayList<String>();
         return syntax;
     }
 }
