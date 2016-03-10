@@ -1,13 +1,16 @@
 package controller;
 
+import model.GBallModel;
 import model.IGBallModel;
+import model.ModelLoader;
 import view.Board;
 import view.IGUI;
 import view.Main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.Timer;
+import java.io.File;
+import javax.swing.*;
 
 public class RunModeBtnListener implements ActionListener {
     private IGBallModel model;
@@ -25,7 +28,6 @@ public class RunModeBtnListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //System.out.println("Source: " + e.getActionCommand());
         if(e.getSource()==timer){
         	model.moveBall();
         } else 
@@ -49,6 +51,23 @@ public class RunModeBtnListener implements ActionListener {
 		            System.gc();
 		            main.switchToBuild(gui.getFrame());
 		    		break;
+                case "Load":
+                    JFileChooser fc = new JFileChooser();
+                    fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                    int valid = fc.showOpenDialog(gui.getFrame());
+                    if(valid == JFileChooser.APPROVE_OPTION) {
+                        File f = fc.getSelectedFile();
+                        ModelLoader ml = new ModelLoader(f);
+                        model = ml.getModel();
+                        System.out.println(model.getGizmos().toString()); // REMOVE
+                    }
+                    break;
+                case "Reload":
+                    break;
+                case "Save":
+                    break;
+                case "Quit":
+                    System.exit(0);
 				default:
 					break;
 		    }
