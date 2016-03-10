@@ -1,1 +1,1 @@
-LeftFlipper LF92 0 0
+Connect C1 LF92
