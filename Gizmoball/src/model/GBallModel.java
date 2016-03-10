@@ -130,17 +130,15 @@ public class GBallModel extends Observable implements IGBallModel {
         y1 -= (y1%20);
         lX = x/20;
         lY = y/20;
-        for(int i = x; i < x1; i++) {
-            for(int j = y; j < y1; j++) {
-                if(occupiedSpaces[i/20][j/20]) {
-                    return false;
-                }
+        for(int i = Math.min(x,x1)/20; i < Math.max(x,x1)/20; i++) {
+            for(int j = Math.min(y,y1)/20; j < Math.max(y,y1)/20; j++) {
+                if(occupiedSpaces[i][j]) return false;
             }
         }
         if(this.getAbsorber()!=null){
             unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
                         absorber.getXBottomRight(), absorber.getYBottomRight());
-            if(occupiedSpacesAbs(x/20, y/20)) return false;
+            if(occupiedSpacesAbs(Math.min(x,x1)/20, Math.min(y,y1)/20)) return false;
         }
         absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
         occupyAbs(x, y, x1, y1);
