@@ -5,7 +5,6 @@ import java.awt.*;
 import javax.swing.JFrame;
 
 import model.*;
-import sun.awt.X11.XCirculateRequestEvent;
 
 /**
  * Created by Stephen on 01/03/2016.
