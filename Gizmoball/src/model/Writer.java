@@ -77,6 +77,10 @@ public class Writer {
             }
 
             /* Write KeyConnectionAbs */
+            for(KeyConnectionAbs connA : model.getKeyConnectionsAbs()) {
+                syntax = generateKeyConnectionAbsSyntax(connA);
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4));
+            }
 
             bufferedWriter.close();
         } catch (IOException e) {
@@ -210,7 +214,7 @@ public class Writer {
         return syntax;
     }
 
-    public List<String> generateKeyconnectionAbsSyntax(KeyConnectionAbs conn) {
+    public List<String> generateKeyConnectionAbsSyntax(KeyConnectionAbs conn) {
         ArrayList<String> syntax = new ArrayList<String>();
         syntax.add("KeyConnect");
         syntax.add("key");

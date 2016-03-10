@@ -56,8 +56,11 @@ public class Main {
         /*Flipper flipper = new Flipper(9, 2, true, Color.RED, "LF92");
         m.addFlipper(180, 40, true, "LF92");
         KeyConnectionFlipper conn = new KeyConnectionFlipper(50, flipper, "up");
-        m.addKeyConnectionFlipper(conn);
-        writer.writeModelToFile(m, "Save2");
-*/
+        m.addKeyConnectionFlipper(conn);*/
+        /*Absorber abs = new Absorber("ABS1", 100, 100, 200, 200);
+        KeyConnectionAbs conn = new KeyConnectionAbs(50, abs, "down");
+        m.addKeyConnectionAbs(conn);
+        writer.writeModelToFile(m, "Save2");*/
+
     }
 }

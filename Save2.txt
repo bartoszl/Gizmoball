@@ -1,2 +1,1 @@
-LeftFlipper LF92 180 40
-KeyConnect key 50 up LF92
+KeyConnect key 50 down ABS1

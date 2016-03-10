@@ -158,7 +158,7 @@ public class WriterTest {
     public void testGenerateKeyConnectionAbsSyntax() {
         Absorber abs = new Absorber("ABS1", 100, 100, 200, 200);
         KeyConnectionAbs conn = new KeyConnectionAbs(50, abs, "down");
-        List<String> actual = writer.generateKeyconnectionAbsSyntax(conn);
+        List<String> actual = writer.generateKeyConnectionAbsSyntax(conn);
         List<String> expected = new ArrayList<String>();
         expected.add("KeyConnect");
         expected.add("key");
