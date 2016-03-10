@@ -250,7 +250,7 @@ public class BuildGUI implements IGUI{
         JMenuItem mntmLoad, mntmReload, mntmSave, mntmQuit;
 
         mntmLoad = new JMenuItem("Load");
-        mntmLoad.addActionListener(controller);
+        mntmLoad.addActionListener(new BuildModeBtnListener(this,board,model,main));
         mnModel.add(mntmLoad);
         mntmReload = new JMenuItem("Reload");
         mntmReload.addActionListener(controller);
@@ -310,6 +310,6 @@ public class BuildGUI implements IGUI{
 
     @Override
     public void setModel(GBallModel model) {
-        this.model = model;
+        main.setModel(model);
     }
 }
