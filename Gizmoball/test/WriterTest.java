@@ -153,6 +153,5 @@ public class WriterTest {
         expected.add("down");
         expected.add("RF103");
         assertEquals(expected, actual);
-
     }
 }
