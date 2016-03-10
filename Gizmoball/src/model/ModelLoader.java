@@ -181,7 +181,7 @@ public class ModelLoader {
             }
         }
 
-        return new KeyConnectionFlipper(connectingFrom, flipper);
+        return new KeyConnectionFlipper(connectingFrom, flipper, "down");
     }
 
     private KeyConnectionAbs createKeyConnectionAbs(String[] command) {

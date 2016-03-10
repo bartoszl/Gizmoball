@@ -144,7 +144,7 @@ public class WriterTest {
     @Test
     public void testGenertaeKeyConnectionFlipperSyntax() {
         Flipper flipper = new Flipper(10, 3, false, Color.RED, "RF103");
-        KeyConnectionFlipper conn = new KeyConnectionFlipper(57, flipper);
+        KeyConnectionFlipper conn = new KeyConnectionFlipper(57, flipper, "down");
         List<String> actual = writer.generateKeyConnectionFlipper(conn);
         List<String> expected = new ArrayList<String>();
         expected.add("KeyConnect");
