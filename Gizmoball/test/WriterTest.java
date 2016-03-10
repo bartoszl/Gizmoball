@@ -127,4 +127,17 @@ public class WriterTest {
         expected.add("3");
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testGenerateConnectionSyntax() {
+        CircularBumper cBumper = new CircularBumper(80, 80, 0, "C1");
+        Flipper flipper = new Flipper(10, 3, false, Color.RED, "RF103");
+        Connection connection = new Connection(cBumper, flipper);
+        List<String> actual = writer.generateConnectionSyntax(connection);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Connect");
+        expected.add("C1");
+        expected.add("RF103");
+        assertEquals(expected, actual);
+    }
 }

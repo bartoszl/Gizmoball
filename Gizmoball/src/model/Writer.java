@@ -64,6 +64,11 @@ public class Writer {
                 syntax = generateFlipperSyntax(flipper);
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + "\n");
             }
+
+            /* Write connections */
+            for(Connection connection : model.getConnections()) {
+
+            }
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -175,6 +180,12 @@ public class Writer {
         syntax.add(flipper.getName());
         syntax.add(String.valueOf((int) flipper.getOrigin().x()));
         syntax.add(String.valueOf((int) flipper.getOrigin().y()));
+        return syntax;
+    }
+
+    public List<String> generateConnectionSyntax(Connection connection) {
+        ArrayList<String> syntax = new ArrayList<String>();
+
         return syntax;
     }
 }
