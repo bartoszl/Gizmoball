@@ -30,6 +30,17 @@ public class Main {
         model.addObserver(gui.getGridView());
     }
 
+    public void setModel(GBallModel model){
+        this.model = model;
+        gui.getGridView().delete();
+        gui.getGridView().setVisible(false);
+        gui.getFrame().remove(gui.getFrame().getContentPane());
+        gui.getFrame().remove(gui.getFrame().getJMenuBar());
+        gui.getFrame().remove(gui.getPanel());
+        if(gui instanceof RunGUI) gui = new RunGUI(this, model, gui.getFrame());
+        else gui = new BuildGUI(this, model, gui.getFrame());
+    }
+
     public static void main(String[] args) {
     	
         EventQueue.invokeLater(new Runnable() {
