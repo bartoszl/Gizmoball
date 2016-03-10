@@ -138,7 +138,9 @@ public class GBallModel extends Observable implements IGBallModel {
             }
         }
         if(this.getAbsorber()!=null){
-            if(occupiedSpacesAbs()) return false;
+            unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
+                        absorber.getXBottomRight(), absorber.getYBottomRight());
+            if(occupiedSpacesAbs(x/20, y/20)) return false;
         }
         absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
         occupyAbs(x, y, x1, y1);
@@ -313,16 +315,16 @@ public class GBallModel extends Observable implements IGBallModel {
 			notifyObs();
 			return true;
 		}
-		if(ball!=null){
-			if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
-			ball.move(newX, newY);
-	        occupiedSpaces[(int)x/20][(int)y/20] = false;
-	        occupiedSpaces[(int)newX/20][(int)newY/20] = true;
-	        notifyObs();
-			return true;
-		}
+		if(ball!=null) {
+            if (occupiedSpaces[(int) newX / 20][(int) newY / 20] == true) return false;
+            ball.move(newX, newY);
+            occupiedSpaces[(int) x / 20][(int) y / 20] = false;
+            occupiedSpaces[(int) newX / 20][(int) newY / 20] = true;
+            notifyObs();
+            return true;
+        }
         if(absorber!=null && findAbs(x,y)){
-            if(occupiedSpacesAbs()) return false;
+            if(occupiedSpacesAbs(newX, newY)) return false;
             if((newX/20) > 20-(absorber.getWidth()/20)) return false;
             if((newY/20) > 20-(absorber.getHeight()/20)) return false;
             unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
@@ -336,9 +338,9 @@ public class GBallModel extends Observable implements IGBallModel {
 		return false;
 	}
 
-    private boolean occupiedSpacesAbs(){
-        for(int i = (int)absorber.getXTopLeft(); i < absorber.getWidth(); i++){
-            for(int j = (int)absorber.getYTopLeft(); j < absorber.getHeight(); j++){
+    private boolean occupiedSpacesAbs(double x, double y){
+        for(int i = (int)x/20; i < (x+absorber.getWidth())/20; i++){
+            for(int j = (int)y/20; j < (y+absorber.getHeight())/20; j++){
                 if(occupiedSpaces[i][j]) return true;
             }
         }
@@ -356,17 +358,17 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     private void occupyAbs(double x, double y, double x1, double y1){
-        for(int i = (int)x; i < x1; i++) {
-            for(int j = (int)y; j < y1; j++) {
-                occupiedSpaces[(i/20)][(j/20)] = true;
+        for(int i = (int)x/20; i < x1/20; i++) {
+            for(int j = (int)y/20; j < y1/20; j++) {
+                occupiedSpaces[i][j] = true;
             }
         }
     }
 
     private void unoccupyAbs(double x, double y, double x1, double y1){
-        for(int i = (int)x; i < x1; i++) {
-            for(int j = (int)y; j < y1; j++) {
-                occupiedSpaces[(i/20)][(j/20)] = false;
+        for(int i = (int)x/20; i < x1/20; i++) {
+            for(int j = (int)y/20; j < y1/20; j++) {
+                occupiedSpaces[i][j] = false;
             }
         }
     }
