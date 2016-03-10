@@ -181,7 +181,45 @@ public class Flipper extends Observable implements IFlipper {
         Circle temp = bottomCircle;
         bottomCircle = topCircle;
         topCircle = temp;
-        rotation += 90;
+        if(rotation+90 == 360) rotation=0;
+        else rotation += 90;
+        switch(rotation){
+            case 0: lines = getVerticalFlipperLines(isLeft ? 0 : 30);
+                    break;
+            case 90: lines = getHorizontalFlipperLines(0);
+                    break;
+            case 180: lines = getVerticalFlipperLines(isLeft ? 30 : 0);
+                break;
+            case 270: lines = getHorizontalFlipperLines(isLeft ? 0 : 30);
+                break;
+            default: break;
+        }
+    }
+
+    private List<LineSegment> getVerticalFlipperLines(int off){ // Left: 0, Right: 30
+        List<LineSegment> newLines = new ArrayList<>();
+        /** - **/
+        newLines.add(new LineSegment(origin.x()+off, origin.y()+5, origin.x()+off+10, origin.y()+5));
+        /**| **/
+        newLines.add(new LineSegment(origin.x()+off, origin.y()+5, origin.x()+off, origin.y()+35));
+        /**  |**/
+        newLines.add(new LineSegment(origin.x()+off+10, origin.y()+5, origin.x()+off+10, origin.y()+35));
+        /** _ **/
+        newLines.add(new LineSegment(origin.x()+off, origin.y()+35, origin.x()+off+10, origin.y()+35));
+        return newLines;
+    }
+
+    private List<LineSegment> getHorizontalFlipperLines(int off){ // Top: 0, Bottom0: 30
+        List<LineSegment> newLines = new ArrayList<>();
+        /** - **/
+        newLines.add(new LineSegment(origin.x()+5, origin.y()+off, origin.x()+5, origin.y()+off+10));
+        /**| **/
+        newLines.add(new LineSegment(origin.x()+5, origin.y()+off, origin.x()+35, origin.y()+off));
+        /**  |**/
+        newLines.add(new LineSegment(origin.x()+5, origin.y()+off+10, origin.x()+35, origin.y()+off+10));
+        /** _ **/
+        newLines.add(new LineSegment(origin.x()+35, origin.y()+off, origin.x()+35, origin.y()+off+10));
+        return newLines;
     }
 
     public String getName() {
