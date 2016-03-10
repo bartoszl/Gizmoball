@@ -19,4 +19,8 @@ public class KeyConnectionAbs {
     public Absorber getAbs() {
         return abs;
     }
+
+    public String getUpDown() {
+        return upDown;
+    }
 }

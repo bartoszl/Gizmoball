@@ -212,6 +212,11 @@ public class Writer {
 
     public List<String> generateKeyconnectionAbsSyntax(KeyConnectionAbs conn) {
         ArrayList<String> syntax = new ArrayList<String>();
+        syntax.add("KeyConnect");
+        syntax.add("key");
+        syntax.add(String.valueOf(conn.getKeyID()));
+        syntax.add(conn.getUpDown());
+        syntax.add(conn.getAbs().getName());
         return syntax;
     }
 }
