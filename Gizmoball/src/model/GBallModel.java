@@ -457,15 +457,18 @@ public class GBallModel extends Observable implements IGBallModel {
 	@Override
 	public void moveBall() {
 		double moveTime = 0.05;
+		List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
 		for(Ball ball: balls){
-			
+			cl.add(timeUntilCollision(ball));
+		}
+		for(Ball ball: balls){
 			if(ball!=null && ball.isMoving()){
 				if(ball.isAbsorbed()){
 					ball = moveBallForTime(ball, moveTime);
 					if(ball.getY()<absorber.getYTopLeft()) 
 						ball.setAbsorbed(false);
 				} else {
-					CollisionDetails cd = timeUntilCollision(ball);
+					CollisionDetails cd = cl.get(balls.indexOf(ball));
 					double tuc = cd.getTime();
 					if(tuc>moveTime){
 						ball = moveBallForTime(ball, moveTime);
@@ -577,7 +580,6 @@ public class GBallModel extends Observable implements IGBallModel {
 																1, 
 																anotherBall.getVelocity());
 					newVelocity = velocities.v1;
-					//anotherBall.setVelocity(velocities.v2);
 					abs=false;
 				}
 			}
