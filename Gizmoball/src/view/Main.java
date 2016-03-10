@@ -33,7 +33,7 @@ public class Main {
 
     public static void main(String[] args) {
     	
-        /*EventQueue.invokeLater(new Runnable() {
+        EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     Main m = new Main();
@@ -41,17 +41,17 @@ public class Main {
                     e.printStackTrace();
                 }
             }
-        });*/
-        GBallModel m = new GBallModel();
-        Writer writer = new Writer();
+        });
+        /*GBallModel m = new GBallModel();
+        Writer writer = new Writer();*/
         //m.addCircularBumper(40, 40, 0, "Circle1");
         /*m.addSquareBumper(80, 80, 0, "Square1");
         m.addAbsorber("Absorber1", 100, 100, 200, 200);
         m.addBall("Ball1", 60, 60, 50, 50);
         m.rotateElement(40, 40);*/
-        CircularBumper cBumper = new CircularBumper(100, 200, 0, "C1");
+        /*CircularBumper cBumper = new CircularBumper(100, 200, 0, "C1");
         Flipper flipper = new Flipper(9, 2, true, Color.RED, "LF92");
         m.addConnection(new Connection(cBumper, flipper));
-        writer.writeModelToFile(m, "Save1");
+        writer.writeModelToFile(m, "Save1");*/
     }
 }
