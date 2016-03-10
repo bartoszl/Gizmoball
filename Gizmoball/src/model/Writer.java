@@ -185,7 +185,9 @@ public class Writer {
 
     public List<String> generateConnectionSyntax(Connection connection) {
         ArrayList<String> syntax = new ArrayList<String>();
-
+        syntax.add("Connect");
+        syntax.add(connection.getTrigger().getName());
+        syntax.add(connection.getFlipper().getName());
         return syntax;
     }
 }
