@@ -80,10 +80,10 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
         Board b = bgui.getGridView();
         if(b.getAction() == Board.Action.KEY_CONNECT) {
             if(f != null) {
-                m.addKeyConnectionFlipper(new KeyConnectionFlipper(keyEvent.getKeyCode(), f));
+                m.addKeyConnectionFlipper(new KeyConnectionFlipper(keyEvent.getKeyCode(), f, "down"));
                 System.out.println("Added Key Connection! with key code " + keyEvent.getKeyCode());
             } else if(abs != null) {
-                m.addKeyConnectionAbs(new KeyConnectionAbs(keyEvent.getKeyCode(), abs));
+                m.addKeyConnectionAbs(new KeyConnectionAbs(keyEvent.getKeyCode(), abs, "down"));
             }
         }
     }

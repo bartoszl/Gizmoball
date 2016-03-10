@@ -181,7 +181,7 @@ public class ModelLoader {
             }
         }
 
-        return new KeyConnectionFlipper(connectingFrom, flipper);
+        return new KeyConnectionFlipper(connectingFrom, flipper, "down");
     }
 
     private KeyConnectionAbs createKeyConnectionAbs(String[] command) {
@@ -191,7 +191,7 @@ public class ModelLoader {
 
 
         if(model.getAbsorber().getName().equals(connectingTo)) {
-            return new KeyConnectionAbs(connectingFrom, model.getAbsorber());
+            return new KeyConnectionAbs(connectingFrom, model.getAbsorber(), "down");
         } else {
             return null;
         }

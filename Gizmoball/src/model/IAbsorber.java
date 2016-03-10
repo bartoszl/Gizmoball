@@ -104,5 +104,6 @@ public interface IAbsorber {
 	 * 				  the absorber.
 	 */
 	public void absorb(Ball ball);
-	
+
+	public String getName();
 }

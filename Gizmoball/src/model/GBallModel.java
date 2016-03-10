@@ -465,7 +465,7 @@ public class GBallModel extends Observable implements IGBallModel {
 			if(ball!=null && ball.isMoving()){
 				if(ball.isAbsorbed()){
 					ball = moveBallForTime(ball, moveTime);
-					if(ball.getY()<absorber.getYTopLeft()) 
+					if(ball.getY()<absorber.getYTopLeft())
 						ball.setAbsorbed(false);
 				} else {
 					CollisionDetails cd = cl.get(balls.indexOf(ball));
