@@ -90,7 +90,7 @@ public class TriangularBumper implements Bumper {
         	case(2):
         		l.add(new LineSegment(cx+20,cy,cx+20,cy+20));
         		l.add(new LineSegment(cx+20,cy+20,cx,cy+20));
-        		l.add(new LineSegment(cx,cy+20,cx+20,cy+20));
+        		l.add(new LineSegment(cx,cy+20,cx+20,cy));
         		break;
         	case(3):
         		l.add(new LineSegment(cx,cy,cx+20,cy+20));
