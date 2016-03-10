@@ -140,4 +140,19 @@ public class WriterTest {
         expected.add("RF103");
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testGenertaeKeyConnectionFlipperSyntax() {
+        Flipper flipper = new Flipper(10, 3, false, Color.RED, "RF103");
+        KeyConnectionFlipper conn = new KeyConnectionFlipper(57, flipper);
+        List<String> actual = writer.generateKeyConnectionFlipper(conn);
+        List<String> expected = new ArrayList<String>();
+        expected.add("KeyConnect");
+        expected.add("key");
+        expected.add("57");
+        expected.add("down");
+        expected.add("RF103");
+        assertEquals(expected, actual);
+
+    }
 }
