@@ -72,7 +72,8 @@ public class Writer {
 
             /* Write KeyConnectionFlippers */
             for(KeyConnectionFlipper connF : model.getKeyConnectionsFlipper()) {
-
+                syntax = generateKeyConnectionFlipperSyntax(connF);
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4));
             }
             bufferedWriter.close();
         } catch (IOException e) {
@@ -196,7 +197,7 @@ public class Writer {
         return syntax;
     }
 
-    public List<String> generateKeyConnectionFlipper(KeyConnectionFlipper conn) {
+    public List<String> generateKeyConnectionFlipperSyntax(KeyConnectionFlipper conn) {
         ArrayList<String> syntax = new ArrayList<String>();
         syntax.add("KeyConnect");
         syntax.add("key");

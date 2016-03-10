@@ -53,5 +53,11 @@ public class Main {
         Flipper flipper = new Flipper(9, 2, true, Color.RED, "LF92");
         m.addConnection(new Connection(cBumper, flipper));
         writer.writeModelToFile(m, "Save1");*/
+        /*Flipper flipper = new Flipper(9, 2, true, Color.RED, "LF92");
+        m.addFlipper(180, 40, true, "LF92");
+        KeyConnectionFlipper conn = new KeyConnectionFlipper(50, flipper, "up");
+        m.addKeyConnectionFlipper(conn);
+        writer.writeModelToFile(m, "Save2");
+*/
     }
 }

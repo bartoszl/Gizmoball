@@ -1,0 +1,2 @@
+LeftFlipper LF92 180 40
+KeyConnect key 50 up LF92

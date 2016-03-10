@@ -3,7 +3,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
-import java.sql.SQLInvalidAuthorizationSpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,7 +144,7 @@ public class WriterTest {
     public void testGenertaeKeyConnectionFlipperSyntax() {
         Flipper flipper = new Flipper(10, 3, false, Color.RED, "RF103");
         KeyConnectionFlipper conn = new KeyConnectionFlipper(57, flipper, "down");
-        List<String> actual = writer.generateKeyConnectionFlipper(conn);
+        List<String> actual = writer.generateKeyConnectionFlipperSyntax(conn);
         List<String> expected = new ArrayList<String>();
         expected.add("KeyConnect");
         expected.add("key");
