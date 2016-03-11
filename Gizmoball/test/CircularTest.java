@@ -1,12 +1,14 @@
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import model.CircularBumper;
 import physics.Circle;
+import physics.LineSegment;
 
 public class CircularTest {
 	
@@ -18,7 +20,7 @@ public class CircularTest {
 
 	@Test
 	public void testGetLineSegments() {
-		assertNull(c.getLines());
+		assertEquals(c.getLines(), new ArrayList<LineSegment>());
 	}
 	
 	@Test
@@ -59,6 +61,13 @@ public class CircularTest {
 		assertTrue(ci.getRotation()==1);
 	}
 	
-	//TODO add test after move and test move;
+	@Test
+	public void coordinatesTest(){
+		assertTrue(c.getX()==100);
+		assertTrue(c.getY()==150);
+		c.move(50, 60);
+		assertTrue(c.getX()==50);
+		assertTrue(c.getY()==60);
+	}
 
 }

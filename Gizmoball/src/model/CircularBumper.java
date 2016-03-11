@@ -39,6 +39,7 @@ public class CircularBumper implements Bumper {
 		this.name = name;
 		color = color.GREEN;
 	}
+	
 	@Override
 	public List<LineSegment> getLines() {
 		return new ArrayList<LineSegment>();
@@ -81,10 +82,12 @@ public class CircularBumper implements Bumper {
 		this.x = x;
 		this.y = y;
 	}
+	
 	@Override
 	public double getX() {
 		return x;
 	}
+	
 	@Override
 	public double getY() {
 		return y;
