@@ -495,6 +495,11 @@ public class GBallModel extends Observable implements IGBallModel {
     public Ball moveBallForTime(Ball ball, double time){
         Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (500*time));
         Vect Vnew = applyFriction(temp, time);
+        if(ball.getVelocity().equals(Vnew)) {
+            ball.setVelocity(new Vect(0,0));
+            ball.setMoving(false);
+            return ball;
+        }
         ball.setVelocity(Vnew);
 		double vx = ball.getVelocity().x();
 		double vy = ball.getVelocity().y();
