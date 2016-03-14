@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -46,10 +47,11 @@ public class ModelLoader {
                     createCircularBumper(command);
                     break;
 
-                /*case "LeftFlipper" :
+                case "LeftFlipper" :
                 case "RightFlipper" :
-                    model.addGizmo(createFlipper(command));
-                    break;*/
+                    //model.addGizmo(createFlipper(command));
+                    createFlipper(command);
+                    break;
 
                 case "Absorber" :
                     createAbsorber(command);
@@ -108,16 +110,16 @@ public class ModelLoader {
         model.addCircularBumper(Integer.parseInt(command[2]) * scale, Integer.parseInt(command[3]) * scale, 0, command[1]);
     }
 
-    /*private IFlipper createFlipper(String[] command) {
-        double xCoord = Double.parseDouble(command[2]) * scale;
-        double yCoord = Double.parseDouble(command[3]) * scale;
+    private void createFlipper(String[] command) {
+        int xCoord = Integer.parseInt(command[2]) * scale;
+        int yCoord = Integer.parseInt(command[3]) * scale;
         String name = command[1];
         if(command[0].equals("LeftFlipper")) {
-            return new Flipper(xCoord, yCoord, FlipperOrientation.LEFT, name);
+            model.addFlipper(xCoord, yCoord, true, name);
+        } else {
+            model.addFlipper(xCoord, yCoord, false, name);
         }
-        Flipper f = new  Flipper(xCoord, yCoord, FlipperOrientation.RIGHT, name);
-        return f;
-    }*/
+    }
 
     private void createAbsorber(String[] command) {
         int leftX = Integer.parseInt(command[2]) * scale;
