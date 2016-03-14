@@ -115,5 +115,4 @@ public class AbsorberTest {
 		assertTrue(ball.getY()==abs.getYBottomRight()-15);
 		assertTrue(ball.isAbsorbed());
 	}
-	
 }
