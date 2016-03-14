@@ -1,6 +1,6 @@
 package model;
 
-import physics.Vect;
+import physics.*;
 
 public class CollisionDetails {
 	private double time;
