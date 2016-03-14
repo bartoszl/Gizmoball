@@ -83,6 +83,11 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
+    public void checkKeyConnectionsFlipper(int keyCode) {
+
+    }
+
+    @Override
     public boolean addTriangularBumper(int x, int y, int rotation, String name) {
         x -= x%20;
         y -= y%20;
@@ -427,6 +432,16 @@ public class GBallModel extends Observable implements IGBallModel {
 		}
 		return null;
 	}
+
+    public void moveFlippers() {
+        for(Flipper f : getFlippers()) {
+            if(f.getMovement() == IFlipper.Movement.FORWARDS) {
+                f.rotatePerTick();
+            } else if(f.getMovement() == IFlipper.Movement.BACKWARDS) {
+                f.rotatePerTick();
+            }
+        }
+    }
 
     public boolean[][] getOccupiedSpaces() {
         return occupiedSpaces;

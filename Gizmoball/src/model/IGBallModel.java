@@ -31,11 +31,11 @@ public interface IGBallModel    {
     public void setAbsorber(Absorber absorber);
     public void setFlippers(List<Flipper> flippers);
     public boolean addFlipper(int i, int i1, boolean b, String flipper);
-    
+    public void checkKeyConnectionsFlipper(int keyCode);
     public boolean rotateElement(double x, double y);
     public boolean moveElement(double x, double y, double newX, double newY);
     public boolean[][] getOccupiedSpaces();
-    
+    public void moveFlippers();
     public void clear();
     public Flipper findFlipper(double x, double y);
     public Bumper findBumper(double x, double y);

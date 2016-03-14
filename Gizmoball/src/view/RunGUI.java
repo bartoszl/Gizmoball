@@ -93,6 +93,7 @@ public class RunGUI implements IGUI{
         panel.add(separator_1);
 
         board = new RunBoard(model);
+        board.addKeyListener(runModeBtnListener);
         board.setBounds(220, 0, 405, 405);
         frame.getContentPane().add(board);
 

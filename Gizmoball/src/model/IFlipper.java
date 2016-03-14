@@ -14,7 +14,7 @@ public interface IFlipper {
         FORWARDS, BACKWARDS, NONE
     }
 
-    public Angle rotatePerTick(Angle left);
+    public void rotatePerTick();
 
     public void rotate();
 
