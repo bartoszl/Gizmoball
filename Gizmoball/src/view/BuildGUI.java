@@ -145,7 +145,7 @@ public class BuildGUI implements IGUI{
 
         JComboBox cbFlipSide = new JComboBox();
         cbFlipSide.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        flipperPositions = new DefaultComboBoxModel(new String[]{"Right", "Left"});
+        flipperPositions = new DefaultComboBoxModel(new String[]{"Left", "Right"});
         cbFlipSide.setModel(flipperPositions);
         cbFlipSide.setBounds(100, 119, 105, 22);
         panel.add(cbFlipSide);
@@ -162,7 +162,6 @@ public class BuildGUI implements IGUI{
         separator_3.setBounds(10, 349, 195, 2);
         panel.add(separator_3);
 
-        
         BuildModeBtnListener btnListener = new BuildModeBtnListener(this, board, model, main);
         
         JButton btnRunMode = new JButton("Run Mode");
