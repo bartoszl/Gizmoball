@@ -35,7 +35,7 @@ public class Ball implements IBall{
 		this.x = x+L/2;
 		this.y = y+L/2;
 		this.velocity = new Vect(xv, yv);
-		this.color = Color.YELLOW;
+		this.color = Color.ORANGE;
 		this.r = 5;
 		moving = true;
 		absorbed = false;

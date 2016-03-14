@@ -49,7 +49,9 @@ public class AddAbsorberListener implements MouseListener {
                 	clicks[0]+=20;
                     clicks[1]+=20;
                 }
-                //System.out.println("absorber "+clicks[0]+","+clicks[1]+" "+clicks[2]+","+clicks[3]);
+                for(int i = 0; i < clicks.length; i++) {
+                    if (clicks[i] > 400) return;
+                }
                 m.addAbsorber("absorber",clicks[0],clicks[1],clicks[2],clicks[3]);
                 first = true;
                 b.repaint();

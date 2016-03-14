@@ -72,7 +72,7 @@ public class GBallModel extends Observable implements IGBallModel {
         if(lX > 18 || lY > 18) return false;
         if(!occupiedSpacesFlipper(lX, lY)) {
             occupyFlipper(lX,lY);
-            Flipper f = new Flipper(x, y, isLeft, Color.RED, name);
+            Flipper f = new Flipper(x, y, isLeft, Color.YELLOW, name);
             flippers.add(f);
             notifyObs();
             return true;
@@ -495,7 +495,11 @@ public class GBallModel extends Observable implements IGBallModel {
     public Ball moveBallForTime(Ball ball, double time){
         Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (500*time));
         Vect Vnew = applyFriction(temp, time);
-        if(ball.getVelocity().equals(Vnew)) {
+//        if(ball.getCollisionTime() == time && time == 0){
+//            ball.setMoving(false);
+//            return ball;
+//        }
+        if(ball.getVelocity().equals(Vnew) && time == 0) {
             ball.setVelocity(new Vect(0,0));
             ball.setMoving(false);
             return ball;
