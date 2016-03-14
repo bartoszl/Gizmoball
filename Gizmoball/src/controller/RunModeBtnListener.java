@@ -93,6 +93,13 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
                 flipper.press();
             }
         }
+        //and abosrber key connections
+        for(KeyConnectionAbs kca : model.getKeyConnectionsAbs()) {
+            if(kca.getKeyID() == keyCode) {
+                Absorber abs = kca.getAbs();
+                abs.fire();
+            }
+        }
     }
 
     @Override

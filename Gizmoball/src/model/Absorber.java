@@ -19,6 +19,7 @@ public class Absorber implements IAbsorber {
 	private double xTopLeft, yTopLeft, xBottomRight, yBottomRight;
 	private Color color;
 	private String name;
+	private List<Ball> ballsAbsorbed;
 	/**
 	 * Constructor for Absorber object. Initially sets color to Pink
 	 *
@@ -35,6 +36,7 @@ public class Absorber implements IAbsorber {
 		yBottomRight=Math.max(y,y1);
 		color=Color.PINK;
 		this.name = name;
+		this.ballsAbsorbed = new ArrayList<Ball>();
 	}
 
 	@Override
@@ -116,8 +118,15 @@ public class Absorber implements IAbsorber {
 	@Override
 	public void absorb(Ball ball) {
 		ball.setAbsorbed(true);
-		ball.setVelocity(0, -1000);
+		ballsAbsorbed.add(ball);
 		ball.setXY(xBottomRight-10, yBottomRight-10);
+	}
+
+	public void fire() {
+		for(Ball ball : ballsAbsorbed) {
+			ball.setVelocity(0, -1000);
+		}
+		ballsAbsorbed = new ArrayList<>();
 	}
 
 	public String getName() {
