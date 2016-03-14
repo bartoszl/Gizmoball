@@ -15,7 +15,6 @@ public class BuildGUI implements IGUI{
 	private JPanel panel;
 	private BuildBoard board;
     private Main main;
-	private ActionListener controller;
 	private IGBallModel model;
     private ButtonGroup componentGroup;
     private DefaultComboBoxModel gizmoShapes;
@@ -253,15 +252,15 @@ public class BuildGUI implements IGUI{
         mntmLoad.addActionListener(new BuildModeBtnListener(this,board,model,main));
         mnModel.add(mntmLoad);
         mntmReload = new JMenuItem("Reload");
-        mntmReload.addActionListener(controller);
+        mntmReload.addActionListener(new BuildModeBtnListener(this,board,model,main));
         mnModel.add(mntmReload);
         mntmSave = new JMenuItem("Save");
-        mntmSave.addActionListener(controller);
+        mntmSave.addActionListener(new BuildModeBtnListener(this,board,model,main));
         mnModel.add(mntmSave);
         JSeparator separator = new JSeparator();
         mnModel.add(separator);
         mntmQuit = new JMenuItem("Quit");
-        mntmQuit.addActionListener(controller);
+        mntmQuit.addActionListener(new BuildModeBtnListener(this,board,model,main));
         mnModel.add(mntmQuit);
 
         return mnModel;
