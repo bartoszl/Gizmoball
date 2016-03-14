@@ -61,6 +61,39 @@ public class BuildModeBtnListener implements ActionListener {
                     board.setAction(Board.Action.NONE);
                 }
                 break;
+            case "Swap":
+                board.delete();
+                MouseListener[] mListeners = board.getMouseListeners();
+                for(int i=0; i<mListeners.length;i++){
+                    board.removeMouseListener(mListeners[i]);
+                }
+                board.setVisible(false);
+                board = null;
+                gui.getFrame().remove(gui.getFrame().getContentPane());
+                gui.getFrame().remove(gui.getFrame().getJMenuBar());
+                gui.getFrame().remove(gui.getPanel());
+                System.gc();
+                main.switchToRun(gui.getFrame());
+                break;
+            case "Load":
+                JFileChooser fc = new JFileChooser();
+                fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int valid = fc.showOpenDialog(gui.getFrame());
+                if(valid == JFileChooser.APPROVE_OPTION) {
+                    File f = fc.getSelectedFile();
+                    ModelLoader ml = new ModelLoader(f);
+                    gui.setModel(ml.getModel());
+                }
+                break;
+            case "Reload":
+                // Needs to be done.
+                break;
+            case "Save":
+                break;
+            case "Quit":
+                int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit",  JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) System.exit(0);
+                break;
             case "Friction":
                 boolean invalidX = true, invalidY = true;
                 double x = 0, y = 0;
@@ -135,30 +168,6 @@ public class BuildModeBtnListener implements ActionListener {
                     }
                     if (invalidG) inputG = JOptionPane.showInputDialog("Please re-enter a valid value for Gravity, Current Gravity: "
                                 + model.getGravity());
-                }
-                break;
-            case "Swap":
-            	board.delete();
-            	MouseListener[] mListeners = board.getMouseListeners();
-            	for(int i=0; i<mListeners.length;i++){
-            		board.removeMouseListener(mListeners[i]);
-            	}
-                board.setVisible(false);
-            	board = null;
-            	gui.getFrame().remove(gui.getFrame().getContentPane());
-            	gui.getFrame().remove(gui.getFrame().getJMenuBar());
-            	gui.getFrame().remove(gui.getPanel());
-            	System.gc();
-                main.switchToRun(gui.getFrame());
-            	break;
-            case "Load":
-                JFileChooser fc = new JFileChooser();
-                fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
-                int valid = fc.showOpenDialog(gui.getFrame());
-                if(valid == JFileChooser.APPROVE_OPTION) {
-                    File f = fc.getSelectedFile();
-                    ModelLoader ml = new ModelLoader(f);
-                    gui.setModel(ml.getModel());
                 }
                 break;
             default:
