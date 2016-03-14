@@ -117,7 +117,7 @@ public class Absorber implements IAbsorber {
 	public void absorb(Ball ball) {
 		ball.setAbsorbed(true);
 		ball.setVelocity(0, -1000);
-		ball.setXY(xBottomRight-15, yBottomRight-15);
+		ball.setXY(xBottomRight-10, yBottomRight-10);
 	}
 
 	public String getName() {

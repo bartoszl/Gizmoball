@@ -14,7 +14,7 @@ import java.awt.Color;
 
 public class Ball implements IBall{
 	private Vect velocity;
-	private double x, y, r;
+	private double x, y, r, sx, sy;
 	private Color color;
 	private boolean moving, absorbed;
 	private static final double L=20;
@@ -34,6 +34,8 @@ public class Ball implements IBall{
 	public Ball(String name, double x, double y, double xv, double yv){
 		this.x = x+L/2;
 		this.y = y+L/2;
+        this.sx = this.x;
+        this.sy = this.y;
 		this.velocity = new Vect(xv, yv);
 		this.color = Color.ORANGE;
 		this.r = 5;
@@ -146,4 +148,9 @@ public class Ball implements IBall{
 	public String getName() {
 		return name;
 	}
+
+    public void reset(){
+        this.x = this.sx;
+        this.y = this.sy;
+    }
 }
