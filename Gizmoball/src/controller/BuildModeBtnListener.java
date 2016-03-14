@@ -1,6 +1,7 @@
 package controller;
 
 import model.IGBallModel;
+import model.ModelLoader;
 import view.Board;
 import view.IGUI;
 import view.Main;
@@ -9,6 +10,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 
 public class BuildModeBtnListener implements ActionListener {
@@ -149,6 +151,16 @@ public class BuildModeBtnListener implements ActionListener {
             	System.gc();
                 main.switchToRun(gui.getFrame());
             	break;
+            case "Load":
+                JFileChooser fc = new JFileChooser();
+                fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int valid = fc.showOpenDialog(gui.getFrame());
+                if(valid == JFileChooser.APPROVE_OPTION) {
+                    File f = fc.getSelectedFile();
+                    ModelLoader ml = new ModelLoader(f);
+                    gui.setModel(ml.getModel());
+                }
+                break;
             default:
                 board.setAction(Board.Action.NONE);
         }

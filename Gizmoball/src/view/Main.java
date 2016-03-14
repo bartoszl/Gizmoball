@@ -39,6 +39,7 @@ public class Main {
         gui.getFrame().remove(gui.getPanel());
         if(gui instanceof RunGUI) gui = new RunGUI(this, model, gui.getFrame());
         else gui = new BuildGUI(this, model, gui.getFrame());
+        model.addObserver(gui.getGridView());
     }
 
     public static void main(String[] args) {
