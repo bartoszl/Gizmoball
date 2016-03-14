@@ -59,7 +59,7 @@ public class BuildGUI implements IGUI{
 	 * Initialize the frame.
 	 */
 	private void createFrame(){
-		frame = new JFrame("GizmoBall - Build Mode");
+		frame = new JFrame("GizmoBall");
 		frame.setBounds(100, 100, 650, 485);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
