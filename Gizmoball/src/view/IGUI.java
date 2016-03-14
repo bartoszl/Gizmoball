@@ -12,5 +12,4 @@ public interface IGUI  {
 	Board getGridView();
 	JFrame getFrame();
 	JPanel getPanel();
-	void setModel(GBallModel model);
 }

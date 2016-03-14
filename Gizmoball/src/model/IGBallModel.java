@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -46,5 +47,8 @@ public interface IGBallModel    {
     public void moveBall();
     public void resetBalls();
     public Ball moveBallForTime(Ball ball, double time);
+
+    public void setLoadFile(File f);
+    public File getLoadFile();
 
 }

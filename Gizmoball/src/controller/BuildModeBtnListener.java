@@ -1,5 +1,6 @@
 package controller;
 
+import model.GBallModel;
 import model.IGBallModel;
 import model.ModelLoader;
 import view.Board;
@@ -81,12 +82,22 @@ public class BuildModeBtnListener implements ActionListener {
                 int valid = fc.showOpenDialog(gui.getFrame());
                 if(valid == JFileChooser.APPROVE_OPTION) {
                     File f = fc.getSelectedFile();
-                    ModelLoader ml = new ModelLoader(f);
-                    gui.setModel(ml.getModel());
+                    if(f != null) {
+                        ModelLoader ml = new ModelLoader(f);
+                        GBallModel m = ml.getModel();
+                        m.setLoadFile(f);
+                        main.setModel(m);
+                    }
                 }
                 break;
             case "Reload":
-                // Needs to be done.
+                File f = model.getLoadFile();
+                if(f != null) {
+                    ModelLoader ml = new ModelLoader(f);
+                    GBallModel m = ml.getModel();
+                    m.setLoadFile(f);
+                    main.setModel(m);
+                }
                 break;
             case "Save":
                 break;

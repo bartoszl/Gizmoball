@@ -148,8 +148,4 @@ public class RunGUI implements IGUI{
 	public JPanel getPanel() {
 		return panel;
 	}
-
-    public void setModel(GBallModel model){
-        main.setModel(model);
-    }
 }
