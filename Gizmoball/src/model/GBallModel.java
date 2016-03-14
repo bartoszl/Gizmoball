@@ -459,6 +459,9 @@ public class GBallModel extends Observable implements IGBallModel {
 		double moveTime = 0.05;
 		List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
 		for(Ball ball: balls){
+            Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (500*moveTime));
+            Vect Vnew = applyFriction(temp, moveTime);
+            ball.setVelocity(Vnew);
 			cl.add(timeUntilCollision(ball));
 		}
 		for(Ball ball: balls){
@@ -487,28 +490,33 @@ public class GBallModel extends Observable implements IGBallModel {
 		}
 	}
 
+    public void resetBalls() {
+        for(Ball b : balls){
+            b.reset();
+            b.setMoving(true);
+            b.setVelocity(new Vect(50,50));
+        }
+    }
+
     public Vect applyFriction(Vect Vold, double time){
         double newVect = Math.sqrt((Math.pow(Vold.x(), 2)+Math.pow(Vold.y(), 2)));
         return Vold.times((1 - (0.025 * time) - ((0.025) * (newVect/20) * time)));
     }
 
     public Ball moveBallForTime(Ball ball, double time){
-        Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (500*time));
-        Vect Vnew = applyFriction(temp, time);
-//        if(ball.getCollisionTime() == time && time == 0){
-//            ball.setMoving(false);
-//            return ball;
-//        }
-        if(ball.getVelocity().equals(Vnew) && time == 0) {
-            ball.setVelocity(new Vect(0,0));
-            ball.setMoving(false);
-            return ball;
-        }
-        ball.setVelocity(Vnew);
 		double vx = ball.getVelocity().x();
 		double vy = ball.getVelocity().y();
 		double newX = ball.getX() + (vx*time);
 		double newY = ball.getY() + (vy*time);
+        // Very badly done stopping detection
+        Vect Vold = ball.getVelocity();
+        if(ball.getX() == newX && ball.getY() == newY && !ball.isAbsorbed()
+                && ball.getVelocity().equals(Vold)
+                && Vold.x() < 20 && Vold.x() > -20
+                && Vold.y() < 20 && Vold.y() > -20){
+            ball.setMoving(false);
+            return ball;
+        }
 		ball.setXY(newX, newY);
 		return ball;
 	}

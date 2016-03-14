@@ -43,6 +43,7 @@ public class RunModeBtnListener implements ActionListener {
 		    		break;
 		    	case "Swap":
 		    		timer.stop();
+                    model.resetBalls();
 		    		gui.getGridView().delete();
 		    		gui.getGridView().setVisible(false);
 		            gui.getFrame().remove(gui.getFrame().getContentPane());
