@@ -111,10 +111,8 @@ public class AbsorberTest {
 		abs.absorb(ball);
 		assertTrue(ball.getVelocity().x()==0);
 		assertTrue(ball.getVelocity().y()==-1000);
-		System.out.println("");
 		assertTrue(ball.getX()==abs.getXBottomRight()-15);
 		assertTrue(ball.getY()==abs.getYBottomRight()-15);
 		assertTrue(ball.isAbsorbed());
 	}
-	
 }
