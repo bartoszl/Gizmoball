@@ -37,7 +37,6 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
             y -= y%20;
             mouseX = x;
             mouseY = y;
-            Absorber abs;
             b.requestFocus();
             if(m.findFlipper(x, y) != null) {
                 f = m.findFlipper(x, y);
