@@ -16,6 +16,10 @@ public interface IFlipper {
 
     public void rotatePerTick();
 
+    public void press();
+
+    public void release();
+
     public void rotate();
 
     public int reservedArea();
