@@ -3,6 +3,7 @@ package model;
 import view.Board;
 
 import java.awt.*;
+import java.io.File;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class GBallModel extends Observable implements IGBallModel {
     private boolean [][] occupiedSpaces;
     private int lX, lY;
     private Walls walls;
+    private File loadFile;
 
     public GBallModel() {
         gizmos = new ArrayList<Bumper>();
@@ -611,4 +613,12 @@ public class GBallModel extends Observable implements IGBallModel {
 		
 		return new CollisionDetails(shortest, newVelocity, abs);
 	}
+
+    public void setLoadFile(File f){
+        this.loadFile = f;
+    }
+
+    public File getLoadFile(){
+        return loadFile;
+    }
 }

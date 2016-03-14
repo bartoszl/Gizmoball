@@ -59,7 +59,9 @@ public class RunModeBtnListener implements ActionListener {
                     if(valid == JFileChooser.APPROVE_OPTION) {
                         File f = fc.getSelectedFile();
                         ModelLoader ml = new ModelLoader(f);
-                        gui.setModel(ml.getModel());
+                        GBallModel m = ml.getModel();
+                        m.setLoadFile(f);
+                        main.setModel(m);
                     }
                     break;
                 case "Reload":

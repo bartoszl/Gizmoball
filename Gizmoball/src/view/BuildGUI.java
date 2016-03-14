@@ -305,9 +305,4 @@ public class BuildGUI implements IGUI{
 	public JPanel getPanel() {
 		return panel;
 	}
-
-    @Override
-    public void setModel(GBallModel model) {
-        main.setModel(model);
-    }
 }
