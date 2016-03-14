@@ -97,15 +97,7 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
         for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
             if(kcf.getKeyID() == keyCode) {
                 Flipper flipper = kcf.getFlipper();
-                if(flipper.getPosition() == IFlipper.Position.VERTICAL) {
-                    flipper.setMovement(IFlipper.Movement.FORWARDS);
-                } else if(flipper.getPosition() == IFlipper.Position.BETWEEN) {
-                    if(flipper.getMovement() == IFlipper.Movement.BACKWARDS) {
-                        //reverse it
-                        flipper.setLeft(Angle.DEG_90.minus(flipper.getLeft()));
-                    }
-                    flipper.setMovement(IFlipper.Movement.FORWARDS);
-                }
+                flipper.press();
             }
         }
     }
@@ -116,15 +108,7 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
         for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
             if(kcf.getKeyID() == keyCode) {
                 Flipper flipper = kcf.getFlipper();
-                if(flipper.getPosition() == IFlipper.Position.HORIZONTAL) {
-                    flipper.setMovement(IFlipper.Movement.BACKWARDS);
-                } else if(flipper.getPosition() == IFlipper.Position.BETWEEN) {
-                    if(flipper.getMovement() == IFlipper.Movement.FORWARDS) {
-                        //reverse it
-                        flipper.setLeft(Angle.DEG_90.minus(flipper.getLeft()));
-                    }
-                    flipper.setMovement(IFlipper.Movement.BACKWARDS);
-                }
+                flipper.release();
             }
         }
     }

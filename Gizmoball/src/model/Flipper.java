@@ -170,6 +170,30 @@ public class Flipper extends Observable implements IFlipper {
         return rotation;
     }
 
+    public void press() {
+        if(getPosition() == IFlipper.Position.VERTICAL) {
+            setMovement(IFlipper.Movement.FORWARDS);
+        } else if(getPosition() == IFlipper.Position.BETWEEN) {
+            if(getMovement() == IFlipper.Movement.BACKWARDS) {
+                //reverse it
+                setLeft(Angle.DEG_90.minus(getLeft()));
+            }
+            setMovement(IFlipper.Movement.FORWARDS);
+        }
+    }
+
+    public void release() {
+        if(getPosition() == IFlipper.Position.HORIZONTAL) {
+            setMovement(IFlipper.Movement.BACKWARDS);
+        } else if(getPosition() == IFlipper.Position.BETWEEN) {
+            if(getMovement() == IFlipper.Movement.FORWARDS) {
+                //reverse it
+                setLeft(Angle.DEG_90.minus(getLeft()));
+            }
+            setMovement(IFlipper.Movement.BACKWARDS);
+        }
+    }
+
     public void rotate() {
         rotateInRun(Angle.DEG_90);
         //swap circles

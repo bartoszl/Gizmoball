@@ -494,6 +494,9 @@ public class GBallModel extends Observable implements IGBallModel {
 						ball = moveBallForTime(ball, moveTime);
 					} else {
 						if(!cd.getAbsorbed()){
+                            if(cd.getBumper() != null) {
+                                collidedWithBumper(cd.getBumper());
+                            }
 							ball = moveBallForTime(ball, tuc);
 							ball.setVelocity(cd.getVelocity());
 						} else {
@@ -506,6 +509,16 @@ public class GBallModel extends Observable implements IGBallModel {
 			
 		}
 	}
+
+    public void collidedWithBumper(Bumper bumper) {
+        for(Connection c : getConnections()) {
+            System.out.println("Fire!");
+            if(c.getTrigger().equals(bumper)) {
+                c.getFlipper().press();
+                c.getFlipper().release();
+            }
+        }
+    }
 
     public void resetBalls() {
         for(Ball b : balls){
@@ -539,6 +552,7 @@ public class GBallModel extends Observable implements IGBallModel {
 	}
 	
 	private CollisionDetails timeUntilCollision(Ball ball) {
+        Bumper collidedWith = null;
 		Circle ballCircle = ball.getCircle();
 		Vect ballVelocity = ball.getVelocity();
 		Vect newVelocity = new Vect(0,0);
@@ -559,11 +573,13 @@ public class GBallModel extends Observable implements IGBallModel {
 				if(time<shortest){
 					shortest=time;
 					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+                    collidedWith = bumper;
 				}
 			}
 			for(Circle circle: bumper.getCircles()){
 				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
 				if(time<shortest){
+                    collidedWith = bumper;
 					shortest=time;
 					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
 				}
@@ -626,7 +642,7 @@ public class GBallModel extends Observable implements IGBallModel {
 			}
 		}
 		
-		return new CollisionDetails(shortest, newVelocity, abs);
+		return new CollisionDetails(shortest, newVelocity, abs, collidedWith);
 	}
 
     public void setLoadFile(File f){
