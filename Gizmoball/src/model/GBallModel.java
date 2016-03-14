@@ -494,7 +494,7 @@ public class GBallModel extends Observable implements IGBallModel {
         for(Ball b : balls){
             b.reset();
             b.setMoving(true);
-            b.setVelocity(new Vect(50,50));
+            b.setVelocity(new Vect(0,0));
         }
     }
 

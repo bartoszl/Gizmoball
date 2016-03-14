@@ -63,13 +63,18 @@ public class RunModeBtnListener implements ActionListener {
                     }
                     break;
                 case "Reload":
+                    model.resetBalls();
+                    model.moveBall();
+                    timer.stop();
                     break;
                 case "Save":
                     break;
                 case "Quit":
-                    System.exit(0);
-				default:
-					break;
+                    int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit",  JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) System.exit(0);
+                    break;
+                default:
+                    break;
 		    }
     }
 }
