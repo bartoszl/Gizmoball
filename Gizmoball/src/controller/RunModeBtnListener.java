@@ -13,11 +13,10 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import javax.swing.*;
 
-public class RunModeBtnListener implements KeyListener, ActionListener {
+public class RunModeBtnListener implements ActionListener {
     private IGBallModel model;
     private IGUI gui;
     private Main main;
-    private MagicKeyListener mkl;
     
     private Timer timer;
 
@@ -25,7 +24,6 @@ public class RunModeBtnListener implements KeyListener, ActionListener {
     	this.gui = gui;
         this.model = model;
         this.main = main;
-        this.mkl = new MagicKeyListener(this);
         this.timer = new Timer(50, this);
     }
 
@@ -76,42 +74,5 @@ public class RunModeBtnListener implements KeyListener, ActionListener {
 				default:
 					break;
 		    }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-        System.out.println("press");
-        int keyCode = keyEvent.getKeyCode();
-        //loop through key flipper connections
-        for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
-            if(kcf.getKeyID() == keyCode) {
-                Flipper flipper = kcf.getFlipper();
-                flipper.press();
-            }
-        }
-        //and absorber key connections
-        for(KeyConnectionAbs kca : model.getKeyConnectionsAbs()) {
-            if(kca.getKeyID() == keyCode) {
-                Absorber abs = kca.getAbs();
-                abs.fire();
-            }
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-        System.out.println("release");
-        int keyCode = keyEvent.getKeyCode();
-        for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
-            if(kcf.getKeyID() == keyCode) {
-                Flipper flipper = kcf.getFlipper();
-                flipper.release();
-            }
-        }
     }
 }
