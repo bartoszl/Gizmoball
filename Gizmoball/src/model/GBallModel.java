@@ -441,6 +441,7 @@ public class GBallModel extends Observable implements IGBallModel {
             } else if(f.getMovement() == IFlipper.Movement.BACKWARDS) {
                 f.rotatePerTick();
             }
+            notifyObs();
         }
     }
 
