@@ -36,6 +36,12 @@ public class DeleteConnectionListener implements MouseListener {
                         break;
                     }
                 }
+            } else if(m.getAbsorber() != null &&
+                    x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&
+                    y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
+                    ) {
+                m.getAbsorber().setConnectedToItself(false);
+                System.out.println("Disconnected!");
             }
 
         }

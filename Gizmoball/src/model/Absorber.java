@@ -20,6 +20,7 @@ public class Absorber implements IAbsorber {
 	private Color color;
 	private String name;
 	private List<Ball> ballsAbsorbed;
+	private boolean connectedToItself;
 	/**
 	 * Constructor for Absorber object. Initially sets color to Pink
 	 *
@@ -37,6 +38,7 @@ public class Absorber implements IAbsorber {
 		color=Color.PINK;
 		this.name = name;
 		this.ballsAbsorbed = new ArrayList<Ball>();
+		this.connectedToItself = true;
 	}
 
 	@Override
@@ -119,6 +121,9 @@ public class Absorber implements IAbsorber {
 	public void absorb(Ball ball) {
 		ball.setAbsorbed(true);
 		ballsAbsorbed.add(ball);
+		if(isConnectedToItself()) {
+			fire();
+		}
 		ball.setXY(xBottomRight-10, yBottomRight-10);
 	}
 
@@ -132,5 +137,12 @@ public class Absorber implements IAbsorber {
 	public String getName() {
 		return name;
 	}
-	
+
+	public boolean isConnectedToItself() {
+		return connectedToItself;
+	}
+
+	public void setConnectedToItself(boolean connectedToItself) {
+		this.connectedToItself = connectedToItself;
+	}
 }
