@@ -6,6 +6,7 @@ public class CollisionDetails {
 	private double time;
 	private Vect velocity;
 	private boolean absorbed;
+	private boolean fired;
 	private Bumper bumper;
 	
 	public CollisionDetails(double t, Vect v, boolean abs, Bumper bumper){
@@ -33,5 +34,13 @@ public class CollisionDetails {
 
 	public void setBumper(Bumper bumper) {
 		this.bumper = bumper;
+	}
+
+	public boolean isFired() {
+		return fired;
+	}
+
+	public void setFired(boolean fired) {
+		this.fired = fired;
 	}
 }

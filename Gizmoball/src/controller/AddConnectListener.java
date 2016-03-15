@@ -14,6 +14,7 @@ public class AddConnectListener implements MouseListener {
     private IGBallModel m;
     private boolean firstStep;
     private CircularBumper trigger;
+    private IAbsorber triggerAbs;
 
     public AddConnectListener(BuildGUI bgui, IGBallModel m) {
         this.m = m;
@@ -39,14 +40,33 @@ public class AddConnectListener implements MouseListener {
                     trigger = (CircularBumper) bumper;
                     System.out.println("Trigger found!");
                     firstStep = false;
+                } else if(m.getAbsorber() != null &&
+                        x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&
+                        y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
+                        ) {
+                    //it is absorber
+                    triggerAbs = m.getAbsorber();
+                    System.out.println("Trigger found!");
+                    firstStep = false;
                 }
             } else {
                 //find flipper
                 Flipper f = m.findFlipper(x, y);
-                if(f != null) {
-                    m.addConnection(new Connection(trigger, f));
-                    System.out.println("Connected!");
+                if(trigger != null) {
+                    if (f != null) {
+                        m.addConnection(new Connection(trigger, f));
+                        System.out.println("Connected!");
+                    }
+                } else if(triggerAbs != null) {
+                    if(m.getAbsorber() != null &&
+                            x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&
+                            y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
+                            ) {
+                        m.getAbsorber().setConnectedToItself(true);
+                        System.out.println("Connected!");
+                    }
                 }
+
             }
         }
     }

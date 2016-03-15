@@ -26,6 +26,7 @@ public class GBallModel extends Observable implements IGBallModel {
     private List<Connection> connections;
     private List<KeyConnectionAbs> keyConnectionsAbs;
     private List<KeyConnectionFlipper> keyConnectionsFlipper;
+    private List<ConnectionAbs> connectionsAbs;
     private List<Ball> balls;
     private Absorber absorber;
     private boolean [][] occupiedSpaces;
@@ -38,6 +39,7 @@ public class GBallModel extends Observable implements IGBallModel {
         connections = new ArrayList<Connection>();
         keyConnectionsAbs = new ArrayList<KeyConnectionAbs>();
         keyConnectionsFlipper = new ArrayList<KeyConnectionFlipper>();
+        connectionsAbs = new ArrayList<ConnectionAbs>();
         flippers = new ArrayList<Flipper>();
         balls = new ArrayList<Ball>();
         walls = new Walls(0,0,400,400);
@@ -200,6 +202,10 @@ public class GBallModel extends Observable implements IGBallModel {
     @Override
     public boolean addConnection(Connection connection) {
         return connections.add(connection);
+    }
+
+    public boolean addConnectionAbs(ConnectionAbs connectionAbs) {
+        return connectionsAbs.add(connectionAbs);
     }
 
     public boolean addKeyConnectionAbs(KeyConnectionAbs keyConnectionAbs) {
@@ -501,6 +507,7 @@ public class GBallModel extends Observable implements IGBallModel {
 							ball.setVelocity(cd.getVelocity());
 						} else {
 							absorber.absorb(ball);
+
 						}
 					}
 				}
