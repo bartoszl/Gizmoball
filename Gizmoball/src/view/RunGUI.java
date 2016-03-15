@@ -6,6 +6,7 @@ import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
 
 import controller.RunModeBtnListener;
+import controller.RunModeKeyListener;
 import model.GBallModel;
 import model.IGBallModel;
 
@@ -93,7 +94,7 @@ public class RunGUI implements IGUI{
         panel.add(separator_1);
 
         board = new RunBoard(model);
-        board.addKeyListener(runModeBtnListener);
+        board.addKeyListener(new RunModeKeyListener(this, model, main));
         board.setBounds(220, 0, 405, 405);
         frame.getContentPane().add(board);
 

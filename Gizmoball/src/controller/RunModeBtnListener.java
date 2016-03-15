@@ -13,11 +13,10 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import javax.swing.*;
 
-public class RunModeBtnListener implements ActionListener, KeyListener {
+public class RunModeBtnListener implements ActionListener {
     private IGBallModel model;
     private IGUI gui;
     private Main main;
-    private MagicKeyListener mkl;
     
     private Timer timer;
 
@@ -26,7 +25,6 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
         this.model = model;
         this.main = main;
         this.timer = new Timer(50, this);
-        this.mkl = new MagicKeyListener(this);
     }
 
     @Override
@@ -37,8 +35,8 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
         } else 
 		    switch(e.getActionCommand()){
 		    	case "Start":
-		    		timer.start();
                     gui.getGridView().requestFocus();
+		    		timer.start();
 		    		break;
 		    	case "Tick":
 		    		model.moveBall();
@@ -83,40 +81,5 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
                 default:
                     break;
 		    }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-        int keyCode = keyEvent.getKeyCode();
-        //loop through key flipper connections
-        for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
-            if(kcf.getKeyID() == keyCode) {
-                Flipper flipper = kcf.getFlipper();
-                flipper.press();
-            }
-        }
-        //and abosrber key connections
-        for(KeyConnectionAbs kca : model.getKeyConnectionsAbs()) {
-            if(kca.getKeyID() == keyCode) {
-                Absorber abs = kca.getAbs();
-                abs.fire();
-            }
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-        int keyCode = keyEvent.getKeyCode();
-        for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
-            if(kcf.getKeyID() == keyCode) {
-                Flipper flipper = kcf.getFlipper();
-                flipper.release();
-            }
-        }
     }
 }

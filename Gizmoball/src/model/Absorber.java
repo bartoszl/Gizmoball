@@ -121,6 +121,7 @@ public class Absorber implements IAbsorber {
 	public void absorb(Ball ball) {
 		ball.setAbsorbed(true);
 		ballsAbsorbed.add(ball);
+		ball.setMoving(false);
 		if(isConnectedToItself()) {
 			fire();
 		}
@@ -129,6 +130,7 @@ public class Absorber implements IAbsorber {
 
 	public void fire() {
 		for(Ball ball : ballsAbsorbed) {
+			ball.setMoving(true);
 			ball.setVelocity(0, -1000);
 		}
 		ballsAbsorbed = new ArrayList<>();
