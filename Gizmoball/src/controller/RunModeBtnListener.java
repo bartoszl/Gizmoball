@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import javax.swing.*;
 
-public class RunModeBtnListener implements ActionListener, KeyListener {
+public class RunModeBtnListener implements KeyListener, ActionListener {
     private IGBallModel model;
     private IGUI gui;
     private Main main;
@@ -25,8 +25,8 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
     	this.gui = gui;
         this.model = model;
         this.main = main;
-        this.timer = new Timer(50, this);
         this.mkl = new MagicKeyListener(this);
+        this.timer = new Timer(50, this);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
         } else 
 		    switch(e.getActionCommand()){
 		    	case "Start":
-		    		timer.start();
                     gui.getGridView().requestFocus();
+		    		timer.start();
 		    		break;
 		    	case "Tick":
 		    		model.moveBall();
@@ -85,6 +85,7 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
+        System.out.println("press");
         int keyCode = keyEvent.getKeyCode();
         //loop through key flipper connections
         for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
@@ -93,7 +94,7 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
                 flipper.press();
             }
         }
-        //and abosrber key connections
+        //and absorber key connections
         for(KeyConnectionAbs kca : model.getKeyConnectionsAbs()) {
             if(kca.getKeyID() == keyCode) {
                 Absorber abs = kca.getAbs();
@@ -104,6 +105,7 @@ public class RunModeBtnListener implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
+        System.out.println("release");
         int keyCode = keyEvent.getKeyCode();
         for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
             if(kcf.getKeyID() == keyCode) {

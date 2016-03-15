@@ -50,7 +50,8 @@ import java.util.Iterator;
  * generate a release event for only one of them.
  */
 public class MagicKeyListener
-        implements KeyListener {
+        implements KeyListener
+{
 
     /**
      * @requires adaptee != null
