@@ -225,7 +225,15 @@ public class GBallModel extends Observable implements IGBallModel {
                 }
             }
         }
+        return false;
+    }
 
+    private boolean checkFlipperExists(Flipper flipper) {
+        for(Flipper f : flippers) {
+            if(f.getName().equals(flipper.getName())) {
+                return true;
+            }
+        }
         return false;
     }
 
