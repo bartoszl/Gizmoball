@@ -22,7 +22,7 @@ public class FlipperTest {
         assertEquals(d.intValue(), 1);
     }
 
-/*    @Test
+    @Test
     public void testRotatePerTick() {
         flipper.setMovement(Flipper.Movement.FORWARDS);
         Angle a = flipper.rotatePerTick(Angle.DEG_90);
@@ -51,6 +51,6 @@ public class FlipperTest {
         flipper.setPosition(IFlipper.Position.HORIZONTAL);
         Angle a = flipper.rotatePerTick(Angle.DEG_90);
         assertEquals(a, Angle.ZERO);
-    }*/
+    }
 
 }
