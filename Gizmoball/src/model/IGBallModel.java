@@ -19,7 +19,7 @@ public interface IGBallModel    {
     public void setFriction(double xFriction, double yFriction);
     public double getFrictionX();
     public double getFrictionY();
-    public boolean addConnection(Connection connection);
+    public boolean addConnection(CircularBumper cBumper, Flipper flipper);
     public boolean addKeyConnectionFlipper(KeyConnectionFlipper keyConnection);
     public boolean addKeyConnectionAbs(KeyConnectionAbs keyConnection);
     public List<Bumper> getGizmos();

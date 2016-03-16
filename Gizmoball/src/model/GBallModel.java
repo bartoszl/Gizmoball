@@ -198,7 +198,8 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public boolean addConnection(Connection connection) {
+    public boolean addConnection(CircularBumper cBumper, Flipper flipper) {
+        Connection connection = new Connection(cBumper, flipper);
         return connections.add(connection);
     }
 
