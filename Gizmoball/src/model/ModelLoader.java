@@ -78,7 +78,7 @@ public class ModelLoader {
                     break;
 
                 case "KeyConnect" :
-                    model.addKeyConnection(createKeyConnection(command));
+                    createKeyConnection(command);
                     break;
             }
         }
@@ -171,19 +171,20 @@ public class ModelLoader {
         String upDown = command[3];
         String flipperName = command[4];
         Flipper flipper = model.getFlipper(flipperName);
-        model.addKeyConnectionFlipper(keyID, flipper, upDown);
+        if(flipper != null) {
+            model.addKeyConnectionFlipper(keyID, flipper, upDown);
+        }
     }
 
-    private KeyConnectionAbs createKeyConnectionAbs(String[] command) {
-        Integer connectingFrom = Integer.parseInt(command[1]);
-        String connectingTo = command[2];
-        Absorber abs = null;
-
-
-        if(model.getAbsorber().getName().equals(connectingTo)) {
-            return new KeyConnectionAbs(connectingFrom, model.getAbsorber(), "down");
-        } else {
-            return null;
+    private void createKeyConnectionAbs(String[] command) {
+        Integer keyID = Integer.parseInt(command[2]);
+        String upDown = command[3];
+        String absorberName = command[4];
+        Absorber absorber = model.getAbsorber();
+        if(absorber != null) {
+            if(absorber.getName().equals(absorberName)) {
+                model.addKeyConnectionAbs(keyID, absorber, upDown);
+            }
         }
     }
 }
