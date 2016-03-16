@@ -22,4 +22,11 @@ public class GBallModelTest {
         assertThat(actual, is(equalTo(true)));
     }
 
+    @Test
+    public void testAddCircularBumperNameNotUnique() {
+        model.addCircularBumper(380, 380, 0, "C1");
+        boolean actual = model.addCircularBumper(200, 200, 0, "C1");
+        assertThat(actual, is(equalTo(false)));
+    }
+
 }
