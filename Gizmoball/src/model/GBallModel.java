@@ -8,6 +8,7 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.jar.Pack200;
 
 import physics.Circle;
 import physics.Geometry;
@@ -219,7 +220,7 @@ public class GBallModel extends Observable implements IGBallModel {
         return null;
     }
 
-    private Flipper getFlipper(String flipperName) {
+    public Flipper getFlipper(String flipperName) {
         for(Flipper flipper : flippers) {
             if(flipper.getName().equals(flipperName)) {
                 return flipper;
@@ -265,13 +266,28 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
 
-    public boolean addKeyConnectionAbs(KeyConnectionAbs keyConnectionAbs) {
-        return keyConnectionsAbs.add(keyConnectionAbs);
+    public boolean addKeyConnectionAbs(int keyID, Absorber abs, String upDown) {
+        if(checkExistingAbsorber(abs.getName())) {
+            KeyConnectionAbs keyConnectionAbs = new KeyConnectionAbs(keyID, abs, upDown);
+            keyConnectionsAbs.add(keyConnectionAbs);
+            return true;
+        }
+        return false;
     }
 
-    public boolean addKeyConnectionFlipper(KeyConnectionFlipper keyConnectionFlipper) {
-        return keyConnectionsFlipper.add(keyConnectionFlipper);
+    private boolean checkExistingAbsorber(String absorberName) {
+        return absorber.getName().equals(absorberName);
     }
+
+    public boolean addKeyConnectionFlipper(int keyID, Flipper flipper, String upDown) {
+        if(checkFlipperExists(flipper.getName())) {
+            KeyConnectionFlipper keyConnectionFlipper = new KeyConnectionFlipper(keyID, flipper, upDown);
+            keyConnectionsFlipper.add(keyConnectionFlipper);
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     public List<Bumper> getGizmos() {
@@ -715,5 +731,21 @@ public class GBallModel extends Observable implements IGBallModel {
 
     public File getLoadFile(){
         return loadFile;
+    }
+
+    @Override
+    public String getObjectTypeForKeyConnection(String objectName) {
+        if(absorber != null) {
+            if(absorber.getName().equals(objectName)) {
+                return "Absorber";
+            }
+        }
+
+        for(Flipper flipper : flippers) {
+            if(flipper.getName().equals(objectName)) {
+                return "Flipper";
+            }
+        }
+        return null;
     }
 }
