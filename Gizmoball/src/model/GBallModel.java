@@ -175,10 +175,13 @@ public class GBallModel extends Observable implements IGBallModel {
                         absorber.getXBottomRight(), absorber.getYBottomRight());
             if(occupiedSpacesAbs(Math.min(x,x1)/20, Math.min(y,y1)/20)) return false;
         }
-        absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
-        occupyAbs(x, y, x1, y1);
-        notifyObs();
-        return true;
+        if(!checkExistingName(name)) {
+            absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
+            occupyAbs(x, y, x1, y1);
+            notifyObs();
+            return true;
+        }
+        return false;
     }
 
     @Override
