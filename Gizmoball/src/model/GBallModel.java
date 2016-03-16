@@ -73,7 +73,7 @@ public class GBallModel extends Observable implements IGBallModel {
         lX = x/20;
         lY = y/20;
         if(lX > 18 || lY > 18) return false;
-        if(!occupiedSpacesFlipper(lX, lY)) {
+        if(!occupiedSpacesFlipper(lX, lY) && !checkExistingName(name)) {
             occupyFlipper(lX,lY);
             Flipper f = new Flipper(x, y, isLeft, Color.YELLOW, name);
             flippers.add(f);
