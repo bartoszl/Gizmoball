@@ -199,7 +199,9 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addConnection(CircularBumper cBumper, Flipper flipper) {
-        if(!checkForExistingConnection(cBumper, flipper)) {
+        if(!checkForExistingConnection(cBumper, flipper)
+                && checkCircularBumperExists(cBumper)
+                && checkFlipperExists(flipper)) {
             Connection connection = new Connection(cBumper, flipper);
             connections.add(connection);
             return true;
