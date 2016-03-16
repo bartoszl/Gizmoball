@@ -436,11 +436,7 @@ public class GBallModel extends Observable implements IGBallModel {
 
     public void moveFlippers() {
         for(Flipper f : getFlippers()) {
-            if(f.getMovement() == IFlipper.Movement.FORWARDS) {
-                f.rotatePerTick();
-            } else if(f.getMovement() == IFlipper.Movement.BACKWARDS) {
-                f.rotatePerTick();
-            }
+            f.rotatePerTick();
             notifyObs();
         }
     }
@@ -478,9 +474,9 @@ public class GBallModel extends Observable implements IGBallModel {
 		double moveTime = 0.05;
 		List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
 		for(Ball ball: balls){
-            Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (500*moveTime));
-            Vect Vnew = applyFriction(temp, moveTime);
-            ball.setVelocity(Vnew);
+            //Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (500*moveTime));
+            //Vect Vnew = applyFriction(temp, moveTime);
+            //ball.setVelocity(Vnew);
 			cl.add(timeUntilCollision(ball));
 		}
 		for(Ball ball: balls){
@@ -527,14 +523,14 @@ public class GBallModel extends Observable implements IGBallModel {
         for(Ball b : balls){
             b.reset();
             b.setMoving(true);
-            b.setVelocity(new Vect(0,0));
+            b.setVelocity(new Vect(50,50));
         }
     }
-
+    /*
     public Vect applyFriction(Vect Vold, double time){
         double newVect = Math.sqrt((Math.pow(Vold.x(), 2)+Math.pow(Vold.y(), 2)));
         return Vold.times((1 - (0.025 * time) - ((0.025) * (newVect/20) * time)));
-    }
+    }*/
 
     public Ball moveBallForTime(Ball ball, double time){
 		double vx = ball.getVelocity().x();
@@ -542,6 +538,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		double newX = ball.getX() + (vx*time);
 		double newY = ball.getY() + (vy*time);
         // Very badly done stopping detection
+		/*
         Vect Vold = ball.getVelocity();
         if(ball.getX() == newX && ball.getY() == newY && !ball.isAbsorbed()
                 && ball.getVelocity().equals(Vold)
@@ -549,7 +546,7 @@ public class GBallModel extends Observable implements IGBallModel {
                 && Vold.y() < 20 && Vold.y() > -20){
             ball.setMoving(false);
             return ball;
-        }
+        }*/
 		ball.setXY(newX, newY);
 		return ball;
 	}
@@ -591,17 +588,35 @@ public class GBallModel extends Observable implements IGBallModel {
 		// Check flippers
 		for(Flipper flipper: flippers){
 			for(LineSegment line: flipper.getLines()){
-				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
-				if(time<shortest){
-					shortest=time;
-					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+				if(flipper.getMovement()==IFlipper.Movement.NONE){
+					time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
+					if(time<shortest){
+						shortest=time;
+						newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+					}
+				} else {
+					time = Geometry.timeUntilRotatingWallCollision(line, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
+					if(time<shortest){
+						shortest=time;
+						System.out.println("BAM");
+						newVelocity = Geometry.reflectRotatingWall(line, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
+					}
 				}
+				
 			}
 			for(Circle circle: flipper.getCircles()){
-				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
-				if(time<shortest){
-					shortest=time;
-					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+				if(flipper.getMovement()==IFlipper.Movement.NONE) {
+					time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
+					if(time<shortest){
+						shortest=time;
+						newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+					}
+				} else {
+					time = Geometry.timeUntilRotatingCircleCollision(circle, circle.getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
+					if(time<shortest){
+						shortest=time;
+						newVelocity = Geometry.reflectRotatingCircle(circle, circle.getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
+					}
 				}
 			}
 		}

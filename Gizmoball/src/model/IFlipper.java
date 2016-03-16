@@ -22,8 +22,6 @@ public interface IFlipper {
 
     public void rotate();
 
-    public int reservedArea();
-
     public Color getColor();
 
     public void setColor(Color color);
