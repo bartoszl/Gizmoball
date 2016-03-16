@@ -207,6 +207,17 @@ public class GBallModel extends Observable implements IGBallModel {
         return false;
     }
 
+    private CircularBumper getCircularBumper(String circularBumperName) {
+        for(Bumper gizmo : gizmos) {
+            if(gizmo instanceof CircularBumper) {
+                if(gizmo.getName().equals(circularBumperName)) {
+                    return (CircularBumper) gizmo;
+                }
+            }
+        }
+        return null;
+    }
+
     private boolean safeToAddConnection(String circularBumperName, String flipperName) {
         return !checkForExistingConnection(circularBumperName, flipperName)
                 && checkCircularBumperExists(circularBumperName)
