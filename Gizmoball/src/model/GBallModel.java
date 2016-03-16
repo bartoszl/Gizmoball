@@ -270,6 +270,7 @@ public class GBallModel extends Observable implements IGBallModel {
         if(checkExistingAbsorber(abs.getName())) {
             KeyConnectionAbs keyConnectionAbs = new KeyConnectionAbs(keyID, abs, upDown);
             keyConnectionsAbs.add(keyConnectionAbs);
+            System.out.println("KeyConnection " + keyConnectionAbs.getKeyID() + " " + keyConnectionAbs.getUpDown() + " " + keyConnectionAbs.getAbs().getName());
             return true;
         }
         return false;
@@ -283,6 +284,7 @@ public class GBallModel extends Observable implements IGBallModel {
         if(checkFlipperExists(flipper.getName())) {
             KeyConnectionFlipper keyConnectionFlipper = new KeyConnectionFlipper(keyID, flipper, upDown);
             keyConnectionsFlipper.add(keyConnectionFlipper);
+            System.out.println("KeyConnection " + keyConnectionFlipper.getKeyID() + " " + keyConnectionFlipper.getUpDown() + " " + keyConnectionFlipper.getFlipper().getName());
             return true;
         }
         return false;
