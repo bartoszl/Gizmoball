@@ -204,7 +204,6 @@ public class GBallModel extends Observable implements IGBallModel {
             Flipper flipper = getFlipper(flipperName);
             Connection connection = new Connection(circularBumper, flipper);
             connections.add(connection);
-            return true;
         }
         return false;
     }

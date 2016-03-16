@@ -71,10 +71,11 @@ public class ModelLoader {
 
                 case "Rotate" :
                     applyRotation(command);
+                    break;
 
-                    //case "Connect" :
-                    //model.addConnection(createConnection(command));
-                    //break;
+                case "Connect" :
+                    createConnection(command);
+                    break;
 
                     //case "KeyConnect" :
                     //    model.addKeyConnection(createKeyConnection(command));
@@ -151,25 +152,10 @@ public class ModelLoader {
         return Double.parseDouble(command[2]);
     }
 
-    private Connection createConnection(String[] command) {
-        String connectingFrom = command[1];
-        String connectingTo = command[2];
-        CircularBumper trigger = null;
-        Flipper flipper = null;
-
-        for(Bumper cb : model.getGizmos()) {
-            if(cb instanceof CircularBumper) {
-                trigger = (CircularBumper) cb;
-            }
-        }
-
-        for(Flipper f : model.getFlippers()) {
-            if(f.getName().equals(connectingTo)) {
-                flipper = f;
-            }
-        }
-
-        return new Connection(trigger, flipper);
+    private void createConnection(String[] command) {
+        String circularBumperName = command[1];
+        String flipperName = command[2];
+        model.addConnection(circularBumperName, flipperName);
     }
 
     private KeyConnectionFlipper createKeyConnectionFlipper(String[] command) {
