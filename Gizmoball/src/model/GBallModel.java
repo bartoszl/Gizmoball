@@ -8,6 +8,7 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.jar.Pack200;
 
 import physics.Circle;
 import physics.Geometry;
@@ -279,9 +280,14 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     public boolean addKeyConnectionFlipper(int keyID, Flipper flipper, String upDown) {
-        //return keyConnectionsFlipper.add(keyConnectionFlipper);
+        if(checkFlipperExists(flipper.getName())) {
+            KeyConnectionFlipper keyConnectionFlipper = new KeyConnectionFlipper(keyID, flipper, upDown);
+            keyConnectionsFlipper.add(keyConnectionFlipper);
+            return true;
+        }
         return false;
     }
+
 
     @Override
     public List<Bumper> getGizmos() {
