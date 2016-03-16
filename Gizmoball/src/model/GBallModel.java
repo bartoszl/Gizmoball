@@ -89,6 +89,29 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     private boolean checkExistingName(String name) {
+        for(Bumper gizmo : gizmos) {
+            if(gizmo.getName().equals(name)) {
+                return true;
+            }
+        }
+
+        for(Flipper flipper : flippers) {
+            if(flipper.getName().equals(name)) {
+                return true;
+            }
+        }
+
+        for(Ball ball : balls) {
+            if(ball.getName().equals(name)) {
+                return true;
+            }
+        }
+
+        if(absorber != null) {
+            if(absorber.getName().equals(name)) {
+                return true;
+            }
+        }
         return false;
     }
 
