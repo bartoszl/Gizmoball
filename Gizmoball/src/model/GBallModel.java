@@ -265,12 +265,14 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
 
-    public boolean addKeyConnectionAbs(KeyConnectionAbs keyConnectionAbs) {
-        return keyConnectionsAbs.add(keyConnectionAbs);
+    public boolean addKeyConnectionAbs(int keyID, Absorber abs, String upDown) {
+        //return keyConnectionsAbs.add(keyConnectionAbs);
+        return false;
     }
 
-    public boolean addKeyConnectionFlipper(KeyConnectionFlipper keyConnectionFlipper) {
-        return keyConnectionsFlipper.add(keyConnectionFlipper);
+    public boolean addKeyConnectionFlipper(int keyID, Flipper flipper, String upDown) {
+        //return keyConnectionsFlipper.add(keyConnectionFlipper);
+        return false;
     }
 
     @Override
