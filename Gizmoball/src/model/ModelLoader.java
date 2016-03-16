@@ -166,19 +166,12 @@ public class ModelLoader {
         }
     }
 
-    private KeyConnectionFlipper createKeyConnectionFlipper(String[] command) {
-        Integer connectingFrom = Integer.parseInt(command[1]);
-        String connectingTo = command[2];
-        CircularBumper trigger = null;
-        Flipper flipper = null;
-
-        for (Flipper f : model.getFlippers()) {
-            if (f.getName().equals(connectingTo)) {
-                flipper = f;
-            }
-        }
-
-        return new KeyConnectionFlipper(connectingFrom, flipper, "down");
+    private void createKeyConnectionFlipper(String[] command) {
+        Integer keyID = Integer.parseInt(command[2]);
+        String upDown = command[3];
+        String flipperName = command[4];
+        Flipper flipper = model.getFlipper(flipperName);
+        model.addKeyConnectionFlipper(keyID, flipper, upDown);
     }
 
     private KeyConnectionAbs createKeyConnectionAbs(String[] command) {

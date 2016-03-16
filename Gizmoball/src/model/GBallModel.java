@@ -220,7 +220,7 @@ public class GBallModel extends Observable implements IGBallModel {
         return null;
     }
 
-    private Flipper getFlipper(String flipperName) {
+    public Flipper getFlipper(String flipperName) {
         for(Flipper flipper : flippers) {
             if(flipper.getName().equals(flipperName)) {
                 return flipper;

@@ -52,4 +52,5 @@ public interface IGBallModel    {
     public File getLoadFile();
 
     public String getObjectTypeForKeyConnection(String objectName);
+    public Flipper getFlipper(String flipperName);
 }
