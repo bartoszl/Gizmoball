@@ -88,6 +88,10 @@ public class GBallModel extends Observable implements IGBallModel {
 
     }
 
+    private boolean checkExistingName(String name) {
+        return false;
+    }
+
     @Override
     public boolean addTriangularBumper(int x, int y, int rotation, String name) {
         x -= x%20;
