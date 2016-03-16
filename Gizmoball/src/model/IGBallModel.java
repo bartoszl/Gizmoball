@@ -51,4 +51,5 @@ public interface IGBallModel    {
     public void setLoadFile(File f);
     public File getLoadFile();
 
+    public String getObjectTypeForKeyConnection(String objectName);
 }

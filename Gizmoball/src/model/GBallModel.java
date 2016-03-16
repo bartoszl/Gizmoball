@@ -734,4 +734,18 @@ public class GBallModel extends Observable implements IGBallModel {
     public File getLoadFile(){
         return loadFile;
     }
+
+    @Override
+    public String getObjectTypeForKeyConnection(String objectName) {
+        if(absorber.getName().equals(objectName)) {
+            return "Absorber";
+        }
+
+        for(Flipper flipper : flippers) {
+            if(flipper.getName().equals(objectName)) {
+                return "Flipper";
+            }
+        }
+        return null;
+    }
 }

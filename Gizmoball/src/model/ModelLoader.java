@@ -77,9 +77,9 @@ public class ModelLoader {
                     createConnection(command);
                     break;
 
-                    //case "KeyConnect" :
-                    //    model.addKeyConnection(createKeyConnection(command));
-                    //    break;
+                case "KeyConnect" :
+                    model.addKeyConnection(createKeyConnection(command));
+                    break;
             }
         }
     }
@@ -156,6 +156,10 @@ public class ModelLoader {
         String circularBumperName = command[1];
         String flipperName = command[2];
         model.addConnection(circularBumperName, flipperName);
+    }
+
+    private void createKeyConnection(String[] command) {
+
     }
 
     private KeyConnectionFlipper createKeyConnectionFlipper(String[] command) {
