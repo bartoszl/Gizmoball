@@ -200,7 +200,9 @@ public class GBallModel extends Observable implements IGBallModel {
     @Override
     public boolean addConnection(String cBumperName, String flipperName) {
         if(safeToAddConnection(cBumperName, flipperName)) {
-            Connection connection = new Connection(cBumper, flipper);
+            CircularBumper circularBumper = getCircularBumper(cBumperName);
+            Flipper flipper = getFlipper(flipperName);
+            Connection connection = new Connection(circularBumper, flipper);
             connections.add(connection);
             return true;
         }
@@ -213,6 +215,15 @@ public class GBallModel extends Observable implements IGBallModel {
                 if(gizmo.getName().equals(circularBumperName)) {
                     return (CircularBumper) gizmo;
                 }
+            }
+        }
+        return null;
+    }
+
+    private Flipper getFlipper(String flipperName) {
+        for(Flipper flipper : flippers) {
+            if(flipper.getName().equals(flipperName)) {
+                return flipper;
             }
         }
         return null;
