@@ -217,6 +217,18 @@ public class GBallModel extends Observable implements IGBallModel {
         return false;
     }
 
+    private boolean checkCircularBumperExists(CircularBumper circularBumper) {
+        for(Bumper gizmo : gizmos) {
+            if(gizmo instanceof CircularBumper) {
+                if(gizmo.getName().equals(circularBumper.getName())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 
     public boolean addKeyConnectionAbs(KeyConnectionAbs keyConnectionAbs) {
         return keyConnectionsAbs.add(keyConnectionAbs);
