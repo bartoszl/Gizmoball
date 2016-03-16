@@ -22,6 +22,29 @@ public class AbsorberTest {
 	}
 
 	@Test
+	public void testGetName() {
+		assertEquals(abs.getName(),"ABS1");
+	}
+	
+	
+	@Test
+	public void testConnection() {
+		abs.setConnectedToItself(true);
+		assertTrue(abs.isConnectedToItself());
+		abs.setConnectedToItself(false);
+		assertFalse(abs.isConnectedToItself());
+	}
+	
+	@Test
+	public void testMove() {
+		abs.move(0, 360);
+		assertTrue(abs.getXTopLeft()==0);
+		assertTrue(abs.getYTopLeft()==360);
+		assertTrue(abs.getXBottomRight()==400);
+		assertTrue(abs.getYBottomRight()==380);
+	}
+	
+	@Test
 	public void testGetTopLeftX() {
 		assertTrue(abs.getXTopLeft()==0);
 	}
@@ -111,8 +134,8 @@ public class AbsorberTest {
 		abs.absorb(ball);
 		assertTrue(ball.getVelocity().x()==0);
 		assertTrue(ball.getVelocity().y()==-1000);
-		assertTrue(ball.getX()==abs.getXBottomRight()-15);
-		assertTrue(ball.getY()==abs.getYBottomRight()-15);
+		assertTrue(ball.getX()==abs.getXBottomRight()-10);
+		assertTrue(ball.getY()==abs.getYBottomRight()-10);
 		assertTrue(ball.isAbsorbed());
 	}
 }
