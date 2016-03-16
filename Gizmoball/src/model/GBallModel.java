@@ -198,8 +198,70 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public boolean addConnection(Connection connection) {
-        return connections.add(connection);
+    public boolean addConnection(String cBumperName, String flipperName) {
+        if(safeToAddConnection(cBumperName, flipperName)) {
+            CircularBumper circularBumper = getCircularBumper(cBumperName);
+            Flipper flipper = getFlipper(flipperName);
+            Connection connection = new Connection(circularBumper, flipper);
+            connections.add(connection);
+        }
+        return false;
+    }
+
+    private CircularBumper getCircularBumper(String circularBumperName) {
+        for(Bumper gizmo : gizmos) {
+            if(gizmo instanceof CircularBumper) {
+                if(gizmo.getName().equals(circularBumperName)) {
+                    return (CircularBumper) gizmo;
+                }
+            }
+        }
+        return null;
+    }
+
+    private Flipper getFlipper(String flipperName) {
+        for(Flipper flipper : flippers) {
+            if(flipper.getName().equals(flipperName)) {
+                return flipper;
+            }
+        }
+        return null;
+    }
+
+    private boolean safeToAddConnection(String circularBumperName, String flipperName) {
+        return !checkForExistingConnection(circularBumperName, flipperName)
+                && checkCircularBumperExists(circularBumperName)
+                && checkFlipperExists(flipperName);
+    }
+
+    private boolean checkForExistingConnection(String circularBumperName, String flipperName) {
+        for(Connection connection : connections) {
+            if(connection.getFlipper().getName().equals(flipperName)
+            && connection.getTrigger().getName().equals(circularBumperName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkCircularBumperExists(String circularBumperName) {
+        for(Bumper gizmo : gizmos) {
+            if(gizmo instanceof CircularBumper) {
+                if(gizmo.getName().equals(circularBumperName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean checkFlipperExists(String flipperName) {
+        for(Flipper f : flippers) {
+            if(f.getName().equals(flipperName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

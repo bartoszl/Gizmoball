@@ -54,7 +54,7 @@ public class AddConnectListener implements MouseListener {
                 Flipper f = m.findFlipper(x, y);
                 if(trigger != null) {
                     if (f != null) {
-                        m.addConnection(new Connection(trigger, f));
+                        m.addConnection(trigger.getName(), f.getName());
                         System.out.println("Connected!");
                     }
                 } else if(triggerAbs != null) {
