@@ -159,7 +159,11 @@ public class ModelLoader {
     }
 
     private void createKeyConnection(String[] command) {
-
+        if(model.getObjectTypeForKeyConnection(command[4]).equals("Absorber")) {
+            createKeyConnectionAbs(command);
+        } else if(model.getObjectTypeForKeyConnection(command[4]).equals("Flipper")) {
+            createKeyConnectionFlipper(command);
+        }
     }
 
     private KeyConnectionFlipper createKeyConnectionFlipper(String[] command) {
