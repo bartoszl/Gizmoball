@@ -29,4 +29,17 @@ public class GBallModelTest {
         assertThat(actual, is(equalTo(false)));
     }
 
+    @Test
+    public void testAddAbsorberNameUnique() {
+        boolean actual = model.addAbsorber("ABSORBER1", 100, 100, 200, 200);
+        assertThat(actual, is(equalTo(true)));
+    }
+
+    @Test
+    public void testAddAbsorberNameNotUnique() {
+        model.addCircularBumper(60, 60, 0, "ABS");
+        boolean actual = model.addAbsorber("ABS", 100, 100, 200, 200);
+        assertThat(actual, is(equalTo(false)));
+    }
+
 }
