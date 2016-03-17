@@ -35,7 +35,6 @@ public interface IGBallModel    {
     public boolean rotateElement(double x, double y);
     public boolean moveElement(double x, double y, double newX, double newY);
     public boolean[][] getOccupiedSpaces();
-    public void moveFlippers();
     public void clear();
     public Flipper findFlipper(double x, double y);
     public Bumper findBumper(double x, double y);

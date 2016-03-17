@@ -3,11 +3,10 @@ package model;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 import physics.*;
 
-public class Flipper extends Observable implements IFlipper {
+public class Flipper implements IFlipper {
 
     private boolean isLeft;
     private Color color;
@@ -15,12 +14,14 @@ public class Flipper extends Observable implements IFlipper {
     private Circle bottomCircle;
     private List<LineSegment> lines;
     private Movement movement;
-    private Position position;
-    private Angle rotationPerTick;
-    private Angle leftToRotate;
+    private double rotationPerTick;
+    private Angle currentRotation;
     private Vect origin;
     private String name;
     private int rotation;
+    private List<Circle> lineCircles;
+    
+    private static final double RAD = 0.017;
 
     /**
      * Creates a flipper on a 4-cell space, with specific color and position.
@@ -34,287 +35,135 @@ public class Flipper extends Observable implements IFlipper {
      */
     public Flipper(int cx, int cy, boolean isLeft, Color color, String name) {
         this.name = name;
-        leftToRotate = Angle.DEG_90;
-        double off = isLeft ? 0 : 30;
-        //For the right flipper it is 54 degrees -> 0.95 rad
-        //For the left it is 360 - 54 = 304 ->
-        rotationPerTick = new Angle(0.95);
-        rotation = 0;
+        this.rotationPerTick = 15*RAD;
+        this.rotation = 0;
         this.isLeft = isLeft;
         this.color=color;
-        origin = new Vect((double)cx, (double)cy);
-        lines = new ArrayList<>();
-        /** o **/
-        topCircle = new Circle(origin.x()+5+off, origin.y()+5, 5);
-        /** - **/
-        lines.add(new LineSegment(origin.x()+off, origin.y()+5, origin.x()+off+10, origin.y()+5));
-        /**| **/
-        lines.add(new LineSegment(origin.x()+off, origin.y()+5, origin.x()+off, origin.y()+35));
-        /**  |**/
-        lines.add(new LineSegment(origin.x()+off+10, origin.y()+5, origin.x()+off+10, origin.y()+35));
-        /** _ **/
-        lines.add(new LineSegment(origin.x()+off, origin.y()+35, origin.x()+off+10, origin.y()+35));
-        /** o **/
-        bottomCircle = new Circle(origin.x()+off+5, origin.y()+35, 5);
-        movement = Movement.NONE;
-        position = Position.VERTICAL;
-
+        this.currentRotation = Angle.ZERO;
+        this.origin = new Vect((double)cx, (double)cy);
+        this.movement = Movement.NONE;
+        makeLines();
+        makeCircles();
     }
-
-    /**
-     * This method changes coordinates of flipper
-     * @param cx new coordinate of left upper cell which is used for flipper
-     * @param cy new coordinate of left upper cell which is used for flipper
-     */
+    
+    @Override
     public void move(double cx, double cy) {
-        double off = isLeft ? 0 : 30;
         origin = new Vect(cx, cy);
-        topCircle = new Circle(origin.x()+5+off, origin.y()+5, 5);
-        List<LineSegment> newLines = new ArrayList<>();
-        newLines.add(new LineSegment(cx+off, cy, cx+off+10, cy));
-        newLines.add(new LineSegment(cx+off, cy, cx+off, cy+40));
-        newLines.add(new LineSegment(cx+off+10, cy, cx+off+10, cy+40));
-        newLines.add(new LineSegment(cx+off, cy+40, cx+off+10, cy+40));
-        lines = newLines;
-        bottomCircle = new Circle(origin.x()+off+5, origin.y()+35, 5);
-        this.notifyObservers();
-        this.setChanged();
+        makeLines();
+        makeCircles();
+        int temp = rotation;
+        rotation = 0;
+        for(int i=0;i<temp;i++)
+        	rotate();
     }
-
-    /**
-     * Rotate at angular velocity of 1080 degrees per second
-     * One tick is approx 0.05 sec -> 1080/100 * 5 = 54 (about 0.95 radians)
-     * degrees per tick.
-     * If possible rotate to 0.95 radians, if not -> rotate the remaining number of degrees.
-     */
-    public void rotatePerTick() {
+    
+    @Override
+    public void rotatePerTime(double time) {
         switch(movement) {
             case FORWARDS:
-                //moving forwards
-                if(getPosition() != Position.HORIZONTAL) {
-                    if (leftToRotate.compareTo(rotationPerTick) > 0) {
-                        //there are more than 0.95 left -> rotate at 0.95 and return remainder
-                        rotateInRun(rotationPerTick);
-                        leftToRotate = leftToRotate.minus(rotationPerTick);
-                        setPosition(Position.BETWEEN);
-                    } else {
-                        //there are less than 0.95 left -> rotate the remainder, stop movement, return 0
-                        rotateInRun(leftToRotate);
-                        setMovement(Movement.NONE);
-                        setPosition(Position.HORIZONTAL);
-                        leftToRotate = Angle.DEG_90;
-                    }
-                }
+            	if(currentRotation.radians()<Angle.DEG_90.radians()){
+            		double r = rotationPerTick * (time/0.05);
+            		if(currentRotation.radians()+r>Angle.DEG_90.radians()){
+            			r=Angle.DEG_90.radians()-currentRotation.radians();
+            		}
+            		currentRotation = new Angle(currentRotation.radians()+r);
+	            	rotateByAngle(new Angle(r));
+            	} else {
+            		movement = Movement.NONE;
+            	}
                 break;
             case BACKWARDS:
-                //moving backwards
-                if(getPosition() != Position.VERTICAL) {
-                    if (leftToRotate.compareTo(rotationPerTick) > 0) {
-                        //there are more than 0.95 left -> rotate at 0.95 and return remainder
-                        rotateInRun(Angle.ZERO.minus(rotationPerTick));
-                        leftToRotate = leftToRotate.minus(rotationPerTick);
-                        setPosition(Position.BETWEEN);
-                    } else {
-                        //there are less than 0.95 left -> rotate the remainder, stop movement, return 0
-                        rotateInRun(Angle.ZERO.minus(leftToRotate));
-                        movement = Movement.NONE;
-
-                        //change here!!!!
-                        leftToRotate = Angle.DEG_90;
-                        setPosition(Position.VERTICAL);
-                    }
-                }
+            	if(currentRotation.radians()>Angle.ZERO.radians()){
+            		double r = rotationPerTick * (time/0.05);
+            		if(currentRotation.radians()-r<Angle.ZERO.radians())
+            			r=currentRotation.radians();
+            		currentRotation = new Angle(currentRotation.radians()-r);
+            		rotateByAngle(Angle.ZERO.minus(new Angle(r)));
+            	} else {
+            		movement = Movement.NONE;
+            	}
                 break;
+            default:
+			break;
         }
     }
 
-    public void doAction(Object objectArg) {
-        setMovement(Movement.FORWARDS);
-        rotatePerTick();
+    @Override
+    public double getAngSpeed(){
+    	if(isLeft)
+    		return -rotationPerTick*20;
+    	else
+    		return rotationPerTick*20;
     }
 
-    /**
-     * This method rotates the flipper at a given Angle,
-     * also considering flipper's position (Left or Right)
-     * @param a Angle of rotation
-     */
-    public void rotateInRun(Angle a) {
-        //Flipper is left -> reverse rotation, otherwise -> do nothing
-        a = isLeft ? Angle.ZERO.minus(a) : a;
-
-        bottomCircle = Geometry.rotateAround(bottomCircle, topCircle.getCenter(), a);
-        for(LineSegment l : lines) {
-            l = Geometry.rotateAround(l, topCircle.getCenter(), a);
-        }
-        //atopCircle = Geometry.rotateAround(topCircle, topCircle.getCenter(), a);
-        setChanged();
-        notifyObservers();
+    @Override
+    public void press() {
+        movement = Movement.FORWARDS;
     }
-
-    /**
-     * @return reserved area for flipper
-     */
-    public int reservedArea() {
-        return 4;
+    
+    @Override
+    public void release() {
+        movement = Movement.BACKWARDS;
     }
-
-    /**
-     * @return color of flipper
-     */
-    public Color getColor() {
-        return color;
-    }
-
+    
+    @Override
     public int getRotation() {
-        //do nothing -> it's a flipper
         return rotation;
     }
-
-    public void press() {
-        if(getPosition() == IFlipper.Position.VERTICAL) {
-            setMovement(IFlipper.Movement.FORWARDS);
-        } else if(getPosition() == IFlipper.Position.BETWEEN) {
-            if(getMovement() == IFlipper.Movement.BACKWARDS) {
-                //reverse it
-                setLeft(Angle.DEG_90.minus(getLeft()));
-            }
-            setMovement(IFlipper.Movement.FORWARDS);
-        }
-    }
-
-    public void release() {
-        if(getPosition() == IFlipper.Position.HORIZONTAL) {
-            setMovement(IFlipper.Movement.BACKWARDS);
-        } else if(getPosition() == IFlipper.Position.BETWEEN) {
-            if(getMovement() == IFlipper.Movement.FORWARDS) {
-                //reverse it
-                setLeft(Angle.DEG_90.minus(getLeft()));
-            }
-            setMovement(IFlipper.Movement.BACKWARDS);
-        }
-    }
-
+    
+    @Override
     public void rotate() {
-        rotateInRun(Angle.DEG_90);
-        //swap circles
-        Circle temp = bottomCircle;
-        bottomCircle = topCircle;
-        topCircle = temp;
-        if(rotation+90 == 360) rotation=0;
-        else rotation += 90;
-        switch(rotation){
-            case 0: lines = getVerticalFlipperLines(isLeft ? 0 : 30);
-                    break;
-            case 90: lines = getHorizontalFlipperLines(0);
-                    break;
-            case 180: lines = getVerticalFlipperLines(isLeft ? 30 : 0);
-                break;
-            case 270: lines = getHorizontalFlipperLines(isLeft ? 0 : 30);
-                break;
-            default: break;
-        }
+        rotateByAngle(Angle.DEG_90);
+        swapCircles();
+        rotation=(rotation+1)%4;
     }
-
-    private List<LineSegment> getVerticalFlipperLines(int off){ // Left: 0, Right: 30
-        List<LineSegment> newLines = new ArrayList<>();
-        /** - **/
-        newLines.add(new LineSegment(origin.x()+off, origin.y()+5, origin.x()+off+10, origin.y()+5));
-        /**| **/
-        newLines.add(new LineSegment(origin.x()+off, origin.y()+5, origin.x()+off, origin.y()+35));
-        /**  |**/
-        newLines.add(new LineSegment(origin.x()+off+10, origin.y()+5, origin.x()+off+10, origin.y()+35));
-        /** _ **/
-        newLines.add(new LineSegment(origin.x()+off, origin.y()+35, origin.x()+off+10, origin.y()+35));
-        return newLines;
+    
+    @Override
+    public void setName(String name) {
+    	this.name = name;
     }
-
-    private List<LineSegment> getHorizontalFlipperLines(int off){ // Top: 0, Bottom0: 30
-        List<LineSegment> newLines = new ArrayList<>();
-        /** - **/
-        newLines.add(new LineSegment(origin.x()+5, origin.y()+off, origin.x()+5, origin.y()+off+10));
-        /**| **/
-        newLines.add(new LineSegment(origin.x()+5, origin.y()+off, origin.x()+35, origin.y()+off));
-        /**  |**/
-        newLines.add(new LineSegment(origin.x()+5, origin.y()+off+10, origin.x()+35, origin.y()+off+10));
-        /** _ **/
-        newLines.add(new LineSegment(origin.x()+35, origin.y()+off, origin.x()+35, origin.y()+off+10));
-        return newLines;
-    }
-
+    
+    @Override
     public String getName() {
         return name;
     }
-
-    /**
-     * @param color new color of flipper
-     */
+    
+    @Override
+    public Color getColor() {
+        return color;
+    }
+    
+    @Override
     public void setColor(Color color) {
         this.color = color;
     }
 
-    /**
-     * @return current direction of flippers' rotation
-     */
+    @Override
     public IFlipper.Movement getMovement() {
         return movement;
     }
 
-    /**
-     * @param movement new direction of flippers' rotation
-     */
+    @Override
     public void setMovement(Movement movement) {
         this.movement = movement;
     }
 
-    /**
-     * @return position of flipper (VERTICAL, HORIZONTAL or BETWEEN)
-     */
-    public Position getPosition() {
-        return position;
-    }
-
-    /**
-     * @param position new position of flipper (VERTICAL, HORIZONTAL or BETWEEN)
-     */
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    /**
-     * @return current angle left for rotation
-     */
-    public Angle getLeft() {
-        return leftToRotate;
-    }
-
-    /**
-     * @param left new angle left for rotation
-     */
-    public void setLeft(Angle left) {
-        leftToRotate = left;
-    }
-
-    /**
-     * @return center of top circle of flipper
-     */
+    @Override
     public Circle getOriginCircle() {
         return topCircle;
     }
 
-    /**
-     * @return center of end circle of flipper
-     */
+    @Override
     public Circle getEndCircle() {
         return bottomCircle;
     }
 
-    /**
-     * @return origin
-     */
+    @Override
     public Vect getOrigin() {
         return origin;
     }
-
+    
+    @Override
     public void setOrigin(Vect origin) {
         this.origin = origin;
     }
@@ -324,14 +173,68 @@ public class Flipper extends Observable implements IFlipper {
 		return isLeft;
 	}
 	
+	@Override
 	public List<LineSegment> getLines(){
 		return lines;
 	}
 	
+	@Override
 	public List<Circle> getCircles(){
 		List<Circle> l = new ArrayList<Circle>();
 		l.add(topCircle);
 		l.add(bottomCircle);
+		l.addAll(lineCircles);
 		return l;
 	}
+	
+	// Private Methods
+	
+	private void makeLines(){
+    	double off = isLeft ? 0 : 30;
+    	lines = new ArrayList<LineSegment>();
+        lines.add(new LineSegment(origin.x()+off, origin.y()+5, origin.x()+off, origin.y()+35));
+        lines.add(new LineSegment(origin.x()+off+10, origin.y()+5, origin.x()+off+10, origin.y()+35));
+        makeLineCircles();
+    }
+    
+    private void makeLineCircles(){
+    	lineCircles = new ArrayList<Circle>();
+        Circle line1a = new Circle(lines.get(0).p1().x(), lines.get(0).p1().y(), 0);
+        lineCircles.add(line1a);
+        Circle line1b = new Circle(lines.get(0).p2().x(), lines.get(0).p2().y(), 0);
+        lineCircles.add(line1b);
+        Circle line2a = new Circle(lines.get(1).p1().x(), lines.get(1).p1().y(), 0);
+        lineCircles.add(line2a);
+        Circle line2b = new Circle(lines.get(1).p2().x(), lines.get(1).p2().y(), 0);
+        lineCircles.add(line2b);
+    }
+    
+    private void makeCircles(){
+    	double off = isLeft ? 0 : 30;
+    	topCircle = new Circle(origin.x()+5+off, origin.y()+5, 5);
+        bottomCircle = new Circle(origin.x()+off+5, origin.y()+35, 5);
+    }
+    
+    private void swapCircles(){
+    	Circle temp = bottomCircle;
+        bottomCircle = topCircle;
+        topCircle = temp;
+    }
+    
+    private void rotateByAngle(Angle a) {
+        //Flipper is left -> reverse rotation, otherwise -> do nothing
+        a = isLeft ? Angle.ZERO.minus(a) : a;
+        
+        bottomCircle = Geometry.rotateAround(bottomCircle, topCircle.getCenter(), a);
+        List<LineSegment> temp = new ArrayList<LineSegment>();
+        for(LineSegment l : lines) {
+        	temp.add(Geometry.rotateAround(l, topCircle.getCenter(), a));
+        }
+        lines = temp;
+        List<Circle> tempc = new ArrayList<Circle>();
+        for(Circle c : lineCircles){
+        	tempc.add(Geometry.rotateAround(c, topCircle.getCenter(), a));
+        }
+        lineCircles = tempc;
+    }
 }

@@ -27,7 +27,6 @@ public class RunModeBtnListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==timer) {
         	model.moveBall();
-            model.moveFlippers();
         } else 
 		    switch(e.getActionCommand()){
 		    	case "Start":
