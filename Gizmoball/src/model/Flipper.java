@@ -51,6 +51,8 @@ public class Flipper implements IFlipper {
         origin = new Vect(cx, cy);
         makeLines();
         makeCircles();
+        for(int i=0;i<rotation;i++)
+        	rotateByAngle(Angle.DEG_90);
     }
     
     @Override
