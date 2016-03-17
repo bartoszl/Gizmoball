@@ -3,6 +3,7 @@ package controller;
 import model.GBallModel;
 import model.IGBallModel;
 import model.ModelLoader;
+import model.Writer;
 import view.Board;
 import view.IGUI;
 import view.Main;
@@ -100,6 +101,14 @@ public class BuildModeBtnListener implements ActionListener {
                 }
                 break;
             case "Save":
+                JFileChooser saveFC = new JFileChooser();
+                saveFC.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int saveValid = saveFC.showSaveDialog(gui.getFrame());
+                if(saveValid == JFileChooser.APPROVE_OPTION) {
+                    File saveFile = saveFC.getSelectedFile();
+                    Writer writer = new Writer();
+                    writer.writeModelToFile(model, saveFile.getName());
+                }
                 break;
             case "Quit":
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit",  JOptionPane.YES_NO_OPTION);
