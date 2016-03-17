@@ -73,6 +73,14 @@ public class RunModeBtnListener implements ActionListener {
                     timer.stop();
                     break;
                 case "Save":
+                    JFileChooser saveFC = new JFileChooser();
+                    saveFC.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                    int saveValid = saveFC.showSaveDialog(gui.getFrame());
+                    if(saveValid == JFileChooser.APPROVE_OPTION) {
+                        File saveFile = saveFC.getSelectedFile();
+                        Writer writer = new Writer();
+                        writer.writeModelToFile(model, saveFile.getName());
+                    }
                     break;
                 case "Quit":
                     int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit",  JOptionPane.YES_NO_OPTION);
