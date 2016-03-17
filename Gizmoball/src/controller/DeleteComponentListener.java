@@ -7,6 +7,7 @@ import model.IGBallModel;
 import physics.Angle;
 import view.Board;
 import view.BuildGUI;
+import view.IBuildGUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,10 +16,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class DeleteComponentListener implements MouseListener {
-    private BuildGUI bgui;
+    private IBuildGUI bgui;
     private IGBallModel model;
 
-    public DeleteComponentListener(BuildGUI bgui, IGBallModel model) {
+    public DeleteComponentListener(IBuildGUI bgui, IGBallModel model) {
         this.model = model;
         this.bgui = bgui;
     }

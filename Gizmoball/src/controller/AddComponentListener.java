@@ -1,16 +1,15 @@
 package controller;
 
-import model.IGBallModel;
 import view.Board;
-import view.BuildGUI;
+import view.IBuildGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AddComponentListener implements ActionListener {
-    private BuildGUI bgui;
+    private IBuildGUI bgui;
 
-    public AddComponentListener(BuildGUI bgui) {
+    public AddComponentListener(IBuildGUI bgui) {
         this.bgui = bgui;
     }
 

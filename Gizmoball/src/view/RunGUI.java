@@ -4,13 +4,9 @@ import javax.swing.*;
 
 import controller.RunModeBtnListener;
 import controller.RunModeKeyListener;
-import model.GBallModel;
 import model.IGBallModel;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-public class RunGUI implements IGUI{
+public class RunGUI implements IRunGUI {
 
 	private JFrame frame;
 	private JPanel panel;
@@ -112,8 +108,7 @@ public class RunGUI implements IGUI{
     }
 
     public void setMessage(String message) {
-        txtOutput.setText(message);
-    }
+        txtOutput.setText(message); }
 
     private JMenuBar createMenuBar(){
         JMenuBar menuBar = new JMenuBar();

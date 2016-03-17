@@ -2,6 +2,7 @@ package controller;
 
 import model.IGBallModel;
 import view.Board;
+import view.IBuildGUI;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -9,13 +10,13 @@ import java.awt.event.MouseListener;
 
 
 public class MoveGizmoListener implements MouseListener {
-    private Board board;
+    private IBuildGUI bgui;
     private IGBallModel model;
     private int[] clicks;
     private boolean first;
 
-    public MoveGizmoListener(Board board, IGBallModel model){
-        this.board = board;
+    public MoveGizmoListener(IBuildGUI bgui, IGBallModel model){
+        this.bgui = bgui;
         this.model = model;
         first = true;
         clicks = new int[4];
@@ -23,6 +24,7 @@ public class MoveGizmoListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        Board board = bgui.getGridView();
         Point mouseP = MouseInfo.getPointerInfo().getLocation();
         Point gridP = board.getLocationOnScreen();
         int x = mouseP.x - gridP.x;
@@ -31,12 +33,14 @@ public class MoveGizmoListener implements MouseListener {
             if(first){
                 clicks[0] = x;
                 clicks[1] = y;
+                bgui.setMessage("Component found!");
                 first = false;
             }
             else {
                 clicks[2] = x;
                 clicks[3] = y;
                 model.moveElement(clicks[0],clicks[1],clicks[2],clicks[3]);
+                bgui.setMessage("Component moved!");
                 first = true;
                 board.repaint();
             }

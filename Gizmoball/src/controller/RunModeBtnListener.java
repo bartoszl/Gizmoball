@@ -1,26 +1,23 @@
 package controller;
 
 import model.*;
-import physics.Angle;
-import view.Board;
-import view.IGUI;
+import view.IBuildGUI;
+import view.IRunGUI;
 import view.Main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import javax.swing.*;
 
 public class RunModeBtnListener implements ActionListener {
     private IGBallModel model;
-    private IGUI gui;
+    private IRunGUI gui;
     private Main main;
     
     private Timer timer;
 
-    public RunModeBtnListener(IGUI gui, IGBallModel model, Main main){
+    public RunModeBtnListener(IRunGUI gui, IGBallModel model, Main main){
     	this.gui = gui;
         this.model = model;
         this.main = main;

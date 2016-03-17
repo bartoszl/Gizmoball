@@ -5,7 +5,7 @@ import model.IGBallModel;
 import model.ModelLoader;
 import model.Writer;
 import view.Board;
-import view.IGUI;
+import view.IBuildGUI;
 import view.Main;
 
 import javax.swing.*;
@@ -18,10 +18,10 @@ import java.io.File;
 public class BuildModeBtnListener implements ActionListener {
     private Board board;
     private IGBallModel model;
-    private IGUI gui;
+    private IBuildGUI gui;
     private Main main;
 
-    public BuildModeBtnListener(IGUI gui, Board board, IGBallModel model, Main main) {
+    public BuildModeBtnListener(IBuildGUI gui, Board board, IGBallModel model, Main main) {
     	this.gui = gui;
         this.board = board;
         this.model = model;

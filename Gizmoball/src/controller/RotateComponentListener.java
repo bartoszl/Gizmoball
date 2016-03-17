@@ -31,7 +31,11 @@ public class RotateComponentListener implements MouseListener {
             Point gridP = b.getLocationOnScreen();
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            model.rotateElement(x, y);
+            if(model.rotateElement(x, y)){
+                bgui.setMessage("Component rotated!");
+            } else {
+                bgui.setMessage("Nothing done");
+            }
         }
 
     }

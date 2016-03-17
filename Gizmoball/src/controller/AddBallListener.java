@@ -3,18 +3,15 @@ package controller;
 import model.*;
 import view.*;
 
-import javax.xml.stream.Location;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddBallListener implements MouseListener {
-    private BuildGUI bgui;
+    private IBuildGUI bgui;
     private IGBallModel m;
 
-    public AddBallListener(BuildGUI bgui, IGBallModel m) {
+    public AddBallListener(IBuildGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
     }
@@ -23,7 +20,7 @@ public class AddBallListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
-        if(b.getAction() == Board.Action.ADD && bgui.getSelectedButtonText().equals("Ball")) {
+        if(b.getAction() == Board.Action.ADD && bgui.getSelectedComponent().equals("Ball")) {
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
             //paint it
