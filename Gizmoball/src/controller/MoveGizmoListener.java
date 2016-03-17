@@ -2,7 +2,7 @@ package controller;
 
 import model.IGBallModel;
 import view.Board;
-import view.IBuildGUI;
+import view.IGUI;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -10,12 +10,12 @@ import java.awt.event.MouseListener;
 
 
 public class MoveGizmoListener implements MouseListener {
-    private IBuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel model;
     private int[] clicks;
     private boolean first;
 
-    public MoveGizmoListener(IBuildGUI bgui, IGBallModel model){
+    public MoveGizmoListener(IGUI bgui, IGBallModel model){
         this.bgui = bgui;
         this.model = model;
         first = true;

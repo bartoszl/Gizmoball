@@ -2,8 +2,7 @@ package controller;
 
 import model.*;
 import view.Board;
-import view.BuildGUI;
-import view.IBuildGUI;
+import view.IGUI;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -12,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddKeyConnectListener implements MouseListener, KeyListener {
-    private IBuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
     private int mouseX;
     private int mouseY;
@@ -20,7 +19,7 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
     private Absorber abs;
     private MagicKeyListener mkl;
 
-    public AddKeyConnectListener(IBuildGUI bgui, IGBallModel m) {
+    public AddKeyConnectListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
         this.mkl = new MagicKeyListener(this);

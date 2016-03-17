@@ -1,8 +1,7 @@
 package controller;
 
 import model.*;
-import view.IBuildGUI;
-import view.IRunGUI;
+import view.IGUI;
 import view.Main;
 
 import java.awt.event.ActionEvent;
@@ -12,12 +11,12 @@ import javax.swing.*;
 
 public class RunModeBtnListener implements ActionListener {
     private IGBallModel model;
-    private IRunGUI gui;
+    private IGUI gui;
     private Main main;
     
     private Timer timer;
 
-    public RunModeBtnListener(IRunGUI gui, IGBallModel model, Main main){
+    public RunModeBtnListener(IGUI gui, IGBallModel model, Main main){
     	this.gui = gui;
         this.model = model;
         this.main = main;

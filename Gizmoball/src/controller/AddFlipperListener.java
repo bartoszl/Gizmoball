@@ -8,10 +8,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddFlipperListener implements MouseListener {
-    private IBuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
 
-    public AddFlipperListener(IBuildGUI bgui, IGBallModel m) {
+    public AddFlipperListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
     }

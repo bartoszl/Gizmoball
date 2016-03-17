@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * Created by Stephen on 01/03/2016.
  */
-public interface IBuildGUI {
+public interface IGUI {
 	Board getGridView();
 	JFrame getFrame();
 	JPanel getPanel();

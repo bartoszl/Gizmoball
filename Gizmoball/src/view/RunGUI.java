@@ -6,7 +6,7 @@ import controller.RunModeBtnListener;
 import controller.RunModeKeyListener;
 import model.IGBallModel;
 
-public class RunGUI implements IRunGUI {
+public class RunGUI implements IGUI {
 
 	private JFrame frame;
 	private JPanel panel;
@@ -109,6 +109,21 @@ public class RunGUI implements IRunGUI {
 
     public void setMessage(String message) {
         txtOutput.setText(message); }
+
+    @Override
+    public String getSelectedComponent() {
+        return null;
+    }
+
+    @Override
+    public String getFlipperPosition() {
+        return null;
+    }
+
+    @Override
+    public String getGizmoShape() {
+        return null;
+    }
 
     private JMenuBar createMenuBar(){
         JMenuBar menuBar = new JMenuBar();

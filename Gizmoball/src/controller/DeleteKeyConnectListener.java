@@ -2,8 +2,7 @@ package controller;
 
 import model.*;
 import view.Board;
-import view.BuildGUI;
-import view.IBuildGUI;
+import view.IGUI;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -12,12 +11,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class DeleteKeyConnectListener implements MouseListener, KeyListener {
-    private IBuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
     private IFlipper f;
     private IAbsorber abs;
 
-    public DeleteKeyConnectListener(IBuildGUI bgui, IGBallModel m) {
+    public DeleteKeyConnectListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
     }

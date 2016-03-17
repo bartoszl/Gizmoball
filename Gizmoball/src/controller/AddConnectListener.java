@@ -2,20 +2,20 @@ package controller;
 
 import model.*;
 import view.Board;
-import view.IBuildGUI;
+import view.IGUI;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddConnectListener implements MouseListener {
-    private IBuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
     private boolean firstStep;
     private Bumper trigger;
     private IAbsorber triggerAbs;
 
-    public AddConnectListener(IBuildGUI bgui, IGBallModel m) {
+    public AddConnectListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
         firstStep = true;

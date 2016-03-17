@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.Font;
 import java.util.Enumeration;
 
-public class BuildGUI implements IBuildGUI {
+public class BuildGUI implements IGUI {
 
 	private JFrame frame;
 	private JPanel panel;

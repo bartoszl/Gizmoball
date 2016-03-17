@@ -1,8 +1,7 @@
 package controller;
 
 import model.*;
-import view.IBuildGUI;
-import view.IRunGUI;
+import view.IGUI;
 import view.Main;
 
 import java.awt.event.KeyEvent;
@@ -13,12 +12,12 @@ import java.awt.event.KeyListener;
  */
 public class RunModeKeyListener implements KeyListener {
     private IGBallModel model;
-    private IRunGUI gui;
+    private IGUI gui;
     private Main main;
     private MagicKeyListener mkl;
 
 
-    public RunModeKeyListener(IRunGUI gui, IGBallModel model, Main main){
+    public RunModeKeyListener(IGUI gui, IGBallModel model, Main main){
         this.gui = gui;
         this.model = model;
         this.main = main;

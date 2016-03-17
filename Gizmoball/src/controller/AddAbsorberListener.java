@@ -8,12 +8,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddAbsorberListener implements MouseListener {
-    private IBuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
     private int[] clicks;
     private boolean first;
 
-    public AddAbsorberListener(IBuildGUI bgui, IGBallModel m) {
+    public AddAbsorberListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
         first = true;

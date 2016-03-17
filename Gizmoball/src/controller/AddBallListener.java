@@ -8,10 +8,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddBallListener implements MouseListener {
-    private IBuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
 
-    public AddBallListener(IBuildGUI bgui, IGBallModel m) {
+    public AddBallListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
     }
