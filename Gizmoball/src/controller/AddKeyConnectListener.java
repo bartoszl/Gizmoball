@@ -42,11 +42,13 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
             b.requestFocus();
             if(m.findFlipper(x, y) != null) {
                 f = m.findFlipper(x, y);
+                bgui.setMessage("Flipper found! Now press key to connect it");
             } else if( m.getAbsorber() != null &&
                     x <= m.getAbsorber().getXBottomRight() && x >= m.getAbsorber().getXTopLeft() &&
                             y <= m.getAbsorber().getYBottomRight() && y >= m.getAbsorber().getYTopLeft()
                     ) {
                 abs = m.getAbsorber();
+                bgui.setMessage("Absorber found! Now press key to connect it");
             }
         }
     }
@@ -82,12 +84,12 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
         if(b.getAction() == Board.Action.KEY_CONNECT) {
             if(f != null) {
                 m.addKeyConnectionFlipper(keyEvent.getKeyCode(), f, "down");
-                System.out.println("Added Key Connection to flipper! with key code " + keyEvent.getKeyCode());
+                bgui.setMessage("Connected key '"+KeyEvent.getKeyText(keyEvent.getKeyCode())+"' to flipper!");
                 f = null;
             } else if(abs != null) {
                 m.addKeyConnectionAbs(keyEvent.getKeyCode(), abs, "down");
                 m.setConnectedToAbs(false);
-                System.out.println("Added Key Connection to absorber! with key code " + keyEvent.getKeyCode());
+                bgui.setMessage("Connected key '"+KeyEvent.getKeyText(keyEvent.getKeyCode())+"' to absorber!");
                 abs = null;
             }
         }

@@ -52,8 +52,7 @@ public class BuildModeBtnListener implements ActionListener {
                 board.setAction(Board.Action.KEY_CONNECT);
                 break;
             case "Key Disconnect":
-                gui.setMessage("Click on Flipper or Absorber which you want to key disconnect. Warning!" +
-                    "It will remove ALL key connections to that Component");
+                gui.setMessage("Click on Flipper or Absorber which you want to key disconnect");
                 board.setAction(Board.Action.KEY_DISCONNECT);
                 break;
             case "Connect":
@@ -61,8 +60,7 @@ public class BuildModeBtnListener implements ActionListener {
                 board.setAction(Board.Action.CONNECT);
                 break;
             case "Disconnect":
-                gui.setMessage("Click on Flipper or Absorber which you want to disconnect. Warning!" +
-                        "It will remove ALL connections (but not key connections) to that Component");
+                gui.setMessage("Click on Flipper or Absorber which you want to disconnect");
                 board.setAction(Board.Action.DISCONNECT);
                 break;
             case "Clear":
