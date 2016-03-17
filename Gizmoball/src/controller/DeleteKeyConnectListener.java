@@ -37,10 +37,11 @@ public class DeleteKeyConnectListener implements MouseListener {
                     }
                 }
             } else if( m.getAbsorber() != null &&
-                    x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&
-                    y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
+                    x <= m.getAbsorber().getXBottomRight() && x >= m.getAbsorber().getXTopLeft() &&
+                    y <= m.getAbsorber().getYBottomRight() && y >= m.getAbsorber().getYTopLeft()
                     ) {
                 System.out.println("Disconnected");
+                m.setConnectedToAbs(true);
                 m.getKeyConnectionsAbs().clear();
             }
         }

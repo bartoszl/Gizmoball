@@ -17,10 +17,12 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
     private int mouseY;
     private Flipper f;
     private Absorber abs;
+    private MagicKeyListener mkl;
 
     public AddKeyConnectListener(BuildGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
+        this.mkl = new MagicKeyListener(this);
     }
 
 
@@ -41,8 +43,8 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
             if(m.findFlipper(x, y) != null) {
                 f = m.findFlipper(x, y);
             } else if( m.getAbsorber() != null &&
-                    x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&
-                            y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
+                    x <= m.getAbsorber().getXBottomRight() && x >= m.getAbsorber().getXTopLeft() &&
+                            y <= m.getAbsorber().getYBottomRight() && y >= m.getAbsorber().getYTopLeft()
                     ) {
                 abs = m.getAbsorber();
             }
@@ -84,6 +86,7 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
                 f = null;
             } else if(abs != null) {
                 m.addKeyConnectionAbs(keyEvent.getKeyCode(), abs, "down");
+                m.setConnectedToAbs(false);
                 System.out.println("Added Key Connection to absorber! with key code " + keyEvent.getKeyCode());
                 abs = null;
             }
