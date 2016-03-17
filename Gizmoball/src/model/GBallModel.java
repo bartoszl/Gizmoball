@@ -532,7 +532,6 @@ public class GBallModel extends Observable implements IGBallModel {
 		for(Flipper f:flippers){
 			double xx = f.getOrigin().x();
 			double yy = f.getOrigin().y();
-			System.out.println(xx+" "+yy);
 			for(int i=0;i<2;i++){
 				for(int j=0;j<2;j++){
 					if(xx==x-(i*20) && yy==y-(20*j)) return f;
@@ -622,7 +621,6 @@ public class GBallModel extends Observable implements IGBallModel {
 
     public void collidedWithBumper(Bumper bumper) {
         for(Connection c : getConnections()) {
-            System.out.println("Fire!");
             if(c.getTrigger().equals(bumper)) {
                 c.getFlipper().press();
                 c.getFlipper().release();
@@ -777,5 +775,9 @@ public class GBallModel extends Observable implements IGBallModel {
             }
         }
         return null;
+    }
+
+    public void setConnectedToAbs(boolean set){
+        absorber.setConnectedToItself(set);
     }
 }

@@ -53,4 +53,6 @@ public interface IGBallModel    {
 
     public String getObjectTypeForKeyConnection(String objectName);
     public Flipper getFlipper(String flipperName);
+
+    public void setConnectedToAbs(boolean set);
 }
