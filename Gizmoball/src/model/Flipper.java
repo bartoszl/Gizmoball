@@ -15,14 +15,14 @@ public class Flipper implements IFlipper {
     private Circle bottomCircle;
     private List<LineSegment> lines;
     private Movement movement;
-    private Position position;
     private double rotationPerTick;
     private Angle currentRotation;
     private Vect origin;
     private String name;
     private int rotation;
-    
     private List<Circle> lineCircles;
+    
+    private static final double RAD = 0.017;
 
     /**
      * Creates a flipper on a 4-cell space, with specific color and position.
@@ -37,7 +37,7 @@ public class Flipper implements IFlipper {
     public Flipper(int cx, int cy, boolean isLeft, Color color, String name) {
         this.name = name;
         double off = isLeft ? 0 : 30;
-        this.rotationPerTick = 15*0.017;
+        this.rotationPerTick = 15*RAD;
         this.rotation = 0;
         this.isLeft = isLeft;
         this.color=color;
@@ -53,7 +53,6 @@ public class Flipper implements IFlipper {
         /** o **/
         bottomCircle = new Circle(origin.x()+off+5, origin.y()+35, 5);
         movement = Movement.NONE;
-        position = Position.VERTICAL;
         
         lineCircles = new ArrayList<Circle>();
         Circle line1a = new Circle(lines.get(0).p1().x(), lines.get(0).p1().y(), 0);
@@ -83,14 +82,25 @@ public class Flipper implements IFlipper {
     	
         double off = isLeft ? 0 : 30;
         origin = new Vect(cx, cy);
-        topCircle = new Circle(origin.x()+5+off, origin.y()+5, 5);
-        List<LineSegment> newLines = new ArrayList<>();
-        newLines.add(new LineSegment(cx+off, cy, cx+off+10, cy));
-        newLines.add(new LineSegment(cx+off, cy, cx+off, cy+40));
-        newLines.add(new LineSegment(cx+off+10, cy, cx+off+10, cy+40));
-        newLines.add(new LineSegment(cx+off, cy+40, cx+off+10, cy+40));
-        lines = newLines;
+        lines = new ArrayList<LineSegment>();
         bottomCircle = new Circle(origin.x()+off+5, origin.y()+35, 5);
+        topCircle = new Circle(origin.x()+5+off, origin.y()+5, 5);
+        /**| **/
+        lines.add(new LineSegment(origin.x()+off, origin.y()+5, origin.x()+off, origin.y()+35));
+        /**  |**/
+        lines.add(new LineSegment(origin.x()+off+10, origin.y()+5, origin.x()+off+10, origin.y()+35));
+        /** o **/
+        bottomCircle = new Circle(origin.x()+off+5, origin.y()+35, 5);
+        
+        lineCircles = new ArrayList<Circle>();
+        Circle line1a = new Circle(lines.get(0).p1().x(), lines.get(0).p1().y(), 0);
+        lineCircles.add(line1a);
+        Circle line1b = new Circle(lines.get(0).p2().x(), lines.get(0).p2().y(), 0);
+        lineCircles.add(line1b);
+        Circle line2a = new Circle(lines.get(1).p1().x(), lines.get(1).p1().y(), 0);
+        lineCircles.add(line2a);
+        Circle line2b = new Circle(lines.get(1).p2().x(), lines.get(1).p2().y(), 0);
+        lineCircles.add(line2b);
         
     }
 
