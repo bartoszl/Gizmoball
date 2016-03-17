@@ -31,10 +31,10 @@ Circle C183 18 3
 Absorber A 0 19 20 20
 Ball B 1.0 11.0 0.0 0.0
 Rotate T
-LeftFlipper LF92 180 40
-RightFlipper RF112 220 40
-LeftFlipper LF87 160 140
-RightFlipper RF137 260 140
+LeftFlipper LF92 9 2
+RightFlipper RF112 11 2
+LeftFlipper LF87 8 7
+RightFlipper RF137 13 7
 Connect C43 LF87
 Connect C54 LF87
 Connect C65 LF87

@@ -105,7 +105,7 @@ public class WriterTest {
 
     @Test
     public void testGenerateFlipperSyntax_LeftFlipper() {
-        Flipper flipper = new Flipper(9, 2, true, Color.RED, "LF92");
+        Flipper flipper = new Flipper(180, 40, true, Color.RED, "LF92");
         List<String> actual = writer.generateFlipperSyntax(flipper);
         List<String> expected = new ArrayList<String>();
         expected.add("LeftFlipper");
@@ -117,7 +117,7 @@ public class WriterTest {
 
     @Test
     public void testGenerateFlipperSyntax_RightFlipper() {
-        Flipper flipper = new Flipper(10, 3, false, Color.RED, "RF103");
+        Flipper flipper = new Flipper(200, 60, false, Color.RED, "RF103");
         List<String> actual = writer.generateFlipperSyntax(flipper);
         List<String> expected = new ArrayList<String>();
         expected.add("RightFlipper");

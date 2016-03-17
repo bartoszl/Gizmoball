@@ -192,8 +192,8 @@ public class Writer {
             syntax.add("RightFlipper");
         }
         syntax.add(flipper.getName());
-        syntax.add(String.valueOf((int) flipper.getOrigin().x()));
-        syntax.add(String.valueOf((int) flipper.getOrigin().y()));
+        syntax.add(String.valueOf((int) flipper.getOrigin().x() / scale));
+        syntax.add(String.valueOf((int) flipper.getOrigin().y() / scale));
         return syntax;
     }
 
