@@ -31,12 +31,15 @@ public class AddGizmoListener implements MouseListener{
             switch(gizmoShape) {
                 case "Circle":
                     m.addCircularBumper(x, y, 0, "circle");
+                    bgui.setMessage("Circle added!");
                     break;
                 case "Triangle":
                     m.addTriangularBumper(x, y, 0, "triangle");
+                    bgui.setMessage("Triangle added!");
                     break;
                 case "Square":
                     m.addSquareBumper(x, y, 0, "square");
+                    bgui.setMessage("Square added!");
                     break;
                 default:
             }

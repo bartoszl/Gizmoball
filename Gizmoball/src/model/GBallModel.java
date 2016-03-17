@@ -43,6 +43,9 @@ public class GBallModel extends Observable implements IGBallModel {
         balls = new ArrayList<Ball>();
         walls = new Walls(0,0,400,400);
         occupiedSpaces = new boolean [20][20];
+        gravity = 25;
+        xFriction = 0.025;
+        yFriction = 0.025;
     }
 
     private void notifyObs() {
@@ -543,7 +546,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		double moveTime = 0.05;
 		List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
 		for(Ball ball: balls){
-            Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (500*moveTime));
+            Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (gravity*20*moveTime));
             Vect Vnew = applyFriction(temp, moveTime);
             ball.setVelocity(Vnew);
 			cl.add(timeUntilCollision(ball));
@@ -597,7 +600,7 @@ public class GBallModel extends Observable implements IGBallModel {
 
     public Vect applyFriction(Vect Vold, double time){
         double newVect = Math.sqrt((Math.pow(Vold.x(), 2)+Math.pow(Vold.y(), 2)));
-        return Vold.times((1 - (0.025 * time) - ((0.025) * (newVect/20) * time)));
+        return Vold.times((1 - (xFriction * time) - ((yFriction) * (newVect/20) * time)));
     }
 
     public Ball moveBallForTime(Ball ball, double time){

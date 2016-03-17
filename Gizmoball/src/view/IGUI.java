@@ -12,4 +12,7 @@ public interface IGUI  {
 	Board getGridView();
 	JFrame getFrame();
 	JPanel getPanel();
+	String getMessage();
+	void setMessage(String message);
+
 }
