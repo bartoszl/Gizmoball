@@ -8,9 +8,6 @@ import java.awt.Color;
 import java.util.List;
 
 public interface IFlipper {
-    enum Position {
-        VERTICAL, HORIZONTAL, BETWEEN
-    }
 
     enum Movement {
         FORWARDS, BACKWARDS, NONE
@@ -31,10 +28,6 @@ public interface IFlipper {
     public Circle getEndCircle();
 
     public Circle getOriginCircle();
-
-    public void setPosition(Position position);
-
-    public Position getPosition();
 
     public Movement getMovement();
 
