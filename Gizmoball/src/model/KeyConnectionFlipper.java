@@ -3,10 +3,10 @@ package model;
 public class KeyConnectionFlipper {
 
     private int keyID;
-    private Flipper flipper;
+    private IFlipper flipper;
     private String upDown;
 
-    public KeyConnectionFlipper(int keyID, Flipper flipper, String upDown) {
+    public KeyConnectionFlipper(int keyID, IFlipper flipper, String upDown) {
         this.keyID = keyID;
         this.flipper = flipper;
         this.upDown = upDown;
@@ -16,7 +16,7 @@ public class KeyConnectionFlipper {
         return keyID;
     }
 
-    public Flipper getFlipper() {
+    public IFlipper getFlipper() {
         return flipper;
     }
 

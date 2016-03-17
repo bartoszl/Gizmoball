@@ -37,14 +37,14 @@ public class RunModeKeyListener implements KeyListener {
         //loop through key flipper connections
         for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
             if(kcf.getKeyID() == keyCode) {
-                Flipper flipper = kcf.getFlipper();
+                IFlipper flipper = kcf.getFlipper();
                 flipper.press();
             }
         }
         //and absorber key connections
         for(KeyConnectionAbs kca : model.getKeyConnectionsAbs()) {
             if(kca.getKeyID() == keyCode) {
-                Absorber abs = kca.getAbs();
+                IAbsorber abs = kca.getAbs();
                 abs.fire();
             }
         }
@@ -56,7 +56,7 @@ public class RunModeKeyListener implements KeyListener {
         int keyCode = keyEvent.getKeyCode();
         for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
             if(kcf.getKeyID() == keyCode) {
-                Flipper flipper = kcf.getFlipper();
+                IFlipper flipper = kcf.getFlipper();
                 flipper.release();
             }
         }

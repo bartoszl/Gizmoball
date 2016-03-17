@@ -3,10 +3,10 @@ package model;
 public class KeyConnectionAbs {
 
     private int keyID;
-    private Absorber abs;
+    private IAbsorber abs;
     private String upDown;
 
-    public KeyConnectionAbs(int keyID, Absorber abs, String upDown) {
+    public KeyConnectionAbs(int keyID, IAbsorber abs, String upDown) {
         this.keyID = keyID;
         this.abs = abs;
         this.upDown = upDown;
@@ -16,7 +16,7 @@ public class KeyConnectionAbs {
         return keyID;
     }
 
-    public Absorber getAbs() {
+    public IAbsorber getAbs() {
         return abs;
     }
 
