@@ -15,8 +15,8 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
     private IGBallModel m;
     private int mouseX;
     private int mouseY;
-    private Flipper f;
-    private Absorber abs;
+    private IFlipper f;
+    private IAbsorber abs;
     private MagicKeyListener mkl;
 
     public AddKeyConnectListener(IGUI bgui, IGBallModel m) {

@@ -22,6 +22,8 @@ public interface IFlipper {
 
     public void rotate();
 
+    public String getName();
+
     public int reservedArea();
 
     public Color getColor();

@@ -42,7 +42,7 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                 if(keys.length() > 2) {
                     keys = keys.substring(0, keys.length() - 2);
                 }
-                keys = keys.substring(0, keys.length() - 2);
+                abs = null;
                 b.requestFocus();
                 bgui.setMessage("This flipper is connected to keys "+keys+". Press key to remove connection to it.");
             } else if( m.getAbsorber() != null &&
@@ -99,7 +99,6 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                     if(kcf.getFlipper().equals(f) && (kcf.getKeyID() == keyEvent.getKeyCode())) {
                         m.getKeyConnectionsFlipper().remove(kcf);
                         bgui.setMessage("Key '" + KeyEvent.getKeyText(kcf.getKeyID()) + "' is removed!");
-                        f = null;
                         removed = true;
                         break;
                     }
@@ -115,7 +114,6 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                     if((kca.getKeyID() == keyEvent.getKeyCode())) {
                         m.getKeyConnectionsAbs().remove(kca);
                         bgui.setMessage("Key '" + KeyEvent.getKeyText(kca.getKeyID()) + "' is removed!");
-                        f = null;
                         removed = true;
                         break;
                     }
