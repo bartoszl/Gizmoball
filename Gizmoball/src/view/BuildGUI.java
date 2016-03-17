@@ -19,6 +19,7 @@ public class BuildGUI implements IGUI{
     private ButtonGroup componentGroup;
     private DefaultComboBoxModel gizmoShapes;
     private DefaultComboBoxModel flipperPositions;
+    private JTextField txtOutput;
 
 	/**
 	 * Create the application.
@@ -94,10 +95,11 @@ public class BuildGUI implements IGUI{
 		frame.getContentPane().add(board);
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
-		
-		JTextField txtOutput = new JTextField();
-		txtOutput.setText("[Example Text]");
-		txtOutput.setEnabled(false);
+
+        txtOutput = new JTextField();
+        txtOutput.setEditable(false);
+        txtOutput.setText("Build Mode");
+
 		txtOutput.setBounds(0, 405, 634, 20);
 		frame.getContentPane().add(txtOutput);
 		
@@ -105,6 +107,14 @@ public class BuildGUI implements IGUI{
 		frame.setJMenuBar(menuBar);
         frame.setVisible(true);
 	}
+
+    public String getMessage() {
+        return txtOutput.getText();
+    }
+
+    public void setMessage(String message) {
+        txtOutput.setText(message);
+    }
 	
 	private JPanel create_buildMenu() {
         panel = new JPanel();
