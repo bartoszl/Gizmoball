@@ -33,7 +33,7 @@ public class RunModeKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        System.out.println("press");
+        //System.out.println("press");
         int keyCode = keyEvent.getKeyCode();
         //loop through key flipper connections
         for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
@@ -53,7 +53,7 @@ public class RunModeKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        System.out.println("release");
+        //System.out.println("release");
         int keyCode = keyEvent.getKeyCode();
         for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
             if(kcf.getKeyID() == keyCode) {

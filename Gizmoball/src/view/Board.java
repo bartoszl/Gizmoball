@@ -58,6 +58,16 @@ public abstract class Board extends JPanel implements Observer {
 					double dx = 5*Math.cos(alpha);
 					double dy = 5*Math.sin(alpha);
 					
+					polyX[0] = (int)(flipper.getLines().get(0).p1().x());
+					polyX[1] = (int)(flipper.getLines().get(0).p2().x());
+					polyX[2] = (int)(flipper.getLines().get(1).p2().x());
+					polyX[3] = (int)(flipper.getLines().get(1).p1().x());
+					
+					polyY[0] = (int)(flipper.getLines().get(0).p1().y());
+					polyY[1] = (int)(flipper.getLines().get(0).p2().y());
+					polyY[2] = (int)(flipper.getLines().get(1).p2().y());
+					polyY[3] = (int)(flipper.getLines().get(1).p1().y());
+					/*
 					polyX[0]=(int)(flipper.getOriginCircle().getCenter().x()+dx);
 					polyX[1]=(int)(flipper.getEndCircle().getCenter().x()+dx);
 					polyX[2]=(int)(flipper.getEndCircle().getCenter().x()-dx);
@@ -67,6 +77,7 @@ public abstract class Board extends JPanel implements Observer {
 					polyY[1]=(int)(flipper.getEndCircle().getCenter().y()+dy);
 					polyY[2]=(int)(flipper.getEndCircle().getCenter().y()-dy);
 					polyY[3]=(int)(flipper.getOriginCircle().getCenter().y()-dy);
+					*/
 				}
 				else{//if the flipper is horizontal, avoid division by 0
 					polyX[0]=(int)(flipper.getOriginCircle().getCenter().x());

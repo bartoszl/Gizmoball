@@ -2,8 +2,10 @@ package model;
 
 import physics.Angle;
 import physics.Circle;
+import physics.LineSegment;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.List;
 
 public interface IFlipper {
     enum Position {
@@ -14,7 +16,7 @@ public interface IFlipper {
         FORWARDS, BACKWARDS, NONE
     }
 
-    public void rotatePerTick();
+    public void rotatePerTime(double time);
 
     public void press();
 
@@ -30,10 +32,6 @@ public interface IFlipper {
 
     public Circle getOriginCircle();
 
-    public void setLeft(Angle left);
-
-    public Angle getLeft();
-
     public void setPosition(Position position);
 
     public Position getPosition();
@@ -43,4 +41,6 @@ public interface IFlipper {
     public void setMovement(Movement movement);
     
     public boolean isLeft();
+    
+    public List<LineSegment> getLines();
 }
