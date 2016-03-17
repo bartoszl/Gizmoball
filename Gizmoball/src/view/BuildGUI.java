@@ -4,8 +4,10 @@ import controller.*;
 import model.IGBallModel;
 
 import javax.swing.*;
-import java.awt.Font;
+import java.awt.*;
 import java.util.Enumeration;
+
+import static java.awt.Font.BOLD;
 
 public class BuildGUI implements IGUI {
 
@@ -98,7 +100,8 @@ public class BuildGUI implements IGUI {
         txtOutput = new JTextField();
         txtOutput.setEditable(false);
         txtOutput.setText("Build Mode");
-
+        Font font = txtOutput.getFont();
+        txtOutput.setFont(font.deriveFont(Font.BOLD));
 		txtOutput.setBounds(0, 405, 634, 20);
 		frame.getContentPane().add(txtOutput);
 		
@@ -113,6 +116,10 @@ public class BuildGUI implements IGUI {
 
     public void setMessage(String message) {
         txtOutput.setText(message);
+    }
+
+    public void setMessageColor(Color color) {
+        txtOutput.setForeground(color);
     }
 	
 	private JPanel create_buildMenu() {

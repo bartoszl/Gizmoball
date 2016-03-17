@@ -42,6 +42,7 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
             b.requestFocus();
             if(m.findFlipper(x, y) != null) {
                 f = m.findFlipper(x, y);
+                bgui.setMessageColor(Color.GREEN);
                 bgui.setMessage("Flipper found! Now press key to connect it");
                 abs = null;
             } else if( m.getAbsorber() != null &&
@@ -49,6 +50,7 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
                             y <= m.getAbsorber().getYBottomRight() && y >= m.getAbsorber().getYTopLeft()
                     ) {
                 abs = m.getAbsorber();
+                bgui.setMessageColor(Color.GREEN);
                 bgui.setMessage("Absorber found! Now press key to connect it");
                 f = null;
             }

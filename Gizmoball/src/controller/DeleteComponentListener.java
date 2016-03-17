@@ -26,7 +26,15 @@ public class DeleteComponentListener implements MouseListener {
             Point gridP = b.getLocationOnScreen();
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            model.deleteElement(x, y);
+            if(model.deleteElement(x, y)) {
+                bgui.setMessageColor(Color.GREEN);
+                bgui.setMessage("Component deleted!");
+            } else {
+                bgui.setMessageColor(Color.YELLOW);
+                bgui.setMessage("Nothing is done");
+            }
+
+
         }
 
     }

@@ -37,6 +37,7 @@ public class AddConnectListener implements MouseListener {
                 if(bumper instanceof CircularBumper) {
                     //sorry for casting
                     trigger = (CircularBumper) bumper;
+                    bgui.setMessageColor(Color.GREEN);
                     bgui.setMessage("Trigger found! Now press on Flipper or Absorber to connect it to trigger");
                     firstStep = false;
                 } else if(m.getAbsorber() != null &&
@@ -45,6 +46,7 @@ public class AddConnectListener implements MouseListener {
                         ) {
                     //it is absorber
                     triggerAbs = m.getAbsorber();
+                    bgui.setMessageColor(Color.GREEN);
                     bgui.setMessage("Trigger found! Now press on Flipper or Absorber to connect it to trigger");
                     firstStep = false;
                 }
@@ -54,6 +56,7 @@ public class AddConnectListener implements MouseListener {
                 if(trigger != null) {
                     if (f != null) {
                         m.addConnection(trigger.getName(), f.getName());
+                        bgui.setMessageColor(Color.GREEN);
                         bgui.setMessage("Flipper connected!");
                     }
                 } else if(triggerAbs != null) {
@@ -62,6 +65,7 @@ public class AddConnectListener implements MouseListener {
                             y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
                             ) {
                         m.getAbsorber().setConnectedToItself(true);
+                        bgui.setMessageColor(Color.GREEN);
                         bgui.setMessage("Absorber connected!");
                     }
                 }
