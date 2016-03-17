@@ -30,7 +30,6 @@ public class BuildModeBtnListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Event: " + e.getActionCommand());
         switch (e.getActionCommand()) {
             case "Move":
                 gui.setMessage("Click on a Component which you want to move");
@@ -41,7 +40,8 @@ public class BuildModeBtnListener implements ActionListener {
                 board.setAction(Board.Action.ROTATE);
                 break;
             case "Add Component":
-                gui.setMessage("Click on board where you want to add Component");
+                gui.setMessage("Click on board where you want to add Component "+
+                        "(for Absorber this will be top left corner).");
                 board.setAction(Board.Action.ADD);
                 break;
             case "Delete":

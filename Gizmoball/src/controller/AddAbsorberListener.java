@@ -31,6 +31,7 @@ public class AddAbsorberListener implements MouseListener {
             x=(x/20)*20;
             y=(y/20)*20;
             if(first){
+                bgui.setMessage("Top left corner set! Now click elsewhere to set bottom right corner of absorber");
                 clicks[0] = x;
                 clicks[1] = y;
                 first = false;
@@ -50,6 +51,7 @@ public class AddAbsorberListener implements MouseListener {
                     if (clicks[i] > 400) return;
                 }
                 m.addAbsorber("absorber",clicks[0],clicks[1],clicks[2],clicks[3]);
+                bgui.setMessage("Absorber added!");
                 first = true;
                 b.repaint();
             }

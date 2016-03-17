@@ -36,20 +36,30 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
             if(f != null) {
                 for(KeyConnectionFlipper kcf: m.getKeyConnectionsFlipper()) {
                     if(kcf.getFlipper().equals(f)) {
-                        keys += (KeyEvent.getKeyText(kcf.getKeyID()) + ", ");
-                        //m.getKeyConnectionsFlipper().remove(kcf);
-                        //break;
+                        keys += ("'" + KeyEvent.getKeyText(kcf.getKeyID()) + "', ");
                     }
                 }
+                if(keys.length() > 2) {
+                    keys = keys.substring(0, keys.length() - 2);
+                }
+                keys = keys.substring(0, keys.length() - 2);
                 b.requestFocus();
                 bgui.setMessage("This flipper is connected to keys "+keys+". Press key to remove connection to it.");
             } else if( m.getAbsorber() != null &&
                     x <= m.getAbsorber().getXBottomRight() && x >= m.getAbsorber().getXTopLeft() &&
                     y <= m.getAbsorber().getYBottomRight() && y >= m.getAbsorber().getYTopLeft()
                     ) {
-                System.out.println("Disconnected");
-                m.setConnectedToAbs(true);
-                m.getKeyConnectionsAbs().clear();
+                for(KeyConnectionAbs kca : m.getKeyConnectionsAbs()) {
+                   keys += ("'" + KeyEvent.getKeyText(kca.getKeyID()) + "', ");
+                }
+                if(keys.length() > 2) {
+                    keys = keys.substring(0, keys.length() - 2);
+                }
+                abs = m.getAbsorber();
+               // m.setConnectedToAbs(true);
+                //m.getKeyConnectionsAbs().clear();
+                b.requestFocus();
+                bgui.setMessage("This absorber is connected to keys "+keys+". Press key to remove connection to it.");
             }
         }
     }
@@ -88,7 +98,7 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                 for(KeyConnectionFlipper kcf : m.getKeyConnectionsFlipper()) {
                     if(kcf.getFlipper().equals(f) && (kcf.getKeyID() == keyEvent.getKeyCode())) {
                         m.getKeyConnectionsFlipper().remove(kcf);
-                        bgui.setMessage("Key " + KeyEvent.getKeyText(kcf.getKeyID()) + " is removed!");
+                        bgui.setMessage("Key '" + KeyEvent.getKeyText(kcf.getKeyID()) + "' is removed!");
                         f = null;
                         removed = true;
                         break;
@@ -96,9 +106,27 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                 }
 
                 if(!removed) {
-                    bgui.setMessage("Key " + KeyEvent.getKeyText(keyEvent.getKeyCode()) + " is not connected " +
+                    bgui.setMessage("Key '" + KeyEvent.getKeyText(keyEvent.getKeyCode()) + "' is not connected " +
                             " to that flipper! ");
                 }
+            } else if(abs != null) {
+                boolean removed = false;
+                for(KeyConnectionAbs kca : m.getKeyConnectionsAbs()) {
+                    if((kca.getKeyID() == keyEvent.getKeyCode())) {
+                        m.getKeyConnectionsAbs().remove(kca);
+                        bgui.setMessage("Key '" + KeyEvent.getKeyText(kca.getKeyID()) + "' is removed!");
+                        f = null;
+                        removed = true;
+                        break;
+                    }
+                }
+
+                if(!removed) {
+                    bgui.setMessage("Key '" + KeyEvent.getKeyText(keyEvent.getKeyCode()) + "' is not connected " +
+                            " to that absorber! ");
+                }
+            } else {
+                bgui.setMessage("No Component chosen yet");
             }
         }
     }
