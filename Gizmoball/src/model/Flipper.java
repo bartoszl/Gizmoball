@@ -51,8 +51,10 @@ public class Flipper implements IFlipper {
         origin = new Vect(cx, cy);
         makeLines();
         makeCircles();
-        for(int i=0;i<rotation;i++)
-        	rotateByAngle(Angle.DEG_90);
+        int temp = rotation;
+        rotation = 0;
+        for(int i=0;i<temp;i++)
+        	rotate();
     }
     
     @Override
@@ -112,10 +114,7 @@ public class Flipper implements IFlipper {
     @Override
     public void rotate() {
         rotateByAngle(Angle.DEG_90);
-        //swap circles
-        Circle temp = bottomCircle;
-        bottomCircle = topCircle;
-        topCircle = temp;
+        swapCircles();
         rotation=(rotation+1)%4;
     }
     
@@ -216,10 +215,16 @@ public class Flipper implements IFlipper {
         bottomCircle = new Circle(origin.x()+off+5, origin.y()+35, 5);
     }
     
+    private void swapCircles(){
+    	Circle temp = bottomCircle;
+        bottomCircle = topCircle;
+        topCircle = temp;
+    }
+    
     private void rotateByAngle(Angle a) {
         //Flipper is left -> reverse rotation, otherwise -> do nothing
         a = isLeft ? Angle.ZERO.minus(a) : a;
-
+        
         bottomCircle = Geometry.rotateAround(bottomCircle, topCircle.getCenter(), a);
         List<LineSegment> temp = new ArrayList<LineSegment>();
         for(LineSegment l : lines) {
