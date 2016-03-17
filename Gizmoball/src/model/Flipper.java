@@ -100,7 +100,7 @@ public class Flipper implements IFlipper {
             			r=Angle.DEG_90.radians()-currentRotation.radians();
             		}
             		currentRotation = new Angle(currentRotation.radians()+r);
-	            	rotateInRun(new Angle(r));
+	            	rotateByAngle(new Angle(r));
             	} else {
             		movement = Movement.NONE;
             	}
@@ -111,7 +111,7 @@ public class Flipper implements IFlipper {
             		if(currentRotation.radians()-r<Angle.ZERO.radians())
             			r=currentRotation.radians();
             		currentRotation = new Angle(currentRotation.radians()-r);
-            		rotateInRun(Angle.ZERO.minus(new Angle(r)));
+            		rotateByAngle(Angle.ZERO.minus(new Angle(r)));
             	} else {
             		movement = Movement.NONE;
             	}
@@ -124,7 +124,7 @@ public class Flipper implements IFlipper {
      * also considering flipper's position (Left or Right)
      * @param a Angle of rotation
      */
-    public void rotateInRun(Angle a) {
+    private void rotateByAngle(Angle a) {
         //Flipper is left -> reverse rotation, otherwise -> do nothing
         a = isLeft ? Angle.ZERO.minus(a) : a;
 
@@ -161,7 +161,7 @@ public class Flipper implements IFlipper {
     }
 
     public void rotate() {
-        rotateInRun(Angle.DEG_90);
+        rotateByAngle(Angle.DEG_90);
         //swap circles
         Circle temp = bottomCircle;
         bottomCircle = topCircle;
