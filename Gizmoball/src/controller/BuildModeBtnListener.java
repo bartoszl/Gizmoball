@@ -3,6 +3,7 @@ package controller;
 import model.GBallModel;
 import model.IGBallModel;
 import model.ModelLoader;
+import model.Writer;
 import view.Board;
 import view.IGUI;
 import view.Main;
@@ -108,6 +109,14 @@ public class BuildModeBtnListener implements ActionListener {
                 }
                 break;
             case "Save":
+                JFileChooser saveFC = new JFileChooser();
+                saveFC.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int saveValid = saveFC.showSaveDialog(gui.getFrame());
+                if(saveValid == JFileChooser.APPROVE_OPTION) {
+                    File saveFile = saveFC.getSelectedFile();
+                    Writer writer = new Writer();
+                    writer.writeModelToFile(model, saveFile.getName());
+                }
                 break;
             case "Quit":
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit",  JOptionPane.YES_NO_OPTION);
@@ -142,9 +151,9 @@ public class BuildModeBtnListener implements ActionListener {
                             invalidY = true;
                         }
                         if(!invalidX && !invalidY) {
-                            if (x < 0 || x > 10) {
+                            if (x < 0 || x > 0.1) {
                                 invalidX = true;
-                            } else if (y < 0 || y > 10) {
+                            } else if (y < 0 || y > 0.1) {
                                 invalidY = true;
                             } else {
                                 model.setFriction(x, y); // May have to add Rounding
@@ -176,7 +185,7 @@ public class BuildModeBtnListener implements ActionListener {
                             invalidG = true;
                         }
                         if (!invalidG) {
-                            if (g < 0 || g > 10) {
+                            if (g < 0 || g > 50) {
                                 invalidG = true;
                             } else {
                                 System.out.println("G: " + g);

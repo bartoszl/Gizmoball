@@ -43,6 +43,9 @@ public class GBallModel extends Observable implements IGBallModel {
         balls = new ArrayList<Ball>();
         walls = new Walls(0,0,400,400);
         occupiedSpaces = new boolean [20][20];
+        gravity = 25;
+        xFriction = 0.025;
+        yFriction = 0.025;
     }
 
     private void notifyObs() {
@@ -57,7 +60,7 @@ public class GBallModel extends Observable implements IGBallModel {
         y -= y%20;
         lX = x/20;
         lY = y/20;
-        if(!occupiedSpaces[lX][lY] && !checkExistingName(name)) {
+        if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
             gizmos.add(new SquareBumper((double) x, (double) y, rotation, name));
             notifyObs();
@@ -73,7 +76,7 @@ public class GBallModel extends Observable implements IGBallModel {
         lX = x/20;
         lY = y/20;
         if(lX > 18 || lY > 18) return false;
-        if(!occupiedSpacesFlipper(lX, lY) && !checkExistingName(name)) {
+        if(!occupiedSpacesFlipper(lX, lY)) {
             occupyFlipper(lX,lY);
             Flipper f = new Flipper(x, y, isLeft, Color.YELLOW, name);
             flippers.add(f);
@@ -88,40 +91,13 @@ public class GBallModel extends Observable implements IGBallModel {
 
     }
 
-    private boolean checkExistingName(String name) {
-        for(Bumper gizmo : gizmos) {
-            if(gizmo.getName().equals(name)) {
-                return true;
-            }
-        }
-
-        for(Flipper flipper : flippers) {
-            if(flipper.getName().equals(name)) {
-                return true;
-            }
-        }
-
-        for(Ball ball : balls) {
-            if(ball.getName().equals(name)) {
-                return true;
-            }
-        }
-
-        if(absorber != null) {
-            if(absorber.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public boolean addTriangularBumper(int x, int y, int rotation, String name) {
         x -= x%20;
         y -= y%20;
         lX = x/20;
         lY = y/20;
-        if(!occupiedSpaces[lX][lY] && !checkExistingName(name)) {
+        if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
             TriangularBumper tBumper = new TriangularBumper((double) x - x%20, (double) y - y%20, rotation, name);
             gizmos.add(tBumper);
@@ -137,7 +113,7 @@ public class GBallModel extends Observable implements IGBallModel {
         y -= y%20;
         lX = x/20;
         lY = y/20;
-        if(!occupiedSpaces[lX][lY] && !checkExistingName(name)) {
+        if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
             CircularBumper cBumper = new CircularBumper((double) x, (double) y, rotation, name);
             gizmos.add(cBumper);
@@ -172,16 +148,13 @@ public class GBallModel extends Observable implements IGBallModel {
         }
         if(this.getAbsorber()!=null){
             unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
-                        absorber.getXBottomRight(), absorber.getYBottomRight());
+                    absorber.getXBottomRight(), absorber.getYBottomRight());
             if(occupiedSpacesAbs(Math.min(x,x1)/20, Math.min(y,y1)/20)) return false;
         }
-        if(!checkExistingName(name)) {
-            absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
-            occupyAbs(x, y, x1, y1);
-            notifyObs();
-            return true;
-        }
-        return false;
+        absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
+        occupyAbs(x, y, x1, y1);
+        notifyObs();
+        return true;
     }
 
     @Override
@@ -190,7 +163,7 @@ public class GBallModel extends Observable implements IGBallModel {
         y -= y%20;
         lX = (int) x/20;
         lY = (int) y/20;
-        if(!occupiedSpaces[lX][lY] && !checkExistingName(name)) {
+        if(!occupiedSpaces[lX][lY]) {
             occupiedSpaces[lX][lY] = true;
             Ball b = new Ball(name, x, y, xv, yv);
             balls.add(b);
@@ -297,25 +270,13 @@ public class GBallModel extends Observable implements IGBallModel {
 
 
     public boolean addKeyConnectionAbs(int keyID, Absorber abs, String upDown) {
-        if(checkExistingAbsorber(abs.getName())) {
-            KeyConnectionAbs keyConnectionAbs = new KeyConnectionAbs(keyID, abs, upDown);
-            keyConnectionsAbs.add(keyConnectionAbs);
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkExistingAbsorber(String absorberName) {
-        return absorber.getName().equals(absorberName);
+        KeyConnectionAbs keyConnectionAbs = new KeyConnectionAbs(keyID, abs, upDown);
+        return keyConnectionsAbs.add(keyConnectionAbs);
     }
 
     public boolean addKeyConnectionFlipper(int keyID, Flipper flipper, String upDown) {
-        if(checkFlipperExists(flipper.getName())) {
             KeyConnectionFlipper keyConnectionFlipper = new KeyConnectionFlipper(keyID, flipper, upDown);
-            keyConnectionsFlipper.add(keyConnectionFlipper);
-            return true;
-        }
-        return false;
+            return keyConnectionsFlipper.add(keyConnectionFlipper);
     }
 
 
@@ -453,6 +414,7 @@ public class GBallModel extends Observable implements IGBallModel {
 	}
 
     private boolean occupiedSpacesAbs(double x, double y){
+        if(x+absorber.getWidth()/20 >= 20 || y+absorber.getHeight()/20 >= 20) return false;
         for(int i = (int)x/20; i < (x+absorber.getWidth())/20; i++){
             for(int j = (int)y/20; j < (y+absorber.getHeight())/20; j++){
                 if(occupiedSpaces[i][j]) return true;
@@ -584,7 +546,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		double moveTime = 0.05;
 		List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
 		for(Ball ball: balls){
-            Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (500*moveTime));
+            Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (gravity*20*moveTime));
             Vect Vnew = applyFriction(temp, moveTime);
             ball.setVelocity(Vnew);
 			cl.add(timeUntilCollision(ball));
@@ -638,7 +600,7 @@ public class GBallModel extends Observable implements IGBallModel {
 
     public Vect applyFriction(Vect Vold, double time){
         double newVect = Math.sqrt((Math.pow(Vold.x(), 2)+Math.pow(Vold.y(), 2)));
-        return Vold.times((1 - (0.025 * time) - ((0.025) * (newVect/20) * time)));
+        return Vold.times((1 - (xFriction * time) - ((yFriction) * (newVect/20) * time)));
     }
 
     public Ball moveBallForTime(Ball ball, double time){

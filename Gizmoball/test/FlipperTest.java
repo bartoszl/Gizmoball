@@ -52,5 +52,4 @@ public class FlipperTest {
         Angle a = flipper.rotatePerTick(Angle.DEG_90);
         assertEquals(a, Angle.ZERO);
     }
-
 }
