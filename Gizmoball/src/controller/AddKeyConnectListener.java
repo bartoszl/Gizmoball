@@ -17,10 +17,12 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
     private int mouseY;
     private Flipper f;
     private Absorber abs;
+    private MagicKeyListener mkl;
 
     public AddKeyConnectListener(BuildGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
+        this.mkl = new MagicKeyListener(this);
     }
 
 
