@@ -3,18 +3,15 @@ package controller;
 import model.*;
 import view.*;
 
-import javax.xml.stream.Location;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddGizmoListener implements MouseListener{
-    private BuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
 
-    public AddGizmoListener(BuildGUI bgui, IGBallModel m) {
+    public AddGizmoListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
     }
@@ -22,7 +19,7 @@ public class AddGizmoListener implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
-        if(b.getAction() == Board.Action.ADD && bgui.getSelectedButtonText().equals("Gizmo")) {
+        if(b.getAction() == Board.Action.ADD && bgui.getSelectedComponent().equals("Gizmo")) {
             String gizmoShape = bgui.getGizmoShape();
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
@@ -31,12 +28,18 @@ public class AddGizmoListener implements MouseListener{
             switch(gizmoShape) {
                 case "Circle":
                     m.addCircularBumper(x, y, 0, "circle");
+                    bgui.setMessageColor(Color.GREEN);
+                    bgui.setMessage("Circle added!");
                     break;
                 case "Triangle":
                     m.addTriangularBumper(x, y, 0, "triangle");
+                    bgui.setMessageColor(Color.GREEN);
+                    bgui.setMessage("Triangle added!");
                     break;
                 case "Square":
                     m.addSquareBumper(x, y, 0, "square");
+                    bgui.setMessageColor(Color.GREEN);
+                    bgui.setMessage("Square added!");
                     break;
                 default:
             }

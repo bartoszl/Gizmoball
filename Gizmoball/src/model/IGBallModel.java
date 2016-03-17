@@ -19,9 +19,9 @@ public interface IGBallModel    {
     public void setFriction(double xFriction, double yFriction);
     public double getFrictionX();
     public double getFrictionY();
-    public boolean addConnection(Connection connection);
-    public boolean addKeyConnectionFlipper(KeyConnectionFlipper keyConnection);
-    public boolean addKeyConnectionAbs(KeyConnectionAbs keyConnection);
+    public boolean addConnection(String cBumperName, String flipperName);
+    public boolean addKeyConnectionFlipper(int keyID, IFlipper flipper, String upDown);
+    public boolean addKeyConnectionAbs(int keyID, IAbsorber abs, String upDown);
     public List<Bumper> getGizmos();
     public Absorber getAbsorber();
     public List<Ball> getBalls();
@@ -50,4 +50,8 @@ public interface IGBallModel    {
     public void setLoadFile(File f);
     public File getLoadFile();
 
+    public String getObjectTypeForKeyConnection(String objectName);
+    public Flipper getFlipper(String flipperName);
+
+    public void setConnectedToAbs(boolean set);
 }

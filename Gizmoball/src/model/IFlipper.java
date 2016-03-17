@@ -69,6 +69,7 @@ public interface IFlipper {
      * Rotates the flipper by 90 degrees clockwise.
      */
     public void rotate();
+
     
     /**
      * Getter method for name.
@@ -89,6 +90,7 @@ public interface IFlipper {
      * 
      * @return Color, representing Color of the flipper.
      */
+
     public Color getColor();
 
     /**

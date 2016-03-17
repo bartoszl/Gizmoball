@@ -3,18 +3,15 @@ package controller;
 import model.*;
 import view.*;
 
-import javax.xml.stream.Location;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddFlipperListener implements MouseListener {
-    private BuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
 
-    public AddFlipperListener(BuildGUI bgui, IGBallModel m) {
+    public AddFlipperListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
     }
@@ -23,7 +20,7 @@ public class AddFlipperListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
-        if(b.getAction() == Board.Action.ADD && bgui.getSelectedButtonText().equals("Flipper")) {
+        if(b.getAction() == Board.Action.ADD && bgui.getSelectedComponent().equals("Flipper")) {
             //paint it
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
@@ -32,9 +29,12 @@ public class AddFlipperListener implements MouseListener {
             switch(bgui.getFlipperPosition()) {
                 case "Left":
                     m.addFlipper(x, y, true, "flipper");
+                    bgui.setMessage("Flipper added!");
                     break;
                 case "Right":
                     m.addFlipper(x, y, false, "flipper");
+                    bgui.setMessageColor(Color.GREEN);
+                    bgui.setMessage("Flipper added!");
                     break;
                 default:
             }

@@ -3,20 +3,17 @@ package controller;
 import model.*;
 import view.*;
 
-import javax.xml.stream.Location;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddAbsorberListener implements MouseListener {
-    private BuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
     private int[] clicks;
     private boolean first;
 
-    public AddAbsorberListener(BuildGUI bgui, IGBallModel m) {
+    public AddAbsorberListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
         first = true;
@@ -26,7 +23,7 @@ public class AddAbsorberListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
-        if(b.getAction() == Board.Action.ADD && bgui.getSelectedButtonText().equals("Absorber")) {
+        if(b.getAction() == Board.Action.ADD && bgui.getSelectedComponent().equals("Absorber")) {
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
             int x = mouseP.x - gridP.x;
@@ -34,6 +31,7 @@ public class AddAbsorberListener implements MouseListener {
             x=(x/20)*20;
             y=(y/20)*20;
             if(first){
+                bgui.setMessage("Top left corner set! Now click elsewhere to set bottom right corner of absorber");
                 clicks[0] = x;
                 clicks[1] = y;
                 first = false;
@@ -53,6 +51,8 @@ public class AddAbsorberListener implements MouseListener {
                     if (clicks[i] > 400) return;
                 }
                 m.addAbsorber("absorber",clicks[0],clicks[1],clicks[2],clicks[3]);
+                bgui.setMessage("Absorber added!");
+                bgui.setMessageColor(Color.GREEN);
                 first = true;
                 b.repaint();
             }

@@ -3,11 +3,13 @@ package controller;
 import model.GBallModel;
 import model.IGBallModel;
 import model.ModelLoader;
+import model.Writer;
 import view.Board;
 import view.IGUI;
 import view.Main;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -29,30 +31,39 @@ public class BuildModeBtnListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Event: " + e.getActionCommand());
+        gui.setMessageColor(Color.BLACK);
         switch (e.getActionCommand()) {
             case "Move":
+                gui.setMessage("Click on a Component which you want to move");
                 board.setAction(Board.Action.MOVE);
                 break;
             case "Rotate":
+                gui.setMessage("Click on a Component which you want to rotate");
                 board.setAction(Board.Action.ROTATE);
                 break;
             case "Add Component":
+                gui.setMessage("Click where you want to add Component "+
+                        "(for Absorber this will be top left corner).");
                 board.setAction(Board.Action.ADD);
                 break;
             case "Delete":
+                gui.setMessage("Click on a Component which you want to delete");
                 board.setAction(Board.Action.DELETE);
                 break;
             case "Key Connect":
+                gui.setMessage("Click on Flipper or Absorber which you want to key connect");
                 board.setAction(Board.Action.KEY_CONNECT);
                 break;
             case "Key Disconnect":
+                gui.setMessage("Click on Flipper or Absorber which you want to key disconnect");
                 board.setAction(Board.Action.KEY_DISCONNECT);
                 break;
             case "Connect":
+                gui.setMessage("Click on Circular Bumper which should trigger the action");
                 board.setAction(Board.Action.CONNECT);
                 break;
             case "Disconnect":
+                gui.setMessage("Click on Flipper or Absorber which you want to disconnect");
                 board.setAction(Board.Action.DISCONNECT);
                 break;
             case "Clear":
@@ -100,6 +111,14 @@ public class BuildModeBtnListener implements ActionListener {
                 }
                 break;
             case "Save":
+                JFileChooser saveFC = new JFileChooser();
+                saveFC.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                int saveValid = saveFC.showSaveDialog(gui.getFrame());
+                if(saveValid == JFileChooser.APPROVE_OPTION) {
+                    File saveFile = saveFC.getSelectedFile();
+                    Writer writer = new Writer();
+                    writer.writeModelToFile(model, saveFile.getName());
+                }
                 break;
             case "Quit":
                 int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit",  JOptionPane.YES_NO_OPTION);
@@ -134,9 +153,9 @@ public class BuildModeBtnListener implements ActionListener {
                             invalidY = true;
                         }
                         if(!invalidX && !invalidY) {
-                            if (x < 0 || x > 10) {
+                            if (x < 0 || x > 0.1) {
                                 invalidX = true;
-                            } else if (y < 0 || y > 10) {
+                            } else if (y < 0 || y > 0.1) {
                                 invalidY = true;
                             } else {
                                 model.setFriction(x, y); // May have to add Rounding
@@ -168,7 +187,7 @@ public class BuildModeBtnListener implements ActionListener {
                             invalidG = true;
                         }
                         if (!invalidG) {
-                            if (g < 0 || g > 10) {
+                            if (g < 0 || g > 50) {
                                 invalidG = true;
                             } else {
                                 System.out.println("G: " + g);

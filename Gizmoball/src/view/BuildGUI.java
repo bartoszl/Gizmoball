@@ -1,15 +1,15 @@
 package view;
 
 import controller.*;
-import model.GBallModel;
 import model.IGBallModel;
 
 import javax.swing.*;
-import java.awt.Font;
-import java.awt.event.*;
+import java.awt.*;
 import java.util.Enumeration;
 
-public class BuildGUI implements IGUI{
+import static java.awt.Font.BOLD;
+
+public class BuildGUI implements IGUI {
 
 	private JFrame frame;
 	private JPanel panel;
@@ -19,6 +19,7 @@ public class BuildGUI implements IGUI{
     private ButtonGroup componentGroup;
     private DefaultComboBoxModel gizmoShapes;
     private DefaultComboBoxModel flipperPositions;
+    private JTextField txtOutput;
 
 	/**
 	 * Create the application.
@@ -77,27 +78,30 @@ public class BuildGUI implements IGUI{
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
 		AddKeyConnectListener akcl = new AddKeyConnectListener(this, model);
+        DeleteKeyConnectListener dkcl = new DeleteKeyConnectListener(this, model);
         board.addKeyListener(akcl);
+        board.addKeyListener(dkcl);
         board.addMouseListener(new AddGizmoListener(this, model));
         board.addMouseListener(new AddBallListener(this, model));
         board.addMouseListener(new AddAbsorberListener(this, model));
         board.addMouseListener(new AddFlipperListener(this, model));
         board.addMouseListener(new RotateComponentListener(this, model));
         board.addMouseListener(new DeleteComponentListener(this, model));
-        board.addMouseListener(akcl);
         board.addMouseListener(new AddConnectListener(this, model));
-        board.addMouseListener(new MoveGizmoListener(board, model));
+        board.addMouseListener(new MoveGizmoListener(this, model));
         board.addMouseListener(akcl);
-        board.addMouseListener(new DeleteConnectionListener(this, model));
+        board.addMouseListener(dkcl);
         board.addMouseListener(new DeleteKeyConnectListener(this, model));
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
-		
-		JTextField txtOutput = new JTextField();
-		txtOutput.setText("[Example Text]");
-		txtOutput.setEnabled(false);
+
+        txtOutput = new JTextField();
+        txtOutput.setEditable(false);
+        txtOutput.setText("Build Mode");
+        Font font = txtOutput.getFont();
+        txtOutput.setFont(font.deriveFont(Font.BOLD));
 		txtOutput.setBounds(0, 405, 634, 20);
 		frame.getContentPane().add(txtOutput);
 		
@@ -105,6 +109,18 @@ public class BuildGUI implements IGUI{
 		frame.setJMenuBar(menuBar);
         frame.setVisible(true);
 	}
+
+    public String getMessage() {
+        return txtOutput.getText();
+    }
+
+    public void setMessage(String message) {
+        txtOutput.setText(message);
+    }
+
+    public void setMessageColor(Color color) {
+        txtOutput.setForeground(color);
+    }
 	
 	private JPanel create_buildMenu() {
         panel = new JPanel();
@@ -279,7 +295,7 @@ public class BuildGUI implements IGUI{
         return mnPhysics;
     }
 
-    public String getSelectedButtonText() {
+    public String getSelectedComponent() {
         for (Enumeration<AbstractButton> buttons = componentGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
             if (button.isSelected()) {

@@ -71,14 +71,15 @@ public class ModelLoader {
 
                 case "Rotate" :
                     applyRotation(command);
+                    break;
 
-                    //case "Connect" :
-                    //model.addConnection(createConnection(command));
-                    //break;
+                case "Connect" :
+                    createConnection(command);
+                    break;
 
-                    //case "KeyConnect" :
-                    //    model.addKeyConnection(createKeyConnection(command));
-                    //    break;
+                case "KeyConnect" :
+                    createKeyConnection(command);
+                    break;
             }
         }
     }
@@ -151,52 +152,39 @@ public class ModelLoader {
         return Double.parseDouble(command[2]);
     }
 
-    private Connection createConnection(String[] command) {
-        String connectingFrom = command[1];
-        String connectingTo = command[2];
-        CircularBumper trigger = null;
-        Flipper flipper = null;
-
-        for(Bumper cb : model.getGizmos()) {
-            if(cb instanceof CircularBumper) {
-                trigger = (CircularBumper) cb;
-            }
-        }
-
-        for(Flipper f : model.getFlippers()) {
-            if(f.getName().equals(connectingTo)) {
-                flipper = f;
-            }
-        }
-
-        return new Connection(trigger, flipper);
+    private void createConnection(String[] command) {
+        String circularBumperName = command[1];
+        String flipperName = command[2];
+        model.addConnection(circularBumperName, flipperName);
     }
 
-    private KeyConnectionFlipper createKeyConnectionFlipper(String[] command) {
-        Integer connectingFrom = Integer.parseInt(command[1]);
-        String connectingTo = command[2];
-        CircularBumper trigger = null;
-        Flipper flipper = null;
-
-        for (Flipper f : model.getFlippers()) {
-            if (f.getName().equals(connectingTo)) {
-                flipper = f;
-            }
+    private void createKeyConnection(String[] command) {
+        if(model.getObjectTypeForKeyConnection(command[4]).equals("Absorber")) {
+            createKeyConnectionAbs(command);
+        } else if(model.getObjectTypeForKeyConnection(command[4]).equals("Flipper")) {
+            createKeyConnectionFlipper(command);
         }
-
-        return new KeyConnectionFlipper(connectingFrom, flipper, "down");
     }
 
-    private KeyConnectionAbs createKeyConnectionAbs(String[] command) {
-        Integer connectingFrom = Integer.parseInt(command[1]);
-        String connectingTo = command[2];
-        Absorber abs = null;
+    private void createKeyConnectionFlipper(String[] command) {
+        Integer keyID = Integer.parseInt(command[2]);
+        String upDown = command[3];
+        String flipperName = command[4];
+        Flipper flipper = model.getFlipper(flipperName);
+        if(flipper != null) {
+            model.addKeyConnectionFlipper(keyID, flipper, upDown);
+        }
+    }
 
-
-        if(model.getAbsorber().getName().equals(connectingTo)) {
-            return new KeyConnectionAbs(connectingFrom, model.getAbsorber(), "down");
-        } else {
-            return null;
+    private void createKeyConnectionAbs(String[] command) {
+        Integer keyID = Integer.parseInt(command[2]);
+        String upDown = command[3];
+        String absorberName = command[4];
+        Absorber absorber = model.getAbsorber();
+        if(absorber != null) {
+            if(absorber.getName().equals(absorberName)) {
+                model.addKeyConnectionAbs(keyID, absorber, upDown);
+            }
         }
     }
 }
