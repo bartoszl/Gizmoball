@@ -6,6 +6,8 @@ import controller.RunModeBtnListener;
 import controller.RunModeKeyListener;
 import model.IGBallModel;
 
+import java.awt.*;
+
 public class RunGUI implements IGUI {
 
 	private JFrame frame;
@@ -113,6 +115,11 @@ public class RunGUI implements IGUI {
     @Override
     public String getSelectedComponent() {
         return null;
+    }
+
+    @Override
+    public void setMessageColor(Color color) {
+
     }
 
     @Override

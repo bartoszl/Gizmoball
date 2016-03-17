@@ -32,8 +32,10 @@ public class RotateComponentListener implements MouseListener {
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
             if(model.rotateElement(x, y)){
+                bgui.setMessageColor(Color.GREEN);
                 bgui.setMessage("Component rotated!");
             } else {
+                bgui.setMessageColor(Color.RED);
                 bgui.setMessage("Nothing done");
             }
         }

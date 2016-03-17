@@ -52,6 +52,7 @@ public class AddAbsorberListener implements MouseListener {
                 }
                 m.addAbsorber("absorber",clicks[0],clicks[1],clicks[2],clicks[3]);
                 bgui.setMessage("Absorber added!");
+                bgui.setMessageColor(Color.GREEN);
                 first = true;
                 b.repaint();
             }

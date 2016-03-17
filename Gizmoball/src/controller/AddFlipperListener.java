@@ -33,6 +33,7 @@ public class AddFlipperListener implements MouseListener {
                     break;
                 case "Right":
                     m.addFlipper(x, y, false, "flipper");
+                    bgui.setMessageColor(Color.GREEN);
                     bgui.setMessage("Flipper added!");
                     break;
                 default:

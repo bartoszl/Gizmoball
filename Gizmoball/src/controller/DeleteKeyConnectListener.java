@@ -44,6 +44,7 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                 }
                 abs = null;
                 b.requestFocus();
+                bgui.setMessageColor(Color.BLACK);
                 bgui.setMessage("This flipper is connected to keys "+keys+". Press key to remove connection to it.");
             } else if( m.getAbsorber() != null &&
                     x <= m.getAbsorber().getXBottomRight() && x >= m.getAbsorber().getXTopLeft() &&
@@ -56,9 +57,8 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                     keys = keys.substring(0, keys.length() - 2);
                 }
                 abs = m.getAbsorber();
-               // m.setConnectedToAbs(true);
-                //m.getKeyConnectionsAbs().clear();
                 b.requestFocus();
+                bgui.setMessageColor(Color.BLACK);
                 bgui.setMessage("This absorber is connected to keys "+keys+". Press key to remove connection to it.");
             }
         }
@@ -98,6 +98,7 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                 for(KeyConnectionFlipper kcf : m.getKeyConnectionsFlipper()) {
                     if(kcf.getFlipper().equals(f) && (kcf.getKeyID() == keyEvent.getKeyCode())) {
                         m.getKeyConnectionsFlipper().remove(kcf);
+                        bgui.setMessageColor(Color.GREEN);
                         bgui.setMessage("Key '" + KeyEvent.getKeyText(kcf.getKeyID()) + "' is removed!");
                         removed = true;
                         break;
@@ -105,6 +106,7 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                 }
 
                 if(!removed) {
+                    bgui.setMessageColor(Color.RED);
                     bgui.setMessage("Key '" + KeyEvent.getKeyText(keyEvent.getKeyCode()) + "' is not connected " +
                             " to that flipper! ");
                 }
@@ -113,6 +115,7 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                 for(KeyConnectionAbs kca : m.getKeyConnectionsAbs()) {
                     if((kca.getKeyID() == keyEvent.getKeyCode())) {
                         m.getKeyConnectionsAbs().remove(kca);
+                        bgui.setMessageColor(Color.GREEN);
                         bgui.setMessage("Key '" + KeyEvent.getKeyText(kca.getKeyID()) + "' is removed!");
                         removed = true;
                         break;
@@ -120,10 +123,12 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                 }
 
                 if(!removed) {
+                    bgui.setMessageColor(Color.RED);
                     bgui.setMessage("Key '" + KeyEvent.getKeyText(keyEvent.getKeyCode()) + "' is not connected " +
                             " to that absorber! ");
                 }
             } else {
+                bgui.setMessageColor(Color.YELLOW);
                 bgui.setMessage("No Component chosen yet");
             }
         }

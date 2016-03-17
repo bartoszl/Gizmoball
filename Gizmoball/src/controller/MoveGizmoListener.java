@@ -33,6 +33,7 @@ public class MoveGizmoListener implements MouseListener {
             if(first){
                 clicks[0] = x;
                 clicks[1] = y;
+                bgui.setMessageColor(Color.GREEN);
                 bgui.setMessage("Component found!");
                 first = false;
             }
@@ -40,6 +41,7 @@ public class MoveGizmoListener implements MouseListener {
                 clicks[2] = x;
                 clicks[3] = y;
                 model.moveElement(clicks[0],clicks[1],clicks[2],clicks[3]);
+                bgui.setMessageColor(Color.GREEN);
                 bgui.setMessage("Component moved!");
                 first = true;
                 board.repaint();

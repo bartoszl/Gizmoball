@@ -28,6 +28,7 @@ public class AddBallListener implements MouseListener {
             int y = mouseP.y - gridP.y;
             m.addBall("ball", x, y, 50, 50);
             bgui.setMessage("Ball added!");
+            bgui.setMessageColor(Color.GREEN);
         }
     }
 
