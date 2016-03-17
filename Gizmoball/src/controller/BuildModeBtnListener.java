@@ -143,9 +143,9 @@ public class BuildModeBtnListener implements ActionListener {
                             invalidY = true;
                         }
                         if(!invalidX && !invalidY) {
-                            if (x < 0 || x > 10) {
+                            if (x < 0 || x > 0.1) {
                                 invalidX = true;
-                            } else if (y < 0 || y > 10) {
+                            } else if (y < 0 || y > 0.1) {
                                 invalidY = true;
                             } else {
                                 model.setFriction(x, y); // May have to add Rounding
@@ -177,7 +177,7 @@ public class BuildModeBtnListener implements ActionListener {
                             invalidG = true;
                         }
                         if (!invalidG) {
-                            if (g < 0 || g > 10) {
+                            if (g < 0 || g > 50) {
                                 invalidG = true;
                             } else {
                                 System.out.println("G: " + g);
