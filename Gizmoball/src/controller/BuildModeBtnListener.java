@@ -33,27 +33,35 @@ public class BuildModeBtnListener implements ActionListener {
         System.out.println("Event: " + e.getActionCommand());
         switch (e.getActionCommand()) {
             case "Move":
+                gui.setMessage("Click on a Component which you want to move");
                 board.setAction(Board.Action.MOVE);
                 break;
             case "Rotate":
+                gui.setMessage("Click on a Component which you want to rotate");
                 board.setAction(Board.Action.ROTATE);
                 break;
             case "Add Component":
+                gui.setMessage("Click on board where you want to add Component");
                 board.setAction(Board.Action.ADD);
                 break;
             case "Delete":
+                gui.setMessage("Click on a Component which you want to delete");
                 board.setAction(Board.Action.DELETE);
                 break;
             case "Key Connect":
+                gui.setMessage("Click on Flipper or Absorber which you want to key connect");
                 board.setAction(Board.Action.KEY_CONNECT);
                 break;
             case "Key Disconnect":
+                gui.setMessage("Click on Flipper or Absorber which you want to key disconnect");
                 board.setAction(Board.Action.KEY_DISCONNECT);
                 break;
             case "Connect":
+                gui.setMessage("Click on Circular Bumper which should trigger the action");
                 board.setAction(Board.Action.CONNECT);
                 break;
             case "Disconnect":
+                gui.setMessage("Click on Flipper or Absorber which you want to disconnect");
                 board.setAction(Board.Action.DISCONNECT);
                 break;
             case "Clear":

@@ -1,22 +1,14 @@
 package view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextPane;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import controller.RunModeBtnListener;
 import controller.RunModeKeyListener;
 import model.GBallModel;
 import model.IGBallModel;
 
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 
 public class RunGUI implements IGUI{
 
@@ -26,6 +18,7 @@ public class RunGUI implements IGUI{
     private Main main;
     private IGBallModel model;
     private RunModeBtnListener runModeBtnListener;
+    private JTextField txtOutput;
 
 	/**
 	 * Create the application.
@@ -98,14 +91,28 @@ public class RunGUI implements IGUI{
         board.setBounds(220, 0, 405, 405);
         frame.getContentPane().add(board);
 
-        JTextPane textPane = new JTextPane();
-        textPane.setBounds(0, 405, 634, 20);
-        frame.getContentPane().add(textPane);
+        //JTextPane textPane = new JTextPane();
+        //textPane.setBounds(0, 405, 634, 20);
+        //frame.getContentPane().add(textPane);
+        txtOutput = new JTextField();
+        txtOutput.setEditable(false);
+        txtOutput.setText("Run Mode");
+
+        txtOutput.setBounds(0, 405, 634, 20);
+        frame.getContentPane().add(txtOutput);
 
         JMenuBar menuBar = createMenuBar();
         frame.setJMenuBar(menuBar);
 
         frame.setVisible(true);
+    }
+
+    public String getMessage() {
+        return txtOutput.getText();
+    }
+
+    public void setMessage(String message) {
+        txtOutput.setText(message);
     }
 
     private JMenuBar createMenuBar(){
