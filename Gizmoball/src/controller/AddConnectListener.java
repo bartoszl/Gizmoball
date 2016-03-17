@@ -1,22 +1,21 @@
 package controller;
 
 import model.*;
-import physics.Circle;
 import view.Board;
-import view.BuildGUI;
+import view.IGUI;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class AddConnectListener implements MouseListener {
-    private BuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
     private boolean firstStep;
-    private CircularBumper trigger;
+    private Bumper trigger;
     private IAbsorber triggerAbs;
 
-    public AddConnectListener(BuildGUI bgui, IGBallModel m) {
+    public AddConnectListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
         firstStep = true;

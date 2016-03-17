@@ -4,13 +4,9 @@ import javax.swing.*;
 
 import controller.RunModeBtnListener;
 import controller.RunModeKeyListener;
-import model.GBallModel;
 import model.IGBallModel;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-public class RunGUI implements IGUI{
+public class RunGUI implements IGUI {
 
 	private JFrame frame;
 	private JPanel panel;
@@ -112,7 +108,21 @@ public class RunGUI implements IGUI{
     }
 
     public void setMessage(String message) {
-        txtOutput.setText(message);
+        txtOutput.setText(message); }
+
+    @Override
+    public String getSelectedComponent() {
+        return null;
+    }
+
+    @Override
+    public String getFlipperPosition() {
+        return null;
+    }
+
+    @Override
+    public String getGizmoShape() {
+        return null;
     }
 
     private JMenuBar createMenuBar(){

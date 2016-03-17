@@ -4,7 +4,6 @@ import model.*;
 import view.IGUI;
 import view.Main;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 

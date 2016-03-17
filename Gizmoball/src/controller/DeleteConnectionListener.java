@@ -2,17 +2,17 @@ package controller;
 
 import model.*;
 import view.Board;
-import view.BuildGUI;
+import view.IGUI;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class DeleteConnectionListener implements MouseListener {
-    private BuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel m;
 
-    public DeleteConnectionListener(BuildGUI bgui, IGBallModel m) {
+    public DeleteConnectionListener(IGUI bgui, IGBallModel m) {
         this.m = m;
         this.bgui = bgui;
     }

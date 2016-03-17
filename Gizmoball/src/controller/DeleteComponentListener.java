@@ -1,24 +1,18 @@
 package controller;
 
-import model.Ball;
-import model.Bumper;
-import model.Flipper;
 import model.IGBallModel;
-import physics.Angle;
 import view.Board;
-import view.BuildGUI;
+import view.IGUI;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class DeleteComponentListener implements MouseListener {
-    private BuildGUI bgui;
+    private IGUI bgui;
     private IGBallModel model;
 
-    public DeleteComponentListener(BuildGUI bgui, IGBallModel model) {
+    public DeleteComponentListener(IGUI bgui, IGBallModel model) {
         this.model = model;
         this.bgui = bgui;
     }

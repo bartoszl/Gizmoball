@@ -1,15 +1,13 @@
 package view;
 
 import controller.*;
-import model.GBallModel;
 import model.IGBallModel;
 
 import javax.swing.*;
 import java.awt.Font;
-import java.awt.event.*;
 import java.util.Enumeration;
 
-public class BuildGUI implements IGUI{
+public class BuildGUI implements IGUI {
 
 	private JFrame frame;
 	private JPanel panel;
@@ -88,7 +86,7 @@ public class BuildGUI implements IGUI{
         board.addMouseListener(new RotateComponentListener(this, model));
         board.addMouseListener(new DeleteComponentListener(this, model));
         board.addMouseListener(new AddConnectListener(this, model));
-        board.addMouseListener(new MoveGizmoListener(board, model));
+        board.addMouseListener(new MoveGizmoListener(this, model));
         board.addMouseListener(akcl);
         board.addMouseListener(dkcl);
         board.addMouseListener(new DeleteKeyConnectListener(this, model));
@@ -290,7 +288,7 @@ public class BuildGUI implements IGUI{
         return mnPhysics;
     }
 
-    public String getSelectedButtonText() {
+    public String getSelectedComponent() {
         for (Enumeration<AbstractButton> buttons = componentGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
             if (button.isSelected()) {
