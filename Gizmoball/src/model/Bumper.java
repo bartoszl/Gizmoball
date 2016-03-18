@@ -72,7 +72,19 @@ public interface Bumper {
 	 */
 	public void move(double x, double y);
 	
+	/**
+	 * Getter method for X coordinate.
+	 * 
+	 * @return double, representing the x coordinate of the top left corner of the grid in which 
+	 * 		   the bumper is placed.
+	 */
 	public double getX();
 	
+	/**
+	 * Getter method for Y coordinate.
+	 * 
+	 * @return double, representing the y coordinate of the top left corner of the grid in which 
+	 * 		   the bumper is placed.
+	 */
 	public double getY();
 }

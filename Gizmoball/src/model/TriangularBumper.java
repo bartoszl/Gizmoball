@@ -6,12 +6,26 @@ import java.util.List;
 
 import physics.*;
 
+/**
+ * 
+ * @author Bartosz Lewandowski
+ *
+ */
 public class TriangularBumper implements Bumper {
     private Color color;
     private String gizmoName;
     private double cx, cy;
     private int rotation;
-
+    
+    /**
+     * Constructor for Triangular Bumper.
+     * @param cx -> double, representing the x coordinate of the top left corner of the grid
+     * 				in which the Bumper is placed.
+     * @param cy -> double, representing the x coordinate of the top left corner of the grid
+     * 				in which the Bumper is placed.
+     * @param rotation -> int, representing how many times the bumper should be rotated by 90 degrees.
+     * @param gizmoName -> String, representing a name for the Bumper.
+     */
     public TriangularBumper(double cx, double cy, int rotation, String gizmoName) {
         this.cx = cx;
         this.cy = cy;
