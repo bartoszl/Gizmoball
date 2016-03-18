@@ -31,14 +31,13 @@ public class Flipper implements IFlipper {
      * @param cx coordinate of left upper cell which is used for flipper
      * @param cy coordinate of left upper cell which is used for flipper
      * @param isLeft specifies whether flipper is on a left or right side of space reserved
-     * @param color specifies the color of flipper
      */
-    public Flipper(int cx, int cy, boolean isLeft, Color color, String name) {
+    public Flipper(int cx, int cy, boolean isLeft, String name) {
         this.name = name;
         this.rotationPerTick = 15*RAD;
         this.rotation = 0;
         this.isLeft = isLeft;
-        this.color=color;
+        this.color = Color.YELLOW;
         this.currentRotation = Angle.ZERO;
         this.origin = new Vect((double)cx, (double)cy);
         this.movement = Movement.NONE;
