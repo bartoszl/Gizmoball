@@ -149,7 +149,7 @@ public class Writer {
      * The formal file syntax for a SquareBumper is:
      * Square <name> <int-pair>
      * For example: Square mySquare 4 5
-     * @param bumper -> The SquareBumper for which the file syntax is to be generated
+     * @param bumper -> The SquareBumper that the file syntax is to be generated for
      * @return -> A list of strings containing the file syntax for the given SquareBumper
      */
     public List<String> generateSquareBumperSyntax(SquareBumper bumper) {
@@ -165,6 +165,14 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the file syntax for a TriangularBumper.
+     * The formal file syntax for a TriangularBumper is:
+     * Triangle <name> <int-pair>
+     * For example: Triangle myTriangle 3 3
+     * @param bumper -> The TriangularBumper that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given TriangularBumper
+     */
     public List<String> generateTriangularBumperSyntax(TriangularBumper bumper) {
         String gizmoOp = "Triangle",
                 xCoordinate = String.valueOf((int) bumper.getX() / scale),
@@ -178,6 +186,14 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the file syntax for the CircularBumper.
+     * The formal file syntax for a CircularBumper is:
+     * Circle <name> <int-pair>
+     * For example: Circle myCircle 7 8
+     * @param bumper -> The CircularBumper that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given CircularBumper
+     */
     public List<String> generateCircularBumperSyntax(CircularBumper bumper) {
         String gizmoOp = "Circle",
                 xCoordinate = String.valueOf((int) bumper.getX() / scale),
@@ -191,6 +207,14 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the file syntax for a Ball.
+     * The formal file syntax for a Ball is:
+     * Ball <name> <float-pair> <float-pair>
+     * For example: Ball myBall 2.0 9.0 0.0 0.0
+     * @param ball -> The Ball that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given ball
+     */
     public List<String> generateBallSyntax(Ball ball) {
         List<String> syntax = new ArrayList<String>();
         String gizmoOp = "Ball",
@@ -208,6 +232,13 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the rotate syntax for a given Bumper, i.e. generate
+     * the number of Rotate commands that is required for the given Bumper.
+     * The formal file syntax for Rotate is: Rotate <name>
+     * @param bumper -> The Bumper to generate the number of Rotate commands required
+     * @return -> A list of strings containing the necessary Rotate commands for the given Bumper
+     */
     public List<String> generateRotateSyntax(Bumper bumper) {
         List<String> syntax = new ArrayList<String>();
         for(int i = 0; i < bumper.getRotation(); i++) {
@@ -216,6 +247,15 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the file syntax for a Flipper.
+     * The formal file syntax for a Flipper differs depending on whether it
+     * is a left flipper or a right flipper.
+     * For a left flipper the syntax is: LeftFlipper <name> <int-pair>
+     * For a right flipper the syntax is: RightFLipper <name> <int-pair>
+     * @param flipper -> The Flipper that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given Flipper
+     */
     public List<String> generateFlipperSyntax(Flipper flipper) {
         List<String> syntax = new ArrayList<String>();
         String name;
@@ -232,6 +272,14 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the file syntax for a Connection.
+     * The formal file syntax for a connection is:
+     * Connect <name> <name>
+     * For example: Connect myCircle myFlipper
+     * @param connection -> The Connection that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given Connection
+     */
     public List<String> generateConnectionSyntax(Connection connection) {
         ArrayList<String> syntax = new ArrayList<String>();
         syntax.add("Connect");
@@ -240,6 +288,15 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the file syntax for a KeyConnectionFlipper, i.e. a connection
+     * between a keyboard key and a Flipper.
+     * The formal file syntax for a KeyConnectionFlipper is:
+     * KeyConnect <keyID> <name>
+     * For example: KeyConnect 57 myFlipper
+     * @param conn -> The KeyConnectionFlipper that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given KeyConnectionFlipper
+     */
     public List<String> generateKeyConnectionFlipperSyntax(KeyConnectionFlipper conn) {
         ArrayList<String> syntax = new ArrayList<String>();
         syntax.add("KeyConnect");
@@ -250,6 +307,15 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the file syntax for a KeyConnectionAbs, i.e. a connection
+     * between a keyboard key and an Absorber.
+     * The formal file syntax for a KeyConnectionAbsorber is:
+     * KeyConnect <keyID> <name>
+     * For example: KeyConnect 57 myAbsorber
+     * @param conn -> The KeyConnectionAbs that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given KeyConnectionAbs
+     */
     public List<String> generateKeyConnectionAbsSyntax(KeyConnectionAbs conn) {
         ArrayList<String> syntax = new ArrayList<String>();
         syntax.add("KeyConnect");
