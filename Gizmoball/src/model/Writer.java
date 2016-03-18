@@ -124,7 +124,7 @@ public class Writer {
         String gizmoOp = "Square",
                 xCoordinate = String.valueOf((int) bumper.getX() / scale),
                 yCoordinate = String.valueOf((int) bumper.getY() / scale),
-                name = bumper.getName();
+                name = "S" + xCoordinate + yCoordinate;
         List<String> syntax = new ArrayList<String>();
         syntax.add(gizmoOp);
         syntax.add(name);
