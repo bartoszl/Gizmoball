@@ -39,7 +39,7 @@ public class WriterTest {
         List<String> actual = writer.generateTriangularBumperSyntax(tBumper);
         List<String> expected = new ArrayList<String>();
         expected.add("Triangle");
-        expected.add("T32");
+        expected.add("T33");
         expected.add("3");
         expected.add("3");
         assertEquals(expected, actual);
@@ -77,7 +77,7 @@ public class WriterTest {
         List<String> actual = writer.generateBallSyntax(ball);
         List<String> expected = new ArrayList<String>();
         expected.add("Ball");
-        expected.add("Ball55");
+        expected.add("B55");
         expected.add("5.0");
         expected.add("5.0");
         expected.add("50.0");
