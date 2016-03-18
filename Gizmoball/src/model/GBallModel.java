@@ -157,13 +157,10 @@ public class GBallModel extends Observable implements IGBallModel {
         }
         return false;
     }
-    
-    // HERE
 
     @Override
     public void setGravity(double gravity) {
         this.gravity = gravity;
-        notifyObs();
     }
 
     @Override
@@ -175,7 +172,6 @@ public class GBallModel extends Observable implements IGBallModel {
     public void setFriction(double xFriction, double yFriction) {
         this.xFriction = xFriction;
         this.yFriction = yFriction;
-        notifyObs();
     }
 
     @Override
