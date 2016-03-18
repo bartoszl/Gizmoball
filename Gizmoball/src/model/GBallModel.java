@@ -79,7 +79,7 @@ public class GBallModel extends Observable implements IGBallModel {
         if(lX > 18 || lY > 18) return false;
         if(!occupiedSpacesFlipper(lX, lY)) {
             occupyFlipper(lX,lY);
-            Flipper f = new Flipper(x, y, isLeft, Color.YELLOW, name);
+            Flipper f = new Flipper(x, y, isLeft, name);
             flippers.add(f);
             notifyObs();
             return true;
@@ -586,7 +586,7 @@ public class GBallModel extends Observable implements IGBallModel {
         for(Connection c : getConnections()) {
             if(c.getTrigger().equals(bumper)) {
                 c.getFlipper().press();
-                if(c.getFlipper().getCurrentRotation()==Angle.DEG_90)
+                if(c.getFlipper().getCurrentRotation().radians()==Angle.DEG_90.radians())
                 	c.getFlipper().release();
             }
         }
