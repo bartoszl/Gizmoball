@@ -12,7 +12,7 @@ public class FlipperTest {
 
     @Before
     public void setUp() {
-        //flipper = new Flipper(0, 0, true, Color.RED, "F1");
+        flipper = new Flipper(0, 0, true, Color.RED, "F1");
     }
 
     @Test
