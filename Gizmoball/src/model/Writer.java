@@ -125,6 +125,11 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the appropriate file syntax for the given <code>Bumper</code>.
+     * @param bumper -> The <code>Bumper</code> to generate the file syntax for
+     * @return -> A list of strings containing the file syntax for the specified Bumper
+     */
     public List<String> generateBumperSyntax(Bumper bumper) {
         if(bumper instanceof SquareBumper) {
             SquareBumper sBumper = (SquareBumper) bumper;
