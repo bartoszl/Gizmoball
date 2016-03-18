@@ -36,11 +36,4 @@ public class CollisionDetails {
 		this.bumper = bumper;
 	}
 
-	public boolean isFired() {
-		return fired;
-	}
-
-	public void setFired(boolean fired) {
-		this.fired = fired;
-	}
 }
