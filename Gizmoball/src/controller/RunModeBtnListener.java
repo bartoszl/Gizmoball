@@ -41,7 +41,7 @@ public class RunModeBtnListener implements ActionListener {
                     break;
                 case "Swap":
                     timer.stop();
-                    model.resetBalls();
+                    model.reset();
                     gui.getGridView().delete();
                     gui.getGridView().setVisible(false);
                     gui.getFrame().remove(gui.getFrame().getContentPane());
@@ -63,9 +63,13 @@ public class RunModeBtnListener implements ActionListener {
                     }
                     break;
                 case "Reload":
-                    model.resetBalls();
-                    model.moveBall();
-                    timer.stop();
+                    File f = model.getLoadFile();
+                    if(f != null) {
+                        ModelLoader ml = new ModelLoader(f);
+                        GBallModel m = ml.getModel();
+                        m.setLoadFile(f);
+                        main.setModel(m);
+                    }
                     break;
                 case "Save":
                     JFileChooser saveFC = new JFileChooser();

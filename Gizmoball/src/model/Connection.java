@@ -17,4 +17,6 @@ public class Connection {
     public Flipper getFlipper() {
         return flipper;
     }
+
+    public void setFlipper(Flipper flipper) { this.flipper = flipper; }
 }

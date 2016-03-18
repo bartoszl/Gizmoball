@@ -592,12 +592,35 @@ public class GBallModel extends Observable implements IGBallModel {
         }
     }
 
-    public void resetBalls() {
+    public void reset() {
+        resetBalls();
+        resetFlippers();
+    }
+
+    private void resetBalls() {
         for(Ball b : balls){
             b.reset();
             b.setMoving(true);
             b.setVelocity(new Vect(50,50));
         }
+    }
+
+    private void resetFlippers() {
+        ArrayList<Flipper> newFlippers = new ArrayList<>();
+        for(Flipper f : flippers){
+            Flipper temp = new Flipper((int)f.getOrigin().x(), (int)f.getOrigin().y(), f.isLeft(), "flipper");
+            for(int i = 0; i < f.getRotation(); i++){
+                temp.rotate();
+            }
+            for(Connection c : connections){
+                if(c.getFlipper().equals(f)) c.setFlipper(temp);
+            }
+            for(KeyConnectionFlipper kc : keyConnectionsFlipper){
+                if(kc.getFlipper().equals(f)) kc.setFlipper(temp);
+            }
+            newFlippers.add(temp);
+        }
+        flippers = newFlippers;
     }
     
     public Vect applyFriction(Vect Vold, double time){
