@@ -127,7 +127,8 @@ public class Absorber implements IAbsorber {
 		}
 		ball.setXY(xBottomRight-10, yBottomRight-10);
 	}
-
+	
+	@Override
 	public void fire() {
 		for(Ball ball : ballsAbsorbed) {
 			ball.setMoving(true);
@@ -135,15 +136,18 @@ public class Absorber implements IAbsorber {
 		}
 		ballsAbsorbed = new ArrayList<>();
 	}
-
+	
+	@Override
 	public String getName() {
 		return name;
 	}
-
+	
+	@Override
 	public boolean isConnectedToItself() {
 		return connectedToItself;
 	}
-
+	
+	@Override
 	public void setConnectedToItself(boolean connectedToItself) {
 		this.connectedToItself = connectedToItself;
 	}

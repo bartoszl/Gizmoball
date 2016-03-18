@@ -105,7 +105,30 @@ public interface IAbsorber {
 	 */
 	public void absorb(Ball ball);
 
+	/**
+	 * This method is called when the action of the absorber is triggered.
+	 * It fires all the balls straight up with an increased speed.
+	 */
 	public void fire();
-
+	
+	/**
+	 * Getter method for name.
+	 * 
+	 * @return String, representing an unique name of the absorber.
+	 */
 	public String getName();
+	
+	/**
+	 * Getter method for connectedToItself.
+	 * @return boolean, true if the absorber is connected to itself i.e fires
+	 * 		   the balls automaticly, false if it's not.
+	 */
+	public boolean isConnectedToItself();
+	
+	/**
+	 * Setter method for connectToItself.
+	 * @param connectedToItself -> boolean, true if we want to connect the absorber
+	 * 		  					   to itself, false if we want to disconnect it.
+	 */
+	public void setConnectedToItself(boolean connectedToItself);
 }
