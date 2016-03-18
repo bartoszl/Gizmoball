@@ -1,14 +1,9 @@
 package model;
 
-import view.Board;
-
-import java.awt.*;
 import java.io.File;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.jar.Pack200;
 
 import physics.Angle;
 import physics.Circle;
