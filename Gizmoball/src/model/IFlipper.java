@@ -181,8 +181,15 @@ public interface IFlipper {
     
     /**
      * Getter method for currentRotation.
-     * 
+     *
      * @return Angle, representing the present angle by which the flipper was rotated.
      */
     public Angle getCurrentRotation();
+
+    /**
+     * Setter method for currentRotation.
+     *
+     * @param newRotation -> Angle that is set as the new currentRotation
+     */
+    public void setCurrentRotation(Angle newRotation);
 }

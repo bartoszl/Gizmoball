@@ -189,6 +189,8 @@ public class Flipper implements IFlipper {
 	public Angle getCurrentRotation(){
 		return currentRotation;
 	}
+
+    public void setCurrentRotation(Angle newRotation) { this.currentRotation = newRotation; }
 	
 	// Private Methods
 	
