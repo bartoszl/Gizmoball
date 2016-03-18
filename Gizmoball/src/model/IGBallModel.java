@@ -35,22 +35,19 @@ public interface IGBallModel    {
     public boolean moveElement(double x, double y, double newX, double newY);
     public boolean[][] getOccupiedSpaces();
     public void clear();
-    public Flipper findFlipper(double x, double y);
-    public Bumper findBumper(double x, double y);
     public boolean deleteElement(double x, double y);
     public List<Connection> getConnections();
     public List<KeyConnectionFlipper> getKeyConnectionsFlipper();
     public List<KeyConnectionAbs> getKeyConnectionsAbs();
-    
+    public Flipper findFlipper(double x, double y);
     public void moveBall();
     public void reset();
-    public Ball moveBallForTime(Ball ball, double time);
+    public Bumper findBumper(double x, double y);
 
     public void setLoadFile(File f);
     public File getLoadFile();
 
     public String getObjectTypeForKeyConnection(String objectName);
     public Flipper getFlipper(String flipperName);
-
     public void setConnectedToAbs(boolean set);
 }
