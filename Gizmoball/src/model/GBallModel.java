@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.jar.Pack200;
 
+import physics.Angle;
 import physics.Circle;
 import physics.Geometry;
 import physics.Geometry.VectPair;
@@ -585,7 +586,8 @@ public class GBallModel extends Observable implements IGBallModel {
         for(Connection c : getConnections()) {
             if(c.getTrigger().equals(bumper)) {
                 c.getFlipper().press();
-                c.getFlipper().release();
+                if(c.getFlipper().getCurrentRotation()==Angle.DEG_90)
+                	c.getFlipper().release();
             }
         }
     }
