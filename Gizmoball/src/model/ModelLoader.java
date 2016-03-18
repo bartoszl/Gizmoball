@@ -93,25 +93,25 @@ public class ModelLoader {
         return true;
     }
 
-    private void createTriangularBumper(String[] command) {
+    public void createTriangularBumper(String[] command) {
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
         String name = command[1];
         model.addTriangularBumper(xCoord, yCoord,0, name);
     }
 
-    private void createSquareBumper(String[] command) {
+    public void createSquareBumper(String[] command) {
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
         String name = command[1];
         model.addSquareBumper(xCoord, yCoord, 0, name);
     }
 
-    private void createCircularBumper(String[] command) {
+    public void createCircularBumper(String[] command) {
         model.addCircularBumper(Integer.parseInt(command[2]) * scale, Integer.parseInt(command[3]) * scale, 0, command[1]);
     }
 
-    private void createFlipper(String[] command) {
+    public void createFlipper(String[] command) {
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
         String name = command[1];
@@ -122,7 +122,7 @@ public class ModelLoader {
         }
     }
 
-    private void createAbsorber(String[] command) {
+    public void createAbsorber(String[] command) {
         int leftX = Integer.parseInt(command[2]) * scale;
         int rightX = Integer.parseInt(command[4]) * scale;
         int topY = Integer.parseInt(command[3]) * scale;
@@ -131,7 +131,7 @@ public class ModelLoader {
         model.addAbsorber(name, leftX, topY, rightX, bottomY);
     }
 
-    private void createBall(String[] command) {
+    public void createBall(String[] command) {
         double xCoord = Double.parseDouble(command[2]) * scale;
         double yCoord = Double.parseDouble(command[3]) * scale;
         double xVelo = Double.parseDouble(command[4]);
