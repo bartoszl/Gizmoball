@@ -13,8 +13,6 @@ import java.awt.event.MouseListener;
 public class AddKeyConnectListener implements MouseListener, KeyListener {
     private IGUI bgui;
     private IGBallModel m;
-    private int mouseX;
-    private int mouseY;
     private IFlipper f;
     private IAbsorber abs;
     private MagicKeyListener mkl;
@@ -24,8 +22,6 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
         this.bgui = bgui;
         this.mkl = new MagicKeyListener(this);
     }
-
-
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
@@ -37,8 +33,6 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
             int y = mouseP.y - gridP.y;
             x -= x%20;
             y -= y%20;
-            mouseX = x;
-            mouseY = y;
             b.requestFocus();
             if(m.findFlipper(x, y) != null) {
                 f = m.findFlipper(x, y);
@@ -58,32 +52,23 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
+    public void mousePressed(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
+    public void mouseReleased(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent) {}
 
     @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
+    public void keyTyped(KeyEvent keyEvent) {}
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
+        mkl.keyPressed(keyEvent); // Might not do anything [REMOVE COMMENT]
         Board b = bgui.getGridView();
         if(b.getAction() == Board.Action.KEY_CONNECT) {
             if(f != null) {
@@ -98,7 +83,5 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent keyEvent) {
-
-    }
+    public void keyReleased(KeyEvent keyEvent) {}
 }

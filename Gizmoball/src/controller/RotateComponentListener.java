@@ -26,39 +26,26 @@ public class RotateComponentListener implements MouseListener {
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
         if(b.getAction() == Board.Action.ROTATE) {
-            boolean[][] spaces = model.getOccupiedSpaces();
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            if(model.rotateElement(x, y)){
+            if(model.rotateElement(x, y)) {
                 bgui.setMessageColor(Color.GREEN);
                 bgui.setMessage("Component rotated!");
-            } else {
-                bgui.setMessageColor(Color.RED);
-                bgui.setMessage("Nothing done");
             }
         }
-
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
+    public void mousePressed(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
+    public void mouseReleased(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent) {}
 }
