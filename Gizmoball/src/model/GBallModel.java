@@ -320,6 +320,7 @@ public class GBallModel extends Observable implements IGBallModel {
 			return true;
 		}
 		if(f!=null){
+            if((newX/20) > 18 || (newY/20) > 18) return false;
 			if(occupiedSpacesFlipper((int)newX/20, (int)newY/20)) return false;
             unoccupyFlipper((int) f.getOrigin().x() / 20, (int) f.getOrigin().y() / 20);
 			f.move(newX, newY);
