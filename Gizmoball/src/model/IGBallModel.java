@@ -13,7 +13,7 @@ public interface IGBallModel    {
     public boolean addCircularBumper(int x, int y, int rotation, String name);
     public Bumper getGizmo(String gizmoName);
     public boolean addAbsorber(String name, int x, int y, int x1, int y1);
-    public boolean addBall(String name, double x, double y, double xv, double yv);
+    public boolean addBall(String name, int x, int y, double xv, double yv);
     public void setGravity(double gravity);
     public double getGravity();
     public void setFriction(double xFriction, double yFriction);
@@ -31,7 +31,6 @@ public interface IGBallModel    {
     public void setAbsorber(Absorber absorber);
     public void setFlippers(List<Flipper> flippers);
     public boolean addFlipper(int i, int i1, boolean b, String flipper);
-    public void checkKeyConnectionsFlipper(int keyCode);
     public boolean rotateElement(double x, double y);
     public boolean moveElement(double x, double y, double newX, double newY);
     public boolean[][] getOccupiedSpaces();

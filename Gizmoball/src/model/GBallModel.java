@@ -31,7 +31,6 @@ public class GBallModel extends Observable implements IGBallModel {
     private List<Ball> balls;
     private Absorber absorber;
     private boolean [][] occupiedSpaces;
-    private int lX, lY;
     private Walls walls;
     private File loadFile;
 
@@ -48,22 +47,17 @@ public class GBallModel extends Observable implements IGBallModel {
         xFriction = 0.025;
         yFriction = 0.025;
     }
-
-    private void notifyObs() {
-        setChanged();
-        notifyObservers();
-        //System.out.println("changed");
-    }
-
+    
+    // Build Mode Methods
+    
     @Override
     public boolean addSquareBumper(int x, int y, int rotation, String name) {
-        x -= x%20;
-        y -= y%20;
-        lX = x/20;
-        lY = y/20;
-        if(!occupiedSpaces[lX][lY]) {
-            occupiedSpaces[lX][lY] = true;
-            gizmos.add(new SquareBumper((double) x, (double) y, rotation, name));
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            gizmos.add(new SquareBumper(x*20, y*20, rotation, name));
             notifyObs();
             return true;
         }
@@ -72,14 +66,13 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addFlipper(int x, int y, boolean isLeft, String name) {
-        x -= x%20;
-        y -= y%20;
-        lX = x/20;
-        lY = y/20;
-        if(lX > 18 || lY > 18) return false;
-        if(!occupiedSpacesFlipper(lX, lY)) {
-            occupyFlipper(lX,lY);
-            Flipper f = new Flipper(x, y, isLeft, name);
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        if(x > 18 || y > 18) return false;
+        if(!occupiedSpacesFlipper(x, y)) {
+            occupyFlipper(x,y);
+            Flipper f = new Flipper(x*20, y*20, isLeft, name);
             flippers.add(f);
             notifyObs();
             return true;
@@ -88,19 +81,13 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public void checkKeyConnectionsFlipper(int keyCode) {
-
-    }
-
-    @Override
     public boolean addTriangularBumper(int x, int y, int rotation, String name) {
-        x -= x%20;
-        y -= y%20;
-        lX = x/20;
-        lY = y/20;
-        if(!occupiedSpaces[lX][lY]) {
-            occupiedSpaces[lX][lY] = true;
-            TriangularBumper tBumper = new TriangularBumper((double) x - x%20, (double) y - y%20, rotation, name);
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            TriangularBumper tBumper = new TriangularBumper(x*20, y*20, rotation, name);
             gizmos.add(tBumper);
             notifyObs();
             return true;
@@ -110,13 +97,12 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addCircularBumper(int x, int y, int rotation, String name) {
-        x -= x%20;
-        y -= y%20;
-        lX = x/20;
-        lY = y/20;
-        if(!occupiedSpaces[lX][lY]) {
-            occupiedSpaces[lX][lY] = true;
-            CircularBumper cBumper = new CircularBumper((double) x, (double) y, rotation, name);
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            CircularBumper cBumper = new CircularBumper(x*20, y*20, rotation, name);
             gizmos.add(cBumper);
             notifyObs();
             return true;
@@ -136,43 +122,44 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addAbsorber(String name, int x, int y, int x1, int y1) {
-        x -= x%20;
-        y -= y%20;
-        x1 -= (x1%20);
-        y1 -= (y1%20);
-        lX = x/20;
-        lY = y/20;
-        for(int i = Math.min(x,x1)/20; i < Math.max(x,x1)/20; i++) {
-            for(int j = Math.min(y,y1)/20; j < Math.max(y,y1)/20; j++) {
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        Vect xy1 = translateXY(x1,y1);
+        x1 = (int) xy1.x();
+        y1 = (int) xy1.y();
+        for(int i = Math.min(x,x1); i < Math.max(x,x1); i++) {
+            for(int j = Math.min(y,y1); j < Math.max(y,y1); j++) {
                 if(occupiedSpaces[i][j]) return false;
             }
         }
         if(this.getAbsorber()!=null){
             unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
                     absorber.getXBottomRight(), absorber.getYBottomRight());
-            if(occupiedSpacesAbs(Math.min(x,x1)/20, Math.min(y,y1)/20)) return false;
+            if(occupiedSpacesAbs(Math.min(x,x1), Math.min(y,y1))) return false;
         }
-        absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
-        occupyAbs(x, y, x1, y1);
+        absorber = new Absorber(name, x*20, y*20, x1*20, y1*20);
+        occupyAbs(x*20, y*20, x1*20, y1*20);
         notifyObs();
         return true;
     }
 
     @Override
-    public boolean addBall(String name, double x, double y, double xv, double yv) {
-        x -= x%20;
-        y -= y%20;
-        lX = (int) x/20;
-        lY = (int) y/20;
-        if(!occupiedSpaces[lX][lY]) {
-            occupiedSpaces[lX][lY] = true;
-            Ball b = new Ball(name, x, y, xv, yv);
+    public boolean addBall(String name, int x, int y, double xv, double yv) {
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            Ball b = new Ball(name, x*20, y*20, xv, yv);
             balls.add(b);
             notifyObs();
             return true;
         }
         return false;
     }
+    
+    // HERE
 
     @Override
     public void setGravity(double gravity) {
@@ -792,5 +779,20 @@ public class GBallModel extends Observable implements IGBallModel {
 
     public void setConnectedToAbs(boolean set){
         absorber.setConnectedToItself(set);
+    }
+    
+    // Private Methods
+    
+    private void notifyObs() {
+        setChanged();
+        notifyObservers();
+    }
+    
+    private Vect translateXY(int x, int y){
+    	x -= x%20;
+    	y -= y%20;
+    	x /=20;
+    	y /=20;
+    	return new Vect(x,y);
     }
 }
