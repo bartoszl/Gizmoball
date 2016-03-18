@@ -31,7 +31,6 @@ public class GBallModel extends Observable implements IGBallModel {
     private List<Ball> balls;
     private Absorber absorber;
     private boolean [][] occupiedSpaces;
-    private int lX, lY;
     private Walls walls;
     private File loadFile;
 
@@ -48,22 +47,17 @@ public class GBallModel extends Observable implements IGBallModel {
         xFriction = 0.025;
         yFriction = 0.025;
     }
-
-    private void notifyObs() {
-        setChanged();
-        notifyObservers();
-        //System.out.println("changed");
-    }
-
+    
+    // Build Mode Methods
+    
     @Override
     public boolean addSquareBumper(int x, int y, int rotation, String name) {
-        x -= x%20;
-        y -= y%20;
-        lX = x/20;
-        lY = y/20;
-        if(!occupiedSpaces[lX][lY]) {
-            occupiedSpaces[lX][lY] = true;
-            gizmos.add(new SquareBumper((double) x, (double) y, rotation, name));
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            gizmos.add(new SquareBumper(x*20, y*20, rotation, name));
             notifyObs();
             return true;
         }
@@ -72,14 +66,13 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addFlipper(int x, int y, boolean isLeft, String name) {
-        x -= x%20;
-        y -= y%20;
-        lX = x/20;
-        lY = y/20;
-        if(lX > 18 || lY > 18) return false;
-        if(!occupiedSpacesFlipper(lX, lY)) {
-            occupyFlipper(lX,lY);
-            Flipper f = new Flipper(x, y, isLeft, name);
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        if(x > 18 || y > 18) return false;
+        if(!occupiedSpacesFlipper(x, y)) {
+            occupyFlipper(x,y);
+            Flipper f = new Flipper(x*20, y*20, isLeft, name);
             flippers.add(f);
             notifyObs();
             return true;
@@ -88,19 +81,13 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public void checkKeyConnectionsFlipper(int keyCode) {
-
-    }
-
-    @Override
     public boolean addTriangularBumper(int x, int y, int rotation, String name) {
-        x -= x%20;
-        y -= y%20;
-        lX = x/20;
-        lY = y/20;
-        if(!occupiedSpaces[lX][lY]) {
-            occupiedSpaces[lX][lY] = true;
-            TriangularBumper tBumper = new TriangularBumper((double) x - x%20, (double) y - y%20, rotation, name);
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            TriangularBumper tBumper = new TriangularBumper(x*20, y*20, rotation, name);
             gizmos.add(tBumper);
             notifyObs();
             return true;
@@ -110,13 +97,12 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addCircularBumper(int x, int y, int rotation, String name) {
-        x -= x%20;
-        y -= y%20;
-        lX = x/20;
-        lY = y/20;
-        if(!occupiedSpaces[lX][lY]) {
-            occupiedSpaces[lX][lY] = true;
-            CircularBumper cBumper = new CircularBumper((double) x, (double) y, rotation, name);
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            CircularBumper cBumper = new CircularBumper(x*20, y*20, rotation, name);
             gizmos.add(cBumper);
             notifyObs();
             return true;
@@ -136,37 +122,35 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public boolean addAbsorber(String name, int x, int y, int x1, int y1) {
-        x -= x%20;
-        y -= y%20;
-        x1 -= (x1%20);
-        y1 -= (y1%20);
-        lX = x/20;
-        lY = y/20;
-        for(int i = Math.min(x,x1)/20; i < Math.max(x,x1)/20; i++) {
-            for(int j = Math.min(y,y1)/20; j < Math.max(y,y1)/20; j++) {
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        Vect xy1 = translateXY(x1,y1);
+        x1 = (int) xy1.x();
+        y1 = (int) xy1.y();
+        
+        for(int i = Math.min(x,x1); i < Math.max(x,x1); i++) {
+            for(int j = Math.min(y,y1); j < Math.max(y,y1); j++) {
                 if(occupiedSpaces[i][j]) return false;
             }
         }
-        if(this.getAbsorber()!=null){
-            unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
-                    absorber.getXBottomRight(), absorber.getYBottomRight());
-            if(occupiedSpacesAbs(Math.min(x,x1)/20, Math.min(y,y1)/20)) return false;
-        }
-        absorber = new Absorber(name, (double) x, (double) y, (double) x1, (double) y1);
-        occupyAbs(x, y, x1, y1);
+        if(absorber!=null)
+        	unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
+                    	absorber.getXBottomRight(), absorber.getYBottomRight());
+        absorber = new Absorber(name, x*20, y*20, x1*20, y1*20);
+        occupyAbs(x*20, y*20, x1*20, y1*20);
         notifyObs();
         return true;
     }
 
     @Override
     public boolean addBall(String name, double x, double y, double xv, double yv) {
-        x -= x%20;
-        y -= y%20;
-        lX = (int) x/20;
-        lY = (int) y/20;
-        if(!occupiedSpaces[lX][lY]) {
-            occupiedSpaces[lX][lY] = true;
-            Ball b = new Ball(name, x, y, xv, yv);
+    	Vect xy = translateXY((int) x ,(int) y);
+        int x1 = (int) xy.x();
+        int y1 = (int) xy.y();
+        if(!occupiedSpaces[x1][y1]) {
+            occupiedSpaces[x1][y1] = true;
+            Ball b = new Ball(name, x1*20, y1*20, xv, yv);
             balls.add(b);
             notifyObs();
             return true;
@@ -177,7 +161,6 @@ public class GBallModel extends Observable implements IGBallModel {
     @Override
     public void setGravity(double gravity) {
         this.gravity = gravity;
-        notifyObs();
     }
 
     @Override
@@ -189,7 +172,6 @@ public class GBallModel extends Observable implements IGBallModel {
     public void setFriction(double xFriction, double yFriction) {
         this.xFriction = xFriction;
         this.yFriction = yFriction;
-        notifyObs();
     }
 
     @Override
@@ -212,18 +194,8 @@ public class GBallModel extends Observable implements IGBallModel {
         }
         return false;
     }
-
-    private CircularBumper getCircularBumper(String circularBumperName) {
-        for(Bumper gizmo : gizmos) {
-            if(gizmo instanceof CircularBumper) {
-                if(gizmo.getName().equals(circularBumperName)) {
-                    return (CircularBumper) gizmo;
-                }
-            }
-        }
-        return null;
-    }
-
+    
+    @Override
     public Flipper getFlipper(String flipperName) {
         for(Flipper flipper : flippers) {
             if(flipper.getName().equals(flipperName)) {
@@ -232,54 +204,18 @@ public class GBallModel extends Observable implements IGBallModel {
         }
         return null;
     }
-
-    private boolean safeToAddConnection(String circularBumperName, String flipperName) {
-        return !checkForExistingConnection(circularBumperName, flipperName)
-                && checkCircularBumperExists(circularBumperName)
-                && checkFlipperExists(flipperName);
-    }
-
-    private boolean checkForExistingConnection(String circularBumperName, String flipperName) {
-        for(Connection connection : connections) {
-            if(connection.getFlipper().getName().equals(flipperName)
-            && connection.getTrigger().getName().equals(circularBumperName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean checkCircularBumperExists(String circularBumperName) {
-        for(Bumper gizmo : gizmos) {
-            if(gizmo instanceof CircularBumper) {
-                if(gizmo.getName().equals(circularBumperName)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean checkFlipperExists(String flipperName) {
-        for(Flipper f : flippers) {
-            if(f.getName().equals(flipperName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
+    
+    @Override
     public boolean addKeyConnectionAbs(int keyID, IAbsorber abs, String upDown) {
         KeyConnectionAbs keyConnectionAbs = new KeyConnectionAbs(keyID, abs, upDown);
         return keyConnectionsAbs.add(keyConnectionAbs);
     }
-
+    
+    @Override
     public boolean addKeyConnectionFlipper(int keyID, IFlipper flipper, String upDown) {
             KeyConnectionFlipper keyConnectionFlipper = new KeyConnectionFlipper(keyID, flipper, upDown);
             return keyConnectionsFlipper.add(keyConnectionFlipper);
     }
-
 
     @Override
     public List<Bumper> getGizmos() {
@@ -335,7 +271,8 @@ public class GBallModel extends Observable implements IGBallModel {
 		notifyObs();
 		return true;
 	}
-
+    
+    @Override
     public boolean deleteElement(double x, double y) {
         x=x-(x%20);
         y=y-(y%20);
@@ -383,6 +320,7 @@ public class GBallModel extends Observable implements IGBallModel {
 			return true;
 		}
 		if(f!=null){
+            if((newX/20) > 18 || (newY/20) > 18) return false;
 			if(occupiedSpacesFlipper((int)newX/20, (int)newY/20)) return false;
             unoccupyFlipper((int) f.getOrigin().x() / 20, (int) f.getOrigin().y() / 20);
 			f.move(newX, newY);
@@ -412,7 +350,212 @@ public class GBallModel extends Observable implements IGBallModel {
         }
 		return false;
 	}
+	
+	@Override
+    public boolean[][] getOccupiedSpaces() {
+        return occupiedSpaces;
+    }
+    
+	@Override
+    public void clear(){
+    	gizmos = new ArrayList<Bumper>();
+        connections = new ArrayList<Connection>();
+        keyConnectionsAbs = new ArrayList<KeyConnectionAbs>();
+        keyConnectionsFlipper = new ArrayList<KeyConnectionFlipper>();
+        flippers = new ArrayList<Flipper>();
+        balls = new ArrayList<Ball>();
+        occupiedSpaces = new boolean [20][20];
+        absorber = null;
+        notifyObs();
+    }
+	
+	@Override
+    public List<KeyConnectionAbs> getKeyConnectionsAbs() {
+        return keyConnectionsAbs;
+    }
+	
+	@Override
+    public List<KeyConnectionFlipper> getKeyConnectionsFlipper() {
+        return keyConnectionsFlipper;
+    }
+	
+	@Override
+    public List<Connection> getConnections() {
+        return connections;
+    }
+	
+	@Override
+    public String getObjectTypeForKeyConnection(String objectName) {
+        if(absorber != null) {
+            if(absorber.getName().equals(objectName)) {
+                return "Absorber";
+            }
+        }
 
+        for(Flipper flipper : flippers) {
+            if(flipper.getName().equals(objectName)) {
+                return "Flipper";
+            }
+        }
+        return null;
+    }
+
+    public void setConnectedToAbs(boolean set){
+        absorber.setConnectedToItself(set);
+    }
+    
+    @Override
+	public Flipper findFlipper(double x, double y){
+		for(Flipper f:flippers){
+			double xx = f.getOrigin().x();
+			double yy = f.getOrigin().y();
+			for(int i=0;i<2;i++){
+				for(int j=0;j<2;j++){
+					if(xx==x-(i*20) && yy==y-(20*j)) return f;
+				}
+			}
+		}
+		return null;
+	}
+    
+    @Override
+    public Bumper findBumper(double x, double y){
+		for(Bumper b: gizmos){
+			if(b.getX()==x && b.getY()==y)
+				return b;
+		}
+		return null;
+	}
+	
+	// Run Mode Methods
+    
+	@Override
+	public void moveBall() {
+		double moveTime = 0.05;
+		double minTime = moveTime;
+		List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
+		for(Ball ball: balls){
+			cl.add(timeUntilCollision(ball));
+			if(cl.get(cl.size()-1).getTime()<minTime) 
+				minTime = cl.get(cl.size()-1).getTime();
+		}
+		
+		moveFlippers(minTime);
+		
+		for(Ball ball: balls){
+			if(!ball.isMoving())
+				continue;
+			if(ball.isAbsorbed()){
+				ball = moveBallForTime(ball, moveTime);
+				if(ball.getY()<absorber.getYTopLeft())
+					ball.setAbsorbed(false);
+				notifyObs();
+				continue;
+			}
+			CollisionDetails cd = cl.get(balls.indexOf(ball));
+			double tuc = cd.getTime();
+			if(tuc>moveTime){
+				ball = moveBallForTime(ball, moveTime);
+				Vect newV = calcVelocity(ball);
+				ball.setVelocity(newV);
+				notifyObs();
+				continue;
+			}
+			if(cd.getAbsorbed()){
+				absorber.absorb(ball);
+				notifyObs();
+				continue;
+			}
+            if(cd.getBumper() != null) {
+                collidedWithBumper(cd.getBumper());
+            }
+			ball = moveBallForTime(ball, tuc);
+			ball.setVelocity(cd.getVelocity());
+			Vect newV = calcVelocity(ball);
+			ball.setVelocity(newV);
+			notifyObs();
+		}
+	}
+    
+    @Override
+    public void reset() {
+        resetBalls();
+        resetFlippers();
+    }
+    
+    // Neutral Methods
+
+    public void setLoadFile(File f){
+        this.loadFile = f;
+    }
+
+    public File getLoadFile(){
+        return loadFile;
+    }
+    
+    // Private Methods
+    
+    private void notifyObs() {
+        setChanged();
+        notifyObservers();
+    }
+    
+    private Vect translateXY(int x, int y){
+    	x -= x%20;
+    	y -= y%20;
+    	x /=20;
+    	y /=20;
+    	return new Vect(x,y);
+    }
+    
+    private CircularBumper getCircularBumper(String circularBumperName) {
+        for(Bumper gizmo : gizmos) {
+            if(gizmo instanceof CircularBumper) {
+                if(gizmo.getName().equals(circularBumperName)) {
+                    return (CircularBumper) gizmo;
+                }
+            }
+        }
+        return null;
+    }
+    
+    
+    private boolean safeToAddConnection(String circularBumperName, String flipperName) {
+        return !checkForExistingConnection(circularBumperName, flipperName)
+                && checkCircularBumperExists(circularBumperName)
+                && checkFlipperExists(flipperName);
+    }
+
+    private boolean checkForExistingConnection(String circularBumperName, String flipperName) {
+        for(Connection connection : connections) {
+            if(connection.getFlipper().getName().equals(flipperName)
+            && connection.getTrigger().getName().equals(circularBumperName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkCircularBumperExists(String circularBumperName) {
+        for(Bumper gizmo : gizmos) {
+            if(gizmo instanceof CircularBumper) {
+                if(gizmo.getName().equals(circularBumperName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean checkFlipperExists(String flipperName) {
+        for(Flipper f : flippers) {
+            if(f.getName().equals(flipperName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private boolean occupiedSpacesAbs(double x, double y){
         if(x+absorber.getWidth()/20 >= 20 || y+absorber.getHeight()/20 >= 20) return false;
         for(int i = (int)x/20; i < (x+absorber.getWidth())/20; i++){
@@ -482,130 +625,21 @@ public class GBallModel extends Observable implements IGBallModel {
 		return null;
 	}
 	
-	public Bumper findBumper(double x, double y){
-		for(Bumper b: gizmos){
-			if(b.getX()==x && b.getY()==y)
-				return b;
-		}
-		return null;
-	}
-	
-	public Flipper findFlipper(double x, double y){
-		for(Flipper f:flippers){
-			double xx = f.getOrigin().x();
-			double yy = f.getOrigin().y();
-			for(int i=0;i<2;i++){
-				for(int j=0;j<2;j++){
-					if(xx==x-(i*20) && yy==y-(20*j)) return f;
-				}
-			}
-		}
-		return null;
-	}
-	
-    public void moveFlippers(double time) {
+	private void moveFlippers(double time) {
         for(Flipper f : getFlippers()) {
             f.rotatePerTime(time);
             notifyObs();
         }
     }
-
-    public boolean[][] getOccupiedSpaces() {
-        return occupiedSpaces;
-    }
-    
-    public void clear(){
-    	gizmos = new ArrayList<Bumper>();
-        connections = new ArrayList<Connection>();
-        keyConnectionsAbs = new ArrayList<KeyConnectionAbs>();
-        keyConnectionsFlipper = new ArrayList<KeyConnectionFlipper>();
-        flippers = new ArrayList<Flipper>();
-        balls = new ArrayList<Ball>();
-        occupiedSpaces = new boolean [20][20];
-        absorber = null;
-        notifyObs();
-    }
-
-    public List<KeyConnectionAbs> getKeyConnectionsAbs() {
-        return keyConnectionsAbs;
-    }
-
-    public List<KeyConnectionFlipper> getKeyConnectionsFlipper() {
-        return keyConnectionsFlipper;
-    }
-
-    public List<Connection> getConnections() {
-        return connections;
-    }
-    
-    private Vect calcVelocity(Ball ball){
+	
+	private Vect calcVelocity(Ball ball){
     	double moveTime = 0.05;
     	Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (gravity*20*moveTime));
         Vect newV = applyFriction(temp, moveTime);
         return newV;
     }
-    
-	@Override
-	public void moveBall() {
-		double moveTime = 0.05;
-		double minTime = moveTime;
-		List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
-		for(Ball ball: balls){
-			cl.add(timeUntilCollision(ball));
-			if(cl.get(cl.size()-1).getTime()<minTime) 
-				minTime = cl.get(cl.size()-1).getTime();
-		}
-		moveFlippers(minTime);
-		for(Ball ball: balls){
-			if(ball!=null && ball.isMoving()){
-				if(ball.isAbsorbed()){
-					ball = moveBallForTime(ball, moveTime);
-					if(ball.getY()<absorber.getYTopLeft())
-						ball.setAbsorbed(false);
-				} else {
-					CollisionDetails cd = cl.get(balls.indexOf(ball));
-					double tuc = cd.getTime();
-					if(tuc>moveTime){
-						ball = moveBallForTime(ball, moveTime);
-						Vect newV = calcVelocity(ball);
-						ball.setVelocity(newV);
-					} else {
-						if(!cd.getAbsorbed()){
-                            if(cd.getBumper() != null) {
-                                collidedWithBumper(cd.getBumper());
-                            }
-							ball = moveBallForTime(ball, tuc);
-							ball.setVelocity(cd.getVelocity());
-							Vect newV = calcVelocity(ball);
-							ball.setVelocity(newV);
-						} else {
-							absorber.absorb(ball);
-
-						}
-					}
-				}
-				notifyObs();
-			}
-			
-		}
-	}
-
-    public void collidedWithBumper(Bumper bumper) {
-        for(Connection c : getConnections()) {
-            if(c.getTrigger().equals(bumper)) {
-                c.getFlipper().press();
-                if(c.getFlipper().getCurrentRotation().radians()==Angle.DEG_90.radians())
-                	c.getFlipper().release();
-            }
-        }
-    }
-
-    public void reset() {
-        resetBalls();
-        resetFlippers();
-    }
-
-    private void resetBalls() {
+	
+	private void resetBalls() {
         for(Ball b : balls){
             b.reset();
             b.setMoving(true);
@@ -631,31 +665,21 @@ public class GBallModel extends Observable implements IGBallModel {
         flippers = newFlippers;
     }
     
-    public Vect applyFriction(Vect Vold, double time){
+    private Vect applyFriction(Vect Vold, double time){
         double newVect = Math.sqrt((Math.pow(Vold.x(), 2)+Math.pow(Vold.y(), 2)));
         return Vold.times((1 - (xFriction * time) - ((yFriction) * (newVect/20) * time)));
     }
-
-    public Ball moveBallForTime(Ball ball, double time){
+    
+    private Ball moveBallForTime(Ball ball, double time){
 		double vx = ball.getVelocity().x();
 		double vy = ball.getVelocity().y();
 		double newX = ball.getX() + (vx*time);
 		double newY = ball.getY() + (vy*time);
-        // Very badly done stopping detection
-		/*
-        Vect Vold = ball.getVelocity();
-        if(ball.getX() == newX && ball.getY() == newY && !ball.isAbsorbed()
-                && ball.getVelocity().equals(Vold)
-                && Vold.x() < 20 && Vold.x() > -20
-                && Vold.y() < 20 && Vold.y() > -20){
-            ball.setMoving(false);
-            return ball;
-        }*/
 		ball.setXY(newX, newY);
 		return ball;
 	}
-	
-	private CollisionDetails timeUntilCollision(Ball ball) {
+    
+    private CollisionDetails timeUntilCollision(Ball ball) {
         Bumper collidedWith = null;
 		Circle ballCircle = ball.getCircle();
 		Vect ballVelocity = ball.getVelocity();
@@ -765,32 +789,14 @@ public class GBallModel extends Observable implements IGBallModel {
 		
 		return new CollisionDetails(shortest, newVelocity, abs, collidedWith);
 	}
-
-    public void setLoadFile(File f){
-        this.loadFile = f;
-    }
-
-    public File getLoadFile(){
-        return loadFile;
-    }
-
-    @Override
-    public String getObjectTypeForKeyConnection(String objectName) {
-        if(absorber != null) {
-            if(absorber.getName().equals(objectName)) {
-                return "Absorber";
+    
+    private void collidedWithBumper(Bumper bumper) {
+        for(Connection c : getConnections()) {
+            if(c.getTrigger().equals(bumper)) {
+                c.getFlipper().press();
+                if(c.getFlipper().getCurrentRotation().radians()==Angle.DEG_90.radians())
+                	c.getFlipper().release();
             }
         }
-
-        for(Flipper flipper : flippers) {
-            if(flipper.getName().equals(objectName)) {
-                return "Flipper";
-            }
-        }
-        return null;
-    }
-
-    public void setConnectedToAbs(boolean set){
-        absorber.setConnectedToItself(set);
     }
 }
