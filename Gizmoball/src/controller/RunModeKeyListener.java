@@ -12,36 +12,30 @@ import java.awt.event.KeyListener;
  */
 public class RunModeKeyListener implements KeyListener {
     private IGBallModel model;
-    private IGUI gui;
-    private Main main;
     private MagicKeyListener mkl;
-
+//    private IGUI gui;
+//    private Main main;
 
     public RunModeKeyListener(IGUI gui, IGBallModel model, Main main){
-        this.gui = gui;
         this.model = model;
-        this.main = main;
         this.mkl = new MagicKeyListener(this);
+//        this.gui = gui;
+//        this.main = main;
     }
-
 
     @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
+    public void keyTyped(KeyEvent keyEvent) {}
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        //System.out.println("press");
+        mkl.keyPressed(keyEvent);
         int keyCode = keyEvent.getKeyCode();
-        //loop through key flipper connections
         for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
             if(kcf.getKeyID() == keyCode) {
                 IFlipper flipper = kcf.getFlipper();
                 flipper.press();
             }
         }
-        //and absorber key connections
         for(KeyConnectionAbs kca : model.getKeyConnectionsAbs()) {
             if(kca.getKeyID() == keyCode) {
                 IAbsorber abs = kca.getAbs();
@@ -52,7 +46,7 @@ public class RunModeKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        //System.out.println("release");
+        mkl.keyReleased(keyEvent);
         int keyCode = keyEvent.getKeyCode();
         for(KeyConnectionFlipper kcf : model.getKeyConnectionsFlipper()) {
             if(kcf.getKeyID() == keyCode) {

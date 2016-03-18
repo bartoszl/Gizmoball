@@ -16,39 +16,33 @@ public class AddBallListener implements MouseListener {
         this.bgui = bgui;
     }
 
-
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
         if(b.getAction() == Board.Action.ADD && bgui.getSelectedComponent().equals("Ball")) {
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
-            //paint it
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
-            m.addBall("ball", x, y, 50, 50);
-            bgui.setMessage("Ball added!");
-            bgui.setMessageColor(Color.GREEN);
+            if(m.addBall("ball", x, y, 50, 50)) {
+                bgui.setMessage("Ball added!");
+                bgui.setMessageColor(Color.GREEN);
+            } else {
+                bgui.setMessageColor(Color.RED);
+                bgui.setMessage("That space is occupied, Ball cannot be added");
+            }
         }
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
+    public void mousePressed(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
+    public void mouseReleased(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent) {}
 }

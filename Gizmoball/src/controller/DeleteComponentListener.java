@@ -21,7 +21,6 @@ public class DeleteComponentListener implements MouseListener {
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
         if(b.getAction() == Board.Action.DELETE) {
-            boolean[][] spaces = model.getOccupiedSpaces();
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
             int x = mouseP.x - gridP.x;
@@ -29,33 +28,19 @@ public class DeleteComponentListener implements MouseListener {
             if(model.deleteElement(x, y)) {
                 bgui.setMessageColor(Color.GREEN);
                 bgui.setMessage("Component deleted!");
-            } else {
-                bgui.setMessageColor(Color.YELLOW);
-                bgui.setMessage("Nothing is done");
             }
-
-
         }
-
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
+    public void mousePressed(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
+    public void mouseReleased(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent) {}
 }

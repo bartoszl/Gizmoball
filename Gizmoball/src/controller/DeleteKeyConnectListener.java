@@ -65,29 +65,19 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
+    public void mousePressed(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
+    public void mouseReleased(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent) {}
 
     @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
+    public void keyTyped(KeyEvent keyEvent) {}
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
@@ -104,7 +94,6 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                         break;
                     }
                 }
-
                 if(!removed) {
                     bgui.setMessageColor(Color.RED);
                     bgui.setMessage("Key '" + KeyEvent.getKeyText(keyEvent.getKeyCode()) + "' is not connected " +
@@ -121,7 +110,6 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
                         break;
                     }
                 }
-
                 if(!removed) {
                     bgui.setMessageColor(Color.RED);
                     bgui.setMessage("Key '" + KeyEvent.getKeyText(keyEvent.getKeyCode()) + "' is not connected " +
@@ -135,7 +123,5 @@ public class DeleteKeyConnectListener implements MouseListener, KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent keyEvent) {
-
-    }
+    public void keyReleased(KeyEvent keyEvent) {}
 }

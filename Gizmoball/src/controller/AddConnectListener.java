@@ -31,12 +31,10 @@ public class AddConnectListener implements MouseListener {
         x -= x % 20;
         y -= y % 20;
         if(b.getAction() == Board.Action.CONNECT) {
-            //find trigger
             if(firstStep) {
                 Bumper bumper = m.findBumper(x, y);
                 if(bumper instanceof CircularBumper) {
-                    //sorry for casting
-                    trigger = (CircularBumper) bumper;
+                    trigger = bumper;
                     bgui.setMessageColor(Color.GREEN);
                     bgui.setMessage("Trigger found! Now press on Flipper or Absorber to connect it to trigger");
                     firstStep = false;
@@ -44,14 +42,12 @@ public class AddConnectListener implements MouseListener {
                         x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&
                         y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
                         ) {
-                    //it is absorber
                     triggerAbs = m.getAbsorber();
                     bgui.setMessageColor(Color.GREEN);
                     bgui.setMessage("Trigger found! Now press on Flipper or Absorber to connect it to trigger");
                     firstStep = false;
                 }
             } else {
-                //find flipper
                 Flipper f = m.findFlipper(x, y);
                 if(trigger != null) {
                     if (f != null) {
@@ -69,28 +65,19 @@ public class AddConnectListener implements MouseListener {
                         bgui.setMessage("Absorber connected!");
                     }
                 }
-
             }
         }
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
+    public void mousePressed(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
+    public void mouseReleased(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent) {}
 }
