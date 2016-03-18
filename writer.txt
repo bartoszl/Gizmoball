@@ -1,0 +1,12 @@
+Circle circle 6 5
+Circle circle 11 3
+Triangle triangle 10 5
+Triangle triangle 12 7
+Triangle triangle 7 7
+Absorber absorber 0 18 20 20
+Ball ball 2.0 1.0 50.0 50.0
+Ball ball 16.0 1.0 50.0 50.0
+LeftFlipper flipper 3 12
+LeftFlipper flipper 14 13
+RightFlipper flipper 16 4
+RightFlipper flipper 1 4

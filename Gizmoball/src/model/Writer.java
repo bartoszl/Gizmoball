@@ -91,7 +91,7 @@ public class Writer {
 
     public List<String> convertAbsorberToFileSyntax(IAbsorber absorber) {
         String gizmoOp = "Absorber",
-                name = absorber.getName(),
+                name = "ABS",
                 x1 = String.valueOf((int) absorber.getXTopLeft() / scale),
                 y1 = String.valueOf((int) absorber.getYTopLeft() / scale),
                 x2 = String.valueOf((int) absorber.getXBottomRight() / scale),
@@ -124,7 +124,7 @@ public class Writer {
         String gizmoOp = "Square",
                 xCoordinate = String.valueOf((int) bumper.getX() / scale),
                 yCoordinate = String.valueOf((int) bumper.getY() / scale),
-                name = bumper.getName();
+                name = "S" + xCoordinate + yCoordinate;
         List<String> syntax = new ArrayList<String>();
         syntax.add(gizmoOp);
         syntax.add(name);
@@ -137,7 +137,7 @@ public class Writer {
         String gizmoOp = "Triangle",
                 xCoordinate = String.valueOf((int) bumper.getX() / scale),
                 yCoordinate = String.valueOf((int) bumper.getY() / scale),
-                name = bumper.getName();
+                name = "T" + xCoordinate + yCoordinate;
         List<String> syntax = new ArrayList<String>();
         syntax.add(gizmoOp);
         syntax.add(name);
@@ -150,7 +150,7 @@ public class Writer {
         String gizmoOp = "Circle",
                 xCoordinate = String.valueOf((int) bumper.getX() / scale),
                 yCoordinate = String.valueOf((int) bumper.getY() / scale),
-                name = bumper.getName();
+                name = "C" + xCoordinate + yCoordinate;
         List<String> syntax = new ArrayList<String>();
         syntax.add(gizmoOp);
         syntax.add(name);
@@ -166,7 +166,7 @@ public class Writer {
                 yCoordinate = String.valueOf((ball.getY() - 10)/ scale),
                 xVelo = String.valueOf(ball.getVelocity().x()),
                 yVelo = String.valueOf(ball.getVelocity().y()),
-                name = ball.getName();
+                name = "B" + String.valueOf((int) (ball.getX() - 10) / scale) + String.valueOf((int) (ball.getY() - 10) / scale);
         syntax.add(gizmoOp);
         syntax.add(name);
         syntax.add(xCoordinate);
@@ -186,12 +186,15 @@ public class Writer {
 
     public List<String> generateFlipperSyntax(Flipper flipper) {
         List<String> syntax = new ArrayList<String>();
+        String name;
         if(flipper.isLeft()) {
             syntax.add("LeftFlipper");
+            name = "LF";
         } else {
             syntax.add("RightFlipper");
+            name = "RF";
         }
-        syntax.add(flipper.getName());
+        syntax.add(name + String.valueOf((int) flipper.getOrigin().x() / scale) + String.valueOf((int) flipper.getOrigin().y() / scale));
         syntax.add(String.valueOf((int) flipper.getOrigin().x() / scale));
         syntax.add(String.valueOf((int) flipper.getOrigin().y() / scale));
         return syntax;
