@@ -140,15 +140,15 @@ public class ModelLoader {
         model.addBall(name, xCoord, yCoord, xVelo, yVelo);
     }
 
-    private double getGravityValue(String[] command) {
+    public double getGravityValue(String[] command) {
         return Double.parseDouble(command[1]);
     }
 
-    private double getHorizontalFriction(String[] command) {
+    public double getHorizontalFriction(String[] command) {
         return Double.parseDouble(command[1]);
     }
 
-    private double getVerticalFriction(String[] command) {
+    public double getVerticalFriction(String[] command) {
         return Double.parseDouble(command[2]);
     }
 
