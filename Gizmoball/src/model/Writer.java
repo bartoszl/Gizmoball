@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Writer provides the functionality to save a <code>IGBallModel</code> instance to a file.
+ * Writer provides the functionality to save an IGBallModel instance to a file.
  * @author John Watt
  */
 public class Writer {
@@ -19,7 +19,7 @@ public class Writer {
     private int scale;
 
     /**
-     * Creates an instance of the Writer class, with the <code>scale</code> set to 20. The <code>scale</code>
+     * Creates an instance of the Writer class, with the scale set to 20. The scale
      * is the factor between the coordinates used in the formal file syntax and the exact pixel values used
      * within the model.
      */
@@ -28,7 +28,7 @@ public class Writer {
     }
 
     /**
-     * Store a given <code>IGBallModel</code> in a file named <code>fileName</code>
+     * Store a given IGBallModel in a file named fileName.
      * @param model -> The instance of a concrete class that implementsa the IGBallModel interface
      * @param fileName  -> The name that the file containing the model is to be given
      */
@@ -101,12 +101,12 @@ public class Writer {
     }
 
     /**
-     * Generate the file syntax for an absorber in the model.
+     * Generate the file syntax for an absorber.
      * The formal file syntax for an absorber is:
      * Absorber <name> <int-pair> <int-pair>
      * For example: Absorber myAbsorber 1 17 19 19
      * @param absorber  -> The absorber for which the file syntax is to be generated
-     * @return  -> A list of strings containing the file syntax for the specified absorber
+     * @return  -> A list of strings containing the file syntax for the given absorber
      */
     public List<String> generateAbsorberSyntax(IAbsorber absorber) {
         String gizmoOp = "Absorber",
@@ -126,9 +126,9 @@ public class Writer {
     }
 
     /**
-     * Generate the appropriate file syntax for the given <code>Bumper</code>.
-     * @param bumper -> The <code>Bumper</code> to generate the file syntax for
-     * @return -> A list of strings containing the file syntax for the specified Bumper
+     * Generate the appropriate file syntax for the given Bumper.
+     * @param bumper -> The Bumper to generate the file syntax for
+     * @return -> A list of strings containing the file syntax for the given Bumper
      */
     public List<String> generateBumperSyntax(Bumper bumper) {
         if(bumper instanceof SquareBumper) {
@@ -144,6 +144,14 @@ public class Writer {
         return null;
     }
 
+    /**
+     * Generate the file syntax for a SquareBumper.
+     * The formal file syntax for a SquareBumper is:
+     * Square <name> <int-pair>
+     * For example: Square mySquare 4 5
+     * @param bumper -> The SquareBumper for which the file syntax is to be generated
+     * @return -> A list of strings containing the file syntax for the given SquareBumper
+     */
     public List<String> generateSquareBumperSyntax(SquareBumper bumper) {
         String gizmoOp = "Square",
                 xCoordinate = String.valueOf((int) bumper.getX() / scale),
