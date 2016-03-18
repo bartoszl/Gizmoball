@@ -64,15 +64,20 @@ public class RunGUI implements IGUI {
         btnStart.addActionListener(runModeBtnListener);
         panel.add(btnStart);
 
-        JButton btnStop = new JButton("Stop");
-        btnStop.setBounds(10, 133, 180, 50);
-        btnStop.addActionListener(runModeBtnListener);
-        panel.add(btnStop);
-
         JButton btnTick = new JButton("Tick");
         btnTick.setBounds(10, 72, 180, 50);
         btnTick.addActionListener(runModeBtnListener);
         panel.add(btnTick);
+
+        JButton btnReset = new JButton("Reset");
+        btnReset.setBounds(10, 133, 180, 50);
+        btnReset.addActionListener(runModeBtnListener);
+        panel.add(btnReset);
+
+        JButton btnStop = new JButton("Stop");
+        btnStop.setBounds(10, 194, 180, 50);
+        btnStop.addActionListener(runModeBtnListener);
+        panel.add(btnStop);
 
         JButton btnBuildMode = new JButton("Build Mode");
         btnBuildMode.setBounds(10, 344, 180, 50);

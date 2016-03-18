@@ -35,6 +35,12 @@ public class RunModeBtnListener implements ActionListener {
                     break;
                 case "Tick":
                     model.moveBall();
+                    timer.stop();
+                    break;
+                case "Reset":
+                    model.reset();
+                    model.moveBall();
+                    timer.stop();
                     break;
                 case "Stop":
                     timer.stop();
