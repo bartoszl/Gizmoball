@@ -119,36 +119,19 @@ public class Ball implements IBall{
 	public Circle getCircle() {
 		return new Circle(x,y,r);
 	}
-
-    @Override
-    public double getLeftLimit() {
-        return x - r;
-    }
-
-    @Override
-    public double getUpperLimit() {
-        return y - r;
-    }
-
-    @Override
-    public double getRightLimit() {
-        return x + r;
-    }
-
-    @Override
-    public double getLowerLimit() {
-        return y + r;
-    }
     
+    @Override
     public void move(double x, double y){
     	this.x = x+L/2;
     	this.y = y+L/2;
     }
-
+    
+    @Override
 	public String getName() {
 		return name;
 	}
-
+	
+	@Override
     public void reset(){
         this.x = this.sx;
         this.y = this.sy;
