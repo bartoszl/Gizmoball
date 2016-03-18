@@ -13,7 +13,7 @@ public interface IGBallModel    {
     public boolean addCircularBumper(int x, int y, int rotation, String name);
     public Bumper getGizmo(String gizmoName);
     public boolean addAbsorber(String name, int x, int y, int x1, int y1);
-    public boolean addBall(String name, int x, int y, double xv, double yv);
+    public boolean addBall(String name, double x, double y, double xv, double yv);
     public void setGravity(double gravity);
     public double getGravity();
     public void setFriction(double xFriction, double yFriction);

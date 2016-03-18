@@ -128,16 +128,15 @@ public class GBallModel extends Observable implements IGBallModel {
         Vect xy1 = translateXY(x1,y1);
         x1 = (int) xy1.x();
         y1 = (int) xy1.y();
+        
         for(int i = Math.min(x,x1); i < Math.max(x,x1); i++) {
             for(int j = Math.min(y,y1); j < Math.max(y,y1); j++) {
                 if(occupiedSpaces[i][j]) return false;
             }
         }
-        if(this.getAbsorber()!=null){
-            unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
-                    absorber.getXBottomRight(), absorber.getYBottomRight());
-            if(occupiedSpacesAbs(Math.min(x,x1), Math.min(y,y1))) return false;
-        }
+        if(absorber!=null)
+        	unoccupyAbs(absorber.getXTopLeft(), absorber.getYTopLeft(),
+                    	absorber.getXBottomRight(), absorber.getYBottomRight());
         absorber = new Absorber(name, x*20, y*20, x1*20, y1*20);
         occupyAbs(x*20, y*20, x1*20, y1*20);
         notifyObs();
@@ -145,13 +144,13 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public boolean addBall(String name, int x, int y, double xv, double yv) {
-    	Vect xy = translateXY(x,y);
-        x = (int) xy.x();
-        y = (int) xy.y();
-        if(!occupiedSpaces[x][y]) {
-            occupiedSpaces[x][y] = true;
-            Ball b = new Ball(name, x*20, y*20, xv, yv);
+    public boolean addBall(String name, double x, double y, double xv, double yv) {
+    	Vect xy = translateXY((int) x ,(int) y);
+        int x1 = (int) xy.x();
+        int y1 = (int) xy.y();
+        if(!occupiedSpaces[x1][y1]) {
+            occupiedSpaces[x1][y1] = true;
+            Ball b = new Ball(name, x1*20, y1*20, xv, yv);
             balls.add(b);
             notifyObs();
             return true;

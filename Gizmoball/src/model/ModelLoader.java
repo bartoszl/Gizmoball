@@ -132,8 +132,8 @@ public class ModelLoader {
     }
 
     private void createBall(String[] command) {
-        int xCoord = Integer.parseInt(command[2]) * scale;
-        int yCoord = Integer.parseInt(command[3]) * scale;
+        double xCoord = Double.parseDouble(command[2]) * scale;
+        double yCoord = Double.parseDouble(command[3]) * scale;
         double xVelo = Double.parseDouble(command[4]);
         double yVelo = Double.parseDouble(command[5]);
         String name = command[1];
