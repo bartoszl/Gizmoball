@@ -2,7 +2,6 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +59,7 @@ public class WriterTest {
     @Test
     public void testConvertAbsorberToFileSyntax() {
         Absorber absorber = new Absorber("ABS", 20, 20, 80, 80);
-        List<String> actual = writer.convertAbsorberToFileSyntax(absorber);
+        List<String> actual = writer.generateAbsorberSyntax(absorber);
         List<String> expected = new ArrayList<String>();
         expected.add("Absorber");
         expected.add("ABS");

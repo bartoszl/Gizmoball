@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by John Watt on 08/03/2016.
+ * Writer provides the functionality to save a <code>IGBallModel</code> instance to a file.
+ * @author John Watt
  */
 public class Writer {
 
@@ -17,10 +18,20 @@ public class Writer {
     private BufferedWriter bufferedWriter;
     private int scale;
 
+    /**
+     * Creates an instance of the Writer class, with the <code>scale</code> set to 20. The <code>scale</code>
+     * is the factor between the coordinates used in the formal file syntax and the exact pixel values used
+     * within the model.
+     */
     public Writer () {
         scale = 20;
     }
 
+    /**
+     * Store a given <code>IGBallModel</code> in a file named <code>fileName</code>
+     * @param model -> The instance of a concrete class that implementsa the IGBallModel interface
+     * @param fileName  -> The name that the file containing the model is to be given
+     */
     public void writeModelToFile(IGBallModel model, String fileName) {
         file = new File(fileName + ".txt");
         List<String> syntax;
@@ -35,14 +46,14 @@ public class Writer {
 
             /* Write all bumpers */
             for(Bumper bumper : model.getGizmos()) {
-                syntax = convertBumperToFileSyntax(bumper);
+                syntax = generateBumperSyntax(bumper);
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + "\n");
             }
 
             /* Write absorber */
             IAbsorber absorber = model.getAbsorber();
             if(absorber != null) {
-                syntax = convertAbsorberToFileSyntax(absorber);
+                syntax = generateAbsorberSyntax(absorber);
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5) + "\n");
             }
 
@@ -89,7 +100,15 @@ public class Writer {
         }
     }
 
-    public List<String> convertAbsorberToFileSyntax(IAbsorber absorber) {
+    /**
+     * Generate the file syntax for an absorber in the model.
+     * The formal file syntax for an absorber is:
+     * Absorber <name> <int-pair> <int-pair>
+     * For example: Absorber myAbsorber 1 17 19 19
+     * @param absorber  -> The absorber for which the file syntax is to be generated
+     * @return  -> A list of strings containing the file syntax for the specified absorber
+     */
+    public List<String> generateAbsorberSyntax(IAbsorber absorber) {
         String gizmoOp = "Absorber",
                 name = "ABS",
                 x1 = String.valueOf((int) absorber.getXTopLeft() / scale),
@@ -106,7 +125,7 @@ public class Writer {
         return syntax;
     }
 
-    public List<String> convertBumperToFileSyntax(Bumper bumper) {
+    public List<String> generateBumperSyntax(Bumper bumper) {
         if(bumper instanceof SquareBumper) {
             SquareBumper sBumper = (SquareBumper) bumper;
             return generateSquareBumperSyntax(sBumper);
