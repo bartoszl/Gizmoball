@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-
 public class MoveGizmoListener implements MouseListener {
     private IGUI bgui;
     private IGBallModel model;
@@ -33,39 +32,40 @@ public class MoveGizmoListener implements MouseListener {
             if(first){
                 clicks[0] = x;
                 clicks[1] = y;
-                bgui.setMessageColor(Color.GREEN);
-                bgui.setMessage("Component found!");
-                first = false;
-            }
-            else {
+                x=(x-(x%20))/20;
+                y=(y-(y%20))/20;
+                if(x < 20 && y < 20) {
+                    if (model.getOccupiedSpaces()[x][y]) {
+                        bgui.setMessageColor(Color.GREEN);
+                        bgui.setMessage("Component found!");
+                        first = false;
+                    }
+                }
+            } else {
                 clicks[2] = x;
                 clicks[3] = y;
-                model.moveElement(clicks[0],clicks[1],clicks[2],clicks[3]);
-                bgui.setMessageColor(Color.GREEN);
-                bgui.setMessage("Component moved!");
-                first = true;
-                board.repaint();
+                if(model.moveElement(clicks[0],clicks[1],clicks[2],clicks[3])) {
+                    bgui.setMessageColor(Color.GREEN);
+                    bgui.setMessage("Component moved!");
+                    first = true;
+                    board.repaint();
+                } else {
+                    bgui.setMessageColor(Color.RED);
+                    bgui.setMessage("Invalid Position for that Component");
+                }
             }
         }
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
+    public void mousePressed(MouseEvent e) {}
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent e) {}
 }

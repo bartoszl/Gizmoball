@@ -44,7 +44,7 @@ public interface IGBallModel    {
     public List<KeyConnectionAbs> getKeyConnectionsAbs();
     
     public void moveBall();
-    public void resetBalls();
+    public void reset();
     public Ball moveBallForTime(Ball ball, double time);
 
     public void setLoadFile(File f);

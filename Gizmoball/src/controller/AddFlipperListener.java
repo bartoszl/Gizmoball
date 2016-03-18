@@ -21,43 +21,39 @@ public class AddFlipperListener implements MouseListener {
     public void mouseClicked(MouseEvent mouseEvent) {
         Board b = bgui.getGridView();
         if(b.getAction() == Board.Action.ADD && bgui.getSelectedComponent().equals("Flipper")) {
-            //paint it
             Point mouseP = MouseInfo.getPointerInfo().getLocation();
             Point gridP = b.getLocationOnScreen();
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
+            boolean added = false;
             switch(bgui.getFlipperPosition()) {
                 case "Left":
-                    m.addFlipper(x, y, true, "flipper");
-                    bgui.setMessage("Flipper added!");
+                    added = m.addFlipper(x, y, true, "flipper");
                     break;
                 case "Right":
-                    m.addFlipper(x, y, false, "flipper");
-                    bgui.setMessageColor(Color.GREEN);
-                    bgui.setMessage("Flipper added!");
+                    added = m.addFlipper(x, y, false, "flipper");
                     break;
                 default:
+            }
+            if(added) {
+                bgui.setMessageColor(Color.GREEN);
+                bgui.setMessage("Flipper added!");
+            } else {
+                bgui.setMessageColor(Color.RED);
+                bgui.setMessage("That space is occupied, Flipper cannot be added");
             }
         }
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
+    public void mousePressed(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
+    public void mouseReleased(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent) {}
 }

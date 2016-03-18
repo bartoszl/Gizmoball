@@ -25,44 +25,38 @@ public class AddGizmoListener implements MouseListener{
             Point gridP = b.getLocationOnScreen();
             int x = mouseP.x - gridP.x;
             int y = mouseP.y - gridP.y;
+            boolean added = false;
             switch(gizmoShape) {
                 case "Circle":
-                    m.addCircularBumper(x, y, 0, "circle");
-                    bgui.setMessageColor(Color.GREEN);
-                    bgui.setMessage("Circle added!");
+                    added = m.addCircularBumper(x, y, 0, "circle");
                     break;
                 case "Triangle":
-                    m.addTriangularBumper(x, y, 0, "triangle");
-                    bgui.setMessageColor(Color.GREEN);
-                    bgui.setMessage("Triangle added!");
+                    added = m.addTriangularBumper(x, y, 0, "triangle");
                     break;
                 case "Square":
-                    m.addSquareBumper(x, y, 0, "square");
-                    bgui.setMessageColor(Color.GREEN);
-                    bgui.setMessage("Square added!");
+                    added = m.addSquareBumper(x, y, 0, "square");
                     break;
                 default:
+            }
+            if(added) {
+                bgui.setMessageColor(Color.GREEN);
+                bgui.setMessage(gizmoShape+" added!");
+            } else {
+                bgui.setMessageColor(Color.RED);
+                bgui.setMessage("That space is occupied, "+gizmoShape+" cannot be added");
             }
         }
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
+    public void mousePressed(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
+    public void mouseReleased(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent) {}
 }

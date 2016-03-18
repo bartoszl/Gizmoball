@@ -42,8 +42,7 @@ public class BuildModeBtnListener implements ActionListener {
                 board.setAction(Board.Action.ROTATE);
                 break;
             case "Add Component":
-                gui.setMessage("Click where you want to add Component "+
-                        "(for Absorber this will be top left corner).");
+                gui.setMessage("Click where you want to add Component");
                 board.setAction(Board.Action.ADD);
                 break;
             case "Delete":

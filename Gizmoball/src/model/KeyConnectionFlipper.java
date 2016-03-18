@@ -20,6 +20,8 @@ public class KeyConnectionFlipper {
         return flipper;
     }
 
+    public void setFlipper(Flipper flipper) { this.flipper = flipper; }
+
     public String getUpDown() {
         return upDown;
     }

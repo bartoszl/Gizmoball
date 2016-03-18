@@ -298,7 +298,6 @@ public class GBallModel extends Observable implements IGBallModel {
 
 	@Override
 	public List<Flipper> getFlippers() {
-		// TODO Auto-generated method stub
 		return flippers;
 	}
 
@@ -538,18 +537,23 @@ public class GBallModel extends Observable implements IGBallModel {
     public List<Connection> getConnections() {
         return connections;
     }
-    // ?
+    
+    private Vect calcVelocity(Ball ball){
+    	double moveTime = 0.05;
+    	Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (gravity*20*moveTime));
+        Vect newV = applyFriction(temp, moveTime);
+        return newV;
+    }
+    
 	@Override
 	public void moveBall() {
 		double moveTime = 0.05;
 		double minTime = moveTime;
 		List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
 		for(Ball ball: balls){
-			Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (gravity*20*moveTime));
-            Vect Vnew = applyFriction(temp, moveTime);
-            ball.setVelocity(Vnew);
 			cl.add(timeUntilCollision(ball));
-			if(cl.get(cl.size()-1).getTime()<minTime) minTime = cl.get(cl.size()-1).getTime();
+			if(cl.get(cl.size()-1).getTime()<minTime) 
+				minTime = cl.get(cl.size()-1).getTime();
 		}
 		moveFlippers(minTime);
 		for(Ball ball: balls){
@@ -563,6 +567,8 @@ public class GBallModel extends Observable implements IGBallModel {
 					double tuc = cd.getTime();
 					if(tuc>moveTime){
 						ball = moveBallForTime(ball, moveTime);
+						Vect newV = calcVelocity(ball);
+						ball.setVelocity(newV);
 					} else {
 						if(!cd.getAbsorbed()){
                             if(cd.getBumper() != null) {
@@ -570,6 +576,8 @@ public class GBallModel extends Observable implements IGBallModel {
                             }
 							ball = moveBallForTime(ball, tuc);
 							ball.setVelocity(cd.getVelocity());
+							Vect newV = calcVelocity(ball);
+							ball.setVelocity(newV);
 						} else {
 							absorber.absorb(ball);
 
@@ -592,12 +600,35 @@ public class GBallModel extends Observable implements IGBallModel {
         }
     }
 
-    public void resetBalls() {
+    public void reset() {
+        resetBalls();
+        resetFlippers();
+    }
+
+    private void resetBalls() {
         for(Ball b : balls){
             b.reset();
             b.setMoving(true);
             b.setVelocity(new Vect(50,50));
         }
+    }
+
+    private void resetFlippers() {
+        ArrayList<Flipper> newFlippers = new ArrayList<>();
+        for(Flipper f : flippers){
+            Flipper temp = new Flipper((int)f.getOrigin().x(), (int)f.getOrigin().y(), f.isLeft(), "flipper");
+            for(int i = 0; i < f.getRotation(); i++){
+                temp.rotate();
+            }
+            for(Connection c : connections){
+                if(c.getFlipper().equals(f)) c.setFlipper(temp);
+            }
+            for(KeyConnectionFlipper kc : keyConnectionsFlipper){
+                if(kc.getFlipper().equals(f)) kc.setFlipper(temp);
+            }
+            newFlippers.add(temp);
+        }
+        flippers = newFlippers;
     }
     
     public Vect applyFriction(Vect Vold, double time){
@@ -611,7 +642,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		double newX = ball.getX() + (vx*time);
 		double newY = ball.getY() + (vy*time);
         // Very badly done stopping detection
-		
+		/*
         Vect Vold = ball.getVelocity();
         if(ball.getX() == newX && ball.getY() == newY && !ball.isAbsorbed()
                 && ball.getVelocity().equals(Vold)
@@ -619,7 +650,7 @@ public class GBallModel extends Observable implements IGBallModel {
                 && Vold.y() < 20 && Vold.y() > -20){
             ball.setMoving(false);
             return ball;
-        }
+        }*/
 		ball.setXY(newX, newY);
 		return ball;
 	}

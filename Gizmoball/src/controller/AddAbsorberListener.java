@@ -31,51 +31,49 @@ public class AddAbsorberListener implements MouseListener {
             x=(x/20)*20;
             y=(y/20)*20;
             if(first){
-                bgui.setMessage("Top left corner set! Now click elsewhere to set bottom right corner of absorber");
+                bgui.setMessage("First corner set! Now click elsewhere to set the second corner of absorber");
                 clicks[0] = x;
                 clicks[1] = y;
                 first = false;
-            }
-            else {
-                clicks[2] = x ;
-                clicks[3] = y ;
-                if((clicks[0]<clicks[2])||(clicks[1]<clicks[3])){
+            } else {
+                clicks[2] = x;
+                clicks[3] = y;
+                if((clicks[0]<clicks[2])&&(clicks[1]<clicks[3])){
                 	clicks[2]+=20;
                 	clicks[3]+=20;
-                }
-                else{
-                	clicks[0]+=20;
+                } else if(clicks[0]<clicks[2]){
+                    clicks[1]+=20;
+                    clicks[2]+=20;
+                } else if(clicks[1]<clicks[3]){
+                    clicks[0]+=20;
+                    clicks[3]+=20;
+                } else {
+                    clicks[0]+=20;
                     clicks[1]+=20;
                 }
-                for(int i = 0; i < clicks.length; i++) {
-                    if (clicks[i] > 400) return;
+                for(int i : clicks) { if (i > 400) return; }
+                if(m.addAbsorber("absorber",clicks[0],clicks[1],clicks[2],clicks[3])) {
+                    bgui.setMessage("Absorber added!");
+                    bgui.setMessageColor(Color.GREEN);
+                    b.repaint();
+                } else {
+                    bgui.setMessageColor(Color.RED);
+                    bgui.setMessage("That space is occupied, Absorber cannot be added");
                 }
-                m.addAbsorber("absorber",clicks[0],clicks[1],clicks[2],clicks[3]);
-                bgui.setMessage("Absorber added!");
-                bgui.setMessageColor(Color.GREEN);
                 first = true;
-                b.repaint();
             }
         }
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
+    public void mousePressed(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
+    public void mouseReleased(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
+    public void mouseEntered(MouseEvent mouseEvent) {}
 
     @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
+    public void mouseExited(MouseEvent mouseEvent) {}
 }
