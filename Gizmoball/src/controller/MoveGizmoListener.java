@@ -32,9 +32,15 @@ public class MoveGizmoListener implements MouseListener {
             if(first){
                 clicks[0] = x;
                 clicks[1] = y;
-                bgui.setMessageColor(Color.GREEN);
-                bgui.setMessage("Component found!");
-                first = false;
+                x=(x-(x%20))/20;
+                y=(y-(y%20))/20;
+                if(x < 20 && y < 20) {
+                    if (model.getOccupiedSpaces()[x][y]) {
+                        bgui.setMessageColor(Color.GREEN);
+                        bgui.setMessage("Component found!");
+                        first = false;
+                    }
+                }
             } else {
                 clicks[2] = x;
                 clicks[3] = y;
