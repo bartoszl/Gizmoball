@@ -186,12 +186,15 @@ public class Writer {
 
     public List<String> generateFlipperSyntax(Flipper flipper) {
         List<String> syntax = new ArrayList<String>();
+        String name;
         if(flipper.isLeft()) {
             syntax.add("LeftFlipper");
+            name = "LF";
         } else {
             syntax.add("RightFlipper");
+            name = "RF";
         }
-        syntax.add(flipper.getName());
+        syntax.add(name + String.valueOf((int) flipper.getOrigin().x() / scale) + String.valueOf((int) flipper.getOrigin().y() / scale));
         syntax.add(String.valueOf((int) flipper.getOrigin().x() / scale));
         syntax.add(String.valueOf((int) flipper.getOrigin().y() / scale));
         return syntax;
