@@ -1,5 +1,6 @@
 package model;
 
+import physics.Angle;
 import physics.Circle;
 import physics.LineSegment;
 import physics.Vect;
@@ -177,4 +178,11 @@ public interface IFlipper {
      * 		   are placed in the ends of lines to ensure perfect collisions.
      */
     public List<Circle> getCircles();
+    
+    /**
+     * Getter method for currentRotation.
+     * 
+     * @return Angle, representing the present angle by which the flipper was rotated.
+     */
+    public Angle getCurrentRotation();
 }

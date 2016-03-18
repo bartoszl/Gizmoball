@@ -187,6 +187,10 @@ public class Flipper implements IFlipper {
 		return l;
 	}
 	
+	public Angle getCurrentRotation(){
+		return currentRotation;
+	}
+	
 	// Private Methods
 	
 	private void makeLines(){
