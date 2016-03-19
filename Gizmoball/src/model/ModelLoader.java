@@ -86,10 +86,10 @@ public class ModelLoader {
 
     private boolean applyRotation(String[] command) {
         String gizmoName = command[1];
-        if(model.getGizmo(gizmoName) == null) {
+        if(model.getBumper(gizmoName) == null) {
             return false;
         }
-        model.getGizmo(gizmoName).rotate();
+        model.getBumper(gizmoName).rotate();
         return true;
     }
 

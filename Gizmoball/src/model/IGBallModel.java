@@ -10,97 +10,102 @@ public interface IGBallModel    {
 	
 	/**
 	 * 
-	 * @param x
-	 * @param y
-	 * @param rotation
-	 * @param name
-	 * @return
+	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
+	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
+	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
+	 * @param name -> String, representing name of the Bumper.
+	 * @return true if the Bumper was successfully created, false if adding a bumper was unsuccessful.
 	 */
     public boolean addSquareBumper(int x, int y, int rotation, String name);
     
     /**
-     * 
-     * @param x
-     * @param y
-     * @param rotation
-     * @param name
-     * @return
-     */
+	 * 
+	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
+	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
+	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
+	 * @param name -> String, representing name of the Bumper.
+	 * @return true if the Bumper was successfully created, false if adding a bumper was unsuccessful.
+	 */
     public boolean addTriangularBumper(int x, int y, int rotation, String name);
     
     /**
-     * 
-     * @param x
-     * @param y
-     * @param rotation
-     * @param name
-     * @return
-     */
+	 * 
+	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
+	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
+	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
+	 * @param name -> String, representing name of the Bumper.
+	 * @return true if the Bumper was successfully created, false if adding a bumper was unsuccessful.
+	 */
     public boolean addCircularBumper(int x, int y, int rotation, String name);
     
     /**
+     * Getter method for bumpers.
      * 
-     * @param gizmoName
-     * @return
+     * @param gizmoName -> representing an unique name of the bumper.
+     * @return Bumper, with a name specified in the params.
      */
-    public Bumper getGizmo(String gizmoName);
+    public Bumper getBumper(String gizmoName);
     
     /**
      * 
-     * @param name
-     * @param x
-     * @param y
-     * @param x1
-     * @param y1
-     * @return
+     * @param name -> String, representing the name of the Absorber.
+     * @param x -> double, representing the x coordinate of top left corner of the top
+     * 			   left grid in which the absorber is placed.
+     * @param y -> double, representing the y coordinate of top left corner of the top
+     * 			   left grid in which the absorber is placed.
+     * @param x1 -> double, representing the x coordinate of bottom right corner of the bottom right
+     * 				grid in which the absorber is placed.
+     * @param y1 -> double, representing the y coordinate of bottom right corner of the bottom
+     * 			    right grid in which the absorber is placed. 
+     * @return true if the Absorber was successfully created, false if adding a Absorber was unsuccessful.
      */
     public boolean addAbsorber(String name, int x, int y, int x1, int y1);
     
     /**
      * 
-     * @param name
-     * @param x
-     * @param y
-     * @param xv
-     * @param yv
-     * @return
+     * @param name -> String, representing the name of the Ball.
+     * @param x -> double, representing the x coordinate of top left corner of the grid in which the Ball is placed.
+     * @param y -> double, representing the y coordinate of top left corner of the grid in which the Ball is placed.
+     * @param xv -> double, representing the ball's velocity along x axis.
+     * @param yv -> double, representing the ball's velocity along y axis.
+     * @return true if the Ball was successfully created, false if adding a Ball was unsuccessful.
      */
     public boolean addBall(String name, double x, double y, double xv, double yv);
     
     /**
      * 
-     * @param gravity
+     * @param gravity -> double, representing the new gravity.
      */
     public void setGravity(double gravity);
     
     /**
      * 
-     * @return
+     * @return double representing gravity.
      */
     public double getGravity();
     
     /**
      * 
-     * @param xFriction
-     * @param yFriction
+     * @param xFriction -> double, representing the new friction along x axis.
+     * @param yFriction -> double, representing the new friction along y axis.
      */
     public void setFriction(double xFriction, double yFriction);
     
     /**
      * 
-     * @return
+     * @return double, representing friction along x axis.
      */
     public double getFrictionX();
     
     /**
      * 
-     * @return
+     * @return double, representing friction along y axis.
      */
     public double getFrictionY();
     
     /**
      * 
-     * @param cBumperName
+     * @param cBumperName -> String representing name of the Bumper that will be connected.
      * @param flipperName
      * @return
      */
@@ -125,50 +130,50 @@ public interface IGBallModel    {
     public boolean addKeyConnectionAbs(int keyID, IAbsorber abs, String upDown);
     
     /**
-     * 
-     * @return
+     * Getter method for Bumpers.
+     * @return List<Bumper>, a list of Bumpers.
      */
-    public List<Bumper> getGizmos();
+    public List<Bumper> getBumpers();
     
     /**
-     * 
-     * @return
+     * Getter method for Absorber.
+     * @return Absorber, if the absorber exists, null if it doesn't.
      */
     public Absorber getAbsorber();
     
     /**
-     * 
-     * @return
+     * Getter method for balls.
+     * @return List<Ball>, a list of balls.
      */
     public List<Ball> getBalls();
     
     /**
-     * 
-     * @return
+     * Getter method for flippers.
+     * @return List<Flipper>, a list of flippers.
      */
     public List<Flipper> getFlippers();
     
     /**
-     * 
-     * @param bumpers
+     * Setter method for Bumpers.
+     * @param bumpers -> List of bumpers, that will replace the bumpers in the model.
      */
-    public void setGizmos(List<Bumper> bumpers);
+    public void setBumpers(List<Bumper> bumpers);
     
     /**
-     * 
-     * @param balls
+     * Setter method for Balls.
+     * @param balls -> List of ball, that will replace the balls in the model.
      */
     public void setBalls(List<Ball> balls);
     
     /**
-     * 
-     * @param absorber
+     * Setter method for absorber.
+     * @param absorber -> now absorber that will replace the old one in the model.
      */
     public void setAbsorber(Absorber absorber);
     
     /**
-     * 
-     * @param flippers
+     * Setter method for flippers.
+     * @param flippers -> List of flippers, that will replace the flippers in the model.
      */
     public void setFlippers(List<Flipper> flippers);
     
