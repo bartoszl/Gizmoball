@@ -97,8 +97,8 @@ public abstract class Board extends JPanel implements Observer {
     }
     
     private void drawBumpers(Graphics g){
-    	if(model.getGizmos()!=null){
-			for(Bumper gizmo: model.getGizmos()){
+    	if(model.getBumpers()!=null){
+			for(Bumper gizmo: model.getBumpers()){
 				List<Circle> circles = gizmo.getCircles();
 				g.setColor(gizmo.getColor());
 				if(circles.size()==1){//circular bumper

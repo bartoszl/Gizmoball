@@ -43,7 +43,7 @@ public interface IGBallModel    {
      * @param gizmoName
      * @return
      */
-    public Bumper getGizmo(String gizmoName);
+    public Bumper getBumper(String gizmoName);
     
     /**
      * 
@@ -128,7 +128,7 @@ public interface IGBallModel    {
      * 
      * @return
      */
-    public List<Bumper> getGizmos();
+    public List<Bumper> getBumpers();
     
     /**
      * 

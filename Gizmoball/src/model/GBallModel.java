@@ -1,16 +1,12 @@
 package model;
 
+import physics.*;
+import physics.Geometry.VectPair;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-
-import physics.Angle;
-import physics.Circle;
-import physics.Geometry;
-import physics.Geometry.VectPair;
-import physics.LineSegment;
-import physics.Vect;
 
 /**
  * Created by John Watt on 01/03/2016.
@@ -106,7 +102,7 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public Bumper getGizmo(String gizmoName) {
+    public Bumper getBumper(String gizmoName) {
         for(Bumper b : gizmos) {
             if(b.getName().equals(gizmoName)) {
                 return b;
@@ -213,7 +209,7 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public List<Bumper> getGizmos() {
+    public List<Bumper> getBumpers() {
         return gizmos;
     }
 
@@ -276,7 +272,7 @@ public class GBallModel extends Observable implements IGBallModel {
         Ball ball = findBall(x, y);
         if(b==null && f==null && ball == null && absorber == null) return false;
         if(b!=null) {
-            getGizmos().remove(b);
+            getBumpers().remove(b);
             occupiedSpaces[(int) x / 20][(int) y / 20] = false;
         }
         if(f!=null) {

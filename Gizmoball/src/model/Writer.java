@@ -45,7 +45,7 @@ public class Writer {
             bufferedWriter = new BufferedWriter(fileWriter);
 
             /* Write all bumpers */
-            for(Bumper bumper : model.getGizmos()) {
+            for(Bumper bumper : model.getBumpers()) {
                 syntax = generateBumperSyntax(bumper);
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + "\n");
             }
@@ -64,7 +64,7 @@ public class Writer {
             }
 
             /* Write rotations */
-            for(Bumper bumper : model.getGizmos()) {
+            for(Bumper bumper : model.getBumpers()) {
                 for(String s : generateRotateSyntax(bumper)) {
                     bufferedWriter.write(s + "\n");
                 }

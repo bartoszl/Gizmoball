@@ -22,15 +22,15 @@ public class GBallModelTest {
     	model.addSquareBumper(0, 0, 0, "sBump");
         model.addCircularBumper(0, 20, 0, "cBump");
         model.addTriangularBumper(0, 40, 0, "tBump");
-        assertFalse(model.getGizmo("sBump")==null);
-        assertTrue(model.getGizmo("")==null);
-        assertTrue(model.getGizmo("sBump") instanceof SquareBumper);
-        assertTrue(model.getGizmo("cBump") instanceof CircularBumper);
-        assertTrue(model.getGizmo("tBump") instanceof TriangularBumper);
+        assertFalse(model.getBumper("sBump")==null);
+        assertTrue(model.getBumper("")==null);
+        assertTrue(model.getBumper("sBump") instanceof SquareBumper);
+        assertTrue(model.getBumper("cBump") instanceof CircularBumper);
+        assertTrue(model.getBumper("tBump") instanceof TriangularBumper);
         model.addSquareBumper(0, 0, 0, "sBump");
         model.addCircularBumper(0, 20, 0, "cBump");
         model.addTriangularBumper(0, 40, 0, "tBump");
-        assertTrue(model.getGizmos().size()==3);
+        assertTrue(model.getBumpers().size()==3);
     }
     
     @Test
@@ -70,10 +70,10 @@ public class GBallModelTest {
         model.addCircularBumper(0, 20, 0, "cBump");
         model.addTriangularBumper(0, 40, 0, "tBump");
         model.clear();
-        assertTrue(model.getGizmo("sBump")==null);
-        assertTrue(model.getGizmo("cBump")==null);
-        assertTrue(model.getGizmo("tBump")==null);
-        assertTrue(model.getGizmos().size()==0);
+        assertTrue(model.getBumper("sBump")==null);
+        assertTrue(model.getBumper("cBump")==null);
+        assertTrue(model.getBumper("tBump")==null);
+        assertTrue(model.getBumpers().size()==0);
     }
     
     @Test
@@ -130,8 +130,8 @@ public class GBallModelTest {
     	Bumper cBump = new CircularBumper(0,0,0,"cBump");
     	bumpers.add(cBump);
     	model.setGizmos(bumpers);
-    	assertTrue(model.getGizmos().size()==1);
-    	assertEquals(model.getGizmos().get(0), cBump);
+    	assertTrue(model.getBumpers().size()==1);
+    	assertEquals(model.getBumpers().get(0), cBump);
     }
     
     @Test
@@ -168,7 +168,7 @@ public class GBallModelTest {
     	model.addTriangularBumper(0, 40, 0, "tBump");
     	model.addFlipper(0, 0, true, "flipper");
     	assertTrue(model.rotateElement(0, 40));
-    	assertTrue(model.getGizmo("tBump").getRotation()==1);
+    	assertTrue(model.getBumper("tBump").getRotation()==1);
     	assertTrue(model.rotateElement(0, 0));
     }
     
