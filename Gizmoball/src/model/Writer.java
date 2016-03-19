@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Writer provides the functionality to save an GBallModel instance to a file.
+ * Writer provides the functionality to save an IGBallModel instance to a file.
  * @author John Watt
  */
 public class Writer {
@@ -28,11 +28,11 @@ public class Writer {
     }
 
     /**
-     * Store a given GBallModel in a file named fileName.
+     * Store a given IGBallModel in a file named fileName.
      * @param model -> A GBallModel instance to save to file
      * @param fileName  -> The name that the file containing the model is to be given
      */
-    public void writeModelToFile(GBallModel model, String fileName) {
+    public void writeModelToFile(IGBallModel model, String fileName) {
         file = new File(fileName + ".txt");
         List<String> syntax;
         try {
