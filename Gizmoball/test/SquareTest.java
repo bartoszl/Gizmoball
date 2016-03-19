@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.SquareBumper;
+import physics.Circle;
+import physics.LineSegment;
 
 /**
  * 
@@ -15,6 +17,8 @@ import model.SquareBumper;
 public class SquareTest {
 
 	private SquareBumper sq;
+	private static final double L = 20;
+
 	@Before
 	public void setUp() throws Exception {
 		sq = new SquareBumper(100,200,0,"SQUAAAAAARE");
@@ -23,13 +27,19 @@ public class SquareTest {
 	@Test
 	public void testGetLines() {
 		assertTrue(sq.getLines().size()==4);
-		//TODO check each line
+		assertEquals(sq.getLines().get(0), new LineSegment(100, 200, 100+L, 200));
+		assertEquals(sq.getLines().get(1), new LineSegment(100+L, 200, 100+L, 200+L));
+		assertEquals(sq.getLines().get(2), new LineSegment(100, 200+L, 100+L, 200+L));
+		assertEquals(sq.getLines().get(3), new LineSegment(100, 200, 100, 200+L));
 	}
 	
 	@Test
 	public void testGetCircles() {
 		assertTrue(sq.getCircles().size()==4);
-		//TODO check each circle
+		assertEquals(sq.getCircles().get(0), new Circle(100, 200, 0));
+		assertEquals(sq.getCircles().get(1), new Circle(100+L, 200, 0));
+		assertEquals(sq.getCircles().get(2), new Circle(100+L, 200+L, 0));
+		assertEquals(sq.getCircles().get(3), new Circle(100, 200+L, 0));
 	}
 	
 	@Test
@@ -70,6 +80,12 @@ public class SquareTest {
 	public void testGetCirclesAfterMove() {
 		assertTrue(sq.getCircles().size()==4);
 		//TODO check all circles
+	}
+
+	@Test
+	public void testSetColor() {
+		sq.setColor(Color.BLACK);
+		assertEquals(sq.getColor(), Color.BLACK);
 	}
 
 }
