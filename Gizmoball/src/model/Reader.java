@@ -12,11 +12,9 @@ public class Reader {
     private BufferedReader reader;
     private String line = "";
     private String regex = "[\\s\\t]";
-    private List<String[]> data;
     private Validator validator;
 
     public Reader () {
-        data = new ArrayList<String[]>();
         validator = new Validator();
     }
 
