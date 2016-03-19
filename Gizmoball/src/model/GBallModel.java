@@ -28,7 +28,11 @@ public class GBallModel extends Observable implements IGBallModel {
     private boolean [][] occupiedSpaces;
     private Walls walls;
     private File loadFile;
-
+    
+    /**
+     * Constructor for GBallModel. Creates empty lists for each gizmo.
+     * Initialises gravity to 25 and x and y friction to 0.025.
+     */
     public GBallModel() {
         gizmos = new ArrayList<Bumper>();
         connections = new ArrayList<Connection>();
