@@ -18,19 +18,19 @@ public class ModelLoadTests {
     @Test
     public void testCreateCircle() {
         assertEquals(new CircularBumper(80, 60, 0, "C43").getCircles(),
-                ml.getModel().getGizmos().get(17).getCircles());
+                ml.getModel().getBumpers().get(17).getCircles());
     }
 
     @Test
     public void testCreateTriangle() {
         assertEquals(new TriangularBumper(20, 20, 0, "T2").getCircles(),
-                ml.getModel().getGizmos().get(1).getCircles());
+                ml.getModel().getBumpers().get(1).getCircles());
     }
 
     @Test
     public void testCreateSquare() {
         assertEquals(new SquareBumper(0, 40, 0, "S02").getCircles(),
-                ml.getModel().getGizmos().get(2).getCircles());
+                ml.getModel().getBumpers().get(2).getCircles());
     }
 
     @Test

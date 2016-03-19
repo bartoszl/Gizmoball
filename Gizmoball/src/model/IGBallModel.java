@@ -179,33 +179,34 @@ public interface IGBallModel    {
     
     /**
      * 
-     * @param i
-     * @param i1
-     * @param b
-     * @param flipper
-     * @return
+     * @param x -> int, representing the x coordinate of the top left corner of the grid that the flipper is placed in.
+     * @param y -> int, representing the x coordinate of the top left corner of the grid that the flipper is placed in.
+     * @param left -> boolean, true if its a left flipper, false if its the right flipper.
+     * @param name -> String, representing name of the flipper.
+     * @return true if the flipper was successfully created, otherwise false.
      */
-    public boolean addFlipper(int i, int i1, boolean b, String flipper);
+    public boolean addFlipper(int x, int y, boolean left, String name);
     
     /**
      * 
-     * @param x
-     * @param y
-     * @return
+     * @param x -> double, x coordinate of the top left corner of the grid, in which the element that will be rotated is placed.
+     * @param y -> double, y coordinate of the top left corner of the grid, in which the element that will be rotated is placed.
+     * @return true if the element was successfully rotated, otherwise false.
      */
     public boolean rotateElement(double x, double y);
     
     /**
      * 
-     * @param x
-     * @param y
-     * @param newX
-     * @param newY
-     * @return
+     * @param x -> double, x coordinate of the top left corner of the grid, in which the element that will be moved is placed.
+     * @param y -> double, y coordinate of the top left corner of the grid, in which the element that will be moved is placed.
+     * @param newX -> double, x coordinate of the top left corner of the grid, into which the element will be moved.
+     * @param newY -> double, y coordinate of the top left corner of the grid, into which the element will be moved.
+     * @return true, if the element was successfully moved, otherwise false.
      */
     public boolean moveElement(double x, double y, double newX, double newY);
     
     /**
+     * Getter method for occupied spaces.
      * 
      * @return
      */
