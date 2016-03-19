@@ -3,6 +3,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,5 +172,35 @@ public class WriterTest {
         expected.add("down");
         expected.add("ABS1");
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testConvertBumperToFileSyntax() {
+        List<String> expected = new ArrayList<String>();
+        expected.add("Circle");
+        expected.add("C33");
+        expected.add("3");
+        expected.add("3");
+        List<String> actual = writer.convertBumperToFileSyntax(new CircularBumper(60, 60, 0, "circle"));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testWriteModelToFile() {
+        IGBallModel m = new GBallModel();
+        m.addTriangularBumper(40, 40, 0, "T22");
+        m.addBall("Ball1", 20, 20, 20, 20);
+        writer.writeModelToFile(m, "newFile");
+        File file1 = new File("newFile.txt");
+        File file2 = new File("testWriter.txt");
+        List<String> content1 = new ArrayList<>();
+        List<String> content2 = new ArrayList<>();
+        try {
+            content1 = Files.readAllLines(file1.toPath(), Charset.defaultCharset());
+            content2 = Files.readAllLines(file2.toPath(), Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertEquals(content1, content2);
     }
 }
