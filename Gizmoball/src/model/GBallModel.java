@@ -14,7 +14,7 @@ import java.util.Observable;
 public class GBallModel extends Observable implements IGBallModel {
 
     private double gravity, xFriction, yFriction;
-    private List<Bumper> gizmos;
+    private List<Bumper> bumpers;
     private List<Flipper> flippers;
     private List<Connection> connections;
     private List<KeyConnectionAbs> keyConnectionsAbs;
@@ -24,9 +24,13 @@ public class GBallModel extends Observable implements IGBallModel {
     private boolean [][] occupiedSpaces;
     private Walls walls;
     private File loadFile;
-
+    
+    /**
+     * Constructor for GBallModel. Creates empty lists for each gizmo.
+     * Initialises gravity to 25 and x and y friction to 0.025.
+     */
     public GBallModel() {
-        gizmos = new ArrayList<Bumper>();
+        bumpers = new ArrayList<Bumper>();
         connections = new ArrayList<Connection>();
         keyConnectionsAbs = new ArrayList<KeyConnectionAbs>();
         keyConnectionsFlipper = new ArrayList<KeyConnectionFlipper>();
@@ -48,7 +52,7 @@ public class GBallModel extends Observable implements IGBallModel {
         y = (int) xy.y();
         if(!occupiedSpaces[x][y]) {
             occupiedSpaces[x][y] = true;
-            gizmos.add(new SquareBumper(x*20, y*20, rotation, name));
+            bumpers.add(new SquareBumper(x*20, y*20, rotation, name));
             notifyObs();
             return true;
         }
@@ -79,7 +83,7 @@ public class GBallModel extends Observable implements IGBallModel {
         if(!occupiedSpaces[x][y]) {
             occupiedSpaces[x][y] = true;
             TriangularBumper tBumper = new TriangularBumper(x*20, y*20, rotation, name);
-            gizmos.add(tBumper);
+            bumpers.add(tBumper);
             notifyObs();
             return true;
         }
@@ -94,16 +98,16 @@ public class GBallModel extends Observable implements IGBallModel {
         if(!occupiedSpaces[x][y]) {
             occupiedSpaces[x][y] = true;
             CircularBumper cBumper = new CircularBumper(x*20, y*20, rotation, name);
-            gizmos.add(cBumper);
+            bumpers.add(cBumper);
             notifyObs();
             return true;
         }
         return false;
     }
-
+    
     @Override
     public Bumper getBumper(String gizmoName) {
-        for(Bumper b : gizmos) {
+        for(Bumper b : bumpers) {
             if(b.getName().equals(gizmoName)) {
                 return b;
             }
@@ -210,7 +214,7 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public List<Bumper> getBumpers() {
-        return gizmos;
+        return bumpers;
     }
 
     @Override
@@ -229,8 +233,8 @@ public class GBallModel extends Observable implements IGBallModel {
 	}
 
     @Override
-    public void setGizmos(List<Bumper> bumpers) {
-        this.gizmos = bumpers;
+    public void setBumpers(List<Bumper> bumpers) {
+        this.bumpers = bumpers;
     }
 
     @Override
@@ -349,7 +353,7 @@ public class GBallModel extends Observable implements IGBallModel {
     
 	@Override
     public void clear(){
-    	gizmos = new ArrayList<Bumper>();
+    	bumpers = new ArrayList<Bumper>();
         connections = new ArrayList<Connection>();
         keyConnectionsAbs = new ArrayList<KeyConnectionAbs>();
         keyConnectionsFlipper = new ArrayList<KeyConnectionFlipper>();
@@ -411,7 +415,7 @@ public class GBallModel extends Observable implements IGBallModel {
     
     @Override
     public Bumper findBumper(double x, double y){
-		for(Bumper b: gizmos){
+		for(Bumper b: bumpers){
 			if(b.getX()==x && b.getY()==y)
 				return b;
 		}
@@ -500,7 +504,7 @@ public class GBallModel extends Observable implements IGBallModel {
     }
     
     private CircularBumper getCircularBumper(String circularBumperName) {
-        for(Bumper gizmo : gizmos) {
+        for(Bumper gizmo : bumpers) {
             if(gizmo instanceof CircularBumper) {
                 if(gizmo.getName().equals(circularBumperName)) {
                     return (CircularBumper) gizmo;
@@ -528,7 +532,7 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     private boolean checkCircularBumperExists(String circularBumperName) {
-        for(Bumper gizmo : gizmos) {
+        for(Bumper gizmo : bumpers) {
             if(gizmo instanceof CircularBumper) {
                 if(gizmo.getName().equals(circularBumperName)) {
                     return true;
@@ -686,7 +690,7 @@ public class GBallModel extends Observable implements IGBallModel {
 			}
 		}
 		// Check Bumpers
-		for(Bumper bumper: gizmos){
+		for(Bumper bumper: bumpers){
 			for(LineSegment line: bumper.getLines()){
 				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
 				if(time<shortest){

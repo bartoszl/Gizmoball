@@ -28,7 +28,7 @@ public interface IFlipper {
     public void move(double cx, double cy);
     
     /**
-     * Method reponsible for flipping the flipper. It rotates it around
+     * Method responsible for flipping the flipper. It rotates it around
      * the topCircle. Maximum rotation is 90 degrees.
      * 
      * @param time -> double, representing the moving time for the flipper. 

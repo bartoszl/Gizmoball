@@ -129,7 +129,7 @@ public class GBallModelTest {
     	List<Bumper> bumpers = new ArrayList<Bumper>();
     	Bumper cBump = new CircularBumper(0,0,0,"cBump");
     	bumpers.add(cBump);
-    	model.setGizmos(bumpers);
+    	model.setBumpers(bumpers);
     	assertTrue(model.getBumpers().size()==1);
     	assertEquals(model.getBumpers().get(0), cBump);
     }
