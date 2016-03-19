@@ -50,6 +50,7 @@ Connect C109 LF87
 Connect C1110 LF87
 Connect C139 LF87
 
+
 RightFlipper RF137 13 7
 KeyConnect key 87 down RF137
 KeyConnect key 87 up RF137
@@ -64,3 +65,6 @@ Absorber A 0 19 20 20
 KeyConnect key 127 down A
 Connect A A
 Ball B 1.0 11.0 0.0 0.0
+
+Gravity 10.0
+Friction 7.0 8.0
