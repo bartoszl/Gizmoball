@@ -1,15 +1,10 @@
 package controller;
 
-import model.Bumper;
-import model.Flipper;
 import model.IGBallModel;
-import physics.Angle;
 import view.Board;
 import view.BuildGUI;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
