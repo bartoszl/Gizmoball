@@ -118,16 +118,25 @@ public interface IBall {
 	 * @return Circle, representing the ball.
 	 */
 	public Circle getCircle();
-
-	public double getLeftLimit();
-
-	public double getUpperLimit();
-
-	public double getRightLimit();
-
-	public double getLowerLimit();
 	
+	/**
+	 * Method that changes the ball fields once the ball is moved.
+	 * 
+	 * @param x -> double, the new x coordinate of the top left corner of the grid in which
+	 * 			   the ball is placed.
+	 * @param y -> double, the new y coordinate of the top left corner of the grid in which
+	 * 			   the ball is placed. 
+	 */
 	public void move(double x,double y);
 
+	/**
+	 * Getter method for name.
+	 * @return String, representing the ball unique name.
+	 */
 	public String getName();
+	
+	/**
+	 * Method that resets the ball to its initial position.
+	 */
+	public void reset();
 }

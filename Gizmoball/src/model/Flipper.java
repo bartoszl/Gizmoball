@@ -6,6 +6,11 @@ import java.util.List;
 
 import physics.*;
 
+/**
+ * 
+ * @author Kiril Rupasov, Bartosz Lewandowski
+ *
+ */
 public class Flipper implements IFlipper {
 
     private boolean isLeft;
@@ -188,6 +193,7 @@ public class Flipper implements IFlipper {
 		return l;
 	}
 	
+	@Override
 	public Angle getCurrentRotation(){
 		return currentRotation;
 	}
