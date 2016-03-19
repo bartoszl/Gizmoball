@@ -432,7 +432,8 @@ public class GBallModel extends Observable implements IGBallModel {
 		for(Ball ball: balls){
 			cl.add(timeUntilCollision(ball));
 			if(cl.get(cl.size()-1).getTime()<minTime) 
-				minTime = cl.get(cl.size()-1).getTime();
+				if(cl.get(cl.size()-1).getTime()!=0)
+					minTime = cl.get(cl.size()-1).getTime();
 		}
 		
 		moveFlippers(minTime);
