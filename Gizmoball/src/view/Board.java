@@ -53,35 +53,17 @@ public abstract class Board extends JPanel implements Observer {
 				//evil math magic to get the polygon values
 				int[] polyX = new int[4];
 				int[] polyY = new int[4];
-				if(flipper.getEndCircle().getCenter().y()-flipper.getOriginCircle().getCenter().y()!=0){
-					double alpha = Math.atan((flipper.getOriginCircle().getCenter().x()-flipper.getEndCircle().getCenter().x())/(flipper.getEndCircle().getCenter().y()-flipper.getOriginCircle().getCenter().y()));
-					double dx = 5*Math.cos(alpha);
-					double dy = 5*Math.sin(alpha);
+				
+				polyX[0] = (int)(flipper.getLines().get(0).p1().x());
+				polyX[1] = (int)(flipper.getLines().get(0).p2().x());
+				polyX[2] = (int)(flipper.getLines().get(1).p2().x());
+				polyX[3] = (int)(flipper.getLines().get(1).p1().x());
+				
+				polyY[0] = (int)(flipper.getLines().get(0).p1().y());
+				polyY[1] = (int)(flipper.getLines().get(0).p2().y());
+				polyY[2] = (int)(flipper.getLines().get(1).p2().y());
+				polyY[3] = (int)(flipper.getLines().get(1).p1().y());
 					
-					polyX[0] = (int)(flipper.getLines().get(0).p1().x());
-					polyX[1] = (int)(flipper.getLines().get(0).p2().x());
-					polyX[2] = (int)(flipper.getLines().get(1).p2().x());
-					polyX[3] = (int)(flipper.getLines().get(1).p1().x());
-					
-					polyY[0] = (int)(flipper.getLines().get(0).p1().y());
-					polyY[1] = (int)(flipper.getLines().get(0).p2().y());
-					polyY[2] = (int)(flipper.getLines().get(1).p2().y());
-					polyY[3] = (int)(flipper.getLines().get(1).p1().y());
-					
-				}
-				else{//if the flipper is horizontal, avoid division by 0
-					
-					polyX[0] = (int)(flipper.getLines().get(0).p1().x());
-					polyX[1] = (int)(flipper.getLines().get(0).p2().x());
-					polyX[2] = (int)(flipper.getLines().get(1).p2().x());
-					polyX[3] = (int)(flipper.getLines().get(1).p1().x());
-					
-					polyY[0] = (int)(flipper.getLines().get(0).p1().y());
-					polyY[1] = (int)(flipper.getLines().get(0).p2().y());
-					polyY[2] = (int)(flipper.getLines().get(1).p2().y());
-					polyY[3] = (int)(flipper.getLines().get(1).p1().y());
-					
-				}
 				g.fillPolygon(polyX ,polyY, 4);
 				g.fillOval((int)((flipper.getEndCircle().getCenter().x()-5)), (int)((flipper.getEndCircle().getCenter().y()-5)), 10, 10);
 	    	}
@@ -152,11 +134,5 @@ public abstract class Board extends JPanel implements Observer {
 	public void setAction(Action action) {
 		this.action = action;
 	}
-
-    //public boolean getMoving() {return moving;}
-
-    //public void setMoving(boolean moving) {
-     //   this.moving = moving;
-    //}
 }
 

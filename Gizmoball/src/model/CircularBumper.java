@@ -37,7 +37,7 @@ public class CircularBumper implements Bumper {
 		this.circle = new Circle(x+L/2,y+L/2,RADIUS);
 		this.rotation = rotation%4;
 		this.name = name;
-		color = color.GREEN;
+		color = Color.GREEN;
 	}
 	
 	@Override

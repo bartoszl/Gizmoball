@@ -94,9 +94,6 @@ public class RunGUI implements IGUI {
         board.setBounds(220, 0, 405, 405);
         frame.getContentPane().add(board);
 
-        //JTextPane textPane = new JTextPane();
-        //textPane.setBounds(0, 405, 634, 20);
-        //frame.getContentPane().add(textPane);
         txtOutput = new JTextField();
         txtOutput.setEditable(false);
         txtOutput.setText("Run Mode");
