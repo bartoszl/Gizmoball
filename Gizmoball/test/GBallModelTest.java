@@ -218,7 +218,7 @@ public class GBallModelTest {
     	model.addFlipper(60, 60, false, "flipper");
     	model.addAbsorber("absorb", 0, 180, 200, 200);
     	model.addBall("b1", 10, 10, 50, 50);
-    	model.moveBall();
+    	model.moveModel();
     	assertTrue(model.getBalls().get(0).getX()!=10);
     	assertTrue(model.getBalls().get(0).getY()!=10);
     	model.reset();

@@ -179,124 +179,133 @@ public interface IGBallModel    {
     
     /**
      * 
-     * @param i
-     * @param i1
-     * @param b
-     * @param flipper
-     * @return
+     * @param x -> int, representing the x coordinate of the top left corner of the grid that the flipper is placed in.
+     * @param y -> int, representing the x coordinate of the top left corner of the grid that the flipper is placed in.
+     * @param left -> boolean, true if its a left flipper, false if its the right flipper.
+     * @param name -> String, representing name of the flipper.
+     * @return true if the flipper was successfully created, otherwise false.
      */
-    public boolean addFlipper(int i, int i1, boolean b, String flipper);
+    public boolean addFlipper(int x, int y, boolean left, String name);
     
     /**
      * 
-     * @param x
-     * @param y
-     * @return
+     * @param x -> double, x coordinate of the top left corner of the grid, in which the element that will be rotated is placed.
+     * @param y -> double, y coordinate of the top left corner of the grid, in which the element that will be rotated is placed.
+     * @return true if the element was successfully rotated, otherwise false.
      */
     public boolean rotateElement(double x, double y);
     
     /**
      * 
-     * @param x
-     * @param y
-     * @param newX
-     * @param newY
-     * @return
+     * @param x -> double, x coordinate of the top left corner of the grid, in which the element that will be moved is placed.
+     * @param y -> double, y coordinate of the top left corner of the grid, in which the element that will be moved is placed.
+     * @param newX -> double, x coordinate of the top left corner of the grid, into which the element will be moved.
+     * @param newY -> double, y coordinate of the top left corner of the grid, into which the element will be moved.
+     * @return true, if the element was successfully moved, otherwise false.
      */
     public boolean moveElement(double x, double y, double newX, double newY);
     
     /**
+     * Getter method for occupied spaces.
      * 
-     * @return
+     * @return boolean[][], represeting the occupied and unoccupied spaces of the grid.
      */
     public boolean[][] getOccupiedSpaces();
     
     /**
-     * 
+     * Method that clears the model. i.e removes all Bumpers, Flippers, Balls, Connection etc.
      */
     public void clear();
     
     /**
      * 
-     * @param x
-     * @param y
-     * @return
+     * @param x -> double, x coordinate of the top left corner of the grid, in which the element that will be moved is placed.
+     * @param y -> double, y coordinate of the top left corner of the grid, in which the element that will be moved is placed.
+     * @return true if the element was successfully deleted. Otherwise false.
      */
     public boolean deleteElement(double x, double y);
     
     /**
+     * Getter method for connections.
      * 
-     * @return
+     * @return List<Connections>, list of all connections.
      */
     public List<Connection> getConnections();
     
     /**
+     * Getter method for KeyConnections for Flippers.
      * 
-     * @return
+     * @return List<KeyConnectionsFlipper>, list of all key connections for flippers.
      */
     public List<KeyConnectionFlipper> getKeyConnectionsFlipper();
     
     /**
+     * Getter method for KeyConnections for Absorber.
      * 
-     * @return
+     * @return List<KeyConnectionsAbs>, list of all key connections for absorber.
      */
     public List<KeyConnectionAbs> getKeyConnectionsAbs();
     
     /**
      * 
-     * @param x
-     * @param y
-     * @return
+     * @param x -> double, x coordinate of the top left corner of the grid in which the flipper is potentially placed.
+     * @param y -> double, y coordinate of the top left corner of the grid in which the flipper is potentially placed.
+     * @return Flipper, if the flipper was found. Otherwise null.
      */
     public Flipper findFlipper(double x, double y);
     
     /**
-     * 
+     * Method for run mode. Moves the ball by 1 Tick or by the collisionTime if a collision happens.
+     * This method also moves Flippers while moving balls.
      */
-    public void moveBall();
+    public void moveModel();
     
     /**
-     * 
+     * This method resets the model to its initial state. 
+     * Gets balls back to their initial positions.
+     * Sets flipper back to initial rotation state.
      */
     public void reset();
     
     /**
      * 
-     * @param x
-     * @param y
-     * @return
+     * @param x -> double, x coordinate of the top left corner of the grid in which the bumper is potentially placed.
+     * @param y -> double, y coordinate of the top left corner of the grid in which the bumper is potentially placed.
+     * @return Bumper if the Bumper exists, null if it doesn't.
      */
     public Bumper findBumper(double x, double y);
     
     /**
+     * Setter method for loadFile.
      * 
-     * @param f
+     * @param f -> File, representing the file from which the model will be loaded.
      */
     public void setLoadFile(File f);
     
     /**
+     * Getter method for loadFile.
      * 
-     * @return
+     * @return File, representing the file from which the model was loaded.
      */
     public File getLoadFile();
     
     /**
      * 
-     * @param objectName
-     * @return
+     * @param objectName -> name of an element which will be connected to a key.
+     * @return String, "Flipper" if its a flipper, "Absorber" if its an absorber or null if its something else.
      */
     public String getObjectTypeForKeyConnection(String objectName);
     
     /**
      * 
-     * @param flipperName
-     * @return
+     * @param flipperName -> String, name of the flipper.
+     * @return Flipper if flipper with a given name exists, otherwise null.
      */
     public Flipper getFlipper(String flipperName);
     
     /**
      * 
-     * @param set
+     * @param set -> True if the absorber should be connected to itself, false if it shouldn't.
      */
     public void setConnectedToAbs(boolean set);
 }

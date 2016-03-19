@@ -78,34 +78,6 @@ public class BallTest {
 	}
 
 	@Test
-	public void testGetLeftLimit() {
-		Double leftLimit = ball.getLeftLimit();
-		int leftLimitInt = leftLimit.intValue();
-		assertEquals(leftLimitInt, 205);
-	}
-
-	@Test
-	public void testGetRightLimit() {
-		Double rightLimit = ball.getRightLimit();
-		int rightLimitInt = rightLimit.intValue();
-		assertEquals(rightLimitInt, 215);
-	}
-
-	@Test
-	public void testGetUpperLimit() {
-		Double upperLimit = ball.getUpperLimit();
-		int upperLimitInt = upperLimit.intValue();
-		assertEquals(upperLimitInt, 205);
-	}
-
-	@Test
-	public void testGetLowerLimit() {
-		Double lowerLimit = ball.getLowerLimit();
-		int lowerLimitInt = lowerLimit.intValue();
-		assertEquals(lowerLimitInt, 215);
-	}
-
-	@Test
 	public void testMove() {
 		ball.move(100, 100);
 		Double ballX = ball.getX();
