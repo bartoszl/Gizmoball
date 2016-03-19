@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.*;
-import physics.*;
 
 public class KeyConnectionsAbsTest {
     private IAbsorber abs;
