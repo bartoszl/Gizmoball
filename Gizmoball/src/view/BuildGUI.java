@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
 
-import static java.awt.Font.BOLD;
-
 public class BuildGUI implements IGUI {
 
 	private JFrame frame;
@@ -26,9 +24,6 @@ public class BuildGUI implements IGUI {
 	 */
 	public BuildGUI(Main main, IGBallModel model) {
         constructor(main, model);
-        this.main = main;
-        this.model = model;
-        this.board = new BuildBoard(model);
         createFrame();
 		initialize();
 	}
@@ -70,7 +65,7 @@ public class BuildGUI implements IGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		JPanel buildMenu = create_buildMenu();
+		JPanel buildMenu = createbuildMenu();
 		buildMenu.setBounds(0, 0, 220, 405);
 		frame.getContentPane().add(buildMenu);
 		buildMenu.setLayout(null);
@@ -122,7 +117,7 @@ public class BuildGUI implements IGUI {
         txtOutput.setForeground(color);
     }
 	
-	private JPanel create_buildMenu() {
+	private JPanel createbuildMenu() {
         panel = new JPanel();
 
         JRadioButton rdbtnGizmo = new JRadioButton("Gizmo");
@@ -249,17 +244,17 @@ public class BuildGUI implements IGUI {
 		JMenuBar menuBar = new JMenuBar();
 
         //Model Menu on menuBar
-		JMenu mnModel = create_ModelMenu();
+		JMenu mnModel = createModelMenu();
 		menuBar.add(mnModel);
 
         //Physics Menu on menuBar
-		JMenu mnPhysics = create_PhysicsMenu();
+		JMenu mnPhysics = createPhysicsMenu();
 		menuBar.add(mnPhysics);
 		
 		return menuBar;
 	}
 
-    private JMenu create_ModelMenu(){
+    private JMenu createModelMenu(){
         JMenu mnModel = new JMenu("Model");
         JMenuItem mntmLoad, mntmReload, mntmSave, mntmQuit;
 
@@ -281,7 +276,7 @@ public class BuildGUI implements IGUI {
         return mnModel;
     }
 
-    private JMenu create_PhysicsMenu(){
+    private JMenu createPhysicsMenu(){
         JMenu mnPhysics = new JMenu("Physics");
         JMenuItem mntmFriction, mntmGravity;
 
