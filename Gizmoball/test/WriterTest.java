@@ -2,17 +2,14 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by John Watt on 08/03/2016.
@@ -198,7 +195,7 @@ public class WriterTest {
 
     @Test
     public void testWriteModelToFile() {
-        IGBallModel m = new GBallModel();
+        GBallModel m = new GBallModel();
         m.addTriangularBumper(40, 40, 0, "T22");
         m.addBall("Ball1", 20, 20, 20, 20);
         writer.writeModelToFile(m, "newFile");

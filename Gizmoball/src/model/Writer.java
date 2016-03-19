@@ -29,7 +29,7 @@ public class Writer {
 
     /**
      * Store a given IGBallModel in a file named fileName.
-     * @param model -> The instance of a concrete class that implementsa the IGBallModel interface
+     * @param model -> A GBallModel instance to save to file
      * @param fileName  -> The name that the file containing the model is to be given
      */
     public void writeModelToFile(IGBallModel model, String fileName) {

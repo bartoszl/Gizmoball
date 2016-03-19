@@ -1,16 +1,12 @@
 package model;
 
+import physics.*;
+import physics.Geometry.VectPair;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-
-import physics.Angle;
-import physics.Circle;
-import physics.Geometry;
-import physics.Geometry.VectPair;
-import physics.LineSegment;
-import physics.Vect;
 
 /**
  * Created by John Watt on 01/03/2016.
