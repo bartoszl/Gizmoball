@@ -261,47 +261,51 @@ public interface IGBallModel    {
     public void moveModel();
     
     /**
-     * 
+     * This method resets the model to its initial state. 
+     * Gets balls back to their initial positions.
+     * Sets flipper back to initial rotation state.
      */
     public void reset();
     
     /**
      * 
-     * @param x
-     * @param y
-     * @return
+     * @param x -> double, x coordinate of the top left corner of the grid in which the bumper is potentially placed.
+     * @param y -> double, y coordinate of the top left corner of the grid in which the bumper is potentially placed.
+     * @return Bumper if the Bumper exists, null if it doesn't.
      */
     public Bumper findBumper(double x, double y);
     
     /**
+     * Setter method for loadFile.
      * 
-     * @param f
+     * @param f -> File, representing the file from which the model will be loaded.
      */
     public void setLoadFile(File f);
     
     /**
+     * Getter method for loadFile.
      * 
-     * @return
+     * @return File, representing the file from which the model was loaded.
      */
     public File getLoadFile();
     
     /**
      * 
-     * @param objectName
-     * @return
+     * @param objectName -> name of an element which will be connected to a key.
+     * @return String, "Flipper" if its a flipper, "Absorber" if its an absorber or null if its something else.
      */
     public String getObjectTypeForKeyConnection(String objectName);
     
     /**
      * 
-     * @param flipperName
-     * @return
+     * @param flipperName -> String, name of the flipper.
+     * @return Flipper if flipper with a given name exists, otherwise null.
      */
     public Flipper getFlipper(String flipperName);
     
     /**
      * 
-     * @param set
+     * @param set -> True if the absorber should be connected to itself, false if it shouldn't.
      */
     public void setConnectedToAbs(boolean set);
 }
