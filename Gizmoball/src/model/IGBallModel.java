@@ -208,53 +208,57 @@ public interface IGBallModel    {
     /**
      * Getter method for occupied spaces.
      * 
-     * @return
+     * @return boolean[][], represeting the occupied and unoccupied spaces of the grid.
      */
     public boolean[][] getOccupiedSpaces();
     
     /**
-     * 
+     * Method that clears the model. i.e removes all Bumpers, Flippers, Balls, Connection etc.
      */
     public void clear();
     
     /**
      * 
-     * @param x
-     * @param y
-     * @return
+     * @param x -> double, x coordinate of the top left corner of the grid, in which the element that will be moved is placed.
+     * @param y -> double, y coordinate of the top left corner of the grid, in which the element that will be moved is placed.
+     * @return true if the element was successfully deleted. Otherwise false.
      */
     public boolean deleteElement(double x, double y);
     
     /**
+     * Getter method for connections.
      * 
-     * @return
+     * @return List<Connections>, list of all connections.
      */
     public List<Connection> getConnections();
     
     /**
+     * Getter method for KeyConnections for Flippers.
      * 
-     * @return
+     * @return List<KeyConnectionsFlipper>, list of all key connections for flippers.
      */
     public List<KeyConnectionFlipper> getKeyConnectionsFlipper();
     
     /**
+     * Getter method for KeyConnections for Absorber.
      * 
-     * @return
+     * @return List<KeyConnectionsAbs>, list of all key connections for absorber.
      */
     public List<KeyConnectionAbs> getKeyConnectionsAbs();
     
     /**
      * 
-     * @param x
-     * @param y
-     * @return
+     * @param x -> double, x coordinate of the top left corner of the grid in which the flipper is potentially placed.
+     * @param y -> double, y coordinate of the top left corner of the grid in which the flipper is potentially placed.
+     * @return Flipper, if the flipper was found. Otherwise null.
      */
     public Flipper findFlipper(double x, double y);
     
     /**
-     * 
+     * Method for run mode. Moves the ball by 1 Tick or by the collisionTime if a collision happens.
+     * This method also moves Flippers while moving balls.
      */
-    public void moveBall();
+    public void moveModel();
     
     /**
      * 

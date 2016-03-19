@@ -26,7 +26,7 @@ public class RunModeBtnListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==timer) {
-        	model.moveBall();
+        	model.moveModel();
         } else {
             switch (e.getActionCommand()) {
                 case "Start":
@@ -34,12 +34,12 @@ public class RunModeBtnListener implements ActionListener {
                     timer.start();
                     break;
                 case "Tick":
-                    model.moveBall();
+                    model.moveModel();
                     timer.stop();
                     break;
                 case "Reset":
                     model.reset();
-                    model.moveBall();
+                    model.moveModel();
                     timer.stop();
                     break;
                 case "Stop":

@@ -429,7 +429,7 @@ public class GBallModel extends Observable implements IGBallModel {
 	// Run Mode Methods
     
 	@Override
-	public void moveBall() {
+	public void moveModel() {
 		double moveTime = 0.05;
 		double minTime = moveTime;
 		List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
