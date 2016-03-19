@@ -1,11 +1,14 @@
 package model;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
+/**
+ * The ModelLoader class provides the functionality to create a GBallModel
+ * based on the contents of a file (that follows the formal file syntax rules).
+ * @author John Watt
+ */
 public class ModelLoader {
 
     private Reader fileReader;
@@ -13,6 +16,9 @@ public class ModelLoader {
     private List<String[]> commands;
     private int scale;
 
+    /**
+     * @param filename The name of the file that the model is to be created from
+     */
     public ModelLoader(File filename) {
         scale = 20;
         fileReader = new Reader();
@@ -26,10 +32,17 @@ public class ModelLoader {
         }
     }
 
+    /**
+     * Get the model created using the contents of the given file
+     * @return The model created using the contents of the given file
+     */
     public GBallModel getModel() {
         return model;
     }
 
+    /**
+     * Build the model up using all of the (valid) commands read from the file
+     */
     public void makeModel() {
         for(String[] command : commands) {
             String gizmoOp = command[0];
@@ -39,7 +52,6 @@ public class ModelLoader {
                     break;
 
                 case "Square" :
-                    //model.addGizmo((createSquareBumper(command)));
                     createSquareBumper(command);
                     break;
 
@@ -49,7 +61,6 @@ public class ModelLoader {
 
                 case "LeftFlipper" :
                 case "RightFlipper" :
-                    //model.addGizmo(createFlipper(command));
                     createFlipper(command);
                     break;
 
@@ -84,6 +95,12 @@ public class ModelLoader {
         }
     }
 
+    /**
+     * Perform a rotation on the given gizmo
+     * @param command The command that specifies the gizmo to rotate
+     * @return True if the rotation was successful - the rotation will be successful if the gizmo exists in the model,
+     * or false if the specified gizmo could not be rotated
+     */
     private boolean applyRotation(String[] command) {
         String gizmoName = command[1];
         if(model.getBumper(gizmoName) == null) {
@@ -93,6 +110,10 @@ public class ModelLoader {
         return true;
     }
 
+    /**
+     * Add a TriangularBumper to the model
+     * @param command The command that specifies the details of the TriangularBumper
+     */
     private void createTriangularBumper(String[] command) {
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
@@ -100,6 +121,10 @@ public class ModelLoader {
         model.addTriangularBumper(xCoord, yCoord,0, name);
     }
 
+    /**
+     * Add a SquareBumper to the model
+     * @param command The command that specifies the details of the SquareBumper
+     */
     private void createSquareBumper(String[] command) {
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
@@ -107,10 +132,21 @@ public class ModelLoader {
         model.addSquareBumper(xCoord, yCoord, 0, name);
     }
 
+    /**
+     * Add a CircularBumper to the model
+     * @param command The command that specifies the details of the CircularBumper
+     */
     private void createCircularBumper(String[] command) {
-        model.addCircularBumper(Integer.parseInt(command[2]) * scale, Integer.parseInt(command[3]) * scale, 0, command[1]);
+        int xCoord = Integer.parseInt(command[2]) * scale;
+        int yCoord = Integer.parseInt(command[3]) * scale;
+        String name = command[1];
+        model.addCircularBumper(xCoord, yCoord, 0, name);
     }
 
+    /**
+     * Add a Flipper to the model
+     * @param command The command that specifies the details of the Flipper
+     */
     private void createFlipper(String[] command) {
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
@@ -122,6 +158,10 @@ public class ModelLoader {
         }
     }
 
+    /**
+     * Add an Absorber to the model
+     * @param command The command that specifies the details of the Absorber
+     */
     private void createAbsorber(String[] command) {
         int leftX = Integer.parseInt(command[2]) * scale;
         int rightX = Integer.parseInt(command[4]) * scale;
@@ -131,6 +171,10 @@ public class ModelLoader {
         model.addAbsorber(name, leftX, topY, rightX, bottomY);
     }
 
+    /**
+     * Add a Ball to the model
+     * @param command The command that specifies the details of the Ball
+     */
     private void createBall(String[] command) {
         double xCoord = Double.parseDouble(command[2]) * scale;
         double yCoord = Double.parseDouble(command[3]) * scale;
@@ -140,24 +184,47 @@ public class ModelLoader {
         model.addBall(name, xCoord, yCoord, xVelo, yVelo);
     }
 
+    /**
+     * Get the value for gravity from the command for gravity
+     * @param command The command that specifies the details for gravity
+     * @return The value for gravity
+     */
     private double getGravityValue(String[] command) {
         return Double.parseDouble(command[1]);
     }
 
+    /**
+     * Get the value for horizontal friction
+     * @param command The command read from the file that specifies the details for horizontal friction
+     * @return The value for horizontal friction
+     */
     private double getHorizontalFriction(String[] command) {
         return Double.parseDouble(command[1]);
     }
 
+    /**
+     * Get the value for vertical friction
+     * @param command The command that specifies the details for vertical friction
+     * @return The value for vertical friction
+     */
     private double getVerticalFriction(String[] command) {
         return Double.parseDouble(command[2]);
     }
 
+    /**
+     * Add a Connection to the model
+     * @param command The command that specifies the details of the Connection
+     */
     private void createConnection(String[] command) {
         String circularBumperName = command[1];
         String flipperName = command[2];
         model.addConnection(circularBumperName, flipperName);
     }
 
+    /**
+     * Add a KeyConnection to the model
+     * @param command The command that specifies the details of the KeyConnection
+     */
     private void createKeyConnection(String[] command) {
         if(model.getObjectTypeForKeyConnection(command[4]).equals("Absorber")) {
             createKeyConnectionAbs(command);
@@ -166,6 +233,10 @@ public class ModelLoader {
         }
     }
 
+    /**
+     * Add a KeyConnectionFlipper, i.e. a key connection to a Flipper, to the model
+     * @param command The command that specifies the details of the KeyConnection
+     */
     private void createKeyConnectionFlipper(String[] command) {
         Integer keyID = Integer.parseInt(command[2]);
         String upDown = command[3];
@@ -176,6 +247,10 @@ public class ModelLoader {
         }
     }
 
+    /**
+     * Add a KeyConnectionAbs, i.e. a key connection to an absorber, to the model
+     * @param command The command that specifies the details of the KeyConnection
+     */
     private void createKeyConnectionAbs(String[] command) {
         Integer keyID = Integer.parseInt(command[2]);
         String upDown = command[3];
