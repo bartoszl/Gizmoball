@@ -1,5 +1,7 @@
 package model;
 
+import java.security.Key;
+
 public class KeyConnectionFlipper {
 
     private int keyID;
@@ -24,5 +26,20 @@ public class KeyConnectionFlipper {
 
     public String getUpDown() {
         return upDown;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(!(object instanceof KeyConnectionFlipper)) {
+
+            return false;
+        }
+        KeyConnectionFlipper kcf = (KeyConnectionFlipper) object;
+        if(( kcf.getKeyID() == keyID)
+                && (kcf.getFlipper().getCircles().equals(flipper.getCircles()))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
