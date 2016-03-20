@@ -8,20 +8,20 @@ import model.IGBallModel;
 
 import java.awt.*;
 
-public class RunGUI implements IGUI {
+class RunGUI implements IGUI {
 
 	private JFrame frame;
 	private JPanel panel;
+    private JTextField txtOutput;
 	private RunBoard board;
     private Main main;
     private IGBallModel model;
     private RunModeBtnListener runModeBtnListener;
-    private JTextField txtOutput;
 
 	/**
 	 * Create the application.
 	 */
-	public RunGUI(Main main, IGBallModel model) {
+	RunGUI(Main main, IGBallModel model) {
 		this.main = main;
 		this.model = model;
 		createFrame();
@@ -31,7 +31,7 @@ public class RunGUI implements IGUI {
 	/**
 	 * Alternate constructor that takes in a JFrame object
 	 */
-	public RunGUI(Main main, IGBallModel model, JFrame frame) {
+	RunGUI(Main main, IGBallModel model, JFrame frame) {
         this.main = main;
         this.model = model;
         this.frame = frame;
@@ -54,40 +54,11 @@ public class RunGUI implements IGUI {
      */
     private void initialize() {
         runModeBtnListener = new RunModeBtnListener(this, model, main);
-        panel = new JPanel();
+
+        panel = createRunMenu();
         panel.setBounds(0, 0, 200, 405);
         frame.getContentPane().add(panel);
         panel.setLayout(null);
-
-        final JButton btnStart = new JButton("Start");
-        btnStart.setBounds(10, 11, 180, 50);
-        btnStart.addActionListener(runModeBtnListener);
-        panel.add(btnStart);
-
-        JButton btnTick = new JButton("Tick");
-        btnTick.setBounds(10, 72, 180, 50);
-        btnTick.addActionListener(runModeBtnListener);
-        panel.add(btnTick);
-
-        JButton btnReset = new JButton("Reset");
-        btnReset.setBounds(10, 133, 180, 50);
-        btnReset.addActionListener(runModeBtnListener);
-        panel.add(btnReset);
-
-        JButton btnStop = new JButton("Stop");
-        btnStop.setBounds(10, 194, 180, 50);
-        btnStop.addActionListener(runModeBtnListener);
-        panel.add(btnStop);
-
-        JButton btnBuildMode = new JButton("Build Mode");
-        btnBuildMode.setBounds(10, 344, 180, 50);
-        btnBuildMode.setActionCommand("Swap");
-        btnBuildMode.addActionListener(runModeBtnListener);
-        panel.add(btnBuildMode);
-
-        JSeparator separator_1 = new JSeparator();
-        separator_1.setBounds(10, 331, 180, 2);
-        panel.add(separator_1);
 
         board = new RunBoard(model);
         board.addKeyListener(new RunModeKeyListener(this, model, main));
@@ -107,31 +78,40 @@ public class RunGUI implements IGUI {
         frame.setVisible(true);
     }
 
-    public String getMessage() {
-        return txtOutput.getText();
-    }
+    private JPanel createRunMenu() {
+        JPanel newPanel = new JPanel();
 
-    public void setMessage(String message) {
-        txtOutput.setText(message); }
+        JButton btnStart = new JButton("Start");
+        btnStart.setBounds(10, 11, 180, 50);
+        btnStart.addActionListener(runModeBtnListener);
+        newPanel.add(btnStart);
 
-    @Override
-    public String getSelectedComponent() {
-        return null;
-    }
+        JButton btnTick = new JButton("Tick");
+        btnTick.setBounds(10, 72, 180, 50);
+        btnTick.addActionListener(runModeBtnListener);
+        newPanel.add(btnTick);
 
-    @Override
-    public void setMessageColor(Color color) {
+        JButton btnReset = new JButton("Reset");
+        btnReset.setBounds(10, 133, 180, 50);
+        btnReset.addActionListener(runModeBtnListener);
+        newPanel.add(btnReset);
 
-    }
+        JButton btnStop = new JButton("Stop");
+        btnStop.setBounds(10, 194, 180, 50);
+        btnStop.addActionListener(runModeBtnListener);
+        newPanel.add(btnStop);
 
-    @Override
-    public String getFlipperPosition() {
-        return null;
-    }
+        JSeparator separator = new JSeparator();
+        separator.setBounds(10, 331, 180, 2);
+        newPanel.add(separator);
 
-    @Override
-    public String getGizmoShape() {
-        return null;
+        JButton btnBuildMode = new JButton("Build Mode");
+        btnBuildMode.setBounds(10, 344, 180, 50);
+        btnBuildMode.setActionCommand("Swap");
+        btnBuildMode.addActionListener(runModeBtnListener);
+        newPanel.add(btnBuildMode);
+
+        return newPanel;
     }
 
     private JMenuBar createMenuBar(){
@@ -176,4 +156,19 @@ public class RunGUI implements IGUI {
 	public JPanel getPanel() {
 		return panel;
 	}
+
+    @Override
+    public void setMessage(String message) { txtOutput.setText(message); }
+
+    @Override
+    public void setMessageColor(Color color) { txtOutput.setForeground(color); }
+
+    @Override
+    public String getSelectedComponent() { return null; }
+
+    @Override
+    public String getFlipperPosition() { return null; }
+
+    @Override
+    public String getGizmoShape() { return null; }
 }

@@ -11,13 +11,14 @@ public class BuildGUI implements IGUI {
 
 	private JFrame frame;
 	private JPanel panel;
+    private JTextField txtOutput;
 	private BuildBoard board;
     private Main main;
 	private IGBallModel model;
     private ButtonGroup componentGroup;
     private DefaultComboBoxModel gizmoShapes;
     private DefaultComboBoxModel flipperPositions;
-    private JTextField txtOutput;
+    private BuildModeBtnListener buildModeBtnListener;
 
 	/**
 	 * Create the application.
@@ -31,7 +32,7 @@ public class BuildGUI implements IGUI {
 	/**
 	 * Alternate constructor that takes in a JFrame object
 	 */
-	public BuildGUI(Main main, IGBallModel model, JFrame frame) {
+	BuildGUI(Main main, IGBallModel model, JFrame frame) {
 		constructor(main, model);
         this.frame = frame;
 		initialize();
@@ -47,10 +48,6 @@ public class BuildGUI implements IGUI {
         this.board = new BuildBoard(model);
 	}
 
-    public Board getGridView() {
-        return board;
-    }
-
 	/**
 	 * Initialize the frame.
 	 */
@@ -65,10 +62,12 @@ public class BuildGUI implements IGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		JPanel buildMenu = createbuildMenu();
-		buildMenu.setBounds(0, 0, 220, 405);
-		frame.getContentPane().add(buildMenu);
-		buildMenu.setLayout(null);
+        buildModeBtnListener = new BuildModeBtnListener(this,board,model,main);
+
+		panel = createBuildMenu();
+        panel.setBounds(0, 0, 220, 405);
+		frame.getContentPane().add(panel);
+        panel.setLayout(null);
 
 		board.setBounds(220, 0, 405, 405);
 		frame.getContentPane().add(board);
@@ -100,52 +99,40 @@ public class BuildGUI implements IGUI {
 		txtOutput.setBounds(0, 405, 634, 20);
 		frame.getContentPane().add(txtOutput);
 		
-		JMenuBar menuBar = create_menuBar();
+		JMenuBar menuBar = createMenuBar();
 		frame.setJMenuBar(menuBar);
         frame.setVisible(true);
 	}
-
-    public String getMessage() {
-        return txtOutput.getText();
-    }
-
-    public void setMessage(String message) {
-        txtOutput.setText(message);
-    }
-
-    public void setMessageColor(Color color) {
-        txtOutput.setForeground(color);
-    }
 	
-	private JPanel createbuildMenu() {
-        panel = new JPanel();
+	private JPanel createBuildMenu() {
+        JPanel newPanel = new JPanel();
 
         JRadioButton rdbtnGizmo = new JRadioButton("Gizmo");
         rdbtnGizmo.setFont(new Font("Tahoma", Font.PLAIN, 11));
         rdbtnGizmo.setBounds(10, 41, 84, 23);
-        panel.add(rdbtnGizmo);
+        newPanel.add(rdbtnGizmo);
 
         JComboBox cbCompType = new JComboBox();
         cbCompType.setFont(new Font("Tahoma", Font.PLAIN, 11));
         gizmoShapes = new DefaultComboBoxModel(new String[]{"Circle", "Square", "Triangle"});
         cbCompType.setModel(gizmoShapes);
         cbCompType.setBounds(100, 41, 105, 22);
-        panel.add(cbCompType);
+        newPanel.add(cbCompType);
 
         JRadioButton rdbtnBall = new JRadioButton("Ball");
         rdbtnBall.setFont(new Font("Tahoma", Font.PLAIN, 11));
         rdbtnBall.setBounds(10, 67, 109, 23);
-        panel.add(rdbtnBall);
+        newPanel.add(rdbtnBall);
 
         JRadioButton rdbtnAbsorber = new JRadioButton("Absorber");
         rdbtnAbsorber.setFont(new Font("Tahoma", Font.PLAIN, 11));
         rdbtnAbsorber.setBounds(10, 93, 109, 23);
-        panel.add(rdbtnAbsorber);
+        newPanel.add(rdbtnAbsorber);
 
         JRadioButton rdbtnFlipper = new JRadioButton("Flipper");
         rdbtnFlipper.setFont(new Font("Tahoma", Font.PLAIN, 11));
         rdbtnFlipper.setBounds(10, 119, 84, 23);
-        panel.add(rdbtnFlipper);
+        newPanel.add(rdbtnFlipper);
 
         componentGroup = new ButtonGroup();
         componentGroup.add(rdbtnGizmo);
@@ -159,73 +146,71 @@ public class BuildGUI implements IGUI {
         flipperPositions = new DefaultComboBoxModel(new String[]{"Left", "Right"});
         cbFlipSide.setModel(flipperPositions);
         cbFlipSide.setBounds(100, 119, 105, 22);
-        panel.add(cbFlipSide);
+        newPanel.add(cbFlipSide);
 
         JSeparator separator_1 = new JSeparator();
         separator_1.setBounds(10, 153, 195, 2);
-        panel.add(separator_1);
+        newPanel.add(separator_1);
 
         JSeparator separator_2 = new JSeparator();
         separator_2.setBounds(10, 234, 195, 2);
-        panel.add(separator_2);
+        newPanel.add(separator_2);
 
         JSeparator separator_3 = new JSeparator();
         separator_3.setBounds(10, 349, 195, 2);
-        panel.add(separator_3);
-
-        BuildModeBtnListener btnListener = new BuildModeBtnListener(this, board, model, main);
+        newPanel.add(separator_3);
         
         JButton btnRunMode = new JButton("Run Mode");
         btnRunMode.setBounds(10, 362, 195, 23);
         btnRunMode.setActionCommand("Swap");
-        btnRunMode.addActionListener(btnListener);
-        panel.add(btnRunMode);
+        btnRunMode.addActionListener(buildModeBtnListener);
+        newPanel.add(btnRunMode);
 
         JToggleButton tglbtnAddComp = new JToggleButton("Add Component");
         tglbtnAddComp.setBounds(10, 11, 195, 23);
-        tglbtnAddComp.addActionListener(btnListener);
-        panel.add(tglbtnAddComp);
+        tglbtnAddComp.addActionListener(buildModeBtnListener);
+        newPanel.add(tglbtnAddComp);
 
         JToggleButton tglbtnRotate = new JToggleButton("Rotate");
         tglbtnRotate.setBounds(10, 166, 93, 23);
-        tglbtnRotate.addActionListener(btnListener);
-        panel.add(tglbtnRotate);
+        tglbtnRotate.addActionListener(buildModeBtnListener);
+        newPanel.add(tglbtnRotate);
 
         JToggleButton tglbtnDelete = new JToggleButton("Delete");
         tglbtnDelete.setBounds(112, 166, 93, 23);
-        tglbtnDelete.addActionListener(btnListener);
-        panel.add(tglbtnDelete);
+        tglbtnDelete.addActionListener(buildModeBtnListener);
+        newPanel.add(tglbtnDelete);
 
         JToggleButton tglbtnMove = new JToggleButton("Move");
         tglbtnMove.setBounds(10, 200, 93, 23);
-        tglbtnMove.addActionListener(btnListener);
-        panel.add(tglbtnMove);
+        tglbtnMove.addActionListener(buildModeBtnListener);
+        newPanel.add(tglbtnMove);
 
         JButton btnClear = new JButton("Clear");
         btnClear.setBounds(112, 200, 93, 23);
-        btnClear.addActionListener(btnListener);
-        panel.add(btnClear);
+        btnClear.addActionListener(buildModeBtnListener);
+        newPanel.add(btnClear);
 
         JToggleButton tglbtnConnect = new JToggleButton("Connect");
         tglbtnConnect.setBounds(10, 247, 93, 23);
-        tglbtnConnect.addActionListener(btnListener);
-        panel.add(tglbtnConnect);
+        tglbtnConnect.addActionListener(buildModeBtnListener);
+        newPanel.add(tglbtnConnect);
 
         JToggleButton tglbtnDisconnect = new JToggleButton("Disconnect");
         tglbtnDisconnect.setFont(new Font("Tahoma", Font.PLAIN, 11));
         tglbtnDisconnect.setBounds(112, 247, 93, 23);
-        tglbtnDisconnect.addActionListener(btnListener);
-        panel.add(tglbtnDisconnect);
+        tglbtnDisconnect.addActionListener(buildModeBtnListener);
+        newPanel.add(tglbtnDisconnect);
 
         JToggleButton tglbtnKeyConnect = new JToggleButton("Key Connect");
         tglbtnKeyConnect.setBounds(10, 281, 195, 23);
-        tglbtnKeyConnect.addActionListener(btnListener);
-        panel.add(tglbtnKeyConnect);
+        tglbtnKeyConnect.addActionListener(buildModeBtnListener);
+        newPanel.add(tglbtnKeyConnect);
 
         JToggleButton tglbtnKeyDisconnect = new JToggleButton("Key Disconnect");
         tglbtnKeyDisconnect.setBounds(10, 315, 195, 23);
-        tglbtnKeyDisconnect.addActionListener(btnListener);
-        panel.add(tglbtnKeyDisconnect);
+        tglbtnKeyDisconnect.addActionListener(buildModeBtnListener);
+        newPanel.add(tglbtnKeyDisconnect);
 
         ButtonGroup mainGroup = new ButtonGroup();
         mainGroup.add(tglbtnAddComp);
@@ -237,17 +222,15 @@ public class BuildGUI implements IGUI {
         mainGroup.add(tglbtnKeyConnect);
         mainGroup.add(tglbtnKeyDisconnect);
 
-        return panel;
+        return newPanel;
     }
 	
-	private JMenuBar create_menuBar(){
+	private JMenuBar createMenuBar(){
 		JMenuBar menuBar = new JMenuBar();
 
-        //Model Menu on menuBar
 		JMenu mnModel = createModelMenu();
 		menuBar.add(mnModel);
 
-        //Physics Menu on menuBar
 		JMenu mnPhysics = createPhysicsMenu();
 		menuBar.add(mnPhysics);
 		
@@ -259,18 +242,18 @@ public class BuildGUI implements IGUI {
         JMenuItem mntmLoad, mntmReload, mntmSave, mntmQuit;
 
         mntmLoad = new JMenuItem("Load");
-        mntmLoad.addActionListener(new BuildModeBtnListener(this,board,model,main));
+        mntmLoad.addActionListener(buildModeBtnListener);
         mnModel.add(mntmLoad);
         mntmReload = new JMenuItem("Reload");
-        mntmReload.addActionListener(new BuildModeBtnListener(this,board,model,main));
+        mntmReload.addActionListener(buildModeBtnListener);
         mnModel.add(mntmReload);
         mntmSave = new JMenuItem("Save");
-        mntmSave.addActionListener(new BuildModeBtnListener(this,board,model,main));
+        mntmSave.addActionListener(buildModeBtnListener);
         mnModel.add(mntmSave);
         JSeparator separator = new JSeparator();
         mnModel.add(separator);
         mntmQuit = new JMenuItem("Quit");
-        mntmQuit.addActionListener(new BuildModeBtnListener(this,board,model,main));
+        mntmQuit.addActionListener(buildModeBtnListener);
         mnModel.add(mntmQuit);
 
         return mnModel;
@@ -281,39 +264,54 @@ public class BuildGUI implements IGUI {
         JMenuItem mntmFriction, mntmGravity;
 
         mntmFriction = new JMenuItem("Friction");
-        mntmFriction.addActionListener(new BuildModeBtnListener(this, board, model, main));
+        mntmFriction.addActionListener(buildModeBtnListener);
         mnPhysics.add(mntmFriction);
         mntmGravity = new JMenuItem("Gravity");
-        mntmGravity.addActionListener(new BuildModeBtnListener(this, board, model, main));
+        mntmGravity.addActionListener(buildModeBtnListener);
         mnPhysics.add(mntmGravity);
 
         return mnPhysics;
     }
 
+    @Override
+    public Board getGridView() {
+        return board;
+    }
+
+    @Override
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    @Override
+    public void setMessage(String message) {
+        txtOutput.setText(message);
+    }
+
+    @Override
+    public void setMessageColor(Color color) {
+        txtOutput.setForeground(color);
+    }
+
+    @Override
     public String getSelectedComponent() {
         for (Enumeration<AbstractButton> buttons = componentGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
-            if (button.isSelected()) {
-                return button.getText();
-            }
+            if (button.isSelected()) return button.getText();
         }
-
         return null;
     }
 
+    @Override
     public String getFlipperPosition() { return flipperPositions.getSelectedItem().toString(); }
 
+    @Override
     public String getGizmoShape() {
         return gizmoShapes.getSelectedItem().toString();
     }
-
-	@Override
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	@Override
-	public JPanel getPanel() {
-		return panel;
-	}
 }

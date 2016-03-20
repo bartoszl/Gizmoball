@@ -5,9 +5,9 @@ import java.awt.Graphics;
 
 import model.IGBallModel;
 
-public class RunBoard extends Board{
+class RunBoard extends Board{
 
-	public RunBoard(IGBallModel model) {
+	RunBoard(IGBallModel model) {
 		super(model);
 	}
 	
@@ -26,5 +26,4 @@ public class RunBoard extends Board{
         g.drawLine(0, 400, 400, 400);
         g.drawLine(400, 0, 400, 400);
     }
-
 }
