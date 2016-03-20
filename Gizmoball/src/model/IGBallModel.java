@@ -19,8 +19,8 @@ public interface IGBallModel    {
     public double getFrictionX();
     public double getFrictionY();
     public boolean addConnection(Connection connection);
-    public boolean addKeyConnectionFlipper(KeyConnectionFlipper keyConnection);
-    public boolean addKeyConnectionAbs(KeyConnectionAbs keyConnection);
+    public boolean addKeyConnectionFlipper(int keyCode, Flipper f);
+    public boolean addKeyConnectionAbs(int keyCode, Absorber abs);
     public List<Bumper> getGizmos();
     public Absorber getAbsorber();
     public List<Ball> getBalls();
