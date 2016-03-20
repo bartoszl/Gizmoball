@@ -15,7 +15,7 @@ public class Main {
     /**
      * Launch the application.
      */
-    public Main() {
+    private Main() {
     	model = new GBallModel();
     	gui = new RunGUI(this, model);
     }

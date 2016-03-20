@@ -17,21 +17,20 @@ import java.util.Observer;
 public abstract class Board extends JPanel implements Observer {
 
 	public enum Action {
-		NONE, ADD, DELETE, MOVE, ROTATE, CLEAR, KEY_CONNECT, KEY_DISCONNECT, CONNECT, DISCONNECT
+		NONE, ADD, DELETE, MOVE, ROTATE, KEY_CONNECT, KEY_DISCONNECT, CONNECT, DISCONNECT
 	}
 
-    private boolean delete, moving;
+    private boolean delete;
     private IGBallModel model;
 	private Action action;
 
     public Board(IGBallModel model){
+        this.model = model;
 		action = Action.NONE;
-        this.model=model;
         delete = false;
-        moving = false;
     }
 
-    public void superPaint(Graphics g){
+    void superPaint(Graphics g){
     	super.paintComponent(g);
     }
     
@@ -47,10 +46,9 @@ public abstract class Board extends JPanel implements Observer {
     private void drawFlippers(Graphics g) {
     	if(model.getFlippers()!=null){
 	    	for(IFlipper flipper: model.getFlippers()){
-				//only needs the center of the top and bottom circles
 				g.setColor(flipper.getColor());
 				g.fillOval((int)((flipper.getOriginCircle().getCenter().x()-5)), (int)((flipper.getOriginCircle().getCenter().y()-5)), 10, 10);
-				//evil math magic to get the polygon values
+
 				int[] polyX = new int[4];
 				int[] polyY = new int[4];
 				
@@ -83,10 +81,10 @@ public abstract class Board extends JPanel implements Observer {
 			for(Bumper gizmo: model.getBumpers()){
 				List<Circle> circles = gizmo.getCircles();
 				g.setColor(gizmo.getColor());
-				if(circles.size()==1){//circular bumper
+				if(circles.size()==1){ // Circular Bumper
 					int radius = (int)circles.get(0).getRadius();
 					g.fillOval((int)circles.get(0).getCenter().x()-radius, (int)circles.get(0).getCenter().y()-radius, radius*2, radius*2);
-				}else if(circles.size()==3){//triangular bumper
+				}else if(circles.size()==3){ // Triangular Bumper
 					int[] polyX = new int[3];
 					int[] polyY = new int[3];
 					
@@ -95,7 +93,7 @@ public abstract class Board extends JPanel implements Observer {
 						polyY[i] = (int)circles.get(i).getCenter().y();
 					}
 					g.fillPolygon(polyX, polyY, 3);
-				}else if(circles.size()==4){//square bumper
+				}else if(circles.size()==4){ // Square Bumper
 					int x = (int)circles.get(0).getCenter().x();
 					int y = (int)circles.get(0).getCenter().y();
 					g.fillRect(x, y, 20, 20);
@@ -119,7 +117,7 @@ public abstract class Board extends JPanel implements Observer {
     	repaint();
     }
     
-	public boolean getDelete() {
+	boolean getDelete() {
 		return delete;
 	}
     

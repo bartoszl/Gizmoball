@@ -15,13 +15,11 @@ public interface IGUI {
 	
 	JPanel getPanel();
 	
-	String getMessage();
-	
 	void setMessage(String message);
+
+    void setMessageColor(Color color);
 	
 	String getSelectedComponent();
-	
-	void setMessageColor(Color color);
 	
 	String getFlipperPosition();
 	
