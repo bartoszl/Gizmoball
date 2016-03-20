@@ -68,16 +68,28 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        mkl.keyPressed(keyEvent); // Might not do anything [REMOVE COMMENT]
         Board b = bgui.getGridView();
         if(b.getAction() == Board.Action.KEY_CONNECT) {
             if(f != null) {
-                m.addKeyConnectionFlipper(keyEvent.getKeyCode(), f, "down");
-                bgui.setMessage("Connected key '"+KeyEvent.getKeyText(keyEvent.getKeyCode())+"' to flipper!");
+                if(m.addKeyConnectionFlipper(keyEvent.getKeyCode(), f, "down")) {
+                    bgui.setMessageColor(Color.GREEN);
+                    bgui.setMessage("Connected key '"+KeyEvent.getKeyText(keyEvent.getKeyCode())+"' to flipper!");
+                } else {
+                    bgui.setMessageColor(Color.RED);
+                    bgui.setMessage("Error! Key might have already been connected");
+                }
+
+
             } else if(abs != null) {
-                m.addKeyConnectionAbs(keyEvent.getKeyCode(), abs, "down");
-                m.setConnectedToAbs(false);
-                bgui.setMessage("Connected key '"+KeyEvent.getKeyText(keyEvent.getKeyCode())+"' to absorber!");
+
+                if(m.addKeyConnectionAbs(keyEvent.getKeyCode(), abs, "down")) {
+                    bgui.setMessageColor(Color.GREEN);
+                    m.setConnectedToAbs(false);
+                    bgui.setMessage("Connected key '"+KeyEvent.getKeyText(keyEvent.getKeyCode())+"' to absorber!");
+                } else {
+                    bgui.setMessageColor(Color.RED);
+                    bgui.setMessage("Error! Key might have already been connected");
+                }
             }
         }
     }

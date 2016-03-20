@@ -34,4 +34,18 @@ public class KeyConnectionAbs {
     public String getUpDown() {
         return upDown;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if(!(object instanceof KeyConnectionAbs)) {
+            return false;
+        }
+        KeyConnectionAbs kca = (KeyConnectionAbs) object;
+        if(( kca.getKeyID() == keyID)
+                && (kca.getAbs()).getCircles().equals(abs.getCircles())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
