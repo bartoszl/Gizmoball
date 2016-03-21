@@ -3,10 +3,12 @@ package model;
 import physics.*;
 import physics.Geometry.VectPair;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Random;
 
 /**
  * Created by John Watt on 01/03/2016.
@@ -179,15 +181,31 @@ public class GBallModel extends Observable implements IGBallModel {
         return yFriction;
     }
 
-    @Override
-    public boolean addConnection(String cBumperName, String flipperName) {
-        if(safeToAddConnection(cBumperName, flipperName)) {
+    public boolean loadConnection(String cBumperName, String flipperName) {
+         if(safeToAddConnection(cBumperName, flipperName)) {
             CircularBumper circularBumper = getCircularBumper(cBumperName);
             Flipper flipper = getFlipper(flipperName);
             Connection connection = new Connection(circularBumper, flipper);
-            connections.add(connection);
+            return connections.add(connection);
+        } else {
+             return false;
+         }
+    }
+
+    @Override
+    public boolean addConnection(CircularBumper circularBumper, Flipper flipper) {
+        /*if(safeToAddConnection(cBumperName, flipperName)) {
+            CircularBumper circularBumper = getCircularBumper(cBumperName);
+            Flipper flipper = getFlipper(flipperName);
+            Connection connection = new Connection(circularBumper, flipper);
+            return connections.add(connection);
+        }*/
+        Connection connection = new Connection(circularBumper, flipper);
+        if(connections.contains(connection)) {
+            return false;
+        } else {
+            return connections.add(connection);
         }
-        return false;
     }
     
     @Override
@@ -471,7 +489,7 @@ public class GBallModel extends Observable implements IGBallModel {
 				notifyObs();
 				continue;
 			}
-            if(cd.getBumper() != null) {
+            if(cd.getBumper() != null && (tuc != 0)) {
                 collidedWithBumper(cd.getBumper());
             }
 			ball = moveBallForTime(ball, tuc);
@@ -796,6 +814,7 @@ public class GBallModel extends Observable implements IGBallModel {
 	}
     
     private void collidedWithBumper(Bumper bumper) {
+
         for(Connection c : getConnections()) {
             if(c.getTrigger().equals(bumper)) {
                 c.getFlipper().press();
@@ -803,5 +822,31 @@ public class GBallModel extends Observable implements IGBallModel {
                 	c.getFlipper().release();
             }
         }
+        //and change the color
+        Color color = null;
+        Random random = new Random();
+        int randomNumber = random.nextInt(6);
+        switch (randomNumber) {
+            case 0:
+                color = Color.GREEN;
+                break;
+            case 1:
+                color = Color.RED;
+                break;
+            case 2:
+                color = Color.YELLOW;
+                break;
+            case 3:
+                color = Color.BLUE;
+                break;
+            case 4:
+                color = Color.ORANGE;
+                break;
+            case 5:
+                color = Color.BLACK;
+                break;
+            default:
+        }
+        bumper.setColor(color);
     }
 }
