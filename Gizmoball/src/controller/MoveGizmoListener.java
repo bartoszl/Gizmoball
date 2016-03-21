@@ -54,7 +54,7 @@ public class MoveGizmoListener implements MouseListener {
                     bgui.setMessage("Invalid Position for that Component");
                 }
             }
-        }
+        } else first = true;
     }
 
     @Override

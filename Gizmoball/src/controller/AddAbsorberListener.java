@@ -32,14 +32,15 @@ public class AddAbsorberListener implements MouseListener {
             y=(y/20)*20;
             if(first){
                 bgui.setMessage("First corner set! Now click elsewhere to set the second corner of absorber");
+                bgui.setMessageColor(Color.GREEN);
                 clicks[0] = x;
                 clicks[1] = y;
                 first = false;
             } else {
                 clicks[2] = x;
                 clicks[3] = y;
-                if((clicks[0]<clicks[2])&&(clicks[1]<clicks[3])){
-                	clicks[2]+=20;
+                if((clicks[0]<=clicks[2])&&(clicks[1]<=clicks[3])){
+                    clicks[2]+=20;
                 	clicks[3]+=20;
                 } else if(clicks[0]<clicks[2]){
                     clicks[1]+=20;
