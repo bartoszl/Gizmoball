@@ -109,7 +109,7 @@ public interface IGBallModel    {
      * @param flipperName
      * @return
      */
-    public boolean addConnection(CircularBumper circularBumper, Flipper flipper);
+    public boolean addConnection(Bumper bumper, Flipper flipper);
     
     /**
      * 

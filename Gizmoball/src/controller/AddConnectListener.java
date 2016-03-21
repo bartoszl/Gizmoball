@@ -33,7 +33,7 @@ public class AddConnectListener implements MouseListener {
         if(b.getAction() == Board.Action.CONNECT) {
             if(firstStep) {
                 Bumper bumper = m.findBumper(x, y);
-                if(bumper instanceof CircularBumper) {
+                if(bumper != null) {
                     trigger = bumper;
                     bgui.setMessageColor(Color.GREEN);
                     bgui.setMessage("Trigger found! Now press on Flipper or Absorber to connect it to trigger");
@@ -53,7 +53,7 @@ public class AddConnectListener implements MouseListener {
                 Flipper f = m.findFlipper(x, y);
                 if(trigger != null) {
                     if (f != null) {
-                        if(m.addConnection((CircularBumper) trigger, f)) {
+                        if(m.addConnection(trigger, f)) {
                             bgui.setMessageColor(Color.GREEN);
                             bgui.setMessage("Flipper connected!");
                             firstStep = true;

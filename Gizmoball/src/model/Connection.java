@@ -7,16 +7,16 @@ package model;
  */
 public class Connection {
 
-    private CircularBumper trigger;
+    private Bumper trigger;
     private Flipper flipper;
     
     /**
      * Constructor for connection.
      * 
-     * @param trigger -> CircularBumper which will trigger an action in the connected flipper.
+     * @param trigger -> Bumper which will trigger an action in the connected flipper.
      * @param flipper -> Flipper, flipper that will be triggered after the CircularBumper gets hit.
      */
-    public Connection(CircularBumper trigger, Flipper flipper) {
+    public Connection(Bumper trigger, Flipper flipper) {
         this.trigger = trigger;
         this.flipper = flipper;
     }
@@ -24,9 +24,9 @@ public class Connection {
     /**
      * Getter method for trigger.
      * 
-     * @return Circular Bumper, representing the trigger.
+     * @return  Bumper, representing the trigger.
      */
-    public CircularBumper getTrigger() {
+    public Bumper getTrigger() {
         return trigger;
     }
     
