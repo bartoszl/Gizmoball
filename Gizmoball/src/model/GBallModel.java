@@ -465,8 +465,6 @@ public class GBallModel extends Observable implements IGBallModel {
 				continue;
 			if(ball.isAbsorbed()){
 				ball = moveBallForTime(ball, moveTime);
-				Vect nv = calcVelocity(ball, moveTime);
-				ball.setVelocity(nv);
 				if(ball.getY()<absorber.getYTopLeft())
 					ball.setAbsorbed(false);
 				notifyObs();
@@ -476,8 +474,6 @@ public class GBallModel extends Observable implements IGBallModel {
 			double tuc = cd.getTime();
 			if(tuc>moveTime){
 				ball = moveBallForTime(ball, moveTime);
-				Vect newV = calcVelocity(ball, moveTime);
-				ball.setVelocity(newV);
 				notifyObs();
 				continue;
 			}
@@ -491,8 +487,6 @@ public class GBallModel extends Observable implements IGBallModel {
             }
 			ball = moveBallForTime(ball, tuc);
 			ball.setVelocity(cd.getVelocity());
-			Vect newV = calcVelocity(ball, tuc);
-			ball.setVelocity(newV);
 			notifyObs();
 		}
 	}
@@ -697,8 +691,8 @@ public class GBallModel extends Observable implements IGBallModel {
     }
     
     private Vect applyFriction(Vect Vold, double time){
-        double newVect = Math.sqrt((Math.pow(Vold.x(), 2)+Math.pow(Vold.y(), 2)));
-        return Vold.times((1 - (xFriction * time) - ((yFriction) * (newVect/20) * time)));
+        double length = Vold.length();
+        return Vold.times((1 - (xFriction * time) - (yFriction * (length/20) * time)));
     }
     
     private Ball moveBallForTime(Ball ball, double time){
@@ -707,6 +701,8 @@ public class GBallModel extends Observable implements IGBallModel {
 		double newX = ball.getX() + (vx*time);
 		double newY = ball.getY() + (vy*time);
 		ball.setXY(newX, newY);
+		Vect newV = calcVelocity(ball, time);
+		ball.setVelocity(newV);
 		return ball;
 	}
     
