@@ -179,15 +179,31 @@ public class GBallModel extends Observable implements IGBallModel {
         return yFriction;
     }
 
-    @Override
-    public boolean addConnection(String cBumperName, String flipperName) {
-        if(safeToAddConnection(cBumperName, flipperName)) {
+    public boolean loadConnection(String cBumperName, String flipperName) {
+         if(safeToAddConnection(cBumperName, flipperName)) {
             CircularBumper circularBumper = getCircularBumper(cBumperName);
             Flipper flipper = getFlipper(flipperName);
             Connection connection = new Connection(circularBumper, flipper);
-            connections.add(connection);
+            return connections.add(connection);
+        } else {
+             return false;
+         }
+    }
+
+    @Override
+    public boolean addConnection(CircularBumper circularBumper, Flipper flipper) {
+        /*if(safeToAddConnection(cBumperName, flipperName)) {
+            CircularBumper circularBumper = getCircularBumper(cBumperName);
+            Flipper flipper = getFlipper(flipperName);
+            Connection connection = new Connection(circularBumper, flipper);
+            return connections.add(connection);
+        }*/
+        Connection connection = new Connection(circularBumper, flipper);
+        if(connections.contains(connection)) {
+            return false;
+        } else {
+            return connections.add(connection);
         }
-        return false;
     }
     
     @Override

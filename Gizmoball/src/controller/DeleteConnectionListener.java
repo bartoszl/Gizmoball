@@ -31,7 +31,8 @@ public class DeleteConnectionListener implements MouseListener {
             if(f != null) {
                 for(Connection c : m.getConnections()) {
                     if(c.getFlipper().equals(f)) {
-                        System.out.println("Disconnected");
+                        bgui.setMessageColor(Color.GREEN);
+                        bgui.setMessage("Flipper disconnected!");
                         m.getConnections().remove(c);
                         break;
                     }
@@ -41,7 +42,8 @@ public class DeleteConnectionListener implements MouseListener {
                     y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
                     ) {
                 m.getAbsorber().setConnectedToItself(false);
-                System.out.println("Disconnected!");
+                bgui.setMessageColor(Color.GREEN);
+                bgui.setMessage("Absorber disconnected!");
             }
         }
     }

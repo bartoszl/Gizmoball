@@ -47,4 +47,18 @@ public class Connection {
     public void setFlipper(Flipper flipper) {
     	this.flipper = flipper; 
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if(!(object instanceof Connection)) {
+            return false;
+        }
+        Connection c = (Connection) object;
+        if(( c.getTrigger().getCircles().equals(trigger.getCircles()))
+                && (c.getFlipper()).getCircles().equals(flipper.getCircles())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
