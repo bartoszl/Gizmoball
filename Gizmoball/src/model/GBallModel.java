@@ -193,14 +193,8 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     @Override
-    public boolean addConnection(CircularBumper circularBumper, Flipper flipper) {
-        /*if(safeToAddConnection(cBumperName, flipperName)) {
-            CircularBumper circularBumper = getCircularBumper(cBumperName);
-            Flipper flipper = getFlipper(flipperName);
-            Connection connection = new Connection(circularBumper, flipper);
-            return connections.add(connection);
-        }*/
-        Connection connection = new Connection(circularBumper, flipper);
+    public boolean addConnection(Bumper bumper, Flipper flipper) {
+        Connection connection = new Connection(bumper, flipper);
         if(connections.contains(connection)) {
             return false;
         } else {
@@ -504,6 +498,19 @@ public class GBallModel extends Observable implements IGBallModel {
     public void reset() {
         resetBalls();
         resetFlippers();
+        resetBumpers();
+    }
+
+    public void resetBumpers() {
+        for(Bumper b : getBumpers()) {
+            if(b instanceof CircularBumper) {
+                b.setColor(Color.GREEN);
+            } else if(b instanceof TriangularBumper) {
+                b.setColor(Color.BLUE);
+            } else if(b instanceof SquareBumper) {
+                b.setColor(Color.RED);
+            }
+        }
     }
     
     // Neutral Methods

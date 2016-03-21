@@ -87,4 +87,5 @@ public interface Bumper {
 	 * 		   the bumper is placed.
 	 */
 	public double getY();
+
 }
