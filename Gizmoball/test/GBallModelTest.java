@@ -82,12 +82,6 @@ public class GBallModelTest {
 		Flipper flipper = new Flipper(200, 200, true, "f1");
     	assertEquals(model.getConnections(), new ArrayList<Connection>());
     	model.addConnection(circularBumper, flipper);
-    	assertEquals(model.getConnections(), new ArrayList<Connection>());
-    	model.addCircularBumper(100, 100, 0, "cBump");
-    	model.addConnection(circularBumper, flipper);
-    	assertEquals(model.getConnections(), new ArrayList<Connection>());
-    	model.addFlipper(200, 200, true, "f1");
-    	model.addConnection(circularBumper, flipper);
     	assertTrue(model.getConnections().size()==1);
     	model.addConnection(circularBumper, flipper);
     	assertTrue(model.getConnections().size()==1);
