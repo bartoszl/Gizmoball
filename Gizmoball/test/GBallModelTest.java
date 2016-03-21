@@ -78,6 +78,7 @@ public class GBallModelTest {
     
     @Test
     public void connectionTest() {
+
 		CircularBumper circularBumper = new CircularBumper(100, 100, 0, "cBump");
 		Flipper flipper = new Flipper(200, 200, true, "f1");
     	assertEquals(model.getConnections(), new ArrayList<Connection>());
