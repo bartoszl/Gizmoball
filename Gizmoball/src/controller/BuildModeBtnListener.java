@@ -69,7 +69,6 @@ public class BuildModeBtnListener implements ActionListener {
                 if(JOptionPane.showConfirmDialog(null, "Are you sure you want to Clear?") == 0) {
                     model.clear();
                     board.repaint();
-                    board.setAction(Board.Action.NONE);
                 }
                 break;
             case "Swap":

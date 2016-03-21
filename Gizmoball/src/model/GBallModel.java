@@ -124,8 +124,8 @@ public class GBallModel extends Observable implements IGBallModel {
         x1 = (int) xy1.x();
         y1 = (int) xy1.y();
         
-        for(int i = Math.min(x,x1); i < Math.max(x,x1); i++) {
-            for(int j = Math.min(y,y1); j < Math.max(y,y1); j++) {
+        for(int i = x; i < x1; i++) {
+            for(int j = y; j < y1; j++) {
                 if(occupiedSpaces[i][j]) return false;
             }
         }
