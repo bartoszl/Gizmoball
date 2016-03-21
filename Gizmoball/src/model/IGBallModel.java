@@ -109,7 +109,7 @@ public interface IGBallModel    {
      * @param flipperName
      * @return
      */
-    public boolean addConnection(String cBumperName, String flipperName);
+    public boolean addConnection(Bumper bumper, Flipper flipper);
     
     /**
      * 
@@ -308,4 +308,6 @@ public interface IGBallModel    {
      * @param set -> True if the absorber should be connected to itself, false if it shouldn't.
      */
     public void setConnectedToAbs(boolean set);
+
+    public boolean loadConnection(String cBumperName, String flipperName);
 }

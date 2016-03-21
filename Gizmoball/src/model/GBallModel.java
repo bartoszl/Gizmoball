@@ -3,10 +3,12 @@ package model;
 import physics.*;
 import physics.Geometry.VectPair;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Random;
 
 /**
  * Created by John Watt on 01/03/2016.
@@ -124,8 +126,8 @@ public class GBallModel extends Observable implements IGBallModel {
         x1 = (int) xy1.x();
         y1 = (int) xy1.y();
         
-        for(int i = Math.min(x,x1); i < Math.max(x,x1); i++) {
-            for(int j = Math.min(y,y1); j < Math.max(y,y1); j++) {
+        for(int i = x; i < x1; i++) {
+            for(int j = y; j < y1; j++) {
                 if(occupiedSpaces[i][j]) return false;
             }
         }
@@ -179,15 +181,25 @@ public class GBallModel extends Observable implements IGBallModel {
         return yFriction;
     }
 
-    @Override
-    public boolean addConnection(String cBumperName, String flipperName) {
-        if(safeToAddConnection(cBumperName, flipperName)) {
+    public boolean loadConnection(String cBumperName, String flipperName) {
+         if(safeToAddConnection(cBumperName, flipperName)) {
             CircularBumper circularBumper = getCircularBumper(cBumperName);
             Flipper flipper = getFlipper(flipperName);
             Connection connection = new Connection(circularBumper, flipper);
-            connections.add(connection);
+            return connections.add(connection);
+        } else {
+             return false;
+         }
+    }
+
+    @Override
+    public boolean addConnection(Bumper bumper, Flipper flipper) {
+        Connection connection = new Connection(bumper, flipper);
+        if(connections.contains(connection)) {
+            return false;
+        } else {
+            return connections.add(connection);
         }
-        return false;
     }
     
     @Override
@@ -316,7 +328,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		Ball ball = findBall(x,y);
         if(b==null && f==null && ball==null && absorber==null) return false;
 		if(b!=null){
-			if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
+			if(occupiedSpaces[(int)newX/20][(int)newY/20]) return false;
 			b.move(newX, newY);
 	        occupiedSpaces[(int)x/20][(int)y/20] = false;
 	        occupiedSpaces[(int)newX/20][(int)newY/20] = true;
@@ -333,14 +345,14 @@ public class GBallModel extends Observable implements IGBallModel {
 			return true;
 		}
 		if(ball!=null) {
-            if (occupiedSpaces[(int) newX / 20][(int) newY / 20] == true) return false;
+            if(occupiedSpaces[(int) newX / 20][(int) newY / 20]) return false;
             ball.move(newX, newY);
             occupiedSpaces[(int) x / 20][(int) y / 20] = false;
             occupiedSpaces[(int) newX / 20][(int) newY / 20] = true;
             notifyObs();
             return true;
         }
-        if(absorber!=null && findAbs(x,y)){
+        if(findAbs(x,y)){
             if(occupiedSpacesAbs(newX, newY)) return false;
             if((newX/20) > 20-(absorber.getWidth()/20)) return false;
             if((newY/20) > 20-(absorber.getHeight()/20)) return false;
@@ -474,7 +486,7 @@ public class GBallModel extends Observable implements IGBallModel {
 				notifyObs();
 				continue;
 			}
-            if(cd.getBumper() != null) {
+            if(cd.getBumper() != null && (tuc != 0)) {
                 collidedWithBumper(cd.getBumper());
             }
 			ball = moveBallForTime(ball, tuc);
@@ -489,6 +501,19 @@ public class GBallModel extends Observable implements IGBallModel {
     public void reset() {
         resetBalls();
         resetFlippers();
+        resetBumpers();
+    }
+
+    public void resetBumpers() {
+        for(Bumper b : getBumpers()) {
+            if(b instanceof CircularBumper) {
+                b.setColor(Color.GREEN);
+            } else if(b instanceof TriangularBumper) {
+                b.setColor(Color.BLUE);
+            } else if(b instanceof SquareBumper) {
+                b.setColor(Color.RED);
+            }
+        }
     }
     
     // Neutral Methods
@@ -565,9 +590,9 @@ public class GBallModel extends Observable implements IGBallModel {
     }
     
     private boolean occupiedSpacesAbs(double x, double y){
-        if(x+absorber.getWidth()/20 >= 20 || y+absorber.getHeight()/20 >= 20) return false;
         for(int i = (int)x/20; i < (x+absorber.getWidth())/20; i++){
             for(int j = (int)y/20; j < (y+absorber.getHeight())/20; j++){
+                if(i > 19 || j > 19) return true;
                 if(occupiedSpaces[i][j]) return true;
             }
         }
@@ -585,8 +610,8 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     private void occupyAbs(double x, double y, double x1, double y1){
-        for(int i = (int)x/20; i < x1/20; i++) {
-            for(int j = (int)y/20; j < y1/20; j++) {
+        for(int i = (int)x/20; i < (int)x1/20; i++) {
+            for(int j = (int)y/20; j < (int)y1/20; j++) {
                 occupiedSpaces[i][j] = true;
             }
         }
@@ -642,8 +667,7 @@ public class GBallModel extends Observable implements IGBallModel {
 	
 	private Vect calcVelocity(Ball ball, double moveTime){
     	Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (gravity*20*moveTime));
-        Vect newV = applyFriction(temp, moveTime);
-        return newV;
+        return applyFriction(temp, moveTime);
     }
 	
 	private void resetBalls() {
@@ -692,7 +716,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		Vect ballVelocity = ball.getVelocity();
 		Vect newVelocity = new Vect(0,0);
 		double shortest = Double.MAX_VALUE;
-		double time = 0.0;
+		double time;
 		// Check walls
 		for(LineSegment line: walls.getLines()){
 			time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
@@ -802,6 +826,7 @@ public class GBallModel extends Observable implements IGBallModel {
 	}
     
     private void collidedWithBumper(Bumper bumper) {
+
         for(Connection c : getConnections()) {
             if(c.getTrigger().equals(bumper)) {
                 c.getFlipper().press();
@@ -809,5 +834,31 @@ public class GBallModel extends Observable implements IGBallModel {
                 	c.getFlipper().release();
             }
         }
+        //and change the color
+        Color color = null;
+        Random random = new Random();
+        int randomNumber = random.nextInt(6);
+        switch (randomNumber) {
+            case 0:
+                color = Color.GREEN;
+                break;
+            case 1:
+                color = Color.RED;
+                break;
+            case 2:
+                color = Color.YELLOW;
+                break;
+            case 3:
+                color = Color.BLUE;
+                break;
+            case 4:
+                color = Color.ORANGE;
+                break;
+            case 5:
+                color = Color.BLACK;
+                break;
+            default:
+        }
+        bumper.setColor(color);
     }
 }

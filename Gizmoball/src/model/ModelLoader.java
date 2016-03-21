@@ -218,7 +218,7 @@ public class ModelLoader {
     private void createConnection(String[] command) {
         String circularBumperName = command[1];
         String flipperName = command[2];
-        model.addConnection(circularBumperName, flipperName);
+        model.loadConnection(circularBumperName, flipperName);
     }
 
     /**

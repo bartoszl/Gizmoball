@@ -33,16 +33,18 @@ public class AddConnectListener implements MouseListener {
         if(b.getAction() == Board.Action.CONNECT) {
             if(firstStep) {
                 Bumper bumper = m.findBumper(x, y);
-                if(bumper instanceof CircularBumper) {
+                if(bumper != null) {
                     trigger = bumper;
                     bgui.setMessageColor(Color.GREEN);
                     bgui.setMessage("Trigger found! Now press on Flipper or Absorber to connect it to trigger");
+                    triggerAbs = null;
                     firstStep = false;
                 } else if(m.getAbsorber() != null &&
                         x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&
                         y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
                         ) {
                     triggerAbs = m.getAbsorber();
+                    trigger = null;
                     bgui.setMessageColor(Color.GREEN);
                     bgui.setMessage("Trigger found! Now press on Flipper or Absorber to connect it to trigger");
                     firstStep = false;
@@ -51,9 +53,15 @@ public class AddConnectListener implements MouseListener {
                 Flipper f = m.findFlipper(x, y);
                 if(trigger != null) {
                     if (f != null) {
-                        m.addConnection(trigger.getName(), f.getName());
-                        bgui.setMessageColor(Color.GREEN);
-                        bgui.setMessage("Flipper connected!");
+                        if(m.addConnection(trigger, f)) {
+                            bgui.setMessageColor(Color.GREEN);
+                            bgui.setMessage("Flipper connected!");
+                            firstStep = true;
+                        } else {
+                            bgui.setMessageColor(Color.RED);
+                            bgui.setMessage("Try again!");
+                        }
+
                     }
                 } else if(triggerAbs != null) {
                     if(m.getAbsorber() != null &&
@@ -63,6 +71,7 @@ public class AddConnectListener implements MouseListener {
                         m.getAbsorber().setConnectedToItself(true);
                         bgui.setMessageColor(Color.GREEN);
                         bgui.setMessage("Absorber connected!");
+                        firstStep = true;
                     }
                 }
             }

@@ -83,6 +83,7 @@ public class BuildGUI implements IGUI {
         board.addMouseListener(new DeleteComponentListener(this, model));
         board.addMouseListener(new AddConnectListener(this, model));
         board.addMouseListener(new MoveGizmoListener(this, model));
+        board.addMouseListener(new DeleteConnectionListener(this, model));
         board.addMouseListener(akcl);
         board.addMouseListener(dkcl);
         board.addMouseListener(new DeleteKeyConnectListener(this, model));
