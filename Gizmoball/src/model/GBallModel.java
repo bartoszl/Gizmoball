@@ -789,6 +789,7 @@ public class GBallModel extends Observable implements IGBallModel {
 				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
 				if(time<shortest){
 					abs=true;
+					collidedWith = null;
 					shortest=time;
 					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
 					
@@ -798,6 +799,7 @@ public class GBallModel extends Observable implements IGBallModel {
 				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
 				if(time<shortest){
 					abs=true;
+					collidedWith = null;
 					shortest=time;
 					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
 				}
@@ -818,6 +820,7 @@ public class GBallModel extends Observable implements IGBallModel {
 																anotherBall.getVelocity());
 					newVelocity = velocities.v1;
 					abs=false;
+					collidedWith = null;
 				}
 			}
 		}
