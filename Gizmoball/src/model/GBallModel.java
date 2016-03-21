@@ -740,7 +740,6 @@ public class GBallModel extends Observable implements IGBallModel {
                     collidedWith = bumper;
 					shortest=time;
 					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity, 1.0);
-					System.out.println("Bump");
 				}
 			}
 		}
@@ -771,7 +770,6 @@ public class GBallModel extends Observable implements IGBallModel {
 						shortest=time;
 						newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity, 0.95);
 						collidedWith = null;
-						System.out.println("FLIPPER");
 					}
 				} else {
 					time = Geometry.timeUntilRotatingCircleCollision(circle, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
