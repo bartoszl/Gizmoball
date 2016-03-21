@@ -328,7 +328,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		Ball ball = findBall(x,y);
         if(b==null && f==null && ball==null && absorber==null) return false;
 		if(b!=null){
-			if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
+			if(occupiedSpaces[(int)newX/20][(int)newY/20]) return false;
 			b.move(newX, newY);
 	        occupiedSpaces[(int)x/20][(int)y/20] = false;
 	        occupiedSpaces[(int)newX/20][(int)newY/20] = true;
@@ -345,14 +345,14 @@ public class GBallModel extends Observable implements IGBallModel {
 			return true;
 		}
 		if(ball!=null) {
-            if (occupiedSpaces[(int) newX / 20][(int) newY / 20] == true) return false;
+            if(occupiedSpaces[(int) newX / 20][(int) newY / 20]) return false;
             ball.move(newX, newY);
             occupiedSpaces[(int) x / 20][(int) y / 20] = false;
             occupiedSpaces[(int) newX / 20][(int) newY / 20] = true;
             notifyObs();
             return true;
         }
-        if(absorber!=null && findAbs(x,y)){
+        if(findAbs(x,y)){
             if(occupiedSpacesAbs(newX, newY)) return false;
             if((newX/20) > 20-(absorber.getWidth()/20)) return false;
             if((newY/20) > 20-(absorber.getHeight()/20)) return false;
@@ -665,8 +665,7 @@ public class GBallModel extends Observable implements IGBallModel {
 	private Vect calcVelocity(Ball ball){
     	double moveTime = 0.05;
     	Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (gravity*20*moveTime));
-        Vect newV = applyFriction(temp, moveTime);
-        return newV;
+        return applyFriction(temp, moveTime);
     }
 	
 	private void resetBalls() {
@@ -715,7 +714,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		Vect ballVelocity = ball.getVelocity();
 		Vect newVelocity = new Vect(0,0);
 		double shortest = Double.MAX_VALUE;
-		double time = 0.0;
+		double time;
 		// Check walls
 		for(LineSegment line: walls.getLines()){
 			time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
