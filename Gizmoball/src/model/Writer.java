@@ -85,13 +85,13 @@ public class Writer {
             /* Write KeyConnectionFlippers */
             for(KeyConnectionFlipper connF : model.getKeyConnectionsFlipper()) {
                 syntax = generateKeyConnectionFlipperSyntax(connF);
-                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4));
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + "\n");
             }
 
             /* Write KeyConnectionAbs */
             for(KeyConnectionAbs connA : model.getKeyConnectionsAbs()) {
                 syntax = generateKeyConnectionAbsSyntax(connA);
-                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4));
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + "\n");
             }
 
             bufferedWriter.close();

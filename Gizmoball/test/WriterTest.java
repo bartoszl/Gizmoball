@@ -2,14 +2,14 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created by John Watt on 08/03/2016.
@@ -34,6 +34,8 @@ public class WriterTest {
         expected.add("1");
         expected.add("2");
         assertEquals(expected, actual);
+        actual = writer.generateBumperSyntax(sBumper);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -46,6 +48,8 @@ public class WriterTest {
         expected.add("3");
         expected.add("3");
         assertEquals(expected, actual);
+        actual = writer.generateBumperSyntax(tBumper);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -57,6 +61,8 @@ public class WriterTest {
         expected.add("C44");
         expected.add("4");
         expected.add("4");
+        assertEquals(expected, actual);
+        actual = writer.generateBumperSyntax(cBumper);
         assertEquals(expected, actual);
     }
 
@@ -196,8 +202,15 @@ public class WriterTest {
     @Test
     public void testWriteModelToFile() {
         GBallModel m = new GBallModel();
-        m.addTriangularBumper(40, 40, 0, "T22");
+        m.addSquareBumper(0, 0, 0, "S10");
+        m.addCircularBumper(20, 0, 0, "C15");
+        m.addTriangularBumper(40, 40, 2, "T22");
         m.addBall("Ball1", 20, 20, 20, 20);
+        m.addAbsorber("A", 0, 180, 200, 200);
+        m.addFlipper(60, 60, true, "LF92");
+        m.addConnection(new SquareBumper(0,0,0,"S10"), new Flipper(60,60,true,"LF92"));
+        m.addKeyConnectionFlipper(10, new Flipper(60,60,true,"LF92"), "down");
+        m.addKeyConnectionAbs(15, new Absorber("A", 0, 180, 200, 200), "down");
         writer.writeModelToFile(m, "newFile");
         File file1 = new File("newFile.txt");
         File file2 = new File("testWriter.txt");
@@ -210,5 +223,6 @@ public class WriterTest {
             e.printStackTrace();
         }
         assertEquals(content1, content2);
+        assertTrue(file1.delete());
     }
 }
