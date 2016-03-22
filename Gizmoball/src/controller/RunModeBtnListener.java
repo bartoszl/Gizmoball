@@ -65,6 +65,11 @@ public class RunModeBtnListener implements ActionListener {
                         ModelLoader ml = new ModelLoader(f);
                         GBallModel m = ml.getModel();
                         m.setLoadFile(f);
+                        gui.getGridView().delete();
+                        gui.getGridView().setVisible(false);
+                        gui.getFrame().remove(gui.getFrame().getContentPane());
+                        gui.getFrame().remove(gui.getFrame().getJMenuBar());
+                        gui.getFrame().remove(gui.getPanel());
                         main.setModel(m);
                     }
                     break;
