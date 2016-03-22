@@ -26,7 +26,7 @@ public class Flipper implements IFlipper {
     private int rotation;
     private List<Circle> lineCircles;
     
-    private static final double RAD = 0.01745329;
+    private static final double RAD = 0.017;
 
     /**
      * Creates a flipper on a 4-cell space, with specific color and position.
