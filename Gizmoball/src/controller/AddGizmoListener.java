@@ -36,6 +36,9 @@ public class AddGizmoListener implements MouseListener{
                 case "Square":
                     added = m.addSquareBumper(x, y, 0, "square");
                     break;
+                case "Teleporter":
+                    added = m.addTeleporterBumper(x, y, 0, "teleporter");
+                    break;
                 default:
             }
             if(added) {

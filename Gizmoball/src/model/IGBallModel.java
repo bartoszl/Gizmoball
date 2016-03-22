@@ -9,7 +9,7 @@ import java.util.List;
 public interface IGBallModel    {
 	
 	/**
-	 * 
+	 * Method for adding a square bumper.
 	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
@@ -19,7 +19,7 @@ public interface IGBallModel    {
     public boolean addSquareBumper(int x, int y, int rotation, String name);
     
     /**
-	 * 
+	 * Method for adding a triangular bumper.
 	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
@@ -29,7 +29,7 @@ public interface IGBallModel    {
     public boolean addTriangularBumper(int x, int y, int rotation, String name);
     
     /**
-	 * 
+	 * Method for adding a circular bumper.
 	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
@@ -37,6 +37,16 @@ public interface IGBallModel    {
 	 * @return true if the Bumper was successfully created, false if adding a bumper was unsuccessful.
 	 */
     public boolean addCircularBumper(int x, int y, int rotation, String name);
+    
+    /**
+	 * Method for adding a teleporter bumper.
+	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
+	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
+	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
+	 * @param name -> String, representing name of the Bumper.
+	 * @return true if the Bumper was successfully created, false if adding a bumper was unsuccessful.
+	 */
+    public boolean addTeleporterBumper(int x, int y, int rotation, String name);
     
     /**
      * Getter method for bumpers.

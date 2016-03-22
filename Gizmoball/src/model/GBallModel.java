@@ -108,6 +108,21 @@ public class GBallModel extends Observable implements IGBallModel {
     }
     
     @Override
+    public boolean addTeleporterBumper(int x, int y, int rotation, String name){
+    	Vect xy = translateXY(x,y);
+        x = (int) xy.x();
+        y = (int) xy.y();
+        if(!occupiedSpaces[x][y]) {
+            occupiedSpaces[x][y] = true;
+            TeleporterBumper tBumper = new TeleporterBumper(x*20, y*20, rotation, name);
+            bumpers.add(tBumper);
+            notifyObs();
+            return true;
+        }
+    	return false;
+    }
+    
+    @Override
     public Bumper getBumper(String gizmoName) {
         for(Bumper b : bumpers) {
             if(b.getName().equals(gizmoName)) {
