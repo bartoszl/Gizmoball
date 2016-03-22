@@ -39,7 +39,7 @@ public class Flipper implements IFlipper {
      */
     public Flipper(int cx, int cy, boolean isLeft, String name) {
         this.name = name;
-        this.rotationPerTick = 25*RAD;
+        this.rotationPerTick = 15*RAD;
         this.rotation = 0;
         this.isLeft = isLeft;
         this.color = Color.YELLOW;
