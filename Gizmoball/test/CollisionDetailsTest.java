@@ -10,12 +10,19 @@ public class CollisionDetailsTest {
     private CollisionDetails cd;
     private Vect v;
     private Bumper b;
+    private Flipper f;
 
     @Before
     public void setUp() {
         v = new Vect(10, 10);
         b = new SquareBumper(10, 10, 0, "Square");
-        cd = new CollisionDetails(10.0, v, false, b, null);
+        f = new Flipper(10, 10, true, "asd");
+        cd = new CollisionDetails(10.0, v, false, b, f);
+    }
+    
+    @Test
+    public void testGetFlipper() {
+    	assertEquals(f, cd.getFlipper());
     }
 
     @Test
