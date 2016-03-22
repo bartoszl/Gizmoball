@@ -133,7 +133,22 @@ public class WriterTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    public void testGenerateRotationSyntax_TriangularBumper_1_Rotation() {
+        TriangularBumper triangularBumper = new TriangularBumper(60, 60, 1, "triangle");
+        List<String> actual = writer.generateRotateSyntax(triangularBumper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Rotate T33");
+        assertEquals(expected, actual);
+    }
 
+    @Test
+    public void testGenerateRotationSyntax_CircularBumper_1_Rotation() {
+        CircularBumper circularBumper = new CircularBumper(60, 40, 1, "circle");
+        List<String> actual = writer.generateRotateSyntax(circularBumper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Rotate C32");
+    }
 
     @Test
     public void testGenerateFlipperSyntax_LeftFlipper() {
