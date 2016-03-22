@@ -15,7 +15,7 @@ import java.util.Random;
  */
 public class GBallModel extends Observable implements IGBallModel {
 
-    private double gravity, xFriction, yFriction;
+    private double gravity, mu, mu2;
     private List<Bumper> bumpers;
     private List<Flipper> flippers;
     private List<Connection> connections;
@@ -41,8 +41,8 @@ public class GBallModel extends Observable implements IGBallModel {
         walls = new Walls(0,0,400,400);
         occupiedSpaces = new boolean [20][20];
         gravity = 25;
-        xFriction = 0.025;
-        yFriction = 0.025;
+        mu = 0.025;
+        mu2 = 0.025;
     }
     
     // Build Mode Methods
@@ -167,18 +167,18 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public void setFriction(double xFriction, double yFriction) {
-        this.xFriction = xFriction;
-        this.yFriction = yFriction;
+        this.mu = xFriction;
+        this.mu2 = yFriction;
     }
 
     @Override
     public double getFrictionX() {
-        return xFriction;
+        return mu;
     }
 
     @Override
     public double getFrictionY() {
-        return yFriction;
+        return mu2;
     }
 
     public boolean loadConnection(String cBumperName, String flipperName) {
@@ -696,7 +696,7 @@ public class GBallModel extends Observable implements IGBallModel {
     
     private Vect applyFriction(Vect Vold, double time){
         double length = Vold.length();
-        return Vold.times((1 - (xFriction * time) - (yFriction * (length/20) * time)));
+        return Vold.times((1 - (mu * time) - (mu2 * (length/20) * time)));
     }
     
     private Ball moveBallForTime(Ball ball, double time){
