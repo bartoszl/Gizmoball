@@ -255,6 +255,7 @@ public class GBallModel extends Observable implements IGBallModel {
         return null;
     }
 
+    @Override
     public boolean deleteConnection(IFlipper f) {
         boolean deleted = false;
         List<Connection> newConn = new ArrayList<Connection>();
@@ -267,6 +268,24 @@ public class GBallModel extends Observable implements IGBallModel {
         }
         connections = newConn;
         return deleted;
+    }
+    
+    @Override
+    public boolean deleteTeleporterConnection(Bumper bump){
+    	if(!(bump instanceof TeleporterBumper)){
+    		return false;
+    	}
+    	TeleporterBumper tpBump = (TeleporterBumper) bump;
+    	for(int i=0; i<tpConnections.size(); i++){
+	    	if(tpConnections.get(i).getConnection().get(0).equals(tpBump)||tpConnections.get(i).getConnection().get(1).equals(tpBump)){
+	    		if(tpConnections.remove(i)!=null){
+	    			return true;
+	    		}
+	    		else
+	    			return false;
+	    	}
+    	}
+    	return false;
     }
     
     @Override

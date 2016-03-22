@@ -354,7 +354,14 @@ public interface IGBallModel    {
      */
     public boolean deleteConnection(IFlipper f);
 
-    /*
+    /**
+     * 
+     * @param tpBump teleporter bumper to disconnect
+     * @return true if there is a connection and it is removed, otherwise false
+     */
+    public boolean deleteTeleporterConnection(Bumper tpBump);
+    
+    /**
      * Setter method for sound files.
      *
      * @param f -> representing a File loaded in from a controller.
