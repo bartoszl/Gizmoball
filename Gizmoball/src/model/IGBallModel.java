@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by John Watt on 01/03/2016.
+ * @author John Watt, Bartosz Lewandowski
  */
 public interface IGBallModel    {
 	

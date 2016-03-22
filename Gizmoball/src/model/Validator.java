@@ -212,7 +212,7 @@ public class Validator {
     }
 
     public boolean validateGizmoOp(String[] command) {
-        return command[0].matches("Square|Circle|Triangle|RightFlipper|LeftFlipper")
+        return command[0].matches("Square|Circle|Triangle|Teleporter|RightFlipper|LeftFlipper")
                 && command.length == 4 && validateIdentifier(command[1])
                 && validateIntPair(command[2], command[3]);
     }

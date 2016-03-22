@@ -14,7 +14,7 @@ import java.util.Observable;
 import java.util.Random;
 
 /**
- * Created by John Watt on 01/03/2016.
+ * @author John Watt, Bartosz Lewandowski
  */
 public class GBallModel extends Observable implements IGBallModel {
 
