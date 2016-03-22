@@ -44,6 +44,20 @@ public class DeleteConnectionListener implements MouseListener {
                 m.getAbsorber().setConnectedToItself(false);
                 bgui.setMessageColor(Color.GREEN);
                 bgui.setMessage("Absorber disconnected!");
+            } else {
+            	Bumper bump = m.findBumper(x, y);
+            	if(bump!=null){
+            		if(m.deleteTeleporterConnection(bump)){
+	            		bgui.setMessageColor(Color.GREEN);
+	                    bgui.setMessage("Teleporter bumper disconnected!");
+	            	} else{
+	            		bgui.setMessageColor(Color.RED);
+	                    bgui.setMessage("Not connected!");
+	            	}
+            	} else{
+            		bgui.setMessageColor(Color.RED);
+                    bgui.setMessage("Invalid object!");
+            	}
             }
         }
     }

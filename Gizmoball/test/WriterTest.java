@@ -273,14 +273,14 @@ public class WriterTest {
     @Test
     public void testWriteModelToFile() {
         GBallModel m = new GBallModel();
-        m.addSquareBumper(0, 0, 0, "S10");
-        m.addCircularBumper(20, 0, 0, "C15");
+        m.addSquareBumper(0, 0, 0, "S00");
+        m.addCircularBumper(20, 0, 0, "C10");
         m.addTriangularBumper(40, 40, 2, "T22");
         m.addBall("Ball1", 20, 20, 20, 20);
         m.addAbsorber("A", 0, 180, 200, 200);
-        m.addFlipper(60, 60, true, "LF92");
-        m.addConnection(new SquareBumper(0,0,0,"S10"), new Flipper(60,60,true,"LF92"));
-        m.addKeyConnectionFlipper(10, new Flipper(60,60,true,"LF92"), "down");
+        m.addFlipper(60, 60, true, "LF33");
+        m.addConnection(new SquareBumper(0,0,0,"S10"), new Flipper(60,60,true,"LF33"));
+        m.addKeyConnectionFlipper(10, new Flipper(60,60,true,"LF33"), "down");
         m.addKeyConnectionAbs(15, new Absorber("A", 0, 180, 200, 200), "down");
         writer.writeModelToFile(m, "newFile");
         File file1 = new File("newFile.txt");

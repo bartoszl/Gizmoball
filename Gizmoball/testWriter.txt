@@ -6,6 +6,6 @@ Ball B11 1.0 1.0 20.0 20.0
 Rotate T22
 Rotate T22
 LeftFlipper LF33 3 3
-Connect S10 LF92
-KeyConnect key 10 down LF92
-KeyConnect key 15 down A
+Connect S00 LF33
+KeyConnect key 10 down LF33
+KeyConnect key 15 down ABS
