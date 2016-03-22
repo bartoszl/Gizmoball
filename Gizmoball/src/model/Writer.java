@@ -241,7 +241,7 @@ public class Writer {
 
     /**
      * Generate the rotate syntax for a given Bumper, i.e. generate
-     * the number of Rotate commands that is required for the given Bumper.
+     * the number of Rotate commands that are required for the given Bumper.
      * The formal file syntax for Rotate is: Rotate <name>
      * @param bumper -> The Bumper to generate the number of Rotate commands required
      * @return -> A list of strings containing the necessary Rotate commands for the given Bumper
@@ -263,6 +263,13 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the rotate syntax for a given Flipper, i.e. generate
+     * the number of Rotate commands that are required for the given Flipper.
+     * The formal file syntax for Rotate is: Rotate <name>
+     * @param flipper -> The Bumper to generate the number of Rotate commands required
+     * @return -> A list of strings containing the necessary Rotate commands for the given Flipper
+     */
     public List<String> generateRotateSyntax(Flipper flipper) {
         List<String> syntax = new ArrayList<String>();
         String xCoordinate, yCoordinate;
