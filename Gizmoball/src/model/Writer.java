@@ -324,8 +324,27 @@ public class Writer {
     public List<String> generateConnectionSyntax(Connection connection) {
         ArrayList<String> syntax = new ArrayList<String>();
         syntax.add("Connect");
-        syntax.add(connection.getTrigger().getName());
-        syntax.add(connection.getFlipper().getName());
+        Bumper trigger = connection.getTrigger();
+        String triggerName = null;
+        if(trigger instanceof SquareBumper) {
+            triggerName = "S";
+        } else if(trigger instanceof TriangularBumper) {
+            triggerName = "T";
+        } else if(trigger instanceof CircularBumper) {
+            triggerName = "C";
+        }
+        triggerName = triggerName + ((int) trigger.getX() / scale) + ((int) trigger.getY() / scale);
+        syntax.add(triggerName);
+
+        Flipper flipper = connection.getFlipper();
+        String flipperName = null;
+        if(flipper.isLeft()) {
+            flipperName = "LF";
+        } else {
+            flipperName = "RF";
+        }
+        flipperName = flipperName + ((int) flipper.getOrigin().x() / scale) + ((int) flipper.getOrigin().y() / scale);
+        syntax.add(flipperName);
         return syntax;
     }
 
@@ -344,7 +363,15 @@ public class Writer {
         syntax.add("key");
         syntax.add(String.valueOf(conn.getKeyID()));
         syntax.add(conn.getUpDown());
-        syntax.add(conn.getFlipper().getName());
+        IFlipper flipper = conn.getFlipper();
+        String flipperName = null;
+        if(flipper.isLeft()) {
+            flipperName = "LF";
+        } else {
+            flipperName = "RF";
+        }
+        flipperName = flipperName + ((int) flipper.getOrigin().x() / scale) + ((int) flipper.getOrigin().y() / scale);
+        syntax.add(flipperName);
         return syntax;
     }
 
@@ -363,7 +390,7 @@ public class Writer {
         syntax.add("key");
         syntax.add(String.valueOf(conn.getKeyID()));
         syntax.add(conn.getUpDown());
-        syntax.add(conn.getAbs().getName());
+        syntax.add("ABS");
         return syntax;
     }
 }

@@ -1,0 +1,5 @@
+Circle C410 4 10
+Ball B37 3.0 7.0 50.0 50.0
+LeftFlipper LF134 13 4
+Connect C410 LF134
+KeyConnect key 70 down LF134
