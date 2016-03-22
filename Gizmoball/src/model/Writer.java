@@ -63,7 +63,7 @@ public class Writer {
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5) + "\n");
             }
 
-            /* Write rotations */
+            /* Write bumper rotations */
             for(Bumper bumper : model.getBumpers()) {
                 for(String s : generateRotateSyntax(bumper)) {
                     bufferedWriter.write(s + "\n");
@@ -74,6 +74,13 @@ public class Writer {
             for(Flipper flipper : model.getFlippers()) {
                 syntax = generateFlipperSyntax(flipper);
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + "\n");
+            }
+
+            /* Write flipper rotations */
+            for(Flipper flipper : model.getFlippers()) {
+                for(String s : generateRotateSyntax(flipper)) {
+                    bufferedWriter.write(s + "\n");
+                }
             }
 
             /* Write connections */
@@ -246,12 +253,23 @@ public class Writer {
             xCoordinate = String.valueOf((int) bumper.getX() / scale);
             yCoordinate = String.valueOf((int) bumper.getY() / scale);
             if(bumper instanceof TriangularBumper) {
-                syntax.add("Rotate " + "T" + xCoordinate + yCoordinate);
+                syntax.add("Rotate T" + xCoordinate + yCoordinate);
             } else if(bumper instanceof SquareBumper) {
-                syntax.add("Rotate " + "S" + xCoordinate + yCoordinate);
+                syntax.add("Rotate S" + xCoordinate + yCoordinate);
             } else if(bumper instanceof CircularBumper) {
-                syntax.add("Rotate " + "C" + xCoordinate + yCoordinate);
+                syntax.add("Rotate C" + xCoordinate + yCoordinate);
             }
+        }
+        return syntax;
+    }
+
+    public List<String> generateRotateSyntax(Flipper flipper) {
+        List<String> syntax = new ArrayList<String>();
+        String xCoordinate, yCoordinate;
+        for(int i = 0; i < flipper.getRotation(); i++) {
+            xCoordinate = String.valueOf((int) flipper.getOrigin().x() / scale);
+            yCoordinate = String.valueOf((int) flipper.getOrigin().y() / scale);
+            syntax.add("Rotate F" + xCoordinate + yCoordinate);
         }
         return syntax;
     }
