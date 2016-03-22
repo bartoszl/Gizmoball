@@ -2,14 +2,15 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by John Watt on 08/03/2016.
@@ -107,7 +108,7 @@ public class WriterTest {
         SquareBumper squareBumper = new SquareBumper(100, 100, 1, "S1");
         List<String> actual = writer.generateRotateSyntax(squareBumper);
         List<String> expected = new ArrayList<String>();
-        expected.add("Rotate S1");
+        expected.add("Rotate S55");
         assertEquals(expected, actual);
     }
 

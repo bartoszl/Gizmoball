@@ -245,7 +245,13 @@ public class Writer {
         for(int i = 0; i < bumper.getRotation(); i++) {
             xCoordinate = String.valueOf((int) bumper.getX() / scale);
             yCoordinate = String.valueOf((int) bumper.getY() / scale);
-            syntax.add("Rotate " + "T" + xCoordinate + yCoordinate);
+            if(bumper instanceof TriangularBumper) {
+                syntax.add("Rotate " + "T" + xCoordinate + yCoordinate);
+            } else if(bumper instanceof SquareBumper) {
+                syntax.add("Rotate " + "S" + xCoordinate + yCoordinate);
+            } else if(bumper instanceof CircularBumper) {
+                syntax.add("Rotate " + "C" + xCoordinate + yCoordinate);
+            }
         }
         return syntax;
     }
