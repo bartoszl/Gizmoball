@@ -117,8 +117,8 @@ public class WriterTest {
         SquareBumper squareBumper = new SquareBumper(100, 100, 2, "S1");
         List<String> actual = writer.generateRotateSyntax(squareBumper);
         List<String> expected = new ArrayList<String>();
-        expected.add("Rotate S1");
-        expected.add("Rotate S1");
+        expected.add("Rotate S55");
+        expected.add("Rotate S55");
         assertEquals(expected, actual);
     }
 
@@ -127,9 +127,9 @@ public class WriterTest {
         SquareBumper squareBumper = new SquareBumper(100, 100, 3, "S1");
         List<String> actual = writer.generateRotateSyntax(squareBumper);
         List<String> expected = new ArrayList<String>();
-        expected.add("Rotate S1");
-        expected.add("Rotate S1");
-        expected.add("Rotate S1");
+        expected.add("Rotate S55");
+        expected.add("Rotate S55");
+        expected.add("Rotate S55");
         assertEquals(expected, actual);
     }
 
