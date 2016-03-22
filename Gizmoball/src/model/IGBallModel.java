@@ -310,4 +310,6 @@ public interface IGBallModel    {
     public void setConnectedToAbs(boolean set);
 
     public boolean loadConnection(String cBumperName, String flipperName);
+
+    public boolean deleteConnection(IFlipper f);
 }
