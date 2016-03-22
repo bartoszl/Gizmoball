@@ -241,8 +241,11 @@ public class Writer {
      */
     public List<String> generateRotateSyntax(Bumper bumper) {
         List<String> syntax = new ArrayList<String>();
+        String xCoordinate, yCoordinate;
         for(int i = 0; i < bumper.getRotation(); i++) {
-            syntax.add("Rotate " + bumper.getName());
+            xCoordinate = String.valueOf((int) bumper.getX() / scale);
+            yCoordinate = String.valueOf((int) bumper.getY() / scale);
+            syntax.add("Rotate " + "T" + xCoordinate + yCoordinate);
         }
         return syntax;
     }
