@@ -269,7 +269,11 @@ public class Writer {
         for(int i = 0; i < flipper.getRotation(); i++) {
             xCoordinate = String.valueOf((int) flipper.getOrigin().x() / scale);
             yCoordinate = String.valueOf((int) flipper.getOrigin().y() / scale);
-            syntax.add("Rotate F" + xCoordinate + yCoordinate);
+            if(flipper.isLeft()) {
+                syntax.add("Rotate LF" + xCoordinate + yCoordinate);
+            } else {
+                syntax.add("Rotate RF" + xCoordinate + yCoordinate);
+            }
         }
         return syntax;
     }
