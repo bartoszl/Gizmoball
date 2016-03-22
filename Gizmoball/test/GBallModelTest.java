@@ -78,7 +78,10 @@ public class GBallModelTest {
     
     @Test
     public void connectionTest() {
+		CircularBumper circularBumper = new CircularBumper(100, 100, 0, "cBump");
+		Flipper flipper = new Flipper(200, 200, true, "f1");
     	assertEquals(model.getConnections(), new ArrayList<Connection>());
+<<<<<<< HEAD
     	model.loadConnection("cBump", "f1");
     	assertEquals(model.getConnections(), new ArrayList<Connection>());
     	model.addCircularBumper(0, 20, 0, "cBump");
@@ -88,6 +91,11 @@ public class GBallModelTest {
     	model.loadConnection("cBump", "f1");
     	assertTrue(model.getConnections().size()==1);
     	model.loadConnection("cBump", "f1");
+=======
+    	model.addConnection(circularBumper, flipper);
+    	assertTrue(model.getConnections().size()==1);
+    	model.addConnection(circularBumper, flipper);
+>>>>>>> master
     	assertTrue(model.getConnections().size()==1);
     }
     

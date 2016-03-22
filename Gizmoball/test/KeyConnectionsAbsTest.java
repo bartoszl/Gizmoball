@@ -29,4 +29,15 @@ public class KeyConnectionsAbsTest {
     public void testGetUpDown() {
         assertEquals(kca.getUpDown(), "up");
     }
+    
+    @Test
+    public void testEquals() {
+    	assertFalse(kca.equals(null));
+    	assertFalse(kca.equals(new Object()));
+    	assertFalse(kca.equals(new KeyConnectionAbs(10, abs, "up")));
+    	assertFalse(kca.equals(new KeyConnectionAbs(12, abs, "up")));
+    	assertFalse(kca.equals(new KeyConnectionAbs(11, new Absorber("abs", 0, 60, 80, 80), "up")));
+    	assertFalse(kca.equals(new KeyConnectionAbs(10, abs, "down")));
+    	assertTrue(kca.equals(new KeyConnectionAbs(11, abs, "up")));
+    }
 }

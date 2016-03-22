@@ -104,28 +104,28 @@ public interface IGBallModel    {
     public double getFrictionY();
     
     /**
-     * 
-     * @param cBumperName -> String representing name of the Bumper that will be connected.
-     * @param flipperName
-     * @return
+     * Add a connection between a bumper and a flipper
+     * @param bumper -> The bumper that will be part of the connection
+     * @param flipper -> The flipper that will be part of the connection
+     * @return True if the connection could be added successfully, or false if it couldn't be added
      */
     public boolean addConnection(Bumper bumper, Flipper flipper);
     
     /**
-     * 
-     * @param keyID
-     * @param flipper
-     * @param upDown
-     * @return
+     * Add a (key) connection between a key and a flipper
+     * @param keyID -> The key number of the key to be used in the connection
+     * @param flipper -> The flipper to be used in the connection
+     * @param upDown -> Whether the key connection is to be executed when the key is pressed or when its released
+     * @return True if the key connection could be added successfully, false if not
      */
     public boolean addKeyConnectionFlipper(int keyID, IFlipper flipper, String upDown);
     
     /**
-     * 
-     * @param keyID
-     * @param abs
-     * @param upDown
-     * @return
+     * Add a (key) connection between a key and a flipper
+     * @param keyID -> The key number of the key to be used in the connection
+     * @param abs -> The absorber to be used in the connection
+     * @param upDown -> Whether the key connection is to be executed when the key is pressed or when its released
+     * @return True if the key connection could be added successfully, false if not
      */
     public boolean addKeyConnectionAbs(int keyID, IAbsorber abs, String upDown);
     
@@ -310,9 +310,16 @@ public interface IGBallModel    {
     public void setConnectedToAbs(boolean set);
 
     /**
+<<<<<<< HEAD
      * @param cBumperName name of Bumper to be connected
      * @param flipperName name of Flipper to be connected
      * @return
+=======
+     * Add a connection between a bumper and a flipper
+     * @param cBumperName -> The name of the bumper that will be part of the connection
+     * @param flipperName -> The name of the flipper that will be part of the connection
+     * @return True if the connection could be added successfully, or false if it couldn't be added
+>>>>>>> master
      */
     public boolean loadConnection(String cBumperName, String flipperName);
 
@@ -321,4 +328,25 @@ public interface IGBallModel    {
      * @return true if any connection found and removed, false otherwise
      */
     public boolean deleteConnection(IFlipper f);
+
+    /*
+     * Setter method for sound files.
+     *
+     * @param f -> representing a File loaded in from a controller.
+     */
+    public void setSound(File f);
+
+    /**
+     * Getter method for sound files.
+     *
+     * @return File, that was set using the above setter.
+     */
+    public File getSound();
+
+    /**
+     * Play/Pause the sound loaded in.
+     *
+     * @param play -> boolean value deciding whether or not to play the sound.
+     */
+    public void playSound(boolean play);
 }

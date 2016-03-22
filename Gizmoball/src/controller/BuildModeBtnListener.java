@@ -69,10 +69,10 @@ public class BuildModeBtnListener implements ActionListener {
                 if(JOptionPane.showConfirmDialog(null, "Are you sure you want to Clear?") == 0) {
                     model.clear();
                     board.repaint();
-                    board.setAction(Board.Action.NONE);
                 }
                 break;
             case "Swap":
+                model.playSound(false);
                 board.delete();
                 MouseListener[] mListeners = board.getMouseListeners();
                 for(int i=0; i<mListeners.length;i++){
@@ -96,6 +96,13 @@ public class BuildModeBtnListener implements ActionListener {
                         ModelLoader ml = new ModelLoader(f);
                         GBallModel m = ml.getModel();
                         m.setLoadFile(f);
+                        model.playSound(false);
+                        m.setSound(model.getSound());
+                        gui.getGridView().delete();
+                        gui.getGridView().setVisible(false);
+                        gui.getFrame().remove(gui.getFrame().getContentPane());
+                        gui.getFrame().remove(gui.getFrame().getJMenuBar());
+                        gui.getFrame().remove(gui.getPanel());
                         main.setModel(m);
                     }
                 }
@@ -124,48 +131,50 @@ public class BuildModeBtnListener implements ActionListener {
                 if (reply == JOptionPane.YES_OPTION) System.exit(0);
                 break;
             case "Friction":
-                boolean invalidX = true, invalidY = true;
-                double x = 0, y = 0;
-                String inputX = JOptionPane.showInputDialog("Please enter a new value for 'X' Friction, Current X: "
-                        + model.getFrictionX()); if(inputX == null) return;
-                String inputY = JOptionPane.showInputDialog("Please enter a new value for 'Y' Friction, Current Y: "
-                        + model.getFrictionY()); if(inputY == null) return;
-                while (invalidX || invalidY) {
-                    invalidX = false; invalidY = false;
-                    if(inputX == null || inputY == null) break;
-                    if(inputX.equals("")){
-                        invalidX = true;
+                boolean invalidMU = true, invalidMU2 = true;
+                double mu = 0, mu2 = 0;
+                String inputMU = JOptionPane.showInputDialog("Please enter a new value for 'mu' Friction, Current mu: "
+                        + model.getFrictionX()); if(inputMU == null) return;
+                String inputMU2 = JOptionPane.showInputDialog("Please enter a new value for 'mu2' Friction, Current mu2: "
+                        + model.getFrictionY()); if(inputMU2 == null) return;
+                while (invalidMU || invalidMU2) {
+                    invalidMU = false; invalidMU2 = false;
+                    if(inputMU == null || inputMU2 == null) break;
+                    if(inputMU.equals("")){
+                        invalidMU = true;
                     }
-                    else if(inputY.equals("")){
-                        invalidY = true;
+                    else if(inputMU2.equals("")){
+                        invalidMU2 = true;
                     }
                     else {
-                        invalidX = false; invalidY = false;
+                        invalidMU = false; invalidMU2 = false;
                         try {
-                            x = Double.parseDouble(inputX);
+                            mu = Double.parseDouble(inputMU);
                         } catch (NumberFormatException err){
-                            invalidX = true;
+                            invalidMU = true;
                         }
                         try {
-                            y = Double.parseDouble(inputY);
+                            mu2 = Double.parseDouble(inputMU2);
                         } catch (NumberFormatException err){
-                            invalidY = true;
+                            invalidMU2 = true;
                         }
-                        if(!invalidX && !invalidY) {
-                            if (x < 0 || x > 0.1) {
-                                invalidX = true;
-                            } else if (y < 0 || y > 0.1) {
-                                invalidY = true;
+                        if(!invalidMU && !invalidMU2) {
+                            if (mu < 0 || mu > 0.1) {
+                                invalidMU = true;
+                            } else if (mu2 < 0 || mu2 > 0.1) {
+                                invalidMU2 = true;
                             } else {
-                                model.setFriction(x, y); // May have to add Rounding
-                                invalidX = false;
-                                invalidY = false;
+                                model.setFriction(mu, mu2);
+                                gui.setMessageColor(Color.GREEN);
+                                gui.setMessage("Friction has been set!");
+                                invalidMU = false;
+                                invalidMU2 = false;
                             }
                         }
                     }
-                    if(invalidX) inputX = JOptionPane.showInputDialog("Please re-enter a valid value for 'X' Friction, Current X: "
+                    if(invalidMU) inputMU = JOptionPane.showInputDialog("Please re-enter a valid value for 'mu' Friction, Current mu: "
                                                                         + model.getFrictionX());
-                    if(invalidY) inputY = JOptionPane.showInputDialog("Please re-enter a valid value for 'Y' Friction, Current Y: "
+                    if(invalidMU2) inputMU2 = JOptionPane.showInputDialog("Please re-enter a valid value for 'mu2' Friction, Current mu2: "
                                                                         + model.getFrictionY());
                 }
                 break;
@@ -189,8 +198,9 @@ public class BuildModeBtnListener implements ActionListener {
                             if (g < 0 || g > 50) {
                                 invalidG = true;
                             } else {
-                                System.out.println("G: " + g);
-                                model.setGravity(g); // May have to add Rounding
+                                model.setGravity(g);
+                                gui.setMessageColor(Color.GREEN);
+                                gui.setMessage("Gravity has been set!");
                                 invalidG = false;
                             }
                         }

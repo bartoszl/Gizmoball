@@ -3,6 +3,9 @@ package model;
 import physics.*;
 import physics.Geometry.VectPair;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ import java.util.Random;
  */
 public class GBallModel extends Observable implements IGBallModel {
 
-    private double gravity, xFriction, yFriction;
+    private double gravity, mu, mu2;
     private List<Bumper> bumpers;
     private List<Flipper> flippers;
     private List<Connection> connections;
@@ -26,6 +29,10 @@ public class GBallModel extends Observable implements IGBallModel {
     private boolean [][] occupiedSpaces;
     private Walls walls;
     private File loadFile;
+
+    private Clip audioClip;
+    private File soundFile;
+    private boolean isPlaying;
     
     /**
      * Constructor for GBallModel. Creates empty lists for each gizmo.
@@ -41,8 +48,9 @@ public class GBallModel extends Observable implements IGBallModel {
         walls = new Walls(0,0,400,400);
         occupiedSpaces = new boolean [20][20];
         gravity = 25;
-        xFriction = 0.025;
-        yFriction = 0.025;
+        mu = 0.025;
+        mu2 = 0.025;
+        isPlaying = false;
     }
     
     // Build Mode Methods
@@ -126,8 +134,8 @@ public class GBallModel extends Observable implements IGBallModel {
         x1 = (int) xy1.x();
         y1 = (int) xy1.y();
         
-        for(int i = Math.min(x,x1); i < Math.max(x,x1); i++) {
-            for(int j = Math.min(y,y1); j < Math.max(y,y1); j++) {
+        for(int i = x; i < x1; i++) {
+            for(int j = y; j < y1; j++) {
                 if(occupiedSpaces[i][j]) return false;
             }
         }
@@ -167,18 +175,18 @@ public class GBallModel extends Observable implements IGBallModel {
 
     @Override
     public void setFriction(double xFriction, double yFriction) {
-        this.xFriction = xFriction;
-        this.yFriction = yFriction;
+        this.mu = xFriction;
+        this.mu2 = yFriction;
     }
 
     @Override
     public double getFrictionX() {
-        return xFriction;
+        return mu;
     }
 
     @Override
     public double getFrictionY() {
-        return yFriction;
+        return mu2;
     }
 
     public boolean loadConnection(String cBumperName, String flipperName) {
@@ -342,7 +350,7 @@ public class GBallModel extends Observable implements IGBallModel {
 		Ball ball = findBall(x,y);
         if(b==null && f==null && ball==null && absorber==null) return false;
 		if(b!=null){
-			if(occupiedSpaces[(int)newX/20][(int)newY/20]==true) return false;
+			if(occupiedSpaces[(int)newX/20][(int)newY/20]) return false;
 			b.move(newX, newY);
 	        occupiedSpaces[(int)x/20][(int)y/20] = false;
 	        occupiedSpaces[(int)newX/20][(int)newY/20] = true;
@@ -359,14 +367,14 @@ public class GBallModel extends Observable implements IGBallModel {
 			return true;
 		}
 		if(ball!=null) {
-            if (occupiedSpaces[(int) newX / 20][(int) newY / 20] == true) return false;
+            if(occupiedSpaces[(int) newX / 20][(int) newY / 20]) return false;
             ball.move(newX, newY);
             occupiedSpaces[(int) x / 20][(int) y / 20] = false;
             occupiedSpaces[(int) newX / 20][(int) newY / 20] = true;
             notifyObs();
             return true;
         }
-        if(absorber!=null && findAbs(x,y)){
+        if(findAbs(x,y)){
             if(occupiedSpacesAbs(newX, newY)) return false;
             if((newX/20) > 20-(absorber.getWidth()/20)) return false;
             if((newY/20) > 20-(absorber.getHeight()/20)) return false;
@@ -462,16 +470,8 @@ public class GBallModel extends Observable implements IGBallModel {
 	@Override
 	public void moveModel() {
 		double moveTime = 0.05;
-		double minTime = moveTime;
-		List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
-		for(Ball ball: balls){
-			cl.add(timeUntilCollision(ball));
-			if(cl.get(cl.size()-1).getTime()<minTime) 
-				if(cl.get(cl.size()-1).getTime()!=0)
-					minTime = cl.get(cl.size()-1).getTime();
-		}
-		
-		moveFlippers(minTime);
+		List<CollisionDetails> cl = calcCollisionDetails();
+		moveFlippers(cl);
 		
 		for(Ball ball: balls){
 			if(!ball.isMoving())
@@ -487,8 +487,6 @@ public class GBallModel extends Observable implements IGBallModel {
 			double tuc = cd.getTime();
 			if(tuc>moveTime){
 				ball = moveBallForTime(ball, moveTime);
-				Vect newV = calcVelocity(ball);
-				ball.setVelocity(newV);
 				notifyObs();
 				continue;
 			}
@@ -499,11 +497,12 @@ public class GBallModel extends Observable implements IGBallModel {
 			}
             if(cd.getBumper() != null && (tuc != 0)) {
                 collidedWithBumper(cd.getBumper());
+                //cl = calcCollisionDetails();
             }
 			ball = moveBallForTime(ball, tuc);
 			ball.setVelocity(cd.getVelocity());
-			Vect newV = calcVelocity(ball);
-			ball.setVelocity(newV);
+			//Vect v = calcVelocity(ball, moveTime);
+			//ball.setVelocity(v);
 			notifyObs();
 		}
 	}
@@ -538,6 +537,14 @@ public class GBallModel extends Observable implements IGBallModel {
     }
     
     // Private Methods
+    
+    private List<CollisionDetails> calcCollisionDetails(){
+    	List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
+    	for(Ball ball: balls){
+			cl.add(timeUntilCollision(ball));
+		}
+    	return cl;
+    }
     
     private void notifyObs() {
         setChanged();
@@ -601,9 +608,9 @@ public class GBallModel extends Observable implements IGBallModel {
     }
     
     private boolean occupiedSpacesAbs(double x, double y){
-        if(x+absorber.getWidth()/20 >= 20 || y+absorber.getHeight()/20 >= 20) return false;
         for(int i = (int)x/20; i < (x+absorber.getWidth())/20; i++){
             for(int j = (int)y/20; j < (y+absorber.getHeight())/20; j++){
+                if(i > 19 || j > 19) return true;
                 if(occupiedSpaces[i][j]) return true;
             }
         }
@@ -621,8 +628,8 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     private void occupyAbs(double x, double y, double x1, double y1){
-        for(int i = (int)x/20; i < x1/20; i++) {
-            for(int j = (int)y/20; j < y1/20; j++) {
+        for(int i = (int)x/20; i < (int)x1/20; i++) {
+            for(int j = (int)y/20; j < (int)y1/20; j++) {
                 occupiedSpaces[i][j] = true;
             }
         }
@@ -669,18 +676,23 @@ public class GBallModel extends Observable implements IGBallModel {
 		return null;
 	}
 	
-	private void moveFlippers(double time) {
-        for(Flipper f : getFlippers()) {
+	private void moveFlippers(List<CollisionDetails> cl) {
+		for(Flipper f : getFlippers()) {
+			double time = 0.05;
+			for(CollisionDetails c:cl){
+				if(c.getFlipper()!=null)
+					if(c.getFlipper().equals(f))
+						if(c.getTime()<time)
+							time = c.getTime();
+			}
             f.rotatePerTime(time);
             notifyObs();
         }
     }
 	
-	private Vect calcVelocity(Ball ball){
-    	double moveTime = 0.05;
+	private Vect calcVelocity(Ball ball, double moveTime){
     	Vect temp = new Vect(ball.getVelocity().x(), ball.getVelocity().y() + (gravity*20*moveTime));
-        Vect newV = applyFriction(temp, moveTime);
-        return newV;
+        return applyFriction(temp, moveTime);
     }
 	
 	private void resetBalls() {
@@ -710,8 +722,8 @@ public class GBallModel extends Observable implements IGBallModel {
     }
     
     private Vect applyFriction(Vect Vold, double time){
-        double newVect = Math.sqrt((Math.pow(Vold.x(), 2)+Math.pow(Vold.y(), 2)));
-        return Vold.times((1 - (xFriction * time) - ((yFriction) * (newVect/20) * time)));
+        double length = Vold.length();
+        return Vold.times((1 - (mu * time) - (mu2 * (length/20) * time)));
     }
     
     private Ball moveBallForTime(Ball ball, double time){
@@ -720,16 +732,19 @@ public class GBallModel extends Observable implements IGBallModel {
 		double newX = ball.getX() + (vx*time);
 		double newY = ball.getY() + (vy*time);
 		ball.setXY(newX, newY);
+		Vect newV = calcVelocity(ball, time);
+		ball.setVelocity(newV);
 		return ball;
 	}
     
     private CollisionDetails timeUntilCollision(Ball ball) {
         Bumper collidedWith = null;
+        Flipper f = null;
 		Circle ballCircle = ball.getCircle();
 		Vect ballVelocity = ball.getVelocity();
 		Vect newVelocity = new Vect(0,0);
 		double shortest = Double.MAX_VALUE;
-		double time = 0.0;
+		double time;
 		// Check walls
 		for(LineSegment line: walls.getLines()){
 			time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
@@ -753,7 +768,7 @@ public class GBallModel extends Observable implements IGBallModel {
 				if(time<shortest){
                     collidedWith = bumper;
 					shortest=time;
-					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity, 1.0);
 				}
 			}
 		}
@@ -764,29 +779,37 @@ public class GBallModel extends Observable implements IGBallModel {
 					time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
 					if(time<shortest){
 						shortest=time;
-						newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+						newVelocity = Geometry.reflectWall(line, ballVelocity, 0.95);
+						collidedWith = null;
 					}
 				} else {
 					time = Geometry.timeUntilRotatingWallCollision(line, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
+					System.out.println("t until rot wa: "+time);
 					if(time<shortest){
 						shortest=time;
+						f = flipper;
 						newVelocity = Geometry.reflectRotatingWall(line, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
+						collidedWith = null;
 					}
 				}
 				
 			}
+			System.out.println();
 			for(Circle circle: flipper.getCircles()){
 				if(flipper.getMovement()==IFlipper.Movement.NONE) {
 					time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
 					if(time<shortest){
 						shortest=time;
-						newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
+						newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity, 0.95);
+						collidedWith = null;
 					}
 				} else {
 					time = Geometry.timeUntilRotatingCircleCollision(circle, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
 					if(time<shortest){
 						shortest=time;
+						f = flipper;
 						newVelocity = Geometry.reflectRotatingCircle(circle, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
+						collidedWith = null;
 					}
 				}
 			}
@@ -798,7 +821,9 @@ public class GBallModel extends Observable implements IGBallModel {
 				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
 				if(time<shortest){
 					abs=true;
+					collidedWith = null;
 					shortest=time;
+					f = null;
 					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
 					
 				}
@@ -807,6 +832,8 @@ public class GBallModel extends Observable implements IGBallModel {
 				time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
 				if(time<shortest){
 					abs=true;
+					collidedWith = null;
+					f = null;
 					shortest=time;
 					newVelocity = Geometry.reflectCircle(circle.getCenter(), ballCircle.getCenter(), ballVelocity);
 				}
@@ -819,6 +846,7 @@ public class GBallModel extends Observable implements IGBallModel {
 				time = Geometry.timeUntilBallBallCollision(ballCircle, ballVelocity, anotherBall.getCircle(), anotherBall.getVelocity());
 				if(time<shortest){
 					shortest=time;
+					f = null;
 					VectPair velocities = Geometry.reflectBalls(ballCircle.getCenter(),
 																1,
 																ballVelocity,
@@ -827,11 +855,12 @@ public class GBallModel extends Observable implements IGBallModel {
 																anotherBall.getVelocity());
 					newVelocity = velocities.v1;
 					abs=false;
+					collidedWith = null;
 				}
 			}
 		}
 		
-		return new CollisionDetails(shortest, newVelocity, abs, collidedWith);
+		return new CollisionDetails(shortest, newVelocity, abs, collidedWith, f);
 	}
     
     private void collidedWithBumper(Bumper bumper) {
@@ -869,5 +898,32 @@ public class GBallModel extends Observable implements IGBallModel {
             default:
         }
         bumper.setColor(color);
+    }
+
+    public void setSound(File f){
+        if(f == null) return; soundFile = f;
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(f);
+            audioClip = AudioSystem.getClip();
+            audioClip.open(ais);
+        } catch (Exception e) {
+            System.out.println("Error with playing sound. \n" + e);
+        }
+    }
+
+    public File getSound(){
+        return soundFile;
+    }
+
+    public void playSound(boolean play){
+        if(isPlaying || !play) {
+            if(soundFile != null) {
+                audioClip.stop();
+            }
+            isPlaying = false;
+        } else {
+            audioClip.start();
+            isPlaying = true;
+        }
     }
 }
