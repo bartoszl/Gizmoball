@@ -151,6 +151,60 @@ public class WriterTest {
     }
 
     @Test
+    public void testGenerateRotationSyntax_LeftFlipper_0_Rotations() {
+        Flipper flipper = new Flipper(20, 20, true, "flipper");
+        List<String> actual = writer.generateRotateSyntax(flipper);
+        List<String> expected = new ArrayList<String>();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGenerateRotationSyntax_LeftFlipper_1_Rotation() {
+        Flipper flipper = new Flipper(20, 20, true, "flipper");
+        flipper.rotate();
+        List<String> actual = writer.generateRotateSyntax(flipper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Rotate LF11");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGenerateRotationSyntax_LeftFlipper_2_Rotations() {
+        Flipper flipper = new Flipper(20, 20, true, "flipper");
+        flipper.rotate();
+        flipper.rotate();
+        List<String> actual = writer.generateRotateSyntax(flipper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Rotate LF11");
+        expected.add("Rotate LF11");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGenerateRotationSyntax_LeftFlipper_3_Rotations() {
+        Flipper flipper = new Flipper(20, 20, true, "flipper");
+        flipper.rotate();
+        flipper.rotate();
+        flipper.rotate();
+        List<String> actual = writer.generateRotateSyntax(flipper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Rotate LF11");
+        expected.add("Rotate LF11");
+        expected.add("Rotate LF11");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGenerateRotationSyntax_RightFlipper_1_Rotation() {
+        Flipper flipper = new Flipper(20, 20, false, "flipper");
+        flipper.rotate();
+        List<String> actual = writer.generateRotateSyntax(flipper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Rotate RF11");
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testGenerateFlipperSyntax_LeftFlipper() {
         Flipper flipper = new Flipper(180, 40, true, "flipper");
         List<String> actual = writer.generateFlipperSyntax(flipper);
