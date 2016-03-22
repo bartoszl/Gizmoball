@@ -232,19 +232,19 @@ public class WriterTest {
     @Test
     public void testGenerateConnectionSyntax() {
         CircularBumper cBumper = new CircularBumper(80, 80, 0, "C1");
-        Flipper flipper = new Flipper(10, 3, false, "RF103");
+        Flipper flipper = new Flipper(200, 60, false, "RF103");
         Connection connection = new Connection(cBumper, flipper);
         List<String> actual = writer.generateConnectionSyntax(connection);
         List<String> expected = new ArrayList<String>();
         expected.add("Connect");
-        expected.add("C1");
+        expected.add("C44");
         expected.add("RF103");
         assertEquals(expected, actual);
     }
 
     @Test
     public void testGenertaeKeyConnectionFlipperSyntax() {
-        Flipper flipper = new Flipper(10, 3, false, "RF103");
+        Flipper flipper = new Flipper(200, 60, false, "RF103");
         KeyConnectionFlipper conn = new KeyConnectionFlipper(57, flipper, "down");
         List<String> actual = writer.generateKeyConnectionFlipperSyntax(conn);
         List<String> expected = new ArrayList<String>();
@@ -266,7 +266,7 @@ public class WriterTest {
         expected.add("key");
         expected.add("50");
         expected.add("down");
-        expected.add("ABS1");
+        expected.add("ABS");
         assertEquals(expected, actual);
     }
 
