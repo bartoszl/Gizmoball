@@ -330,11 +330,12 @@ public class Writer {
             triggerName = "S";
         } else if(trigger instanceof TriangularBumper) {
             triggerName = "T";
-        } else if(trigger instanceof TriangularBumper) {
+        } else if(trigger instanceof CircularBumper) {
             triggerName = "C";
         }
         triggerName = triggerName + ((int) trigger.getX() / scale) + ((int) trigger.getY() / scale);
         syntax.add(triggerName);
+
         Flipper flipper = connection.getFlipper();
         String flipperName = null;
         if(flipper.isLeft()) {
@@ -362,7 +363,15 @@ public class Writer {
         syntax.add("key");
         syntax.add(String.valueOf(conn.getKeyID()));
         syntax.add(conn.getUpDown());
-        syntax.add(conn.getFlipper().getName());
+        IFlipper flipper = conn.getFlipper();
+        String flipperName = null;
+        if(flipper.isLeft()) {
+            flipperName = "LF";
+        } else {
+            flipperName = "RF";
+        }
+        flipperName = flipperName + ((int) flipper.getOrigin().x() / scale) + ((int) flipper.getOrigin().y() / scale);
+        syntax.add(flipperName);
         return syntax;
     }
 
@@ -381,7 +390,7 @@ public class Writer {
         syntax.add("key");
         syntax.add(String.valueOf(conn.getKeyID()));
         syntax.add(conn.getUpDown());
-        syntax.add(conn.getAbs().getName());
+        syntax.add("ABS");
         return syntax;
     }
 }
