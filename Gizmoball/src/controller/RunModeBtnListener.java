@@ -46,6 +46,7 @@ public class RunModeBtnListener implements ActionListener {
                     timer.stop();
                     break;
                 case "Swap":
+                    model.playSound(false);
                     timer.stop();
                     model.reset();
                     gui.getGridView().delete();
@@ -65,6 +66,8 @@ public class RunModeBtnListener implements ActionListener {
                         ModelLoader ml = new ModelLoader(f);
                         GBallModel m = ml.getModel();
                         m.setLoadFile(f);
+                        model.playSound(false);
+                        m.setSound(model.getSound());
                         gui.getGridView().delete();
                         gui.getGridView().setVisible(false);
                         gui.getFrame().remove(gui.getFrame().getContentPane());
@@ -95,6 +98,21 @@ public class RunModeBtnListener implements ActionListener {
                 case "Quit":
                     int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit", JOptionPane.YES_NO_OPTION);
                     if (reply == JOptionPane.YES_OPTION) System.exit(0);
+                    break;
+                case "Play / Pause":
+                    if(model.getSound()==null)
+                        JOptionPane.showMessageDialog(null, "No Audio File Loaded!", "Error", JOptionPane.WARNING_MESSAGE);
+                    else
+                        model.playSound(true);
+                    break;
+                case "Load Sound":
+                    JFileChooser sc = new JFileChooser();
+                    sc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+                    int choice = sc.showOpenDialog(gui.getFrame());
+                    if (choice == JFileChooser.APPROVE_OPTION) {
+                        File sound = sc.getSelectedFile();
+                        model.setSound(sound);
+                    }
                     break;
                 default:
                     break;

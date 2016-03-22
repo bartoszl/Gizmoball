@@ -72,6 +72,7 @@ public class BuildModeBtnListener implements ActionListener {
                 }
                 break;
             case "Swap":
+                model.playSound(false);
                 board.delete();
                 MouseListener[] mListeners = board.getMouseListeners();
                 for(int i=0; i<mListeners.length;i++){
@@ -95,6 +96,8 @@ public class BuildModeBtnListener implements ActionListener {
                         ModelLoader ml = new ModelLoader(f);
                         GBallModel m = ml.getModel();
                         m.setLoadFile(f);
+                        model.playSound(false);
+                        m.setSound(model.getSound());
                         gui.getGridView().delete();
                         gui.getGridView().setVisible(false);
                         gui.getFrame().remove(gui.getFrame().getContentPane());
