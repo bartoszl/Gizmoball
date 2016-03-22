@@ -148,6 +148,7 @@ public class WriterTest {
         List<String> actual = writer.generateRotateSyntax(circularBumper);
         List<String> expected = new ArrayList<String>();
         expected.add("Rotate C32");
+        assertEquals(expected, actual);
     }
 
     @Test
