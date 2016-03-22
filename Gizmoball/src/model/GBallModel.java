@@ -522,7 +522,7 @@ public class GBallModel extends Observable implements IGBallModel {
     public File getSound(){
         return soundFile;
     }
-
+    
     @Override
     public void playSound(boolean play){
         if(isPlaying || !play) {
@@ -541,14 +541,18 @@ public class GBallModel extends Observable implements IGBallModel {
 	@Override
 	public void moveModel() {
 		double moveTime = 0.05;
-		List<CollisionDetails> cl = calcCollisionDetails();
-		moveFlippers(cl);
+		List<Ball> temp = new ArrayList<Ball>();
 		
+		List<CollisionDetails> cl = calcCollisionDetails();
+		
+		moveFlippers(cl);
 		for(Ball ball: balls){
+			Ball b;
 			if(!ball.isMoving())
 				continue;
 			if(ball.isAbsorbed()){
-				ball = moveBallForTime(ball, moveTime);
+				b = moveBallForTime(ball, moveTime);
+				temp.add(b);
 				if(ball.getY()<absorber.getYTopLeft())
 					ball.setAbsorbed(false);
 				notifyObs();
@@ -557,25 +561,26 @@ public class GBallModel extends Observable implements IGBallModel {
 			CollisionDetails cd = cl.get(balls.indexOf(ball));
 			double tuc = cd.getTime();
 			if(tuc>moveTime){
-				ball = moveBallForTime(ball, moveTime);
+				b = moveBallForTime(ball, moveTime);
+				temp.add(b);
 				notifyObs();
 				continue;
 			}
 			if(cd.getAbsorbed()){
 				absorber.absorb(ball);
+				temp.add(ball);
 				notifyObs();
 				continue;
 			}
             if(cd.getBumper() != null && (tuc != 0)) {
                 collidedWithBumper(cd.getBumper());
-                //cl = calcCollisionDetails();
             }
-			ball = moveBallForTime(ball, tuc);
-			ball.setVelocity(cd.getVelocity());
-			//Vect v = calcVelocity(ball, moveTime);
-			//ball.setVelocity(v);
-			notifyObs();
+			b = moveBallForTime(ball, tuc);
+			b.setVelocity(cd.getVelocity());
+			temp.add(b);
 		}
+		notifyObs();
+		balls = temp;
 	}
     
     @Override
@@ -761,7 +766,7 @@ public class GBallModel extends Observable implements IGBallModel {
 							time = c.getTime();
 			}
             f.rotatePerTime(time);
-            notifyObs();
+            //notifyObs();
         }
     }
 	
@@ -881,17 +886,15 @@ public class GBallModel extends Observable implements IGBallModel {
 					}
 				} else {
 					time = Geometry.timeUntilRotatingWallCollision(line, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
-					System.out.println("t until rot wa: "+time);
 					if(time<shortest){
 						shortest=time;
 						f = flipper;
-						newVelocity = Geometry.reflectRotatingWall(line, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
+						newVelocity = Geometry.reflectRotatingWall(line, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity, 0.95);
 						collidedWith = null;
 					}
 				}
 				
 			}
-			System.out.println();
 			for(Circle circle: flipper.getCircles()){
 				if(flipper.getMovement()==IFlipper.Movement.NONE) {
 					time = Geometry.timeUntilCircleCollision(circle, ballCircle, ballVelocity);
@@ -905,7 +908,7 @@ public class GBallModel extends Observable implements IGBallModel {
 					if(time<shortest){
 						shortest=time;
 						f = flipper;
-						newVelocity = Geometry.reflectRotatingCircle(circle, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity);
+						newVelocity = Geometry.reflectRotatingCircle(circle, flipper.getCircles().get(0).getCenter(), flipper.getAngSpeed(), ballCircle, ballVelocity, 0.95);
 						collidedWith = null;
 					}
 				}
