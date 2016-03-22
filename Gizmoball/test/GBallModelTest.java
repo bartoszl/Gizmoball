@@ -79,15 +79,15 @@ public class GBallModelTest {
     @Test
     public void connectionTest() {
     	assertEquals(model.getConnections(), new ArrayList<Connection>());
-    	model.addConnection("cBump", "f1");
+    	model.loadConnection("cBump", "f1");
     	assertEquals(model.getConnections(), new ArrayList<Connection>());
     	model.addCircularBumper(0, 20, 0, "cBump");
-    	model.addConnection("cBump", "f1");
+    	model.loadConnection("cBump", "f1");
     	assertEquals(model.getConnections(), new ArrayList<Connection>());
     	model.addFlipper(60, 0, true, "f1");
-    	model.addConnection("cBump", "f1");
+    	model.loadConnection("cBump", "f1");
     	assertTrue(model.getConnections().size()==1);
-    	model.addConnection("cBump", "f1");
+    	model.loadConnection("cBump", "f1");
     	assertTrue(model.getConnections().size()==1);
     }
     
