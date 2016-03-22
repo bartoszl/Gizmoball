@@ -309,7 +309,16 @@ public interface IGBallModel    {
      */
     public void setConnectedToAbs(boolean set);
 
+    /**
+     * @param cBumperName name of Bumper to be connected
+     * @param flipperName name of Flipper to be connected
+     * @return
+     */
     public boolean loadConnection(String cBumperName, String flipperName);
 
+    /**
+     * @param f Flipper which will be cleared from all connections
+     * @return true if any connection found and removed, false otherwise
+     */
     public boolean deleteConnection(IFlipper f);
 }
