@@ -12,6 +12,7 @@ public class CollisionDetails {
 	private Vect velocity;
 	private boolean absorbed;
 	private Bumper bumper;
+	private Flipper f;
 	
 	/**
 	 * 
@@ -20,11 +21,16 @@ public class CollisionDetails {
 	 * @param abs -> boolean, represents whether the ball collided with an absorber.
 	 * @param bumper -> Bumper, representing a Bumper that the ball collided with.
 	 */
-	public CollisionDetails(double t, Vect v, boolean abs, Bumper bumper){
+	public CollisionDetails(double t, Vect v, boolean abs, Bumper bumper, Flipper f){
 		this.time = t;
 		this.velocity = v;
 		this.absorbed = abs;
 		this.bumper = bumper;
+		this.f = f;
+	}
+	
+	public Flipper getFlipper(){
+		return f;
 	}
 	
 	/**
