@@ -2,11 +2,11 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class GBallModelTest {
 
@@ -75,29 +75,17 @@ public class GBallModelTest {
         assertTrue(model.getBumper("tBump")==null);
         assertTrue(model.getBumpers().size()==0);
     }
-    
-    @Test
-    public void connectionTest() {
+
+	@Test
+	public void connectionTest() {
 		CircularBumper circularBumper = new CircularBumper(100, 100, 0, "cBump");
 		Flipper flipper = new Flipper(200, 200, true, "f1");
-    	assertEquals(model.getConnections(), new ArrayList<Connection>());
-<<<<<<< HEAD
-    	model.loadConnection("cBump", "f1");
-    	assertEquals(model.getConnections(), new ArrayList<Connection>());
-    	model.addCircularBumper(0, 20, 0, "cBump");
-    	model.loadConnection("cBump", "f1");
-    	assertEquals(model.getConnections(), new ArrayList<Connection>());
-    	model.addFlipper(60, 0, true, "f1");
-    	model.loadConnection("cBump", "f1");
-    	assertTrue(model.getConnections().size()==1);
-    	model.loadConnection("cBump", "f1");
-=======
-    	model.addConnection(circularBumper, flipper);
-    	assertTrue(model.getConnections().size()==1);
-    	model.addConnection(circularBumper, flipper);
->>>>>>> master
-    	assertTrue(model.getConnections().size()==1);
-    }
+		assertEquals(model.getConnections(), new ArrayList<Connection>());
+		model.addConnection(circularBumper, flipper);
+		assertTrue(model.getConnections().size()==1);
+		model.addConnection(circularBumper, flipper);
+		assertTrue(model.getConnections().size()==1);
+	}
     
     @Test
     public void gravityTest() {
