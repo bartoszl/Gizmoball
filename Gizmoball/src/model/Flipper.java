@@ -26,7 +26,7 @@ public class Flipper implements IFlipper {
     private int rotation;
     private List<Circle> lineCircles;
     
-    private static final double RAD = 0.017;
+    private static final double RAD = 0.01745329;
 
     /**
      * Creates a flipper on a 4-cell space, with specific color and position.
@@ -94,6 +94,7 @@ public class Flipper implements IFlipper {
 
     @Override
     public double getAngSpeed(){
+    	//if(Movement.NONE == movement) return 0;
     	double angSpeed = rotationPerTick*20;
     	if(isLeft)
     		angSpeed*=-1;
