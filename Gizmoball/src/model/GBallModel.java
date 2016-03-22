@@ -18,6 +18,7 @@ public class GBallModel extends Observable implements IGBallModel {
     private double gravity, xFriction, yFriction;
     private List<Bumper> bumpers;
     private List<Flipper> flippers;
+    private List<TeleporterConnection> tpConnections;
     private List<Connection> connections;
     private List<KeyConnectionAbs> keyConnectionsAbs;
     private List<KeyConnectionFlipper> keyConnectionsFlipper;
@@ -33,6 +34,7 @@ public class GBallModel extends Observable implements IGBallModel {
      */
     public GBallModel() {
         bumpers = new ArrayList<Bumper>();
+        tpConnections = new ArrayList<TeleporterConnection>();
         connections = new ArrayList<Connection>();
         keyConnectionsAbs = new ArrayList<KeyConnectionAbs>();
         keyConnectionsFlipper = new ArrayList<KeyConnectionFlipper>();
@@ -215,6 +217,25 @@ public class GBallModel extends Observable implements IGBallModel {
         } else {
             return connections.add(connection);
         }
+    }
+    
+    @Override
+    public String addTeleporterConnection(Bumper tp1, Bumper tp2){
+    	TeleporterConnection tpConnect = new TeleporterConnection(tp1,tp2);
+    	if(tpConnections.contains(tpConnect)){
+    		return "The connection already exists!";
+    	}
+    	else{
+    		for(TeleporterConnection connect: tpConnections){
+    			if(connect.getConnection().contains(tp1)||connect.getConnection().contains(tp2)){
+    				return "Each teleporter can be connected to another only once!";
+    			}
+    		}
+    		if(tpConnections.add(tpConnect)){
+    			return "true";
+    		} else
+    			return "Failed to make connection!";
+    	}
     }
     
     @Override

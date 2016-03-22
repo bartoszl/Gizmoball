@@ -122,6 +122,14 @@ public interface IGBallModel    {
     public boolean addConnection(Bumper bumper, Flipper flipper);
     
     /**
+     * Add a connection between a bumper and a flipper
+     * @param bumper -> The bumper that will be part of the connection
+     * @param flipper -> The flipper that will be part of the connection
+     * @return True if the connection could be added successfully, or false if it couldn't be added
+     */
+    public String addTeleporterConnection(Bumper tp1, Bumper tp2);
+    
+    /**
      * Add a (key) connection between a key and a flipper
      * @param keyID -> The key number of the key to be used in the connection
      * @param flipper -> The flipper to be used in the connection

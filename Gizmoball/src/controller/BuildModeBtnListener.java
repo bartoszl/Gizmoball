@@ -58,7 +58,7 @@ public class BuildModeBtnListener implements ActionListener {
                 board.setAction(Board.Action.KEY_DISCONNECT);
                 break;
             case "Connect":
-                gui.setMessage("Click on Circular Bumper which should trigger the action");
+                gui.setMessage("Click on Bumper which should trigger the action");
                 board.setAction(Board.Action.CONNECT);
                 break;
             case "Disconnect":

@@ -14,12 +14,12 @@ public class TeleporterConnection {
 	
 	/**
 	 * Constructor for the TeleporterConnection class.
-	 * @param tp1 - one end of the connection
-	 * @param tp2 - the other end of the connection
+	 * @param tp12 - one end of the connection
+	 * @param tp22 - the other end of the connection
 	 */
-	public TeleporterConnection(TeleporterBumper tp1, TeleporterBumper tp2){
-		this.tp1=tp1;
-		this.tp2=tp2;
+	public TeleporterConnection(Bumper tp12, Bumper tp22){
+		this.tp1=tp12;
+		this.tp2=tp22;
 	}
 	
 	/**
