@@ -1,11 +1,11 @@
 package model;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
 import physics.Circle;
 import physics.LineSegment;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 

@@ -91,6 +91,10 @@ public class ModelLoader {
                 case "KeyConnect" :
                     createKeyConnection(command);
                     break;
+
+                case "ABSNOTCONNECTED" :
+                    model.getAbsorber().setConnectedToItself(false);
+                    break;
             }
         }
     }

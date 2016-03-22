@@ -66,7 +66,12 @@ public class Validator {
             if(command[0].matches("Friction")) {
                 return validateFriction(command);
             }
+        } else if(command.length == 1) {
+            if(command[0].matches("ABSNOTCONNECTED")) {
+                return true;
+            }
         }
+
         return false;
     }
 

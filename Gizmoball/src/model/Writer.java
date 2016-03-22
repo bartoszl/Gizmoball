@@ -55,6 +55,9 @@ public class Writer {
             if(absorber != null) {
                 syntax = generateAbsorberSyntax(absorber);
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5) + "\n");
+                if(!absorber.isConnectedToItself()) {
+                    bufferedWriter.write("ABSNOTCONNECTED\n");
+                }
             }
 
             /* Write balls */
