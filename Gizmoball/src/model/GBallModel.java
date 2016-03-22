@@ -450,18 +450,6 @@ public class GBallModel extends Observable implements IGBallModel {
 		double moveTime = 0.05;
 		List<CollisionDetails> cl = calcCollisionDetails();
 		moveFlippers(cl);
-		/*
-		for(Flipper f : getFlippers()) {
-			double time = moveTime;
-			for(CollisionDetails c:cl){
-				if(c.getFlipper()!=null)
-					if(c.getFlipper().equals(f))
-						if(c.getTime()<time)
-							time = c.getTime();
-			}
-            f.rotatePerTime(time);
-            notifyObs();
-        }*/
 		
 		for(Ball ball: balls){
 			if(!ball.isMoving())
@@ -487,7 +475,7 @@ public class GBallModel extends Observable implements IGBallModel {
 			}
             if(cd.getBumper() != null && (tuc != 0)) {
                 collidedWithBumper(cd.getBumper());
-                //cl = calcCollisionDetails();
+                cl = calcCollisionDetails();
             }
 			ball = moveBallForTime(ball, tuc);
 			ball.setVelocity(cd.getVelocity());
