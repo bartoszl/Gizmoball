@@ -1,0 +1,3 @@
+Absorber ABS 0 18 13 19
+ABSNOTCONNECTED
+KeyConnect key 70 down absorber
