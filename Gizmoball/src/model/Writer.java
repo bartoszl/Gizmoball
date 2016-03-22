@@ -63,7 +63,7 @@ public class Writer {
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + " " + syntax.get(4) + " " + syntax.get(5) + "\n");
             }
 
-            /* Write rotations */
+            /* Write bumper rotations */
             for(Bumper bumper : model.getBumpers()) {
                 for(String s : generateRotateSyntax(bumper)) {
                     bufferedWriter.write(s + "\n");
@@ -74,6 +74,13 @@ public class Writer {
             for(Flipper flipper : model.getFlippers()) {
                 syntax = generateFlipperSyntax(flipper);
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + " " + syntax.get(3) + "\n");
+            }
+
+            /* Write flipper rotations */
+            for(Flipper flipper : model.getFlippers()) {
+                for(String s : generateRotateSyntax(flipper)) {
+                    bufferedWriter.write(s + "\n");
+                }
             }
 
             /* Write connections */
@@ -234,7 +241,7 @@ public class Writer {
 
     /**
      * Generate the rotate syntax for a given Bumper, i.e. generate
-     * the number of Rotate commands that is required for the given Bumper.
+     * the number of Rotate commands that are required for the given Bumper.
      * The formal file syntax for Rotate is: Rotate <name>
      * @param bumper -> The Bumper to generate the number of Rotate commands required
      * @return -> A list of strings containing the necessary Rotate commands for the given Bumper
@@ -245,7 +252,35 @@ public class Writer {
         for(int i = 0; i < bumper.getRotation(); i++) {
             xCoordinate = String.valueOf((int) bumper.getX() / scale);
             yCoordinate = String.valueOf((int) bumper.getY() / scale);
-            syntax.add("Rotate " + "T" + xCoordinate + yCoordinate);
+            if(bumper instanceof TriangularBumper) {
+                syntax.add("Rotate T" + xCoordinate + yCoordinate);
+            } else if(bumper instanceof SquareBumper) {
+                syntax.add("Rotate S" + xCoordinate + yCoordinate);
+            } else if(bumper instanceof CircularBumper) {
+                syntax.add("Rotate C" + xCoordinate + yCoordinate);
+            }
+        }
+        return syntax;
+    }
+
+    /**
+     * Generate the rotate syntax for a given Flipper, i.e. generate
+     * the number of Rotate commands that are required for the given Flipper.
+     * The formal file syntax for Rotate is: Rotate <name>
+     * @param flipper -> The Bumper to generate the number of Rotate commands required
+     * @return -> A list of strings containing the necessary Rotate commands for the given Flipper
+     */
+    public List<String> generateRotateSyntax(Flipper flipper) {
+        List<String> syntax = new ArrayList<String>();
+        String xCoordinate, yCoordinate;
+        for(int i = 0; i < flipper.getRotation(); i++) {
+            xCoordinate = String.valueOf((int) flipper.getOrigin().x() / scale);
+            yCoordinate = String.valueOf((int) flipper.getOrigin().y() / scale);
+            if(flipper.isLeft()) {
+                syntax.add("Rotate LF" + xCoordinate + yCoordinate);
+            } else {
+                syntax.add("Rotate RF" + xCoordinate + yCoordinate);
+            }
         }
         return syntax;
     }

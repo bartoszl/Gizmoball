@@ -96,18 +96,23 @@ public class ModelLoader {
     }
 
     /**
-     * Perform a rotation on the given gizmo
-     * @param command The command that specifies the gizmo to rotate
-     * @return True if the rotation was successful - the rotation will be successful if the gizmo exists in the model,
-     * or false if the specified gizmo could not be rotated
+     * Perform a rotation on the given bumper or flipper
+     * @param command The command that specifies the bumper or flipper to rotate
+     * @return True if the rotation was successful - the rotation will be successful if the bumper/flipper exists in the model,
+     * or false if it could not be rotated
      */
     private boolean applyRotation(String[] command) {
-        String gizmoName = command[1];
-        if(model.getBumper(gizmoName) == null) {
-            return false;
+        String name = command[1];
+        if(model.getBumper(name) != null) {
+            model.getBumper(name).rotate();
+            return true;
         }
-        model.getBumper(gizmoName).rotate();
-        return true;
+
+        if(model.getFlipper(name) != null) {
+            model.getFlipper(name).rotate();
+            return true;
+        }
+        return false;
     }
 
     /**
