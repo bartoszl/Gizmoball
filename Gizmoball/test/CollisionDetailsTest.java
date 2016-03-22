@@ -15,7 +15,7 @@ public class CollisionDetailsTest {
     public void setUp() {
         v = new Vect(10, 10);
         b = new SquareBumper(10, 10, 0, "Square");
-        cd = new CollisionDetails(10.0, v, false, b);
+        cd = new CollisionDetails(10.0, v, false, b, null);
     }
 
     @Test
