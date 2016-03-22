@@ -3,6 +3,9 @@ package model;
 import physics.*;
 import physics.Geometry.VectPair;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -26,6 +29,10 @@ public class GBallModel extends Observable implements IGBallModel {
     private boolean [][] occupiedSpaces;
     private Walls walls;
     private File loadFile;
+
+    private Clip audioClip;
+    private File soundFile;
+    private boolean isPlaying;
     
     /**
      * Constructor for GBallModel. Creates empty lists for each gizmo.
@@ -43,6 +50,7 @@ public class GBallModel extends Observable implements IGBallModel {
         gravity = 25;
         mu = 0.025;
         mu2 = 0.025;
+        isPlaying = false;
     }
     
     // Build Mode Methods
@@ -876,5 +884,32 @@ public class GBallModel extends Observable implements IGBallModel {
             default:
         }
         bumper.setColor(color);
+    }
+
+    public void setSound(File f){
+        if(f == null) return; soundFile = f;
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(f);
+            audioClip = AudioSystem.getClip();
+            audioClip.open(ais);
+        } catch (Exception e) {
+            System.out.println("Error with playing sound. \n" + e);
+        }
+    }
+
+    public File getSound(){
+        return soundFile;
+    }
+
+    public void playSound(boolean play){
+        if(isPlaying || !play) {
+            if(soundFile != null) {
+                audioClip.stop();
+            }
+            isPlaying = false;
+        } else {
+            audioClip.start();
+            isPlaying = true;
+        }
     }
 }
