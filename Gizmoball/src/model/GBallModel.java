@@ -475,7 +475,7 @@ public class GBallModel extends Observable implements IGBallModel {
 			}
             if(cd.getBumper() != null && (tuc != 0)) {
                 collidedWithBumper(cd.getBumper());
-                cl = calcCollisionDetails();
+                //cl = calcCollisionDetails();
             }
 			ball = moveBallForTime(ball, tuc);
 			ball.setVelocity(cd.getVelocity());
