@@ -1,0 +1,54 @@
+Triangle T190 19 0
+Triangle T11 1 1
+Square S02 0 2
+Square S12 1 2
+Square S22 2 2
+Square S32 3 2
+Square S42 4 2
+Square S52 5 2
+Square S62 6 2
+Square S72 7 2
+Square S82 8 2
+Square S132 13 2
+Square S142 14 2
+Square S152 15 2
+Square S162 16 2
+Square S172 17 2
+Square S182 18 2
+Circle C43 4 3
+Circle C54 5 4
+Circle C65 6 5
+Circle C76 7 6
+Circle C99 9 9
+Circle C109 10 9
+Circle C1110 11 10
+Circle C129 12 9
+Circle C139 13 9
+Circle C156 15 6
+Circle C165 16 5
+Circle C174 17 4
+Circle C183 18 3
+Absorber ABS 0 19 20 20
+Ball B111 1.0 11.0 50.0 50.0
+Ball B100 10.0 0.0 50.0 50.0
+Ball B74 7.0 4.0 50.0 50.0
+Rotate T
+LeftFlipper LF92 9 2
+RightFlipper RF112 11 2
+LeftFlipper LF87 8 7
+RightFlipper RF137 13 7
+Connect C43 flipper
+Connect C54 flipper
+Connect C65 flipper
+Connect C76 flipper
+Connect C109 flipper
+Connect C1110 flipper
+Connect C139 flipper
+Connect C99 flipper
+Connect C1110 flipper
+Connect C129 flipper
+Connect C156 flipper
+Connect C165 flipper
+Connect C174 flipper
+Connect C183 flipper
+KeyConnect key 32 down flipperKeyConnect key 32 down flipperKeyConnect key 81 down flipperKeyConnect key 87 down flipperKeyConnect key 127 down A

@@ -102,8 +102,22 @@ class RunGUI implements IGUI {
         newPanel.add(btnStop);
 
         JSeparator separator = new JSeparator();
-        separator.setBounds(10, 331, 180, 2);
+        separator.setBounds(10, 255, 180, 2);
         newPanel.add(separator);
+
+        JButton btnPlay = new JButton("Play / Pause");
+        btnPlay.setBounds(10, 265, 180, 23);
+        btnPlay.addActionListener(runModeBtnListener);
+        newPanel.add(btnPlay);
+
+        JButton btnLoad= new JButton("Load Sound");
+        btnLoad.setBounds(10, 299, 180, 23);
+        btnLoad.addActionListener(runModeBtnListener);
+        newPanel.add(btnLoad);
+
+        JSeparator separator_2 = new JSeparator();
+        separator_2.setBounds(10, 331, 180, 2);
+        newPanel.add(separator_2);
 
         JButton btnBuildMode = new JButton("Build Mode");
         btnBuildMode.setBounds(10, 344, 180, 50);

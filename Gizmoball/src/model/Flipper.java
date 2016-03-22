@@ -94,6 +94,7 @@ public class Flipper implements IFlipper {
 
     @Override
     public double getAngSpeed(){
+    	//if(Movement.NONE == movement) return 0;
     	double angSpeed = rotationPerTick*20;
     	if(isLeft)
     		angSpeed*=-1;

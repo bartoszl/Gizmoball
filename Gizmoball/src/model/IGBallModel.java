@@ -341,4 +341,25 @@ public interface IGBallModel    {
      * @return True if the connection could be added successfully, or false if it couldn't be added
      */
     public boolean loadConnection(String cBumperName, String flipperName);
+
+    /**
+     * Setter method for sound files.
+     *
+     * @param f -> representing a File loaded in from a controller.
+     */
+    public void setSound(File f);
+
+    /**
+     * Getter method for sound files.
+     *
+     * @return File, that was set using the above setter.
+     */
+    public File getSound();
+
+    /**
+     * Play/Pause the sound loaded in.
+     *
+     * @param play -> boolean value deciding whether or not to play the sound.
+     */
+    public void playSound(boolean play);
 }
