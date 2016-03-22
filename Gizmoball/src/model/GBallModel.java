@@ -487,9 +487,6 @@ public class GBallModel extends Observable implements IGBallModel {
             }
 			ball = moveBallForTime(ball, tuc);
 			ball.setVelocity(cd.getVelocity());
-			Vect v = calcVelocity(ball, moveTime);
-			ball.setVelocity(v);
-			
 			notifyObs();
 		}
 	}
