@@ -7,6 +7,7 @@ import view.IGUI;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class DeleteConnectionListener implements MouseListener {
     private IGUI bgui;
@@ -27,15 +28,14 @@ public class DeleteConnectionListener implements MouseListener {
             int y = mouseP.y - gridP.y;
             x -= x%20;
             y -= y%20;
-            Flipper f = m.findFlipper(x, y);
+            IFlipper f = m.findFlipper(x, y);
             if(f != null) {
-                for(Connection c : m.getConnections()) {
-                    if(c.getFlipper().equals(f)) {
-                        bgui.setMessageColor(Color.GREEN);
-                        bgui.setMessage("Flipper disconnected!");
-                        m.getConnections().remove(c);
-                        break;
-                    }
+                if(m.deleteConnection(f)) {
+                    bgui.setMessageColor(Color.GREEN);
+                    bgui.setMessage("Flipper disconnected!");
+                } else {
+                    bgui.setMessageColor(Color.YELLOW);
+                    bgui.setMessage("Flipper not connected to anything!");
                 }
             } else if(m.getAbsorber() != null &&
                     x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&

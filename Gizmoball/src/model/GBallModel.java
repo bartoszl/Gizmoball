@@ -254,6 +254,20 @@ public class GBallModel extends Observable implements IGBallModel {
         }
         return null;
     }
+
+    public boolean deleteConnection(IFlipper f) {
+        boolean deleted = false;
+        List<Connection> newConn = new ArrayList<Connection>();
+        for(Connection c : connections) {
+            if(!c.getFlipper().equals(f)) {
+               newConn.add(c);
+            } else {
+                deleted = true;
+            }
+        }
+        connections = newConn;
+        return deleted;
+    }
     
     @Override
     public boolean addKeyConnectionAbs(int keyID, IAbsorber abs, String upDown) {

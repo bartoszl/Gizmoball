@@ -335,14 +335,26 @@ public interface IGBallModel    {
     public void setConnectedToAbs(boolean set);
 
     /**
+<<<<<<< HEAD
+     * @param cBumperName name of Bumper to be connected
+     * @param flipperName name of Flipper to be connected
+     * @return
+=======
      * Add a connection between a bumper and a flipper
      * @param cBumperName -> The name of the bumper that will be part of the connection
      * @param flipperName -> The name of the flipper that will be part of the connection
      * @return True if the connection could be added successfully, or false if it couldn't be added
+>>>>>>> master
      */
     public boolean loadConnection(String cBumperName, String flipperName);
 
     /**
+     * @param f Flipper which will be cleared from all connections
+     * @return true if any connection found and removed, false otherwise
+     */
+    public boolean deleteConnection(IFlipper f);
+
+    /*
      * Setter method for sound files.
      *
      * @param f -> representing a File loaded in from a controller.
