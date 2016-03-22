@@ -11,6 +11,9 @@ import java.util.List;
 public class TeleporterConnection {
 	private Bumper tp1;
 	private Bumper tp2;
+	private double newX;
+	private double newY;
+	private IBall ball;
 	
 	/**
 	 * Constructor for the TeleporterConnection class.
@@ -33,6 +36,44 @@ public class TeleporterConnection {
 		return list;
 	}
 	
+	/**
+	 * set the teleportation coordinates of the ball
+	 */
+	public void setNewCoordinatesOfCollidedBall(double x, double y){
+		newX=x;
+		newY=y;
+	}
+	
+	/**
+	 * 
+	 * @return the x coordinate where the ball will be teleported
+	 */
+	public double getNewX(){
+		return newX;
+	}
+	
+	/**
+	 * 
+	 * @return the y coordinate where the ball will be teleported
+	 */
+	public double getNewY(){
+		return newY;
+	}
+	
+	/**
+	 * @return the teleported ball
+	 */
+	public IBall getBall() {
+		return ball;
+	}
+
+	/**
+	 * @param ball the ball to be teleported
+	 */
+	public void setBall(IBall ball) {
+		this.ball = ball;
+	}
+
 	/**
 	 * Overridden equals method for the class.
 	 */

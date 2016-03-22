@@ -27,6 +27,7 @@ public class GBallModel extends Observable implements IGBallModel {
     private boolean [][] occupiedSpaces;
     private Walls walls;
     private File loadFile;
+    private boolean teleported;
     
     /**
      * Constructor for GBallModel. Creates empty lists for each gizmo.
@@ -45,6 +46,7 @@ public class GBallModel extends Observable implements IGBallModel {
         gravity = 25;
         xFriction = 0.025;
         yFriction = 0.025;
+        teleported = false;
     }
     
     // Build Mode Methods
@@ -437,6 +439,11 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 	
 	@Override
+	public List<TeleporterConnection> getTeleporterConnections(){
+		return tpConnections;
+	}
+	
+	@Override
     public String getObjectTypeForKeyConnection(String objectName) {
         if(absorber != null) {
             if(absorber.getName().equals(objectName)) {
@@ -546,6 +553,8 @@ public class GBallModel extends Observable implements IGBallModel {
                 b.setColor(Color.BLUE);
             } else if(b instanceof SquareBumper) {
                 b.setColor(Color.RED);
+            } else if(b instanceof TeleporterBumper) {
+                b.setColor(Color.CYAN);
             }
         }
     }
@@ -766,8 +775,40 @@ public class GBallModel extends Observable implements IGBallModel {
 			for(LineSegment line: bumper.getLines()){
 				time = Geometry.timeUntilWallCollision(line, ballCircle, ballVelocity);
 				if(time<shortest){
+					boolean noTPConnection = true;
 					shortest=time;
-					newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+					if((bumper instanceof TeleporterBumper)&&(line.equals(bumper.getLines().get(2)))){
+						System.out.println("tp bumper collide");
+						/*if(teleported){
+							teleported=false;
+						}else{*/
+							for(TeleporterConnection tpConnect: tpConnections){
+								if(tpConnect.getConnection().get(0).equals(bumper)){
+									System.out.println("connected tp bumpers");
+									tpConnect.setBall(ball);
+									tpConnect.setNewCoordinatesOfCollidedBall(tpConnect.getConnection().get(1).getX()+5,tpConnect.getConnection().get(1).getY()+5);
+									newVelocity = Geometry.reflectWall(tpConnect.getConnection().get(1).getLines().get(2), ballVelocity, 1.0);
+									newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+									teleported = true;
+									noTPConnection = false;
+									break;
+								}else if(tpConnect.getConnection().get(1).equals(bumper)){
+									System.out.println("connected tp bumpers");
+									tpConnect.setBall(ball);
+									tpConnect.setNewCoordinatesOfCollidedBall(tpConnect.getConnection().get(0).getX()+5,tpConnect.getConnection().get(0).getY()+5);
+									newVelocity = Geometry.reflectWall(tpConnect.getConnection().get(0).getLines().get(2), ballVelocity, 1.0);
+									newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+									teleported = true;
+									noTPConnection = false;
+									break;
+								}
+							}
+						//}
+					}
+					if(noTPConnection){
+						System.out.println("no tp connect");
+						newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
+					}
                     collidedWith = bumper;
 				}
 			}
@@ -865,39 +906,48 @@ public class GBallModel extends Observable implements IGBallModel {
 	}
     
     private void collidedWithBumper(Bumper bumper) {
-
-        for(Connection c : getConnections()) {
-            if(c.getTrigger().equals(bumper)) {
-                c.getFlipper().press();
-                if(c.getFlipper().getCurrentRotation().radians()==Angle.DEG_90.radians())
-                	c.getFlipper().release();
-            }
-        }
-        //and change the color
-        Color color = null;
-        Random random = new Random();
-        int randomNumber = random.nextInt(6);
-        switch (randomNumber) {
-            case 0:
-                color = Color.GREEN;
-                break;
-            case 1:
-                color = Color.RED;
-                break;
-            case 2:
-                color = Color.YELLOW;
-                break;
-            case 3:
-                color = Color.BLUE;
-                break;
-            case 4:
-                color = Color.ORANGE;
-                break;
-            case 5:
-                color = Color.BLACK;
-                break;
-            default:
-        }
-        bumper.setColor(color);
+    	if(bumper instanceof TeleporterBumper){
+    		if(teleported){
+	    		for(TeleporterConnection tpConnect: tpConnections){
+	    			if(tpConnect.getConnection().get(0).equals(bumper)||tpConnect.getConnection().get(1).equals(bumper))
+	    				tpConnect.getBall().move(tpConnect.getNewX(),tpConnect.getNewY());
+	    		}
+	    		//teleported = false;
+    		}
+    	} else {
+	        for(Connection c : getConnections()) {
+	            if(c.getTrigger().equals(bumper)) {
+	                c.getFlipper().press();
+	                if(c.getFlipper().getCurrentRotation().radians()==Angle.DEG_90.radians())
+	                	c.getFlipper().release();
+	            }
+	        }
+	        //and change the color
+	        Color color = null;
+	        Random random = new Random();
+	        int randomNumber = random.nextInt(6);
+	        switch (randomNumber) {
+	            case 0:
+	                color = Color.GREEN;
+	                break;
+	            case 1:
+	                color = Color.RED;
+	                break;
+	            case 2:
+	                color = Color.YELLOW;
+	                break;
+	            case 3:
+	                color = Color.BLUE;
+	                break;
+	            case 4:
+	                color = Color.ORANGE;
+	                break;
+	            case 5:
+	                color = Color.BLACK;
+	                break;
+	            default:
+	        }
+	        bumper.setColor(color);
+    	}
     }
 }

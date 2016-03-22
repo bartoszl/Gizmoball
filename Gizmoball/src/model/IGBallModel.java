@@ -251,6 +251,13 @@ public interface IGBallModel    {
     public List<Connection> getConnections();
     
     /**
+     * Getter method for teleporter connections.
+     * 
+     * @return List<TeleporterConnection>, list of all connections.
+     */
+    public List<TeleporterConnection> getTeleporterConnections();
+    
+    /**
      * Getter method for KeyConnections for Flippers.
      * 
      * @return List<KeyConnectionsFlipper>, list of all key connections for flippers.
