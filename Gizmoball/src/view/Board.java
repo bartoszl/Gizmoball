@@ -14,6 +14,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * 
+ * @author Martin Peev
+ *
+ */
 public abstract class Board extends JPanel implements Observer {
 
 	public enum Action {
@@ -24,16 +29,27 @@ public abstract class Board extends JPanel implements Observer {
     private IGBallModel model;
 	private Action action;
 
+	/**
+	 * Board constructor
+	 * @param model - the model that will be displayed on the board
+	 */
     public Board(IGBallModel model){
         this.model = model;
 		action = Action.NONE;
         delete = false;
     }
 
+    /**
+     * used for calling the JPanel paintComponent method
+     * @param g - Graphics object
+     */
     void superPaint(Graphics g){
     	super.paintComponent(g);
     }
     
+    /**
+     * overridden paintComponent method
+     */
     public void paintComponent(Graphics g) {
     	if(!delete){
 	        drawFlippers(g);
@@ -43,6 +59,10 @@ public abstract class Board extends JPanel implements Observer {
     	}
     }
 
+    /**
+     * paint method for flippers
+     * @param g - Graphics object
+     */
     private void drawFlippers(Graphics g) {
     	if(model.getFlippers()!=null){
 	    	for(IFlipper flipper: model.getFlippers()){
@@ -68,6 +88,10 @@ public abstract class Board extends JPanel implements Observer {
     	}
 	}
     
+    /**
+     * paint method for absorbers
+     * @param g - Graphics object
+     */
     private void drawAbsorber(Graphics g){
     	IAbsorber absorber = model.getAbsorber();
     	if(absorber!=null){
@@ -76,6 +100,10 @@ public abstract class Board extends JPanel implements Observer {
     	}
     }
     
+    /**
+     * paint method for bumpers
+     * @param g - Graphics object
+     */
     private void drawBumpers(Graphics g){
     	if(model.getBumpers()!=null){
 			for(Bumper gizmo: model.getBumpers()){
@@ -102,6 +130,10 @@ public abstract class Board extends JPanel implements Observer {
     	}
 	}
     
+    /**
+     * paint method for balls
+     * @param g - Graphics object
+     */
     private void drawBalls(Graphics g){
     	if(model.getBalls()!=null){
 	    	for(IBall ball: model.getBalls()){
@@ -112,15 +144,25 @@ public abstract class Board extends JPanel implements Observer {
     	}
     }
     
+    /**
+     * set the board to deleted (ignored for painting)
+     */
     public void delete(){
     	delete = true;
     	repaint();
     }
     
+    /**
+     * check if the board has been deleted
+     * @return
+     */
 	boolean getDelete() {
 		return delete;
 	}
     
+	/**
+	 * calls the repaint method
+	 */
     public void update(Observable o, Object arg) {
 		repaint();
     }

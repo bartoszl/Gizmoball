@@ -9,7 +9,7 @@ import java.util.List;
 public interface IGBallModel    {
 	
 	/**
-	 * 
+	 * Method for adding a square bumper.
 	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
@@ -19,7 +19,7 @@ public interface IGBallModel    {
     public boolean addSquareBumper(int x, int y, int rotation, String name);
     
     /**
-	 * 
+	 * Method for adding a triangular bumper.
 	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
@@ -29,7 +29,7 @@ public interface IGBallModel    {
     public boolean addTriangularBumper(int x, int y, int rotation, String name);
     
     /**
-	 * 
+	 * Method for adding a circular bumper.
 	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
 	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
@@ -37,6 +37,16 @@ public interface IGBallModel    {
 	 * @return true if the Bumper was successfully created, false if adding a bumper was unsuccessful.
 	 */
     public boolean addCircularBumper(int x, int y, int rotation, String name);
+    
+    /**
+	 * Method for adding a teleporter bumper.
+	 * @param x -> int, representing x coordinate the top left corner of the grid in which the bumper is placed.
+	 * @param y -> int, representing y coordinate the top left corner of the grid in which the bumper is placed.
+	 * @param rotation -> int, represents how many times the bumper was rotated by 90 degrees.
+	 * @param name -> String, representing name of the Bumper.
+	 * @return true if the Bumper was successfully created, false if adding a bumper was unsuccessful.
+	 */
+    public boolean addTeleporterBumper(int x, int y, int rotation, String name);
     
     /**
      * Getter method for bumpers.
@@ -110,6 +120,14 @@ public interface IGBallModel    {
      * @return True if the connection could be added successfully, or false if it couldn't be added
      */
     public boolean addConnection(Bumper bumper, Flipper flipper);
+    
+    /**
+     * Add a connection between a bumper and a flipper
+     * @param bumper -> The bumper that will be part of the connection
+     * @param flipper -> The flipper that will be part of the connection
+     * @return True if the connection could be added successfully, or false if it couldn't be added
+     */
+    public String addTeleporterConnection(Bumper tp1, Bumper tp2);
     
     /**
      * Add a (key) connection between a key and a flipper
@@ -231,6 +249,13 @@ public interface IGBallModel    {
      * @return List<Connections>, list of all connections.
      */
     public List<Connection> getConnections();
+    
+    /**
+     * Getter method for teleporter connections.
+     * 
+     * @return List<TeleporterConnection>, list of all connections.
+     */
+    public List<TeleporterConnection> getTeleporterConnections();
     
     /**
      * Getter method for KeyConnections for Flippers.

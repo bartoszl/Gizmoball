@@ -115,7 +115,7 @@ public class BuildGUI implements IGUI {
 
         JComboBox cbCompType = new JComboBox();
         cbCompType.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        gizmoShapes = new DefaultComboBoxModel(new String[]{"Circle", "Square", "Triangle"});
+        gizmoShapes = new DefaultComboBoxModel(new String[]{"Circle", "Square", "Triangle", "Teleporter"});
         cbCompType.setModel(gizmoShapes);
         cbCompType.setBounds(100, 41, 105, 22);
         newPanel.add(cbCompType);
