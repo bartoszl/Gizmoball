@@ -423,7 +423,8 @@ public class GBallModel extends Observable implements IGBallModel {
         }
         return null;
     }
-
+	
+	@Override
     public void setConnectedToAbs(boolean set){
         absorber.setConnectedToItself(set);
     }
@@ -450,6 +451,36 @@ public class GBallModel extends Observable implements IGBallModel {
 		}
 		return null;
 	}
+    
+    @Override
+    public void setSound(File f){
+        if(f == null) return; soundFile = f;
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(f);
+            audioClip = AudioSystem.getClip();
+            audioClip.open(ais);
+        } catch (Exception e) {
+            System.out.println("Error with playing sound. \n" + e);
+        }
+    }
+    
+    @Override
+    public File getSound(){
+        return soundFile;
+    }
+
+    @Override
+    public void playSound(boolean play){
+        if(isPlaying || !play) {
+            if(soundFile != null) {
+                audioClip.stop();
+            }
+            isPlaying = false;
+        } else {
+            audioClip.start();
+            isPlaying = true;
+        }
+    }
 	
 	// Run Mode Methods
     
@@ -499,8 +530,22 @@ public class GBallModel extends Observable implements IGBallModel {
         resetFlippers();
         resetBumpers();
     }
-
-    public void resetBumpers() {
+    
+    // Neutral Methods
+    
+    @Override
+    public void setLoadFile(File f){
+        this.loadFile = f;
+    }
+    
+    @Override
+    public File getLoadFile(){
+        return loadFile;
+    }
+    
+    // Private Methods
+    
+    private void resetBumpers() {
         for(Bumper b : getBumpers()) {
             if(b instanceof CircularBumper) {
                 b.setColor(Color.GREEN);
@@ -511,18 +556,6 @@ public class GBallModel extends Observable implements IGBallModel {
             }
         }
     }
-    
-    // Neutral Methods
-
-    public void setLoadFile(File f){
-        this.loadFile = f;
-    }
-
-    public File getLoadFile(){
-        return loadFile;
-    }
-    
-    // Private Methods
     
     private List<CollisionDetails> calcCollisionDetails(){
     	List<CollisionDetails> cl = new ArrayList<CollisionDetails>();
@@ -884,32 +917,5 @@ public class GBallModel extends Observable implements IGBallModel {
             default:
         }
         bumper.setColor(color);
-    }
-
-    public void setSound(File f){
-        if(f == null) return; soundFile = f;
-        try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(f);
-            audioClip = AudioSystem.getClip();
-            audioClip.open(ais);
-        } catch (Exception e) {
-            System.out.println("Error with playing sound. \n" + e);
-        }
-    }
-
-    public File getSound(){
-        return soundFile;
-    }
-
-    public void playSound(boolean play){
-        if(isPlaying || !play) {
-            if(soundFile != null) {
-                audioClip.stop();
-            }
-            isPlaying = false;
-        } else {
-            audioClip.start();
-            isPlaying = true;
-        }
     }
 }
