@@ -46,7 +46,6 @@ public class GBallModel extends Observable implements IGBallModel {
         gravity = 25;
         xFriction = 0.025;
         yFriction = 0.025;
-        teleported = false;
     }
     
     // Build Mode Methods
@@ -778,35 +777,27 @@ public class GBallModel extends Observable implements IGBallModel {
 					boolean noTPConnection = true;
 					shortest=time;
 					if((bumper instanceof TeleporterBumper)&&(line.equals(bumper.getLines().get(2)))){
-						System.out.println("tp bumper collide");
-						/*if(teleported){
-							teleported=false;
-						}else{*/
-							for(TeleporterConnection tpConnect: tpConnections){
-								if(tpConnect.getConnection().get(0).equals(bumper)){
-									System.out.println("connected tp bumpers");
-									tpConnect.setBall(ball);
-									tpConnect.setNewCoordinatesOfCollidedBall(tpConnect.getConnection().get(1).getX()+5,tpConnect.getConnection().get(1).getY()+5);
-									newVelocity = Geometry.reflectWall(tpConnect.getConnection().get(1).getLines().get(2), ballVelocity, 1.0);
-									newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
-									teleported = true;
-									noTPConnection = false;
-									break;
-								}else if(tpConnect.getConnection().get(1).equals(bumper)){
-									System.out.println("connected tp bumpers");
-									tpConnect.setBall(ball);
-									tpConnect.setNewCoordinatesOfCollidedBall(tpConnect.getConnection().get(0).getX()+5,tpConnect.getConnection().get(0).getY()+5);
-									newVelocity = Geometry.reflectWall(tpConnect.getConnection().get(0).getLines().get(2), ballVelocity, 1.0);
-									newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
-									teleported = true;
-									noTPConnection = false;
-									break;
-								}
+						for(TeleporterConnection tpConnect: tpConnections){
+							if(tpConnect.getConnection().get(0).equals(bumper)){
+								tpConnect.setBall(ball);
+								tpConnect.setNewCoordinatesOfCollidedBall(tpConnect.getConnection().get(1).getX()+5,tpConnect.getConnection().get(1).getY()+5);
+								newVelocity = Geometry.reflectWall(tpConnect.getConnection().get(1).getLines().get(2), ballVelocity, 1.0);
+								newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+								teleported = true;
+								noTPConnection = false;
+								break;
+							}else if(tpConnect.getConnection().get(1).equals(bumper)){
+								tpConnect.setBall(ball);
+								tpConnect.setNewCoordinatesOfCollidedBall(tpConnect.getConnection().get(0).getX()+5,tpConnect.getConnection().get(0).getY()+5);
+								newVelocity = Geometry.reflectWall(tpConnect.getConnection().get(0).getLines().get(2), ballVelocity, 1.0);
+								newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+								teleported = true;
+								noTPConnection = false;
+								break;
 							}
-						//}
+						}
 					}
 					if(noTPConnection){
-						System.out.println("no tp connect");
 						newVelocity = Geometry.reflectWall(line, ballVelocity, 1.0);
 					}
                     collidedWith = bumper;
@@ -907,12 +898,9 @@ public class GBallModel extends Observable implements IGBallModel {
     
     private void collidedWithBumper(Bumper bumper) {
     	if(bumper instanceof TeleporterBumper){
-    		if(teleported){
-	    		for(TeleporterConnection tpConnect: tpConnections){
-	    			if(tpConnect.getConnection().get(0).equals(bumper)||tpConnect.getConnection().get(1).equals(bumper))
-	    				tpConnect.getBall().move(tpConnect.getNewX(),tpConnect.getNewY());
-	    		}
-	    		//teleported = false;
+    		for(TeleporterConnection tpConnect: tpConnections){
+    			if(tpConnect.getConnection().get(0).equals(bumper)||tpConnect.getConnection().get(1).equals(bumper))
+    				tpConnect.getBall().move(tpConnect.getNewX(),tpConnect.getNewY());
     		}
     	} else {
 	        for(Connection c : getConnections()) {
