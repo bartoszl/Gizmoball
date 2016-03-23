@@ -33,6 +33,7 @@ public class GBallModel extends Observable implements IGBallModel {
     private Clip audioClip;
     private File soundFile;
     private boolean isPlaying;
+    private boolean teleported;
     
     /**
      * Constructor for GBallModel. Creates empty lists for each gizmo.
@@ -605,8 +606,9 @@ public class GBallModel extends Observable implements IGBallModel {
             if(cd.getBumper() != null && (tuc != 0)) {
                 collidedWithBumper(cd.getBumper());
             }
+            ball.setVelocity(cd.getVelocity());
 			b = moveBallForTime(ball, tuc);
-			b.setVelocity(cd.getVelocity());
+			//b.setVelocity(cd.getVelocity());
 			temp.add(b);
 		}
 		notifyObs();
@@ -912,9 +914,11 @@ public class GBallModel extends Observable implements IGBallModel {
 							if(tpConnect.getConnection().get(0).equals(bumper)){
 								newVelocity = teleportation(bumper, tpConnect.getConnection().get(1), ball, tpConnect);
 								noTPConnection = false;
+								teleported = true;
 								break;
 							}else if(tpConnect.getConnection().get(1).equals(bumper)){
 								newVelocity = teleportation(bumper, tpConnect.getConnection().get(0), ball, tpConnect);
+								teleported = true;
 								noTPConnection = false;
 								break;
 							}
@@ -1045,30 +1049,94 @@ public class GBallModel extends Observable implements IGBallModel {
 			default:
 				break;
 		}
-		switch((r1+r2)%4){
+		switch (r1){
 			case 0:
-				newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+				switch(r1-r2){
+				case 0:
+					newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+					break;
+				case -1:
+					newVelocity = new Vect(newVelocity.y(),newVelocity.x());
+					break;
+				case -2:
+					newVelocity = new Vect(newVelocity.x(), newVelocity.y());
+					break;
+				case -3:
+					newVelocity = new Vect(-1*newVelocity.y(), -1*newVelocity.x());
+					break;
+				default:
+					break;
+				}
 				break;
 			case 1:
-				newVelocity = new Vect(newVelocity.x(),-1*newVelocity.y());
+				switch(r1-r2){
+				case 0:
+					newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+					break;
+				case -1:
+					newVelocity = new Vect(-1*newVelocity.y(),-1*newVelocity.x());
+					break;
+				case -2:
+					newVelocity = new Vect(newVelocity.x(), newVelocity.y());
+					break;
+				case 1:
+					newVelocity = new Vect(newVelocity.y(), newVelocity.x());
+					break;
+				default:
+					break;
+				}
 				break;
 			case 2:
-				newVelocity = new Vect(newVelocity.x(), newVelocity.y());
+				switch(r1-r2){
+				case 0:
+					newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+					break;
+				case 1:
+					newVelocity = new Vect(-1*newVelocity.y(),-1*newVelocity.x());
+					break;
+				case 2:
+					newVelocity = new Vect(newVelocity.x(), newVelocity.y());
+					break;
+				case -1:
+					newVelocity = new Vect(newVelocity.y(), newVelocity.x());
+					break;
+				default:
+					break;
+				}
 				break;
 			case 3:
-				newVelocity = new Vect(-1*newVelocity.x(), newVelocity.y());
+				switch(r1-r2){
+				case 0:
+					newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+					break;
+				case 1:
+					newVelocity = new Vect(-1*newVelocity.y(),-1*newVelocity.x());
+					break;
+				case 2:
+					newVelocity = new Vect(newVelocity.x(), newVelocity.y());
+					break;
+				case 3:
+					newVelocity = new Vect(newVelocity.y(), newVelocity.x());
+					break;
+				default:
+					break;
+				}
 				break;
 			default:
 				break;
 		}
+		
 		return newVelocity;
 	}
 
 	private void collidedWithBumper(Bumper bumper) {
     	if(bumper instanceof TeleporterBumper){
-    		for(TeleporterConnection tpConnect: tpConnections){
-    			if(tpConnect.getConnection().get(0).equals(bumper)||tpConnect.getConnection().get(1).equals(bumper))
-    				tpConnect.getBall().setXY(tpConnect.getNewX(),tpConnect.getNewY());
+    		if(teleported){
+				for(TeleporterConnection tpConnect: tpConnections){
+					if(tpConnect.getConnection().get(0).equals(bumper)||tpConnect.getConnection().get(1).equals(bumper))
+						tpConnect.getBall().setXY(tpConnect.getNewX(),tpConnect.getNewY());
+				}
+				teleported = false;
     		}
     	} else {
 	        for(Connection c : getConnections()) {

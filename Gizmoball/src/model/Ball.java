@@ -124,6 +124,8 @@ public class Ball implements IBall{
     public void move(double x, double y){
     	this.x = x+L/2;
     	this.y = y+L/2;
+    	this.sx = this.x;
+        this.sy = this.y;
     }
     
     @Override
