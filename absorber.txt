@@ -1,4 +1,0 @@
-Absorber ABS 0 18 13 19
-ABSNOTCONNECTED
-Ball B05 0.0 5.0 50.0 50.0
-KeyConnect key 71 down ABS

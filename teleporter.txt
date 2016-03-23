@@ -1,4 +1,0 @@
-Teleporter TEL33 3 3
-Teleporter TEL113 11 3
-Rotate TEL33
-Rotate TEL33

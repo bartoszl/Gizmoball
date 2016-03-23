@@ -1,4 +1,0 @@
-LeftFlipper LF65 6 5
-Rotate LF65
-Rotate LF65
-Rotate LF65
