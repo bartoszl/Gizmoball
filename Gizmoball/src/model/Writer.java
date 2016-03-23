@@ -264,6 +264,8 @@ public class Writer {
                 syntax.add("Rotate S" + xCoordinate + yCoordinate);
             } else if(bumper instanceof CircularBumper) {
                 syntax.add("Rotate C" + xCoordinate + yCoordinate);
+            } else if(bumper instanceof TeleporterBumper) {
+                syntax.add("Rotate TEL" + xCoordinate + yCoordinate);
             }
         }
         return syntax;
