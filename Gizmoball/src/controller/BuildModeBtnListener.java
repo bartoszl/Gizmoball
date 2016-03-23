@@ -62,7 +62,7 @@ public class BuildModeBtnListener implements ActionListener {
                 board.setAction(Board.Action.CONNECT);
                 break;
             case "Disconnect":
-                gui.setMessage("Click on Flipper or Absorber which you want to disconnect");
+                gui.setMessage("Click on Teleporter, Flipper or Absorber which you want to disconnect");
                 board.setAction(Board.Action.DISCONNECT);
                 break;
             case "Clear":
