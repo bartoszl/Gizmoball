@@ -394,6 +394,14 @@ public class Writer {
         return syntax;
     }
 
+    /**
+     * Generate the file syntax for the TeleporterBumper.
+     * The formal file syntax for a TeleporterBumper is:
+     * Teleporter <name> <int-pair>
+     * For example: Teleporter TEL22 2 2
+     * @param teleporterBumper -> The TeleporterBumper that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given TeleporterBumper
+     */
     public List<String> generateTeleporterSyntax(TeleporterBumper teleporterBumper) {
         String gizmoOp = "Teleporter",
                 xCoordinate = String.valueOf((int) teleporterBumper.getX() / scale),
