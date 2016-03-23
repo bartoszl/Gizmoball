@@ -94,7 +94,8 @@ public class Writer {
 
             /* Write teleporter connections */
             for(TeleporterConnection connection : model.getTeleporterConnections()) {
-
+                syntax = generateTeleporterConnectionSyntax(connection);
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + "\n");
             }
 
             /* Write KeyConnectionFlippers */
