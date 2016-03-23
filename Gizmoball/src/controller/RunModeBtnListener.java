@@ -117,8 +117,12 @@ public class RunModeBtnListener implements ActionListener {
                     sc.setCurrentDirectory(new File(System.getProperty("user.dir")));
                     int choice = sc.showOpenDialog(gui.getFrame());
                     if (choice == JFileChooser.APPROVE_OPTION) {
-                        File sound = sc.getSelectedFile();
-                        model.setSound(sound);
+                        if(sc.getSelectedFile().getName().endsWith(".wav")) {
+                            File sound = sc.getSelectedFile();
+                            model.setSound(sound);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "File has to be of type \".wav\"", "Error", JOptionPane.WARNING_MESSAGE);
+                        }
                     }
                     break;
                 default:
