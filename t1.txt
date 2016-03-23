@@ -1,0 +1,6 @@
+Teleporter TEL33 3 3
+Teleporter TEL122 12 2
+Ball B20 2.0 0.0 50.0 50.0
+Rotate TEL33
+Rotate TEL33
+Connect TEL33 TEL122

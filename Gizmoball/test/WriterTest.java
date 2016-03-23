@@ -258,7 +258,7 @@ public class WriterTest {
         TeleporterConnection connection = new TeleporterConnection(t1, t2);
         List<String> actual = writer.generateTeleporterConnectionSyntax(connection);
         List<String> expected = new ArrayList<String>();
-        expected.add("Connect");
+        expected.add("TeleporterConnect");
         expected.add("TEL55");
         expected.add("TEL33");
         assertEquals(expected, actual);

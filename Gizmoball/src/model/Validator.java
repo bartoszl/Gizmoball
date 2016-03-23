@@ -51,7 +51,7 @@ public class Validator {
                 return validateMove(command);
             }
 
-            if(command[0].matches("Connect")) {
+            if(command[0].matches("Connect|TeleporterConnect")) {
                 return validateConnect(command);
             }
 

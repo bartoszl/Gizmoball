@@ -437,7 +437,7 @@ public class Writer {
      */
     public List<String> generateTeleporterConnectionSyntax(TeleporterConnection teleporterConnection) {
         List<String> syntax = new ArrayList<String>();
-        syntax.add("Connect");
+        syntax.add("TeleporterConnect");
         TeleporterBumper t1 = (TeleporterBumper) teleporterConnection.getTp1(),
                 t2 = (TeleporterBumper) teleporterConnection.getTp2();
 
