@@ -579,8 +579,10 @@ public class GBallModel extends Observable implements IGBallModel {
 		moveFlippers(cl);
 		for(Ball ball: balls){
 			Ball b;
-			if(!ball.isMoving())
+			if(!ball.isMoving()){
+				temp.add(ball);
 				continue;
+			}
 			if(ball.isAbsorbed()){
 				b = moveBallForTime(ball, moveTime);
 				temp.add(b);
@@ -594,6 +596,7 @@ public class GBallModel extends Observable implements IGBallModel {
 			if(tuc>moveTime){
 				b = moveBallForTime(ball, moveTime);
 				temp.add(b);
+				System.out.println(b.getX()+" "+b.getY());
 				notifyObs();
 				continue;
 			}
@@ -609,6 +612,7 @@ public class GBallModel extends Observable implements IGBallModel {
 			b = moveBallForTime(ball, tuc);
 			b.setVelocity(cd.getVelocity());
 			temp.add(b);
+			
 		}
 		notifyObs();
 		balls = temp;
