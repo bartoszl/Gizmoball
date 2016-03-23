@@ -335,18 +335,20 @@ public interface IGBallModel    {
     public void setConnectedToAbs(boolean set);
 
     /**
-<<<<<<< HEAD
-     * @param cBumperName name of Bumper to be connected
-     * @param flipperName name of Flipper to be connected
-     * @return
-=======
      * Add a connection between a bumper and a flipper
      * @param cBumperName -> The name of the bumper that will be part of the connection
      * @param flipperName -> The name of the flipper that will be part of the connection
      * @return True if the connection could be added successfully, or false if it couldn't be added
->>>>>>> master
      */
     public boolean loadConnection(String cBumperName, String flipperName);
+
+    /**
+     * Add a connection between two teleporter bumpers
+     * @param t1Name -> The name of the first teleporter bumper that will be part of the connection
+     * @param t2Name -> The name of the second teleporter bumper that will be part of the connection
+     * @return True if the connection could be added successfully, or false if it couldn't be added
+     */
+    public boolean loadTeleporterConnection(String t1Name, String t2Name);
 
     /**
      * @param f Flipper which will be cleared from all connections

@@ -89,6 +89,7 @@ public class ModelLoader {
                     break;
 
                 case "TeleporterConnect" :
+                    createTeleporterConnection(command);
                     break;
 
                 case "KeyConnect" :
@@ -135,6 +136,16 @@ public class ModelLoader {
         int yCoord = Integer.parseInt(command[3]) * scale;
         String name = command[1];
         model.addTeleporterBumper(xCoord, yCoord, 0, name);
+    }
+
+    /**
+     * Add a TeleporterConnection to the model
+     * @param command The command that specifies the details of the TeleporterConnection
+     */
+    private void createTeleporterConnection(String[] command) {
+        String t1Name = command[1];
+        String t2Name = command[2];
+        model.loadTeleporterConnection(t1Name, t2Name);
     }
 
     /**
