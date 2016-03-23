@@ -150,6 +150,9 @@ public class Writer {
         } else if(bumper instanceof CircularBumper) {
             CircularBumper cBumper = (CircularBumper) bumper;
             return generateCircularBumperSyntax(cBumper);
+        } else if(bumper instanceof TeleporterBumper) {
+            TeleporterBumper teleporterBumper = (TeleporterBumper) bumper;
+            return generateTeleporterSyntax(teleporterBumper);
         }
         return null;
     }
