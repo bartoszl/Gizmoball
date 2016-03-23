@@ -395,7 +395,14 @@ public class Writer {
     }
 
     public List<String> generateTeleporterSyntax(TeleporterBumper teleporterBumper) {
+        String gizmoOp = "Teleporter",
+                xCoordinate = String.valueOf((int) teleporterBumper.getX() / scale),
+                yCoordinate = String.valueOf((int) teleporterBumper.getY() / scale),
+                name = "TEL" + xCoordinate + yCoordinate;
         List<String> syntax = new ArrayList<String>();
+        syntax.add(name);
+        syntax.add(xCoordinate);
+        syntax.add(yCoordinate);
         return syntax;
     }
 }
