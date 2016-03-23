@@ -92,6 +92,11 @@ public class Writer {
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + "\n");
             }
 
+            /* Write teleporter connections */
+            for(TeleporterConnection connection : model.getTeleporterConnections()) {
+
+            }
+
             /* Write KeyConnectionFlippers */
             for(KeyConnectionFlipper connF : model.getKeyConnectionsFlipper()) {
                 syntax = generateKeyConnectionFlipperSyntax(connF);
@@ -418,6 +423,28 @@ public class Writer {
         syntax.add(name);
         syntax.add(xCoordinate);
         syntax.add(yCoordinate);
+        return syntax;
+    }
+
+    /**
+     * Generate the file syntax for a Teleporter connection.
+     * The formal file syntax for a connection is:
+     * Connect <name> <name>
+     * For example: Connect firstTeleporter secondTeleporter
+     * @param teleporterConnection -> The TeleporterConnection that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given connection
+     */
+    public List<String> generateTeleporterConnectionSyntax(TeleporterConnection teleporterConnection) {
+        List<String> syntax = new ArrayList<String>();
+        syntax.add("Connect");
+        TeleporterBumper t1 = (TeleporterBumper) teleporterConnection.getTp1(),
+                t2 = (TeleporterBumper) teleporterConnection.getTp2();
+
+        String t1Name = "TEL" + ((int) t1.getX() / scale) + ((int) t1.getY() / scale),
+                t2Name = "TEL" + ((int) t2.getX() / scale) + ((int) t2.getY() / scale);
+
+        syntax.add(t1Name);
+        syntax.add(t2Name);
         return syntax;
     }
 }

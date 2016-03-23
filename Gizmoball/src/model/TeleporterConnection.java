@@ -93,4 +93,20 @@ public class TeleporterConnection {
             return false;
         }
     }
+
+	/**
+	 *
+	 * @return The first TeleporterBumper in the connection
+     */
+	public Bumper getTp1() {
+		return tp1;
+	}
+
+	/**
+	 *
+	 * @return The second TeleporterBumper in the connection
+     */
+	public Bumper getTp2() {
+		return tp2;
+	}
 }
