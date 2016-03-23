@@ -271,6 +271,18 @@ public class WriterTest {
     }
 
     @Test
+    public void testGenerateTeleporterSyntax() {
+        TeleporterBumper tBumper = new TeleporterBumper(100, 100, 0, "teleporter");
+        List<String> actual = writer.generateTeleporterSyntax(tBumper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Teleporter");
+        expected.add("TEL55");
+        expected.add("5");
+        expected.add("5");
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testWriteModelToFile() {
         GBallModel m = new GBallModel();
         m.addSquareBumper(0, 0, 0, "S10");
