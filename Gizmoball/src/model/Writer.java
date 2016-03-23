@@ -393,4 +393,9 @@ public class Writer {
         syntax.add("ABS");
         return syntax;
     }
+
+    public List<String> generateTeleporterSyntax(TeleporterBumper teleporterBumper) {
+        List<String> syntax = new ArrayList<String>();
+        return syntax;
+    }
 }
