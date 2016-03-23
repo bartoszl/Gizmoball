@@ -81,7 +81,6 @@ public class AddKeyConnectListener implements MouseListener, KeyListener {
 
 
             } else if(abs != null) {
-
                 if(m.addKeyConnectionAbs(keyEvent.getKeyCode(), abs, "down")) {
                     bgui.setMessageColor(Color.GREEN);
                     m.setConnectedToAbs(false);

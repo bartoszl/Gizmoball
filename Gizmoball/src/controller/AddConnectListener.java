@@ -49,8 +49,8 @@ public class AddConnectListener implements MouseListener {
 	                    bgui.setMessage("Trigger found. Now press on Flipper or Absorber to connect it to trigger!");
 	                    triggerAbs = null;
 	                } else if(m.getAbsorber() != null &&
-	                        x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&
-	                        y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
+	                        x <= m.getAbsorber().getXBottomRight() && x >= m.getAbsorber().getXTopLeft() &&
+	                        y <= m.getAbsorber().getYBottomRight() && y >= m.getAbsorber().getYTopLeft()
 	                        ) {
 	                    triggerAbs = m.getAbsorber();
 	                    trigger = null;
@@ -94,8 +94,8 @@ public class AddConnectListener implements MouseListener {
                     }
                 } else if(triggerAbs != null) {
                     if(m.getAbsorber() != null &&
-                            x < m.getAbsorber().getXBottomRight() && x > m.getAbsorber().getXTopLeft() &&
-                            y < m.getAbsorber().getYBottomRight() && y > m.getAbsorber().getYTopLeft()
+                            x <= m.getAbsorber().getXBottomRight() && x >= m.getAbsorber().getXTopLeft() &&
+                            y <= m.getAbsorber().getYBottomRight() && y >= m.getAbsorber().getYTopLeft()
                             ) {
                         m.getAbsorber().setConnectedToItself(true);
                         bgui.setMessageColor(Color.GREEN);
