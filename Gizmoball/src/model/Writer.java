@@ -408,6 +408,7 @@ public class Writer {
                 yCoordinate = String.valueOf((int) teleporterBumper.getY() / scale),
                 name = "TEL" + xCoordinate + yCoordinate;
         List<String> syntax = new ArrayList<String>();
+        syntax.add(gizmoOp);
         syntax.add(name);
         syntax.add(xCoordinate);
         syntax.add(yCoordinate);
