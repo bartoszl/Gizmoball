@@ -51,7 +51,7 @@ public class Validator {
                 return validateMove(command);
             }
 
-            if(command[0].matches("Connect")) {
+            if(command[0].matches("Connect|TeleporterConnect")) {
                 return validateConnect(command);
             }
 
@@ -211,12 +211,22 @@ public class Validator {
                 validateFloatPair(command[4], command[5]);
     }
 
+    /**
+     * Validate a gizmo or flipper create command
+     * @param command The create command to validate
+     * @return True if the command matches the formal file syntax, or false if it doesn't
+     */
     public boolean validateGizmoOp(String[] command) {
-        return command[0].matches("Square|Circle|Triangle|RightFlipper|LeftFlipper")
+        return command[0].matches("Square|Circle|Triangle|Teleporter|RightFlipper|LeftFlipper")
                 && command.length == 4 && validateIdentifier(command[1])
                 && validateIntPair(command[2], command[3]);
     }
 
+    /**
+     * Check whether or not an identifier (name) has already been used for another gizmo or flipper
+     * @param existingIdentifier The identifier to check
+     * @return True if the identifier has been used already, or false if it hasn't
+     */
     public boolean validateExistingIdentifier(String existingIdentifier) {
         return identifiers.contains(existingIdentifier);
     }

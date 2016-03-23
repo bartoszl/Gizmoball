@@ -14,7 +14,7 @@ import java.util.Observable;
 import java.util.Random;
 
 /**
- * Created by John Watt on 01/03/2016.
+ * @author John Watt, Bartosz Lewandowski
  */
 public class GBallModel extends Observable implements IGBallModel {
 
@@ -214,6 +214,17 @@ public class GBallModel extends Observable implements IGBallModel {
         } else {
              return false;
          }
+    }
+
+    @Override
+    public boolean loadTeleporterConnection(String t1Name, String t2Name) {
+        if(safeToAddTeleporterConnection(t1Name, t2Name)) {
+            TeleporterBumper t1 = getTeleporterBumper(t1Name),
+                    t2 = getTeleporterBumper(t2Name);
+            TeleporterConnection connection = new TeleporterConnection(t1, t2);
+            return tpConnections.add(connection);
+        }
+        return false;
     }
 
     @Override
@@ -668,7 +679,23 @@ public class GBallModel extends Observable implements IGBallModel {
         }
         return null;
     }
-    
+
+    private TeleporterBumper getTeleporterBumper(String teleporterBumperName) {
+        for(Bumper bumper : bumpers) {
+            if(bumper instanceof TeleporterBumper) {
+                if(bumper.getName().equals(teleporterBumperName)) {
+                    return (TeleporterBumper) bumper;
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean safeToAddTeleporterConnection(String t1Name, String t2Name) {
+        return !checkForExistingTeleporterConnection(t1Name, t2Name)
+                && checkTeleporterBumperExists(t1Name)
+                && checkTeleporterBumperExists(t2Name);
+    }
     
     private boolean safeToAddConnection(String circularBumperName, String flipperName) {
         return !checkForExistingConnection(circularBumperName, flipperName)
@@ -686,10 +713,31 @@ public class GBallModel extends Observable implements IGBallModel {
         return false;
     }
 
+    private boolean checkForExistingTeleporterConnection(String t1Name, String t2Name) {
+        for(TeleporterConnection connection : tpConnections) {
+            if(connection.getTp1().getName().equals(t1Name)
+                    && connection.getTp2().getName().equals(t2Name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean checkCircularBumperExists(String circularBumperName) {
         for(Bumper gizmo : bumpers) {
             if(gizmo instanceof CircularBumper) {
                 if(gizmo.getName().equals(circularBumperName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean checkTeleporterBumperExists(String teleporterBumperName) {
+        for(Bumper bumper : bumpers) {
+            if(bumper instanceof TeleporterBumper) {
+                if(bumper.getName().equals(teleporterBumperName)) {
                     return true;
                 }
             }

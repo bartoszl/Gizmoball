@@ -1,0 +1,6 @@
+Teleporter TEL23 2 3
+Teleporter TEL123 12 3
+Ball B11 1.0 1.0 50.0 50.0
+Rotate TEL23
+Rotate TEL23
+TeleporterConnect TEL23 TEL123

@@ -206,6 +206,15 @@ public class WriterTest {
     }
 
     @Test
+    public void testGenerateRotationSyntax_TeleporterBumper_1_Rotation() {
+        TeleporterBumper teleporterBumper = new TeleporterBumper(100, 100, 1, "teleporter");
+        List<String> actual = writer.generateRotateSyntax(teleporterBumper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Rotate TEL55");
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testGenerateFlipperSyntax_LeftFlipper() {
         Flipper flipper = new Flipper(180, 40, true, "flipper");
         List<String> actual = writer.generateFlipperSyntax(flipper);
@@ -243,6 +252,19 @@ public class WriterTest {
     }
 
     @Test
+    public void testGenerateTeleporterConnectionSyntax() {
+        TeleporterBumper t1 = new TeleporterBumper(100, 100, 0, "teleporter"),
+                t2 = new TeleporterBumper(60, 60, 0, "teleporter");
+        TeleporterConnection connection = new TeleporterConnection(t1, t2);
+        List<String> actual = writer.generateTeleporterConnectionSyntax(connection);
+        List<String> expected = new ArrayList<String>();
+        expected.add("TeleporterConnect");
+        expected.add("TEL55");
+        expected.add("TEL33");
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testGenertaeKeyConnectionFlipperSyntax() {
         Flipper flipper = new Flipper(200, 60, false, "RF103");
         KeyConnectionFlipper conn = new KeyConnectionFlipper(57, flipper, "down");
@@ -267,6 +289,18 @@ public class WriterTest {
         expected.add("50");
         expected.add("down");
         expected.add("ABS");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGenerateTeleporterSyntax() {
+        TeleporterBumper tBumper = new TeleporterBumper(100, 100, 0, "teleporter");
+        List<String> actual = writer.generateTeleporterSyntax(tBumper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Teleporter");
+        expected.add("TEL55");
+        expected.add("5");
+        expected.add("5");
         assertEquals(expected, actual);
     }
 

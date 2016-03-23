@@ -92,6 +92,12 @@ public class Writer {
                 bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + "\n");
             }
 
+            /* Write teleporter connections */
+            for(TeleporterConnection connection : model.getTeleporterConnections()) {
+                syntax = generateTeleporterConnectionSyntax(connection);
+                bufferedWriter.write(syntax.get(0) + " " + syntax.get(1) + " " + syntax.get(2) + "\n");
+            }
+
             /* Write KeyConnectionFlippers */
             for(KeyConnectionFlipper connF : model.getKeyConnectionsFlipper()) {
                 syntax = generateKeyConnectionFlipperSyntax(connF);
@@ -150,6 +156,9 @@ public class Writer {
         } else if(bumper instanceof CircularBumper) {
             CircularBumper cBumper = (CircularBumper) bumper;
             return generateCircularBumperSyntax(cBumper);
+        } else if(bumper instanceof TeleporterBumper) {
+            TeleporterBumper teleporterBumper = (TeleporterBumper) bumper;
+            return generateTeleporterSyntax(teleporterBumper);
         }
         return null;
     }
@@ -261,6 +270,9 @@ public class Writer {
                 syntax.add("Rotate S" + xCoordinate + yCoordinate);
             } else if(bumper instanceof CircularBumper) {
                 syntax.add("Rotate C" + xCoordinate + yCoordinate);
+            } else if(bumper instanceof TeleporterBumper) {
+                System.out.println(bumper.getRotation());
+                syntax.add("Rotate TEL" + xCoordinate + yCoordinate);
             }
         }
         return syntax;
@@ -391,6 +403,49 @@ public class Writer {
         syntax.add(String.valueOf(conn.getKeyID()));
         syntax.add(conn.getUpDown());
         syntax.add("ABS");
+        return syntax;
+    }
+
+    /**
+     * Generate the file syntax for the TeleporterBumper.
+     * The formal file syntax for a TeleporterBumper is:
+     * Teleporter <name> <int-pair>
+     * For example: Teleporter TEL22 2 2
+     * @param teleporterBumper -> The TeleporterBumper that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given TeleporterBumper
+     */
+    public List<String> generateTeleporterSyntax(TeleporterBumper teleporterBumper) {
+        String gizmoOp = "Teleporter",
+                xCoordinate = String.valueOf((int) teleporterBumper.getX() / scale),
+                yCoordinate = String.valueOf((int) teleporterBumper.getY() / scale),
+                name = "TEL" + xCoordinate + yCoordinate;
+        List<String> syntax = new ArrayList<String>();
+        syntax.add(gizmoOp);
+        syntax.add(name);
+        syntax.add(xCoordinate);
+        syntax.add(yCoordinate);
+        return syntax;
+    }
+
+    /**
+     * Generate the file syntax for a Teleporter connection.
+     * The formal file syntax for a connection is:
+     * Connect <name> <name>
+     * For example: Connect firstTeleporter secondTeleporter
+     * @param teleporterConnection -> The TeleporterConnection that the file syntax is to be generated for
+     * @return -> A list of strings containing the file syntax for the given connection
+     */
+    public List<String> generateTeleporterConnectionSyntax(TeleporterConnection teleporterConnection) {
+        List<String> syntax = new ArrayList<String>();
+        syntax.add("TeleporterConnect");
+        TeleporterBumper t1 = (TeleporterBumper) teleporterConnection.getTp1(),
+                t2 = (TeleporterBumper) teleporterConnection.getTp2();
+
+        String t1Name = "TEL" + ((int) t1.getX() / scale) + ((int) t1.getY() / scale),
+                t2Name = "TEL" + ((int) t2.getX() / scale) + ((int) t2.getY() / scale);
+
+        syntax.add(t1Name);
+        syntax.add(t2Name);
         return syntax;
     }
 }

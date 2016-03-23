@@ -88,12 +88,20 @@ public class ModelLoader {
                     createConnection(command);
                     break;
 
+                case "TeleporterConnect" :
+                    createTeleporterConnection(command);
+                    break;
+
                 case "KeyConnect" :
                     createKeyConnection(command);
                     break;
 
                 case "ABSNOTCONNECTED" :
                     model.getAbsorber().setConnectedToItself(false);
+                    break;
+
+                case "Teleporter" :
+                    createTeleporterBumper(command);
                     break;
             }
         }
@@ -117,6 +125,27 @@ public class ModelLoader {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Add a TeleporterBumper to the model
+     * @param command The command that specifies the details of the TeleporterBumper
+     */
+    private void createTeleporterBumper(String[] command) {
+        int xCoord = Integer.parseInt(command[2]) * scale;
+        int yCoord = Integer.parseInt(command[3]) * scale;
+        String name = command[1];
+        model.addTeleporterBumper(xCoord, yCoord, 0, name);
+    }
+
+    /**
+     * Add a TeleporterConnection to the model
+     * @param command The command that specifies the details of the TeleporterConnection
+     */
+    private void createTeleporterConnection(String[] command) {
+        String t1Name = command[1];
+        String t2Name = command[2];
+        model.loadTeleporterConnection(t1Name, t2Name);
     }
 
     /**
