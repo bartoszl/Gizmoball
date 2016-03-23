@@ -91,7 +91,7 @@ public class BallTest {
 		ball.reset();
 		Double ballX = ball.getX();
 		int ballXInt = ballX.intValue();
-		assertEquals(ballXInt, 210);
+		assertEquals(110, ballXInt);
 	}
 
 
