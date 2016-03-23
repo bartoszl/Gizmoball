@@ -1,7 +1,5 @@
 package model;
 
-import java.security.Key;
-
 public class KeyConnectionFlipper {
 
     private int keyID;

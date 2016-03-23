@@ -1,2 +1,0 @@
-Absorber ABS 0 18 18 20
-Absorber connected to itself: True

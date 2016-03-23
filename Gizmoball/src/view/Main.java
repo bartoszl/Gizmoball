@@ -9,8 +9,7 @@ import model.*;
 /**
  * Created by Stephen on 01/03/2016.
  */
-public class
-Main {
+public class Main {
     private IGUI gui;
     private GBallModel model;
     /**

@@ -1,3 +1,0 @@
-Square S11 1 1
-Absorber ABS 5 5 10 10
-Ball B33 3.0 3.0 100.0 100.0
