@@ -88,6 +88,9 @@ public class ModelLoader {
                     createConnection(command);
                     break;
 
+                case "TeleporterConnect" :
+                    break;
+
                 case "KeyConnect" :
                     createKeyConnection(command);
                     break;
@@ -123,6 +126,10 @@ public class ModelLoader {
         return false;
     }
 
+    /**
+     * Add a TeleporterBumper to the model
+     * @param command The command that specifies the details of the TeleporterBumper
+     */
     private void createTeleporterBumper(String[] command) {
         int xCoord = Integer.parseInt(command[2]) * scale;
         int yCoord = Integer.parseInt(command[3]) * scale;
