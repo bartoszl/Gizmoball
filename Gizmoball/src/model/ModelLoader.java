@@ -95,6 +95,10 @@ public class ModelLoader {
                 case "ABSNOTCONNECTED" :
                     model.getAbsorber().setConnectedToItself(false);
                     break;
+
+                case "Teleporter" :
+                    createTeleporterBumper(command);
+                    break;
             }
         }
     }
@@ -117,6 +121,13 @@ public class ModelLoader {
             return true;
         }
         return false;
+    }
+
+    private void createTeleporterBumper(String[] command) {
+        int xCoord = Integer.parseInt(command[2]) * scale;
+        int yCoord = Integer.parseInt(command[3]) * scale;
+        String name = command[1];
+        model.addTeleporterBumper(xCoord, yCoord, 0, name);
     }
 
     /**
