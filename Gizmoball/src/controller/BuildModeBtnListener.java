@@ -113,6 +113,13 @@ public class BuildModeBtnListener implements ActionListener {
                     ModelLoader ml = new ModelLoader(f);
                     GBallModel m = ml.getModel();
                     m.setLoadFile(f);
+                    model.playSound(false);
+                    m.setSound(model.getSound());
+                    gui.getGridView().delete();
+                    gui.getGridView().setVisible(false);
+                    gui.getFrame().remove(gui.getFrame().getContentPane());
+                    gui.getFrame().remove(gui.getFrame().getJMenuBar());
+                    gui.getFrame().remove(gui.getPanel());
                     main.setModel(m);
                 }
                 break;
