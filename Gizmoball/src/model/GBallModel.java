@@ -862,17 +862,11 @@ public class GBallModel extends Observable implements IGBallModel {
 					if((bumper instanceof TeleporterBumper)&&(line.equals(bumper.getLines().get(2)))){
 						for(TeleporterConnection tpConnect: tpConnections){
 							if(tpConnect.getConnection().get(0).equals(bumper)){
-								tpConnect.setBall(ball);
-								tpConnect.setNewCoordinatesOfCollidedBall(tpConnect.getConnection().get(1).getX()+5,tpConnect.getConnection().get(1).getY()+5);
-								newVelocity = Geometry.reflectWall(tpConnect.getConnection().get(1).getLines().get(2), ballVelocity, 1.0);
-								newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+								newVelocity = teleportation(bumper, tpConnect.getConnection().get(1), ball, tpConnect);
 								noTPConnection = false;
 								break;
 							}else if(tpConnect.getConnection().get(1).equals(bumper)){
-								tpConnect.setBall(ball);
-								tpConnect.setNewCoordinatesOfCollidedBall(tpConnect.getConnection().get(0).getX()+5,tpConnect.getConnection().get(0).getY()+5);
-								newVelocity = Geometry.reflectWall(tpConnect.getConnection().get(0).getLines().get(2), ballVelocity, 1.0);
-								newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+								newVelocity = teleportation(bumper, tpConnect.getConnection().get(0), ball, tpConnect);
 								noTPConnection = false;
 								break;
 							}
@@ -982,11 +976,51 @@ public class GBallModel extends Observable implements IGBallModel {
 		return new CollisionDetails(shortest, newVelocity, abs, collidedWith, f);
 	}
     
-    private void collidedWithBumper(Bumper bumper) {
+    private Vect teleportation(Bumper tp1, Bumper tp2, Ball ball, TeleporterConnection tpConnect) {
+    	Vect newVelocity = ball.getVelocity();
+    	tpConnect.setBall(ball);
+		int r1 = tp1.getRotation();
+		int r2 = tp2.getRotation();
+		switch(r2){
+			case 0:
+				tpConnect.setNewCoordinatesOfCollidedBall(tp2.getX()+12,tp2.getY()+12);
+				break;
+			case 1:
+				tpConnect.setNewCoordinatesOfCollidedBall(tp2.getX()-2,tp2.getY()+12);
+				break;
+			case 2:
+				tpConnect.setNewCoordinatesOfCollidedBall(tp2.getX()-2,tp2.getY()-2);
+				break;
+			case 3:
+				tpConnect.setNewCoordinatesOfCollidedBall(tp2.getX()+12,tp2.getY()-2);
+				break;
+			default:
+				break;
+		}
+		switch((r1+r2)%4){
+			case 0:
+				newVelocity = new Vect(-1*newVelocity.x(),-1*newVelocity.y());
+				break;
+			case 1:
+				newVelocity = new Vect(newVelocity.x(),-1*newVelocity.y());
+				break;
+			case 2:
+				newVelocity = new Vect(newVelocity.x(), newVelocity.y());
+				break;
+			case 3:
+				newVelocity = new Vect(-1*newVelocity.x(), newVelocity.y());
+				break;
+			default:
+				break;
+		}
+		return newVelocity;
+	}
+
+	private void collidedWithBumper(Bumper bumper) {
     	if(bumper instanceof TeleporterBumper){
     		for(TeleporterConnection tpConnect: tpConnections){
     			if(tpConnect.getConnection().get(0).equals(bumper)||tpConnect.getConnection().get(1).equals(bumper))
-    				tpConnect.getBall().move(tpConnect.getNewX(),tpConnect.getNewY());
+    				tpConnect.getBall().setXY(tpConnect.getNewX(),tpConnect.getNewY());
     		}
     	} else {
 	        for(Connection c : getConnections()) {
