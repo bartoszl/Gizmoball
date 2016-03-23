@@ -20,7 +20,7 @@ public class RunModeBtnListener implements ActionListener {
     	this.gui = gui;
         this.model = model;
         this.main = main;
-        this.timer = new Timer(50, this);
+        this.timer = new Timer(10, this);
     }
 
     @Override

@@ -571,7 +571,7 @@ public class GBallModel extends Observable implements IGBallModel {
     
 	@Override
 	public void moveModel() {
-		double moveTime = 0.05;
+		double moveTime = 0.01;
 		List<Ball> temp = new ArrayList<Ball>();
 		
 		List<CollisionDetails> cl = calcCollisionDetails();
@@ -596,7 +596,6 @@ public class GBallModel extends Observable implements IGBallModel {
 			if(tuc>moveTime){
 				b = moveBallForTime(ball, moveTime);
 				temp.add(b);
-				System.out.println(b.getX()+" "+b.getY());
 				notifyObs();
 				continue;
 			}
@@ -830,7 +829,7 @@ public class GBallModel extends Observable implements IGBallModel {
 	
 	private void moveFlippers(List<CollisionDetails> cl) {
 		for(Flipper f : getFlippers()) {
-			double time = 0.05;
+			double time = 0.01;
 			for(CollisionDetails c:cl){
 				if(c.getFlipper()!=null)
 					if(c.getFlipper().equals(f))
