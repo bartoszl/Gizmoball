@@ -252,6 +252,19 @@ public class WriterTest {
     }
 
     @Test
+    public void testGenerateTeleporterConnectionSyntax() {
+        TeleporterBumper t1 = new TeleporterBumper(100, 100, 0, "teleporter"),
+                t2 = new TeleporterBumper(60, 60, 0, "teleporter");
+        TeleporterConnection connection = new TeleporterConnection(t1, t2);
+        List<String> actual = writer.generateTeleporterConnectionSyntax(connection);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Connect");
+        expected.add("TEL55");
+        expected.add("TEL33");
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testGenertaeKeyConnectionFlipperSyntax() {
         Flipper flipper = new Flipper(200, 60, false, "RF103");
         KeyConnectionFlipper conn = new KeyConnectionFlipper(57, flipper, "down");
