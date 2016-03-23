@@ -206,6 +206,15 @@ public class WriterTest {
     }
 
     @Test
+    public void testGenerateRotationSyntax_TeleporterBumper_1_Rotation() {
+        TeleporterBumper teleporterBumper = new TeleporterBumper(100, 100, 1, "teleporter");
+        List<String> actual = writer.generateRotateSyntax(teleporterBumper);
+        List<String> expected = new ArrayList<String>();
+        expected.add("Rotate TEL55");
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testGenerateFlipperSyntax_LeftFlipper() {
         Flipper flipper = new Flipper(180, 40, true, "flipper");
         List<String> actual = writer.generateFlipperSyntax(flipper);
