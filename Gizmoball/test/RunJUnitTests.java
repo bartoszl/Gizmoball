@@ -17,6 +17,8 @@ import org.junit.runners.Suite;
   KeyConnectionsFlipperTest.class,
   ModelLoadTests.class,
   SquareTest.class,
+  TeleporterBumperTest.class,
+  TeleporterConnectionTest.class,
   TriangularTest.class,
   ValidatorTest.class,
   WallsTest.class,
