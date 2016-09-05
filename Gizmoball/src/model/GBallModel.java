@@ -207,14 +207,28 @@ public class GBallModel extends Observable implements IGBallModel {
     }
 
     public boolean loadConnection(String cBumperName, String flipperName) {
-         if(safeToAddConnection(cBumperName, flipperName)) {
-            CircularBumper circularBumper = getCircularBumper(cBumperName);
-            Flipper flipper = getFlipper(flipperName);
-            Connection connection = new Connection(circularBumper, flipper);
-            return connections.add(connection);
-        } else {
-             return false;
-         }
+        if(cBumperName.startsWith("C")) { // Bumper is a circle
+            if(safeToAddConnection(cBumperName, flipperName, true)) {
+                CircularBumper circularBumper = getCircularBumper(cBumperName);
+                Flipper flipper = getFlipper(flipperName);
+                Connection connection = new Connection(circularBumper, flipper);
+                return connections.add(connection);
+            } else {
+                return false;
+            }
+        }
+
+        if(cBumperName.startsWith("S")) { // Bumper is a square
+            if(safeToAddConnection(cBumperName, flipperName, false)) {
+                SquareBumper squareBumper = getSquareBumper(cBumperName);
+                Flipper flipper = getFlipper(flipperName);
+                Connection connection = new Connection(squareBumper, flipper);
+                return connections.add(connection);
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -684,6 +698,17 @@ public class GBallModel extends Observable implements IGBallModel {
         return null;
     }
 
+    private SquareBumper getSquareBumper(String squareBumperName) {
+        for(Bumper gizmo : bumpers) {
+            if(gizmo instanceof  SquareBumper) {
+                if(gizmo.getName().equals(squareBumperName)) {
+                    return (SquareBumper) gizmo;
+                }
+            }
+        }
+        return null;
+    }
+
     private TeleporterBumper getTeleporterBumper(String teleporterBumperName) {
         for(Bumper bumper : bumpers) {
             if(bumper instanceof TeleporterBumper) {
@@ -701,9 +726,14 @@ public class GBallModel extends Observable implements IGBallModel {
                 && checkTeleporterBumperExists(t2Name);
     }
     
-    private boolean safeToAddConnection(String circularBumperName, String flipperName) {
+    private boolean safeToAddConnection(String circularBumperName, String flipperName, boolean circularBumper) {
+        if(circularBumper) {
+            return !checkForExistingConnection(circularBumperName, flipperName)
+                    && checkCircularBumperExists(circularBumperName)
+                    && checkFlipperExists(flipperName);
+        }
         return !checkForExistingConnection(circularBumperName, flipperName)
-                && checkCircularBumperExists(circularBumperName)
+                && checkSquareBumperExists(circularBumperName)
                 && checkFlipperExists(flipperName);
     }
 
@@ -722,6 +752,17 @@ public class GBallModel extends Observable implements IGBallModel {
             if(connection.getTp1().getName().equals(t1Name)
                     && connection.getTp2().getName().equals(t2Name)) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkSquareBumperExists(String squareBumperName) {
+        for(Bumper gizmo : bumpers) {
+            if(gizmo instanceof SquareBumper) {
+                if(gizmo.getName().equals(squareBumperName)) {
+                    return true;
+                }
             }
         }
         return false;
